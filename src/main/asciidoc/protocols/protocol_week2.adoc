@@ -1,0 +1,60 @@
+= Protokoll Gruppe 01
+
+Treffen am 16.10.2018
+
+Ort:      WILL C103 +
+Beginn:   13:02 Uhr +
+Ende:     12:46 Uhr
+
+__Schriftführer:__
+Bruno Reinhold
+*Nächstes Treffen:* +
+22.10.2018, 15:30 Uhr,  Ort des nächsten Treffens: *3m5 Loschwitzer Str. 5 01309 Dresden*
+
+__Teilnehmer:__
+//Tabellarisch oder Aufzählung, Kennzeichnung von Teilnehmern mit besonderer Rolle (z.B. Kunde)
+Paul Hoffmann (product owner) +
+Aron Gaden (scrum master, scrum team) +
+Willy Pertsch (scrum team) +
+Maximilian Schaller (scrum team) +
+Bruno Reinhild (Schriftführer, scrum team) +
+
+== Bemerkungen
+Verwarnungen, besondere Vorfälle, Organisatorisches, wichtige getroffene Entscheidungen
+
+-> *Anwendungsprototyp muss von jedem erstellt werden* +
+ 
+
+== Retrospektive des letzten Sprints
+*Issue referenziert die Issue ID von GitHub*
+// Wie ist der Status der im letzten Sprint erstellten Issues/veteilten Aufgaben?
+
+// See http://asciidoctor.org/docs/user-manual/=tables
+[option="headers"]
+|===
+|Issue |Aufgabe |Status |Bemerkung
+|…     |…       |…      |…
+|===
+
+
+== Aktueller Stand
+-> Rollen Verteilt +
+-> erste Skizzen erstellt +
+-> Technologien sondiert +
+
+
+== Planung des nächsten Sprints +
+*Analysephase bis 18.10.2018:*
+-> Use-Case-Diagramme +
+-> CRC-Card-Diagramme + 
+-> Sequenzdiagramme +
+-> Analyseklassendiagramme +
+-> GUI-MockUp´s +  
+*Issue referenziert die Issue ID von GitHub*
+
+// See http://asciidoctor.org/docs/user-manual/=tables
+[option="headers"]
+|===
+|Issue |Titel |Beschreibung |Verantwortlicher |Status
+|…     |…     |…            |…                |…
+|===
