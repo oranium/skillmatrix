@@ -43,7 +43,7 @@ Verwarnungen, besondere Vorfälle, Organisatorisches, wichtige getroffene Entsch
 
 
 == Planung des nächsten Sprints +
-*Analysephase bis 18.10.2018!*
+*Analysephase bis 28.10.2018!*
 
 *Issue referenziert die Issue ID von GitHub*
 
