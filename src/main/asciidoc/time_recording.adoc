@@ -8,7 +8,7 @@ Die individuell erfasste Zeit beinhaltet auch das Lesen von Dokumentationen, Bes
 |===
 |Woche |Aron |Max |Cornell |Willy |Bruno |Meeting
 |1  |180   |180    |120    |180    |180   |45       
-|2  |120   |…    |…    |…    |…    |60   |44
+|2  |120   |…    |160    |…    |…    |60   |44
 |3  |…   |…    |…    |…    |…    |60    
 |4  |…   |…    |…    |…    |…    |…     
 |5  |…   |…    |…    |…    |…    |…   
