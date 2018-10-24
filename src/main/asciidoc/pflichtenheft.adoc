@@ -1,6 +1,6 @@
 = Pflichtenheft
 :project_name: Projektname
-== __{project_name}__
+SkillMatrix
 
 [options="header"]
 [cols="1, 1, 1, 1, 4"]
@@ -16,15 +16,63 @@ Dieses Dokument benötigt ein Inhaltsverzeichnis. Es existieren mehrere Einbindu
 Eine kurze Beschreibung des Dokuments. Wenige Absätze.
 
 == Aufgabenstellung und Zielsetzung
+
+=======
 Text aus Aufgabenstellung kopieren und ggfs. präzisieren.
 Insbesondere ergänzen, welche Ziele mit dem Abschluss des Projektes erreicht werden sollen.
+=======
+Im Rahmen des Softwarepraktikums soll eine webbasierte Anwendung erstellt werden, in der die
+Mitarbeiter in einem Fragebogen ihre aktuellen Fähigkeiten selbst bewerten können. Es ist möglich
+nach Mitarbeitern zu suchen, die eine oder mehrere Technologien beherrschen. Die Suche soll dabei
+als unscharfe Suche realisiert werden und es soll die Möglichkeit bestehen auch ähnliche/verwandte
+Skills zu finden.
+Die Anwendung soll auf Basis von HTML/JavaScript mit React oder Angular realisiert werden. Für das
+UI soll Google's Material Design verwendet werden. Die Daten werden serverseitig in einer MySQL
+Datenbank abgelegt. Die Authentifizierung der Benutzer erfolgt gegen ein Active Directory.
+Die Anwendung soll folgende Funktionalitäten bieten:
+
+==== 1.) Anmeldung / Login:
+Die Benutzer können sich an der Anwendung anmelden. Je nach Benutzergruppe werden
+unterschiedliche Funktionen dargestellt.
+
+==== 2.) Fähigkeiten bewerten:
+In einem einfachen Fragebogen kann jeder Mitarbeiter bewerten wie gut er eine bestimmte
+Technologie beherrscht (1 = sehr gut / 5 = gar nicht).
+
+==== 3.) Fähigkeiten suchen:
+Über eine Suchmaske kann nach einer oder mehreren Fähigkeiten gesucht werden. Die
+Anwendung liefert eine Liste von Mitarbeitern, welche diese Fähigkeiten besitzen (absteigend
+nach Beherrschungsgrad).
+Wird nach mehreren Fähigkeiten gesucht, muss der Mitarbeiter auch alle diese Fähigkeiten
+besitzen.
+Zusätzlich werden auch Mitarbeiter gefunden die nur Teile der Fähigkeiten besitzen.
+
+==== 4.) Fähigkeiten bearbeiten:
+Es soll möglich sein, die bestehenden Fähigkeiten anzupassen. Dafür gibt es Fähigkeiten die für
+eine bestimmte Gruppe von Mitarbeitern zutreffen (z.B. Programmierer = (Java, C++, C#,
+HTML, usw. / Designer = (Photoshop, InDesign, Responsive Webdesign, …).
+Anmerkung: Die Mitarbeitergruppen existieren bereits in der Mitarbeitertabelle.
+
+==== 5.) Mitarbeiter Entwicklung
+Statistische Auswertung der Entwicklung der Mitarbeiter. Welche Fähigkeiten wurden
+erworben. Welche Fähigkeiten wurden verbessert usw. Filterung der Statistik nach Zeitraum
+(Monat, Quartal, Jahr, Gesamter Zeitraum, usw.).
 
 == Produktnutzung
+=======
 In welchem Kontext soll das System später genutzt werden? Welche Rahmenbedingungen gelten?
 Zusätzlich kurze Einleitung für fachfremde Personen
+=======
+
+Die SkillMatrix soll genutzt werden, um die Fähigkeiten der Mitarbeiter zentral zu speichern und abzurufen. Des Weiteren sollen Fähigkeitsentwicklungen ersichtlich sein. Jeder Mitarbeiter hat die Möglichkeit, seine Fertigkeiten zu verwalten und nach anderen Mitarbeitern mit spezifischen Fähigkeiten zu suchen. So soll es den Prozess der Teambildung bei Projekten zu erleichtern.
 
 == Interessensgruppen (Stakeholders)
+=======
 Welche realen und juristischen Personen(-gruppen) haben Einfluss auf die Anforderungen im Projekt?
+=======
+3m5. Media GmbH +
+Alexander Lehn +
+Dominik Pretzsch +
 
 == Systemgrenze und Top-Level-Architektur
 
@@ -37,16 +85,16 @@ Dokumentieren Sie ihre Top-Level-Architektur mit Hilfe eines Komponentendiagramm
 == Anwendungsfälle
 
 === Akteure
-
+=====
 Akteure sind die Benutzer des Software-Systems oder Nachbarsysteme, welche darauf zugreifen. Dokumentieren Sie die Akteure in einer Tabelle. Diese Tabelle gibt einen Überblick über die Akteure und beschreibt sie kurz. Die Tabelle hat also mindestens zwei Spalten (Akteur Name und Kommentar).
 Weitere relevante Spalten können bei Bedarf ergänzt werden.
-
+=====
 // See http://asciidoctor.org/docs/user-manual/#tables
 [options="header"]
 [cols="1,4"]
 |===
 |Name |Beschreibung
-|...  |...
+|Employee  |Mitarbeiter bei 3m5.
 |===
 
 === Überblick Anwendungsfalldiagramm
@@ -61,30 +109,52 @@ Die typischen Anwendungsfälle (Anlegen, Ändern, Löschen) können zu einem ein
 == Funktionale Anforderungen
 
 === Muss-Kriterien
+=====
 Was das zu erstellende Programm auf alle Fälle leisten muss.
+=====
+* Authentifizierung der Mitarbeiter über Active Directory
+* Hinzufügen und Bearbeiten eigener Skills auf Skala von 1-5 (auch mehrer gleichzeitig)
+* Entwicklungsstatistik mit einstellbarem Zeitraum
+* Speicherung von Profilen in MySQL-Datenbank
+* Unscharfe Suche von Mitarbeitern nach Kriterien (Programmiersprachen, Frameworks, etc.)
+* Trennung von Mitarbeitern mit allen gesuchten und Fähigkeiten von Mitarbeitern mit einem Teil dieser
+* Guidelines für Bewertungsniveau ermöglichen
+
 
 === Kann-Kriterien
+=====
 Anforderungen die das Programm leisten können soll, aber für den korrekten Betrieb entbehrlich sind.
+=====
+* Hierarchische Unterteilung der Profile (Admin, Senior Developer, etc.) => Anlegen neuer Skills an Berechtigung binden
+* Regelmäßige Benachrichtigungen bei längerer Nichtbenutzung
 
 == Nicht-Funktionale Anforderungen
 
 === Qualitätsziele
-
+=====
 Dokumentieren Sie in einer Tabelle die Qualitätsziele, welche das System erreichen soll, sowie deren Priorität.
+=====
 
 === Konkrete Nicht-Funktionale Anforderungen
-
+====
 Beschreiben Sie Nicht-Funktionale Anforderungen, welche dazu dienen, die zuvor definierten Qualitätsziele zu erreichen.
 Achten Sie darauf, dass deren Erfüllung (mindestens theoretisch) messbar sein muss.
+====
+* "Wenig Interaktion" => Anzahl der Operationen zur Benutzung gering halten
+* User Interface verwendet Material Design
+* Leichte Nutzbarkeit (z. B. kein horizontales Scrollen)
 
 == GUI Prototyp
-
+=====
 In diesem Kapitel soll ein Entwurf der Navigationsmöglichkeiten und Dialoge des Systems erstellt werden.
 Idealerweise entsteht auch ein grafischer Prototyp, welcher dem Kunden zeigt, wie sein System visuell umgesetzt werden soll.
 Konkrete Absprachen - beispielsweise ob der grafische Prototyp oder die Dialoglandkarte höhere Priorität hat - sind mit dem Kunden zu treffen.
+=====
 
 === Überblick: Dialoglandkarte
+=====
 Erstellen Sie ein Übersichtsdiagramm, das das Zusammenspiel Ihrer Masken zur Laufzeit darstellt. Also mit welchen Aktionen zwischen den Masken navigiert wird.
+=====
 //Die nachfolgende Abbildung zeigt eine an die Pinnwand gezeichnete Dialoglandkarte. Ihre Karte sollte zusätzlich die Buttons/Funktionen darstellen, mit deren Hilfe Sie zwischen den Masken navigieren.
 
 === Dialogbeschreibung
@@ -106,18 +176,42 @@ Dieser Abschnitt stellt eine Vereinigung von Glossar und der Beschreibung von Kl
 // See http://asciidoctor.org/docs/user-manual/#tables
 [options="header"]
 |===
-|Klasse/Enumeration |Beschreibung |
-|…                  |…            |
+|Klasse/Enumeration |Beschreibung
+|ActiveDirectoryProfile|Sorgt für Authentifizierung gegen ActiveDirectory.
+|Database|Abstraktion der Datenbank mit Nutzerdaten.
+|Session |Ordnet dem Nutzer eine Session ID zu.
+|SkillMatrixProfileManager | Verwaltet die momentanen SkillMatrix-Profile.
+|SkillMatrixProfile | Profil mit Daten eines Mitarbeiters.
+|Skill|Prototyp für eine Fähigkeit.
+|Category|Fähigkeit, die Unterkategorien haben kann, beispielsweise eine Programmiersprache.
+|Subcategory|Fähigkeit, die feingranularer ist als eine Kategorie, beispielsweise ein Framework.
+|Search|Organisiert eine Suchanfrage an die **Database**.
+|Comparator|Sortiert Suchergebnisse einer Anfrage.
+|Filter|Kriterium einer Suchanfrage. Eine **Suche** kann mehrere Filter besitzen.
+|GUI|Abstraktion des User Interface.
+
+
 |===
 
 == Akzeptanztestfälle
+=====
 Mithilfe von Akzeptanztests wird geprüft, ob die Software die funktionalen Erwartungen und Anforderungen im Gebrauch erfüllt. Diese sollen und können aus den Anwendungsfallbeschreibungen und den UML-Sequenzdiagrammen abgeleitet werden. D.h., pro (komplexen) Anwendungsfall gibt es typischerweise mindestens ein Sequenzdiagramm (welches ein Szenarium beschreibt). Für jedes Szenarium sollte es einen Akzeptanztestfall geben. Listen Sie alle Akzeptanztestfälle in tabellarischer Form auf.
 Jeder Testfall soll mit einer ID versehen werde, um später zwischen den Dokumenten (z.B. im Test-Plan) referenzieren zu können.
+=====
+|===
+|ID|Use Case | Akzeptanztestfall
+|1|Login | Benutzer wird gegen Active Directory authentifiziert und eingeloggt.
+|2|Eigene SkillMatrix bearbeiten | Mehrere Fähigkeiten können gleichzeitig verändert bzw. hinzugefügt werden. Die Änderungen werden in der Datenbank gespeichert.
+|3|Fähigkeiten suchen|Es kann nach mehreren Fähigkeiten gleichzeitig gesucht werden. Es werden Profile, die alle Kriterien erfüllen, in absteigender Reihenfolge aufgelistet. Profile, die nur einen Teil der Kriterien erfüllen, werden gesondert aufgelistet.
+|4|SkillMatrix ansehen|Skills des Mitarbeiters werden in tabellarischer Form aufgelistet.
+|5|Statistik ansehen|Statistik wird mit grafischem Diagramm angezeigt. Die Zeitspanne kann manuell festgelegt werden. 
+|===
 
 == Glossar
+=====
 Sämtliche Begriffe, die innerhalb des Projektes verwendet werden und deren gemeinsames Verständnis aller beteiligten Stakeholder essentiell ist, sollten hier aufgeführt werden.
 Insbesondere Begriffe der zu implementierenden Domäne wurden bereits beschrieben, jedoch gibt es meist mehr Begriffe, die einer Beschreibung bedürfen. +
 Beispiel: Was bedeutet "Kunde"? Ein Nutzer des Systems? Der Kunde des Projektes (Auftraggeber)?
-
+===== 
 == Offene Punkte
 Offene Punkte werden entweder direkt in der Spezifikation notiert. Wenn das Pflichtenheft zum finalen Review vorgelegt wird, sollte es keine offenen Punkte mehr geben.
