@@ -8,13 +8,17 @@ SkillMatrix
 |Version | Status      | Bearbeitungsdatum   | Autoren(en) |  Vermerk
 |0.1     | In Arbeit   | 10.10.2017          | Autor       | Initiale Version
 |1.0 |In Arbeit | 23-24.10.2018 |Aron Gaden, Wilhelm Pertsch, Bruno Reinhold |Erste Bearbeitung
+|1.0.1|In Arbeit|24.10.2018|Aron Gaden|Links zu Diagrammen hinzugefügt
 |===
 
 == Inhaltsverzeichnis
 Dieses Dokument benötigt ein Inhaltsverzeichnis. Es existieren mehrere Einbindungsmöglichkeiten.
 
 == Zusammenfassung
-Eine kurze Beschreibung des Dokuments. Wenige Absätze.
+//Eine kurze Beschreibung des Dokuments. Wenige Absätze.
+In diesem Pflichtenheft wird beschrieben, wie die Auftragnehmer (Cornell Ziepel, Maximilian Schaller, Bruno Reinhold, Wilhelm Pertsch, Aron Gaden) planen, die Anwendung SkillMatrix umzusetzen. Die Idee folgt den Anforderungen des Auftraggebers (3m5. Media GmbH), die im Folgenden aufgeführt ist.
+
+
 
 == Aufgabenstellung und Zielsetzung
 
@@ -78,11 +82,16 @@ Dominik Pretzsch +
 == Systemgrenze und Top-Level-Architektur
 
 === Kontextdiagramm
+====
 Das Kontextdiagramm zeigt das geplante Software-System in seiner Umgebung. Zur Umgebung gehören alle Nutzergruppen des Systems und Nachbarsysteme. Die Grafik kann auch informell gehalten sein. Überlegen Sie sich dann geeignete Symbole. Die Grafik kann beispielsweise mit Visio erstellt werden. Wenn nötig, erläutern Sie diese Grafik.
+====
+
 
 === Top-Level-Architektur
+====
 Dokumentieren Sie ihre Top-Level-Architektur mit Hilfe eines Komponentendiagramm.
-
+====
+link:models/analysis/toplevelarchitecture.png[Top-Level-Architektur]
 == Anwendungsfälle
 
 === Akteure
@@ -100,12 +109,23 @@ Weitere relevante Spalten können bei Bedarf ergänzt werden.
 
 === Überblick Anwendungsfalldiagramm
 Anwendungsfall-Diagramm, das alle Anwendungsfälle und alle Akteure darstellt
+link:models/analysis/usecasediagram.png[Use-Case-Diagramm]
 
 === Anwendungsfallbeschreibungen
 Dieser Unterabschnitt beschreibt die Anwendungsfälle. In dieser Beschreibung müssen noch nicht alle Sonderfälle und Varianten berücksichtigt werden. Schwerpunkt ist es, die wichtigsten Anwendungsfälle des Systems zu finden. Wichtig sind solche Anwendungsfälle, die für den Auftraggeber, den Nutzer den größten Nutzen bringen.
 Für komplexere Anwendungsfälle ein UML-Sequenzdiagramm ergänzen.
 Einfache Anwendungsfälle mit einem Absatz beschreiben.
 Die typischen Anwendungsfälle (Anlegen, Ändern, Löschen) können zu einem einzigen zusammengefasst werden.
+
+Sequenzdiagramme zu Use-Cases: +
+link:models/analysis/sdLogin.png[Sequenzdiagramm: Login] +
+link:models/analysis/sdEditMatrix.png[Sequenzdiagramm: Eigene SkillMatrix bearbeiten ] +
+link:models/analysis/sdSearch.png[Sequenzdiagramm: Fähigkeiten suchen] +
+link:models/analysis/sdViewSkillMatrix.png[Sequenzdiagramm: SkillMatrix ansehen] +
+link:models/analysis/sdViewStatistics.png[Sequenzdiagramm: Statistik ansehen]
+
+
+
 
 == Funktionale Anforderungen
 
@@ -170,6 +190,7 @@ Für jeden Dialog:
 
 === Überblick: Klassendiagramm
 UML-Analyseklassendiagramm
+link:models/analysis/analysisdiagram.png[Analyseklassendiagramm]
 
 === Klassen und Enumerationen
 Dieser Abschnitt stellt eine Vereinigung von Glossar und der Beschreibung von Klassen/Enumerationen dar. Jede Klasse und Enumeration wird in Form eines Glossars textuell beschrieben. Zusätzlich werden eventuellen Konsistenz- und Formatierungsregeln aufgeführt.
