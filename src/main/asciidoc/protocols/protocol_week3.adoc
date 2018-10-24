@@ -18,6 +18,7 @@ Paul Hoffmann (product owner) +
 Aron Gaden (scrum master, scrum team) +
 Willy Pertsch (scrum team) +
 Maximilian Schaller (scrum team) +
+Cornell Ziepel (scrum team) +
 Bruno Reinhold (Schriftführer, scrum team) +
 
 == Bemerkungen

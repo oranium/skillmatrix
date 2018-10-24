@@ -19,6 +19,7 @@ Aron  +
 Willy  +
 Maximilian  +
 Bruno  +
+Cornell 
 
 == Bemerkungen
 Verwarnungen, besondere Vorfälle, Organisatorisches, wichtige getroffene Entscheidungen
