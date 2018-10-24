@@ -7,6 +7,7 @@ SkillMatrix
 |===
 |Version | Status      | Bearbeitungsdatum   | Autoren(en) |  Vermerk
 |0.1     | In Arbeit   | 10.10.2017          | Autor       | Initiale Version
+|1.0 |In Arbeit | 23-24.10.2018 |Aron Gaden, Wilhelm Pertsch, Bruno Reinhold |Erste Bearbeitung
 |===
 
 == Inhaltsverzeichnis
@@ -199,12 +200,15 @@ Mithilfe von Akzeptanztests wird geprüft, ob die Software die funktionalen Erwa
 Jeder Testfall soll mit einer ID versehen werde, um später zwischen den Dokumenten (z.B. im Test-Plan) referenzieren zu können.
 =====
 |===
-|ID|Use Case | Akzeptanztestfall
+|ID|Case | Akzeptanztestfall
 |1|Login | Benutzer wird gegen Active Directory authentifiziert und eingeloggt.
 |2|Eigene SkillMatrix bearbeiten | Mehrere Fähigkeiten können gleichzeitig verändert bzw. hinzugefügt werden. Die Änderungen werden in der Datenbank gespeichert.
 |3|Fähigkeiten suchen|Es kann nach mehreren Fähigkeiten gleichzeitig gesucht werden. Es werden Profile, die alle Kriterien erfüllen, in absteigender Reihenfolge aufgelistet. Profile, die nur einen Teil der Kriterien erfüllen, werden gesondert aufgelistet.
 |4|SkillMatrix ansehen|Skills des Mitarbeiters werden in tabellarischer Form aufgelistet.
 |5|Statistik ansehen|Statistik wird mit grafischem Diagramm angezeigt. Die Zeitspanne kann manuell festgelegt werden. 
+|6|Verbindung zum Server verloren| Fehlermeldung abgeben
+|7|Verbindung zu Database verloren | Fehlermeldung abgeben
+|8|Verbindungsfehler zum Intranet | Fehlermeldung abgeben
 |===
 
 == Glossar
