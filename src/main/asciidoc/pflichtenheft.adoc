@@ -117,6 +117,7 @@ Weitere relevante Spalten können bei Bedarf ergänzt werden.
 
 === Überblick Anwendungsfalldiagramm
 Anwendungsfall-Diagramm, das alle Anwendungsfälle und alle Akteure darstellt
+
 image::usecasediagram.jpg[Use-Case-Diagramm]
 
 === Anwendungsfallbeschreibungen
