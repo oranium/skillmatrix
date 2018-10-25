@@ -168,6 +168,16 @@ Anforderungen die das Programm leisten können soll, aber für den korrekten Bet
 ////
 Dokumentieren Sie in einer Tabelle die Qualitätsziele, welche das System erreichen soll, sowie deren Priorität.
 ////
+|===
+|**Ziele**|1|2|3|4|5
+|**Wartbarkeit**|||||
+|**Erweiterbarkeit**|||||
+|**Nutzbarkeit**|||||
+|**Skalierbarkeit**|||||
+|**Zuverlässigkeit**|||||
+|**Performance**|||||
+|**Sicherheit**|||||
+|===
 
 === Konkrete Nicht-Funktionale Anforderungen
 ////
@@ -215,21 +225,19 @@ Dieser Abschnitt stellt eine Vereinigung von Glossar und der Beschreibung von Kl
 // See http://asciidoctor.org/docs/user-manual/#tables
 [options="header"]
 |===
-|Klasse/Enumeration |Beschreibung
-|ActiveDirectoryProfile|Sorgt für Authentifizierung gegen ActiveDirectory.
-|Database|Abstraktion der Datenbank mit Nutzerdaten.
-|Session |Ordnet dem Nutzer eine Session ID zu.
-|SkillMatrixProfileManager | Verwaltet die momentanen SkillMatrix-Profile.
-|SkillMatrixProfile | Profil mit Daten eines Mitarbeiters.
-|Skill|Prototyp für eine Fähigkeit.
-|Category|Fähigkeit, die Unterkategorien haben kann, beispielsweise eine Programmiersprache.
-|Subcategory|Fähigkeit, die feingranularer ist als eine Kategorie, beispielsweise ein Framework.
-|Search|Organisiert eine Suchanfrage an die **Database**.
-|Comparator|Sortiert Suchergebnisse einer Anfrage.
-|Filter|Kriterium einer Suchanfrage. Eine **Suche** kann mehrere Filter besitzen.
-|GUI|Abstraktion des User Interface.
-
-
+|**Klasse/Enumeration** |Beschreibung
+|**ActiveDirectoryProfile**|Sorgt für Authentifizierung gegen ActiveDirectory.
+|**Database**|Abstraktion der Datenbank mit Nutzerdaten.
+|**Session**|Ordnet dem Nutzer eine Session ID zu.
+|**SkillMatrixProfileManager** | Verwaltet die momentanen SkillMatrix-Profile.
+|**SkillMatrixProfile**| Profil mit Daten eines Mitarbeiters.
+|**Skill**|Prototyp für eine Fähigkeit.
+|**Category**|Fähigkeit, die Unterkategorien haben kann, beispielsweise eine Programmiersprache.
+|**Subcategory**|Fähigkeit, die feingranularer ist als eine Kategorie, beispielsweise ein Framework.
+|**Search**|Organisiert eine Suchanfrage an die **Database**.
+|**Comparator**|Sortiert Suchergebnisse einer Anfrage.
+|**Filter**|Kriterium einer Suchanfrage. Eine **Suche** kann mehrere Filter besitzen.
+|**GUI**|Abstraktion des User Interface.
 |===
 
 == Akzeptanztestfälle
@@ -237,6 +245,9 @@ Dieser Abschnitt stellt eine Vereinigung von Glossar und der Beschreibung von Kl
 Mithilfe von Akzeptanztests wird geprüft, ob die Software die funktionalen Erwartungen und Anforderungen im Gebrauch erfüllt. Diese sollen und können aus den Anwendungsfallbeschreibungen und den UML-Sequenzdiagrammen abgeleitet werden. D.h., pro (komplexen) Anwendungsfall gibt es typischerweise mindestens ein Sequenzdiagramm (welches ein Szenarium beschreibt). Für jedes Szenarium sollte es einen Akzeptanztestfall geben. Listen Sie alle Akzeptanztestfälle in tabellarischer Form auf.
 Jeder Testfall soll mit einer ID versehen werde, um später zwischen den Dokumenten (z.B. im Test-Plan) referenzieren zu können.
 ////
+
+//// 
+keeping old table for reference
 |===
 |ID|Case | Akzeptanztestfall
 |1|Login | Benutzer wird gegen Active Directory authentifiziert und eingeloggt.
@@ -248,8 +259,69 @@ Jeder Testfall soll mit einer ID versehen werde, um später zwischen den Dokumen
 |7|Verbindung zu Database verloren | Fehlermeldung abgeben
 |8|Verbindungsfehler zum Intranet | Fehlermeldung abgeben
 |===
+////
+**Akzeptanztestfall ID1: Login**
+
+|===
+|**Bedingung**|Nutzer ist nicht eingeloggt und öffnet die SkillMatrix-Webanwendung.
+|**Ereignis**|Nutzer gibt persönliche Logindaten für Active Directory ein.
+|**Ergebnis**|Nutzer wird gegen Active Directory authentifiziert und eingeloggt. 
+|===
+
+**Akzeptanztestfall ID2: Eigenes SkillMatrix-Profil bearbeiten**
+|===
+|**Bedingung**|Nutzer ist eingeloggt und SkillMatrix-Webanwendung geöffnet.
+|**Ereignis**|Nutzer navigiert zum eigenen Profil, ändert die gewünschten Skills oder fügt neue hinzu.
+|**Ergebnis**|Die Änderungen am Profil werden in der Datenbank gespeichert und in der Webanwendung entsprechend angezeigt.
+|===
+
+**Akzeptanztestfall ID3: Fähigkeiten suchen**
+|===
+|**Bedingung**|Nutzer ist eingeloggt und SkillMatrix-Webanwendung geöffnet.
+|**Ereignis**|Nutzer gibt Suchanfrage in die Maske ein und sendet sie ab.
+|**Ergebnis**|Die Suchanfrage wird bearbeitet, der Anfrage entsprechende Ergebnisse werden der Datenbank entnommen und dem Nutzer nach Skill-Level geordnet angezeigt. Ergebnisse, die nur einen Teil der Suche erfüllen, werden gesondert angezeigt.
+|===
+
+**Akzeptanztestfall ID4: SkillMatrix ansehen**
+|===
+|**Bedingung**|Nutzer ist eingeloggt und SkillMatrix-Webanwendung geöffnet und eine Suche durchgeführt.
+|**Ereignis**|Der Nutzer wählt ein beliebiges Profil aus den Suchergebnissen aus und wählt es mit einem Klick aus.
+|**Ergebnis**|Die SkillMatrix des gewählten Profils wird angezeigt. 
+|===
+
+**Akzeptanztestfall ID5: Statistik ansehen**
+|===
+|**Bedingung**|Nutzer ist eingeloggt und SkillMatrix-Webanwendung geöffnet und eine Suche durchgeführt.
+|**Ereignis**|Der Nutzer wählt ein beliebiges Profil aus den Suchergebnissen aus und wählt es mit einem Klick aus. Auf dem Profil wählt er den Reiter "Statistik".
+|**Ergebnis**|Die Statistik, also ein zeitlicher Verlauf der Skill-Entwicklung des Mitarbeiters wird als Graph angezeigt. 
+|===
+
+**Akzeptanztestfall ID6: Verbindung zum Server verloren**
+|===
+|**Bedingung**|Nutzer befindet sich auf der SkillMatrix-Webanwendung.
+|**Ereignis**|Der Nutzer versucht, mit der Webanwendung zu interagieren.
+|**Ergebnis**|Eine Fehlermeldung wird ausgegeben, welche die Verbindung zum Server als Fehlerquelle identifiziert.
+|===
+
+**Akzeptanztestfall ID7: Verbindung zur Datenbank verloren**
+|===
+|**Bedingung**|Nutzer befindet sich auf der SkillMatrix-Webanwendung.
+|**Ereignis**|Der Nutzer versucht, mit der Webanwendung zu interagieren, sodass eine Datenbankanfrage benötigt wird.
+|**Ergebnis**|Eine Fehlermeldung wird ausgegeben, welche die Datenbank als Fehlerquelle identifiziert.
+|===
+
+**Akzeptanztestfall ID8: Verbindungsfehler im Intranet**
+|===
+|**Bedingung**|Nutzer befindet sich auf der SkillMatrix-Webanwendung oder versucht, auf sie zu navigieren.
+|**Ereignis**|Die Webanwendung wird nicht geöffnet bzw. geladen
+|**Ergebnis**|Es kann keine Verbindung zur Webanwendung aufgebaut werden.
+|===
 
 == Glossar
+
+|===
+|Begriff|Erklärung
+|===
 ////
 Sämtliche Begriffe, die innerhalb des Projektes verwendet werden und deren gemeinsames Verständnis aller beteiligten Stakeholder essentiell ist, sollten hier aufgeführt werden.
 Insbesondere Begriffe der zu implementierenden Domäne wurden bereits beschrieben, jedoch gibt es meist mehr Begriffe, die einer Beschreibung bedürfen. +
