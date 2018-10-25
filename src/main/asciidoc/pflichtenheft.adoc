@@ -2,6 +2,8 @@
 :project_name: Projektname
 SkillMatrix
 
+
+
 [options="header"]
 [cols="1, 1, 1, 1, 4"]
 |===
@@ -64,17 +66,17 @@ erworben. Welche Fähigkeiten wurden verbessert usw. Filterung der Statistik nac
 (Monat, Quartal, Jahr, Gesamter Zeitraum, usw.).
 
 == Produktnutzung
-=======
+////
 In welchem Kontext soll das System später genutzt werden? Welche Rahmenbedingungen gelten?
 Zusätzlich kurze Einleitung für fachfremde Personen
-=======
+////
 
 Die SkillMatrix soll genutzt werden, um die Fähigkeiten der Mitarbeiter zentral zu speichern und abzurufen. Des Weiteren sollen Fähigkeitsentwicklungen ersichtlich sein. Jeder Mitarbeiter hat die Möglichkeit, seine Fertigkeiten zu verwalten und nach anderen Mitarbeitern mit spezifischen Fähigkeiten zu suchen. So soll es den Prozess der Teambildung bei Projekten zu erleichtern.
 
 == Interessensgruppen (Stakeholders)
-=======
+////
 Welche realen und juristischen Personen(-gruppen) haben Einfluss auf die Anforderungen im Projekt?
-=======
+////
 3m5. Media GmbH +
 Alexander Lehn +
 Dominik Pretzsch +
@@ -82,23 +84,26 @@ Dominik Pretzsch +
 == Systemgrenze und Top-Level-Architektur
 
 === Kontextdiagramm
-====
+////
 Das Kontextdiagramm zeigt das geplante Software-System in seiner Umgebung. Zur Umgebung gehören alle Nutzergruppen des Systems und Nachbarsysteme. Die Grafik kann auch informell gehalten sein. Überlegen Sie sich dann geeignete Symbole. Die Grafik kann beispielsweise mit Visio erstellt werden. Wenn nötig, erläutern Sie diese Grafik.
-====
+////
 
 
 === Top-Level-Architektur
-====
+////
 Dokumentieren Sie ihre Top-Level-Architektur mit Hilfe eines Komponentendiagramm.
-====
+////
+
+
 link:models/analysis/toplevelarchitecture.png[Top-Level-Architektur]
+
 == Anwendungsfälle
 
 === Akteure
-=====
+////
 Akteure sind die Benutzer des Software-Systems oder Nachbarsysteme, welche darauf zugreifen. Dokumentieren Sie die Akteure in einer Tabelle. Diese Tabelle gibt einen Überblick über die Akteure und beschreibt sie kurz. Die Tabelle hat also mindestens zwei Spalten (Akteur Name und Kommentar).
 Weitere relevante Spalten können bei Bedarf ergänzt werden.
-=====
+////
 // See http://asciidoctor.org/docs/user-manual/#tables
 [options="header"]
 [cols="1,4"]
@@ -130,9 +135,9 @@ link:models/analysis/sdViewStatistics.png[Sequenzdiagramm: Statistik ansehen]
 == Funktionale Anforderungen
 
 === Muss-Kriterien
-=====
+////
 Was das zu erstellende Programm auf alle Fälle leisten muss.
-=====
+////
 * Authentifizierung der Mitarbeiter über Active Directory
 * Hinzufügen und Bearbeiten eigener Skills auf Skala von 1-5 (auch mehrer gleichzeitig)
 * Entwicklungsstatistik mit einstellbarem Zeitraum
@@ -143,58 +148,62 @@ Was das zu erstellende Programm auf alle Fälle leisten muss.
 
 
 === Kann-Kriterien
-=====
+////
 Anforderungen die das Programm leisten können soll, aber für den korrekten Betrieb entbehrlich sind.
-=====
+////
 * Hierarchische Unterteilung der Profile (Admin, Senior Developer, etc.) => Anlegen neuer Skills an Berechtigung binden
 * Regelmäßige Benachrichtigungen bei längerer Nichtbenutzung
 
 == Nicht-Funktionale Anforderungen
 
 === Qualitätsziele
-=====
+////
 Dokumentieren Sie in einer Tabelle die Qualitätsziele, welche das System erreichen soll, sowie deren Priorität.
-=====
+////
 
 === Konkrete Nicht-Funktionale Anforderungen
-====
+////
 Beschreiben Sie Nicht-Funktionale Anforderungen, welche dazu dienen, die zuvor definierten Qualitätsziele zu erreichen.
 Achten Sie darauf, dass deren Erfüllung (mindestens theoretisch) messbar sein muss.
-====
+////
 * "Wenig Interaktion" => Anzahl der Operationen zur Benutzung gering halten
 * User Interface verwendet Material Design
 * Leichte Nutzbarkeit (z. B. kein horizontales Scrollen)
 
 == GUI Prototyp
-=====
+////
 In diesem Kapitel soll ein Entwurf der Navigationsmöglichkeiten und Dialoge des Systems erstellt werden.
 Idealerweise entsteht auch ein grafischer Prototyp, welcher dem Kunden zeigt, wie sein System visuell umgesetzt werden soll.
 Konkrete Absprachen - beispielsweise ob der grafische Prototyp oder die Dialoglandkarte höhere Priorität hat - sind mit dem Kunden zu treffen.
-=====
+////
 
 === Überblick: Dialoglandkarte
-=====
+////
 Erstellen Sie ein Übersichtsdiagramm, das das Zusammenspiel Ihrer Masken zur Laufzeit darstellt. Also mit welchen Aktionen zwischen den Masken navigiert wird.
-=====
+////
 //Die nachfolgende Abbildung zeigt eine an die Pinnwand gezeichnete Dialoglandkarte. Ihre Karte sollte zusätzlich die Buttons/Funktionen darstellen, mit deren Hilfe Sie zwischen den Masken navigieren.
 
 === Dialogbeschreibung
+////
 Für jeden Dialog:
 
 1. Kurze textuelle Dialogbeschreibung eingefügt: Was soll der jeweilige Dialog? Was kann man damit tun? Überblick?
 2. Maskenentwürfe (Screenshot, Mockup)
 3. Maskenelemente (Ein/Ausgabefelder, Aktionen wie Buttons, Listen, …)
 4. Evtl. Maskendetails, spezielle Widgets
-
+////
 == Datenmodell
 
 === Überblick: Klassendiagramm
 UML-Analyseklassendiagramm
-link:models/analysis/analysisdiagram.png[Analyseklassendiagramm]
+
+image::analysisdiagram.png[Analyseklassendiagramm]
+
 
 === Klassen und Enumerationen
+////
 Dieser Abschnitt stellt eine Vereinigung von Glossar und der Beschreibung von Klassen/Enumerationen dar. Jede Klasse und Enumeration wird in Form eines Glossars textuell beschrieben. Zusätzlich werden eventuellen Konsistenz- und Formatierungsregeln aufgeführt.
-
+////
 // See http://asciidoctor.org/docs/user-manual/#tables
 [options="header"]
 |===
@@ -216,10 +225,10 @@ Dieser Abschnitt stellt eine Vereinigung von Glossar und der Beschreibung von Kl
 |===
 
 == Akzeptanztestfälle
-=====
+////
 Mithilfe von Akzeptanztests wird geprüft, ob die Software die funktionalen Erwartungen und Anforderungen im Gebrauch erfüllt. Diese sollen und können aus den Anwendungsfallbeschreibungen und den UML-Sequenzdiagrammen abgeleitet werden. D.h., pro (komplexen) Anwendungsfall gibt es typischerweise mindestens ein Sequenzdiagramm (welches ein Szenarium beschreibt). Für jedes Szenarium sollte es einen Akzeptanztestfall geben. Listen Sie alle Akzeptanztestfälle in tabellarischer Form auf.
 Jeder Testfall soll mit einer ID versehen werde, um später zwischen den Dokumenten (z.B. im Test-Plan) referenzieren zu können.
-=====
+////
 |===
 |ID|Case | Akzeptanztestfall
 |1|Login | Benutzer wird gegen Active Directory authentifiziert und eingeloggt.
@@ -233,10 +242,12 @@ Jeder Testfall soll mit einer ID versehen werde, um später zwischen den Dokumen
 |===
 
 == Glossar
-=====
+////
 Sämtliche Begriffe, die innerhalb des Projektes verwendet werden und deren gemeinsames Verständnis aller beteiligten Stakeholder essentiell ist, sollten hier aufgeführt werden.
 Insbesondere Begriffe der zu implementierenden Domäne wurden bereits beschrieben, jedoch gibt es meist mehr Begriffe, die einer Beschreibung bedürfen. +
 Beispiel: Was bedeutet "Kunde"? Ein Nutzer des Systems? Der Kunde des Projektes (Auftraggeber)?
-===== 
+//// 
 == Offene Punkte
+////
 Offene Punkte werden entweder direkt in der Spezifikation notiert. Wenn das Pflichtenheft zum finalen Review vorgelegt wird, sollte es keine offenen Punkte mehr geben.
+////
