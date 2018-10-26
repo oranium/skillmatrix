@@ -121,18 +121,30 @@ Anwendungsfall-Diagramm, das alle Anwendungsfälle und alle Akteure darstellt
 image::usecasediagram.jpg[Use-Case-Diagramm]
 
 === Anwendungsfallbeschreibungen
+////
 Dieser Unterabschnitt beschreibt die Anwendungsfälle. In dieser Beschreibung müssen noch nicht alle Sonderfälle und Varianten berücksichtigt werden. Schwerpunkt ist es, die wichtigsten Anwendungsfälle des Systems zu finden. Wichtig sind solche Anwendungsfälle, die für den Auftraggeber, den Nutzer den größten Nutzen bringen.
 Für komplexere Anwendungsfälle ein UML-Sequenzdiagramm ergänzen.
 Einfache Anwendungsfälle mit einem Absatz beschreiben.
 Die typischen Anwendungsfälle (Anlegen, Ändern, Löschen) können zu einem einzigen zusammengefasst werden.
+////
 
 Sequenzdiagramme zu Use-Cases: +
 
+In den Sequenzdiagrammen wird der Einstieg in das Szenario direkt vom Nutzer mit einem Aufruf an die erste agierende Klasse durchgeführt. In der realen Anwendung würde der Nutzer allerdings stattdessen mit der GUI interagieren.
+
+Im Szenario "Login" wird davon ausgegangen, dass der Nutzer auf die Webanwendung navigiert hat und sich bereits auf der Startseite befindet. Der Befehl _verify()_ wird aufgerufen, wenn der Nutzer seine Logindaten eingegeben und abgesendet hat.
+
 image::sdLogin.jpg[Sequenzdiagramm: Login] 
+
+In den folgenden Sequenzdiagrammen wird davon ausgegangen, dass der Nutzer sich bereits eingeloggt hat.
 
 image::sdEditMatrix.jpg[Sequenzdiagramm: Eigene SkillMatrix bearbeiten ] 
 
+Im Szenario "Search skills" wird dargestellt, wie das System mit Suchanfragen umgeht. Insbesondere legt **SkillMatrixProfileManager** neue Objekte der Klasse **SkillMatrixProfile** via _createProfile()_ an, wenn diese nicht bereits vorhanden sind.
+
 image::sdSearch.jpg[Sequenzdiagramm: Fähigkeiten suchen] 
+
+In den folgenden beiden Sequenzdiagrammen befindet sich der Nutzer entweder auf der Ergebnisliste einer Suchanfrage oder auf der Startseite nach Login. _getProfile()_ wird ausgelöst, indem der Nutzer auf den Link einem Profil klickt. Die Profile werden nicht neu via **SkillMatrixProfileManager** kreiert, da diese Funktion entweder aus der vorherigen Suchanfrage oder aus dem Login hervorgeht.
 
 image::sdViewSkillMatrix.jpg[Sequenzdiagramm: SkillMatrix ansehen] 
 
@@ -152,7 +164,7 @@ Was das zu erstellende Programm auf alle Fälle leisten muss.
 * Speicherung von Profilen in MySQL-Datenbank
 * Unscharfe Suche von Mitarbeitern nach Kriterien (Programmiersprachen, Frameworks, etc.)
 * Trennung von Mitarbeitern mit allen gesuchten und Fähigkeiten von Mitarbeitern mit einem Teil dieser
-* Guidelines für Bewertungsniveau ermöglichen
+* Hinzufügen von Guidelines für Bewertungsniveau ermöglichen
 
 
 === Kann-Kriterien
@@ -321,6 +333,10 @@ keeping old table for reference
 
 |===
 |Begriff|Erklärung
+|**SkillMatrix**|Webanwendung als Ganzes oder tabellarische Auflistung der Skills eines Mitarbeiters.
+|**Skill**|Kategorie für Fähigkeiten, beispielsweise Programmiersprachen oder Designtechnologien. Kann von 1 bis 5 bewertet werden.
+|**Mitarbeiter**|Mitarbeiter bei 3m5. .
+
 |===
 ////
 Sämtliche Begriffe, die innerhalb des Projektes verwendet werden und deren gemeinsames Verständnis aller beteiligten Stakeholder essentiell ist, sollten hier aufgeführt werden.
@@ -333,3 +349,4 @@ Offene Punkte werden entweder direkt in der Spezifikation notiert. Wenn das Pfli
 ////
 * Qualitätsziele in Absprache mit Kunden ausfüllen
 * Dialoglandkarte, Dialogbeschreibung
+* Glossar ergänzen
