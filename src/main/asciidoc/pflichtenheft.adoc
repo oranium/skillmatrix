@@ -335,9 +335,9 @@ Die Skill-Kategorie zeigen auch wie viele verschiedene Unter-Skills der Mitarbei
 
 
 ==== Profil-Statistik-Seite
-Zeigt die historische Grafiken der Fähigkeitsentwicklung eines Mitarbeites
+Zeigt die historische Grafiken der Fähigkeitsentwicklung eines Mitarbeiters.
 
-image::page_5.png[Login-Seite]
+image::Page_5.png[Login-Seite]
 
 [options="header"]
 [cols="1,3"]
@@ -352,7 +352,7 @@ image::page_5.png[Login-Seite]
 |===
 
 ==== Profil-Statistik-Graph-Seite
-Zeigt die historische Grafiken einer Fähigkeit eines Mitarbeites
+Zeigt die historische Grafiken einer Fähigkeit eines Mitarbeiters.
 
 image::page_5_skillFullscreen.png[Login-Seite]
 
