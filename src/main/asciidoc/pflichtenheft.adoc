@@ -221,7 +221,54 @@ image::Dialoglandkarte.jpg[Dialoglandkarte]
 === Dialogbeschreibung
 ==== Login-Seite
 Durch das Eingeben seiner 3m5-E-Mailadresse und des zugehörigen Passwortes ist es möglich sich auf der Skillmatrix einzuloggen.
- 
+
+image::page_1.png[Login-Seite]
+
+[options="header"]
+[cols="1,3"]
+|===
+|Maskenelemente |Beschreibung
+|Email-Textfeld  |Textfeld zur Eingabe einer 3m5-E-Mailadresse.
+|Passwort-Textfeld  |Textfeld zur Eingabe des zugehörigen Passworts.
+|Login-Button |Bestätigt die Eingaben.
+|===
+
+Das Passwort wird ausgeblendet, lässt sich aber durch das "Auge" anzeigen.
+
+==== Suche-Seite
+Es ist möglich Mitarbeiter, Fertigkeiten oder Fertigkeitsverknüpfungen zu suchen und auf die Profil-Seite gefundener Mitarbeiter zu wechseln.
+
+image::page_2.png[Login-Seite]
+
+[options="header"]
+[cols="1,3"]
+|===
+|Maskenelemente |Beschreibung
+|Suchleiste-Textfeld  |Textfeld zur Eingabe gesuchter Mitarbeiter oder Fähigkeiten.
+|Gelistete Mitarbeiter-Anzeige|Zeigt geordnete Mitarbeiter welche durch die Suche gefunden wurden und deren Qualifizierung für die gesuchte Fähigkeit.
+|+-Button |Zeigt nähere Angaben zur Fähigkeit des Mitarbeites durch eine Grafik.
+|View Profile-Button |Ermöglicht es auf die Profil-Seite eines Mitarbeites zu wechseln.
+|===
+
+==== Profil-Skill-Seite
+Zeigt verschiedene Skills eines Mitarbeiters.
+
+image::page_3.png[Login-Seite]
+
+[options="header"]
+[cols="1,3"]
+|===
+|Maskenelemente |Beschreibung
+|Statistics-Button |Ermöglicht den Wechsel zur Profil-Statistik-Seite eines Mitarbeiters.
+|Skill-Überkategorien-Anzeige  | Zeigt die verschiedenen Bereiche in welchen der Mitarbeiter Fähigkeiten besitzt.
+|Pfeil-Button |Klappt eine Liste von Skills aus, welche der Mitarbeiter in der zugehörigen Überkategorie besitzt.
+|Skill-Anzeige  |Zeigt Skills und deren Spezifikationen sowie Level des SKills.
+|Neuen Skill Erstellen-Button|Ermöglicht es einen neuen Skill hinzuzufügen, falls es sich um das eigene Profil handelt.
+|===
+
+Die Skill-Überkategorien zeigen auch wie viele verschiedene Fähigkeiten der Mitarbeiter in dieser Kategorie besitzt.
+
+Falls es sich um das eigene Profil handelt ist es möglich das Level einen Skills zu verändern.
 ////
 Für jeden Dialog:
 
