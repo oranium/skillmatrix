@@ -15,7 +15,7 @@ SkillMatrix
 |1.0 |In Arbeit | 23-24.10.2018 |Aron Gaden, Wilhelm Pertsch, Bruno Reinhold |Erste Bearbeitung
 |1.0.1|In Arbeit|24.10.2018|Aron Gaden|Links zu Diagrammen hinzugefügt
 |1.0.2|In Arbeit|28.10.2018|Aron Gaden,Wilhelm Pertsch, Bruno Reinhold, Cornell Ziepel|Bearbeitung von Diagrammen und einzelnen Elementen
-|2|Fertig|28.10.2018|Aron Gaden,Wilhelm Pertsch, Cornell Ziepel|Beseitigen letzter Fehler
+|2|Fertig|28.10.2018|Aron Gaden,Wilhelm Pertsch, Cornell Ziepel|Beseitigung letzter Fehler
 |===
 
 toc::[]
@@ -275,8 +275,7 @@ image::page_4.png[Login-Seite]
 |Logout-Button|Der Mitarbeiter wird ausgeloggt und kommt zurück auf die Login-Seite.
 |===
 
-Die Skill-Überkategorien zeigen auch, wie viele verschiedene Fähigkeiten der Mitarbeiter in dieser Kategorie besitzt.
-Die Skill-Kategorie zeigen auch wie viele verschiedene Unter-Skills der Mitarbeiter zu dieser Skill-Kategorie besitzt.
+Die Skill-Überkategorien zeigen auch, wie viele verschiedene Fähigkeiten und Unter-Skills der Mitarbeiter in dieser Kategorie besitzt.
 Die Skill-Level und Skill-Unterkategorie-Level lassen sich sich durch Klicken auf den entsprechenden Punkt bearbeiten. 
 
 ==== Add-Milestone-Seite
@@ -351,10 +350,10 @@ image::Page_5.png[Login-Seite]
 |Maskenelemente |Beschreibung
 |Suchleiste-Textfeld  |Textfeld zur Eingabe von gesuchten Skills des Mitarbeiters.
 |Lupen-Button  |Bestätigt die Eingabe in der Suchleiste und sucht danach.
-|Kategorien-Anzeige |Zeigt Kategoriene wie z.B. durch Suche gefundene Fähigkeiten oder allgemeine Fähigkeiten.
+|Kategorien-Anzeige |Zeigt Kategorien, wie z.B. durch Suche gefundene Fähigkeiten oder weitere Fähigkeiten.
 |Pfeil-Button |Ermöglicht das Ein/Ausklappen von Kategorien.
 |Fähigkeits-Anzeige |Zeigt Profil-Statistik-Graph-Seite.
-|Vollbild-Button |Ermöglicht eine genauere Ansicht einer Fähigkeit.
+|Vollbild-Button |Ermöglicht eine genauere Ansicht der zeitlichen Entwicklung einer Fähigkeit.
 |Logout-Button|Der Mitarbeiter wird ausgeloggt und kommt zurück auf die Login-Seite.
 |===
 
@@ -368,9 +367,9 @@ image::page_5_skillFullscreen.png[Login-Seite]
 |===
 |Maskenelemente |Beschreibung
 |Skill-Graph-Anzeige  |Zeigt die zeitliche Entwicklung einer Fähigkeit mit den zugehörigen Meilensteinen.
-|Range-Felder |Ermöglicht zeitliche Eingrenzung der Skill-Graph-Anzeige.
+|Range-Felder |Ermöglicht die Auswahl des im Graphen angezeigten Zeitraums.
 |Meilenstein-Anzeigefelder |Zeigt Meilensteine in der Fähigkeitsentwicklung mit Zeit und Spezifikationen.
-|X-Button  |Ermöglicht das Abbrechen der Profil-Statistik-Graph-Seite, man kommt wieder auf die Profil-Statistik-Seite.
+|X-Button  |Schließt das Fenster zur genauen Betrachtung der Entwicklung eines Skills und zeigt wieder die Profil-Statistik-Seite an.
 |===
 
 ////
