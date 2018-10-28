@@ -274,6 +274,44 @@ Die Skill-Überkategorien zeigen auch wie viele verschiedene Fähigkeiten der Mi
 Die Skill-Kategorie zeigen auch wie viele verschiedene Unter-Skills der Mitarbeiter zu dieser SKill-Kategorie besitzt.
 Die Skill-Level und Skill-Unterkategorie-Level lassen sich sich durch Klick bearbeiten. 
 
+==== Add-Milestone-Seite
+Ermöglicht das Hinzufügen eines Meilensteins für eine Fähigkeit, also dem Punkt der Entwicklung einer Fähigkeit.
+
+image::page_4_addMilestone.png[Login-Seite]
+
+[options="header"]
+[cols="1,3"]
+|===
+|Maskenelemente |Beschreibung
+|For-Textfeld |Beschreibt für welche Fähigkeit der Meilenstein hinzugefügt werden soll.
+|Datums-Feld  |Ermöglicht das zeitliche Festlegen, wann der Meilenstein erreicht wurde.
+|Meilenstein-Anzeige |Zeigt ältere Meilensteine zu dem spezifischen Skill an.
+|ADD MILESTONE-Button|Legt den Meilenstein mit den oben bestimmten Daten an. Nach anlegen des Meilensteins kommt man zurück auf die Eigene-Profil-Skill-Seite.
+|X-Button  |Ermöglicht das Abbrechen des Meilenstein-Hinzufügen-Prozesses, man kommt wieder auf die Eigene-Profil-Skill-Seite.
+|Pfeil-Button | Ermöglicht es Skills aus einer Liste auszuwählen.
+|===
+
+
+
+
+==== Login-Seite
+Ermöglicht das Hinzufügen eines Skills zu seinem eigenen Skill Repertoire.
+
+image::page_4_addSkill.png[Login-Seite]
+
+[options="header"]
+[cols="1,3"]
+|===
+|Maskenelemente |Beschreibung
+|Such-Textfeld  |Textfeld zur Eingabe von des Skills, welcher hinzugefügt werden soll.
+|Dropdown-Buttonleiste  |Leiste mit Fähigkeiten, welche von der Suche als schon bestehende Skills gefunden wurde. Durch Auswählen einer solchen Fähigkeit, wird bestimmt welche Fähigkeit hinzugefügt werden soll.
+|Level-Buttonleiste |Bestimmt das wie gut die neue Fähigkeit beherrscht wird.
+|ADD SKILL-Button|Legt die Fähigkeit mit den oben bestimmten Daten an. Nach anlegen der Fähigkeit kommt man zurück auf die Eigene-Profil-Skill-Seite.
+|X-Button  |Ermöglicht das Abbrechen des Fähigkeit-Hinzufügen-Prozesses, man kommt wieder auf die Eigene-Profil-Skill-Seite.
+|===
+
+
+
 ==== Profil-Skill-Seite
 Zeigt verschiedene Skills eines Mitarbeiters.
 
