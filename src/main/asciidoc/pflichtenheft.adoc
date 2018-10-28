@@ -351,7 +351,7 @@ image::page_5.png[Login-Seite]
 |Vollbild-Button |Ermöglicht eine genauere Ansicht einer Fähigkeit.
 |===
 
-==== Profil-Statistik-Seite
+==== Profil-Statistik-Graph-Seite
 Zeigt die historische Grafiken einer Fähigkeit eines Mitarbeites
 
 image::page_5_skillFullscreen.png[Login-Seite]
@@ -363,6 +363,7 @@ image::page_5_skillFullscreen.png[Login-Seite]
 |Skill-Graph-Anzeige  |Zeigt die zeitliche Entwicklung einer Fähigkeit mit den zugehörigen Meilensteinen.
 |Range-Felder |Ermöglicht zeitliche Eingrenzung der SKill-Graph-Anzeige.
 |Meilenstein-Anzeigefelder |Zeigt Meilensteine in der Fähigkeitsentwicklung mit Zeit und Spezifikationen.
+|X-Button  |Ermöglicht das Abbrechen der Profil-Statistik-Graph-Seite, man kommt wieder auf die Profil-Statistik-Seite.
 |===
 
 ////
