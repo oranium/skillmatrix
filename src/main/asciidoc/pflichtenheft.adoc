@@ -1,8 +1,10 @@
 = Pflichtenheft
 :project_name: Projektname
 SkillMatrix
-
 :imagesdir: ./models/analysis
+:toc:
+:toc-placement: macro
+
 
 
 [options="header"]
@@ -14,8 +16,7 @@ SkillMatrix
 |1.0.1|In Arbeit|24.10.2018|Aron Gaden|Links zu Diagrammen hinzugefügt
 |===
 
-== Inhaltsverzeichnis
-Dieses Dokument benötigt ein Inhaltsverzeichnis. Es existieren mehrere Einbindungsmöglichkeiten.
+toc::[]
 
 == Zusammenfassung
 //Eine kurze Beschreibung des Dokuments. Wenige Absätze.
@@ -39,15 +40,15 @@ UI soll Google's Material Design verwendet werden. Die Daten werden serverseitig
 Datenbank abgelegt. Die Authentifizierung der Benutzer erfolgt gegen ein Active Directory.
 Die Anwendung soll folgende Funktionalitäten bieten:
 
-==== 1.) Anmeldung / Login:
+**1.) Anmeldung / Login:**
 Die Benutzer können sich an der Anwendung anmelden. Je nach Benutzergruppe werden
 unterschiedliche Funktionen dargestellt.
 
-==== 2.) Fähigkeiten bewerten:
+**2.) Fähigkeiten bewerten:**
 In einem einfachen Fragebogen kann jeder Mitarbeiter bewerten wie gut er eine bestimmte
 Technologie beherrscht (1 = sehr gut / 5 = gar nicht).
 
-==== 3.) Fähigkeiten suchen:
+**3.) Fähigkeiten suchen:**
 Über eine Suchmaske kann nach einer oder mehreren Fähigkeiten gesucht werden. Die
 Anwendung liefert eine Liste von Mitarbeitern, welche diese Fähigkeiten besitzen (absteigend
 nach Beherrschungsgrad).
@@ -55,13 +56,13 @@ Wird nach mehreren Fähigkeiten gesucht, muss der Mitarbeiter auch alle diese F�
 besitzen.
 Zusätzlich werden auch Mitarbeiter gefunden die nur Teile der Fähigkeiten besitzen.
 
-==== 4.) Fähigkeiten bearbeiten:
+**4.) Fähigkeiten bearbeiten:**
 Es soll möglich sein, die bestehenden Fähigkeiten anzupassen. Dafür gibt es Fähigkeiten die für
 eine bestimmte Gruppe von Mitarbeitern zutreffen (z.B. Programmierer = (Java, C++, C#,
 HTML, usw. / Designer = (Photoshop, InDesign, Responsive Webdesign, …).
 Anmerkung: Die Mitarbeitergruppen existieren bereits in der Mitarbeitertabelle.
 
-==== 5.) Mitarbeiter Entwicklung
+**5.) Mitarbeiter Entwicklung**
 Statistische Auswertung der Entwicklung der Mitarbeiter. Welche Fähigkeiten wurden
 erworben. Welche Fähigkeiten wurden verbessert usw. Filterung der Statistik nach Zeitraum
 (Monat, Quartal, Jahr, Gesamter Zeitraum, usw.).
@@ -180,15 +181,17 @@ Anforderungen die das Programm leisten können soll, aber für den korrekten Bet
 ////
 Dokumentieren Sie in einer Tabelle die Qualitätsziele, welche das System erreichen soll, sowie deren Priorität.
 ////
+
+Die Priosierung der Qualitätsziele ist vorläufig und es muss noch Rücksprache mit dem Kunden gehalten werden.   
 |===
 |**Ziele**|1|2|3|4|5
-|**Wartbarkeit**|||||
-|**Erweiterbarkeit**|||||
-|**Nutzbarkeit**|||||
-|**Skalierbarkeit**|||||
-|**Zuverlässigkeit**|||||
-|**Performance**|||||
-|**Sicherheit**|||||
+|**Wartbarkeit**|||X||
+|**Erweiterbarkeit**||||X|
+|**Nutzbarkeit**|||||X
+|**Skalierbarkeit**||X|||
+|**Zuverlässigkeit**||||X|
+|**Performance**|||X||
+|**Sicherheit**|X||||
 |===
 
 === Konkrete Nicht-Funktionale Anforderungen
@@ -336,7 +339,8 @@ keeping old table for reference
 |**SkillMatrix**|Webanwendung als Ganzes oder tabellarische Auflistung der Skills eines Mitarbeiters.
 |**Skill**|Kategorie für Fähigkeiten, beispielsweise Programmiersprachen oder Designtechnologien. Kann von 1 bis 5 bewertet werden.
 |**Mitarbeiter**|Mitarbeiter bei 3m5. .
-
+|**Material Design**|Von Google entwickelte Designsprache.
+|**Active Directory**|Verzeichnisdienst von Microsoft Windows Server.
 |===
 ////
 Sämtliche Begriffe, die innerhalb des Projektes verwendet werden und deren gemeinsames Verständnis aller beteiligten Stakeholder essentiell ist, sollten hier aufgeführt werden.
@@ -347,6 +351,6 @@ Beispiel: Was bedeutet "Kunde"? Ein Nutzer des Systems? Der Kunde des Projektes 
 ////
 Offene Punkte werden entweder direkt in der Spezifikation notiert. Wenn das Pflichtenheft zum finalen Review vorgelegt wird, sollte es keine offenen Punkte mehr geben.
 ////
-* Qualitätsziele in Absprache mit Kunden ausfüllen
+* Qualitätsziele mit Kunden absprechen, ggf. überarbeiten
 * Dialoglandkarte, Dialogbeschreibung
 * Glossar ergänzen
