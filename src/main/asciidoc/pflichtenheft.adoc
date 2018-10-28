@@ -245,8 +245,9 @@ image::page_2.png[Login-Seite]
 |===
 |Maskenelemente |Beschreibung
 |Suchleiste-Textfeld  |Textfeld zur Eingabe gesuchter Mitarbeiter oder Fähigkeiten.
+|+-Button bei Suche |Spezifiziert die Suche durch Hinzufügen eines weiteren Suchelements.
 |Gelistete Mitarbeiter-Anzeige|Zeigt geordnete Mitarbeiter welche durch die Suche gefunden wurden und deren Qualifizierung für die gesuchte Fähigkeit.
-|+-Button |Zeigt nähere Angaben zur Fähigkeit des Mitarbeites durch eine Grafik.
+|+-Button bei Mitarbeitern |Zeigt nähere Angaben zur Fähigkeit des Mitarbeites durch eine Grafik.
 |View Profile-Button |Ermöglicht es auf die Profil-Seite eines Mitarbeites zu wechseln.
 |Logout-Button|Der Mitarbeiter wird ausgeloggt und kommt zurück auf die Login-Seite.
 |===
