@@ -216,6 +216,8 @@ Erstellen Sie ein Übersichtsdiagramm, das das Zusammenspiel Ihrer Masken zur La
 ////
 //Die nachfolgende Abbildung zeigt eine an die Pinnwand gezeichnete Dialoglandkarte. Ihre Karte sollte zusätzlich die Buttons/Funktionen darstellen, mit deren Hilfe Sie zwischen den Masken navigieren.
 
+image::Dialoglandkarte.jpg[Dialoglandkarte]
+
 === Dialogbeschreibung
 ////
 Für jeden Dialog:
@@ -232,6 +234,8 @@ UML-Analyseklassendiagramm
 
 image::analysisdiagram.jpg[Analyseklassendiagramm]
 
+
+image::guianalysis.jpg[GUI-Analyseklassendiagramm]
 
 === Klassen und Enumerationen
 ////
@@ -253,6 +257,13 @@ Dieser Abschnitt stellt eine Vereinigung von Glossar und der Beschreibung von Kl
 |**Comparator**|Sortiert Suchergebnisse einer Anfrage.
 |**Filter**|Kriterium einer Suchanfrage. Eine **Suche** kann mehrere Filter besitzen.
 |**GUI**|Abstraktion des User Interface.
+|**Login_View**|Zeigt die Login-Seite.
+|**Suche_View**|Zeigt die Suche-Seite.
+|**Render_Graph**|Zeigt Graph.
+|**Profil_View**|Zeigt die Profil-Seite.
+|**Skills_View**|Zeigt die Skills-Seite.
+|**Statistik_View**|Zeigt die Statistik-Seite.
+
 |===
 
 == Akzeptanztestfälle
