@@ -248,6 +248,7 @@ image::page_2.png[Login-Seite]
 |Gelistete Mitarbeiter-Anzeige|Zeigt geordnete Mitarbeiter welche durch die Suche gefunden wurden und deren Qualifizierung für die gesuchte Fähigkeit.
 |+-Button |Zeigt nähere Angaben zur Fähigkeit des Mitarbeites durch eine Grafik.
 |View Profile-Button |Ermöglicht es auf die Profil-Seite eines Mitarbeites zu wechseln.
+|Logout-Button|Der Mitarbeiter wird ausgeloggt und kommt zurück auf die Login-Seite.
 |===
 
 
@@ -268,6 +269,7 @@ image::page_4.png[Login-Seite]
 |Unter-Skill-Anzeige  |Zeigt Unter-Skills und deren Spezifikationen sowie Level des Unter-SKills.
 |ADD NEW SKILL-Button|Ermöglicht es einen neuen Skill hinzuzufügen.
 |ADD NEW SKILL-Button|Ermöglicht es einen neuen Skill hinzuzufügen.
+|Logout-Button|Der Mitarbeiter wird ausgeloggt und kommt zurück auf die Login-Seite.
 |===
 
 Die Skill-Überkategorien zeigen auch wie viele verschiedene Fähigkeiten der Mitarbeiter in dieser Kategorie besitzt.
@@ -327,6 +329,7 @@ image::page_3.png[Login-Seite]
 |Skill-Anzeige  |Zeigt Skills und deren Spezifikationen sowie Level des SKills.
 |Pfeil-Unterkategorie-Button |Klappt eine Liste von Unter-Skills aus, welche der Mitarbeiter in dem zugehörigen Skill besitzt.
 |Unter-Skill-Anzeige  |Zeigt Unter-Skills und deren Spezifikationen sowie Level des Unter-SKills.
+|Logout-Button|Der Mitarbeiter wird ausgeloggt und kommt zurück auf die Login-Seite.
 |===
 
 Die Skill-Überkategorien zeigen auch wie viele verschiedene Fähigkeiten der Mitarbeiter in dieser Kategorie besitzt.
@@ -347,8 +350,9 @@ image::Page_5.png[Login-Seite]
 |Lupen-Button  |Bestätigt die Eingabe in der Suchleiste und sucht danach.
 |Kategorien-Anzeige |Zeigt Kategoriene wie z.B. durch Suche gefundene Fähigkeiten oder allgemeine Fähigkeiten.
 |Pfeil-Button |Ermöglicht das Ein/Ausklappen von Kategorien.
-|Fähigkeits-Anzeige |Zeigt Fähigkeiten mit Entwicklungsgraph und letzten Meilensteinen.
+|Fähigkeits-Anzeige |Zeigt Profil-Statistik-Graph-Seite.
 |Vollbild-Button |Ermöglicht eine genauere Ansicht einer Fähigkeit.
+|Logout-Button|Der Mitarbeiter wird ausgeloggt und kommt zurück auf die Login-Seite.
 |===
 
 ==== Profil-Statistik-Graph-Seite
