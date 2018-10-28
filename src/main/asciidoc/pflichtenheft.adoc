@@ -14,6 +14,8 @@ SkillMatrix
 |0.1     | In Arbeit   | 10.10.2017          | Autor       | Initiale Version
 |1.0 |In Arbeit | 23-24.10.2018 |Aron Gaden, Wilhelm Pertsch, Bruno Reinhold |Erste Bearbeitung
 |1.0.1|In Arbeit|24.10.2018|Aron Gaden|Links zu Diagrammen hinzugefügt
+|1.0.2|In Arbeit|28.10.2018|Aron Gaden,Wilhelm Pertsch, Bruno Reinhold, Cornell Ziepel|Bearbeitung von Diagrammen und einzelnen Elementen
+|2|Fertig|28.10.2018|Aron Gaden,Wilhelm Pertsch, Cornell Ziepel|Beseitigen letzter Fehler
 |===
 
 toc::[]
