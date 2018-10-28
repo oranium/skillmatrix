@@ -216,6 +216,8 @@ Erstellen Sie ein Übersichtsdiagramm, das das Zusammenspiel Ihrer Masken zur La
 ////
 //Die nachfolgende Abbildung zeigt eine an die Pinnwand gezeichnete Dialoglandkarte. Ihre Karte sollte zusätzlich die Buttons/Funktionen darstellen, mit deren Hilfe Sie zwischen den Masken navigieren.
 
+image::Dialoglandkarte.jpg[Dialoglandkarte]
+
 === Dialogbeschreibung
 ////
 Für jeden Dialog:
