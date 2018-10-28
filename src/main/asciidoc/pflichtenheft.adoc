@@ -250,6 +250,30 @@ image::page_2.png[Login-Seite]
 |View Profile-Button |Ermöglicht es auf die Profil-Seite eines Mitarbeites zu wechseln.
 |===
 
+
+==== Eigene-Profil-Skill-Seite
+Zeigt verschiedene Skills des eigenes Profils.
+
+image::page_4.png[Login-Seite]
+
+[options="header"]
+[cols="1,3"]
+|===
+|Maskenelemente |Beschreibung
+|Statistics-Button |Ermöglicht den Wechsel zur Profil-Statistik-Seite eines Mitarbeiters.
+|Skill-Überkategorien-Anzeige  | Zeigt die verschiedenen Bereiche in welchen der Mitarbeiter Fähigkeiten besitzt.
+|Pfeil-Überkategorie-Button |Klappt eine Liste von Skills aus, welche der Mitarbeiter in der zugehörigen Überkategorie besitzt.
+|Skill-Anzeige  |Zeigt Skills und deren Spezifikationen sowie Level des SKills.
+|Pfeil-Unterkategorie-Button |Klappt eine Liste von Unter-Skills aus, welche der Mitarbeiter in dem zugehörigen Skill besitzt.
+|Unter-Skill-Anzeige  |Zeigt Unter-Skills und deren Spezifikationen sowie Level des Unter-SKills.
+|ADD NEW SKILL-Button|Ermöglicht es einen neuen Skill hinzuzufügen.
+|ADD NEW SKILL-Button|Ermöglicht es einen neuen Skill hinzuzufügen.
+|===
+
+Die Skill-Überkategorien zeigen auch wie viele verschiedene Fähigkeiten der Mitarbeiter in dieser Kategorie besitzt.
+Die Skill-Kategorie zeigen auch wie viele verschiedene Unter-Skills der Mitarbeiter zu dieser SKill-Kategorie besitzt.
+Die Skill-Level und Skill-Unterkategorie-Level lassen sich sich durch Klick bearbeiten. 
+
 ==== Profil-Skill-Seite
 Zeigt verschiedene Skills eines Mitarbeiters.
 
@@ -261,14 +285,48 @@ image::page_3.png[Login-Seite]
 |Maskenelemente |Beschreibung
 |Statistics-Button |Ermöglicht den Wechsel zur Profil-Statistik-Seite eines Mitarbeiters.
 |Skill-Überkategorien-Anzeige  | Zeigt die verschiedenen Bereiche in welchen der Mitarbeiter Fähigkeiten besitzt.
-|Pfeil-Button |Klappt eine Liste von Skills aus, welche der Mitarbeiter in der zugehörigen Überkategorie besitzt.
+|Pfeil-Überkategorie-Button |Klappt eine Liste von Skills aus, welche der Mitarbeiter in der zugehörigen Überkategorie besitzt.
 |Skill-Anzeige  |Zeigt Skills und deren Spezifikationen sowie Level des SKills.
-|Neuen Skill Erstellen-Button|Ermöglicht es einen neuen Skill hinzuzufügen, falls es sich um das eigene Profil handelt.
+|Pfeil-Unterkategorie-Button |Klappt eine Liste von Unter-Skills aus, welche der Mitarbeiter in dem zugehörigen Skill besitzt.
+|Unter-Skill-Anzeige  |Zeigt Unter-Skills und deren Spezifikationen sowie Level des Unter-SKills.
 |===
 
 Die Skill-Überkategorien zeigen auch wie viele verschiedene Fähigkeiten der Mitarbeiter in dieser Kategorie besitzt.
+Die Skill-Kategorie zeigen auch wie viele verschiedene Unter-Skills der Mitarbeiter zu dieser SKill-Kategorie besitzt.
 
-Falls es sich um das eigene Profil handelt ist es möglich das Level einen Skills zu verändern.
+
+
+==== Profil-Statistik-Seite
+Zeigt die historische Grafiken der Fähigkeitsentwicklung eines Mitarbeites
+
+image::page_5.png[Login-Seite]
+
+[options="header"]
+[cols="1,3"]
+|===
+|Maskenelemente |Beschreibung
+|Suchleiste-Textfeld  |Textfeld zur Eingabe von gesuchten Skills des Mitarbeiters.
+|Lupen-Button  |Bestätigt die Eingabe in der Suchleiste und sucht danach.
+|Kategorien-Anzeige |Zeigt Kategoriene wie z.B. durch Suche gefundene Fähigkeiten oder allgemeine Fähigkeiten.
+|Pfeil-Button |Ermöglicht das Ein/Ausklappen von Kategorien.
+|Fähigkeits-Anzeige |Zeigt Fähigkeiten mit Entwicklungsgraph und letzten Meilensteinen.
+|Vollbild-Button |Ermöglicht eine genauere Ansicht einer Fähigkeit.
+|===
+
+==== Profil-Statistik-Seite
+Zeigt die historische Grafiken einer Fähigkeit eines Mitarbeites
+
+image::page_5_skillFullscreen.png[Login-Seite]
+
+[options="header"]
+[cols="1,3"]
+|===
+|Maskenelemente |Beschreibung
+|Skill-Graph-Anzeige  |Zeigt die zeitliche Entwicklung einer Fähigkeit mit den zugehörigen Meilensteinen.
+|Range-Felder |Ermöglicht zeitliche Eingrenzung der SKill-Graph-Anzeige.
+|Meilenstein-Anzeigefelder |Zeigt Meilensteine in der Fähigkeitsentwicklung mit Zeit und Spezifikationen.
+|===
+
 ////
 Für jeden Dialog:
 
