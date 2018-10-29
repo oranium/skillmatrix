@@ -516,5 +516,3 @@ Beispiel: Was bedeutet "Kunde"? Ein Nutzer des Systems? Der Kunde des Projektes 
 Offene Punkte werden entweder direkt in der Spezifikation notiert. Wenn das Pflichtenheft zum finalen Review vorgelegt wird, sollte es keine offenen Punkte mehr geben.
 ////
 * Qualitätsziele mit Kunden absprechen, ggf. überarbeiten
-* Dialoglandkarte, Dialogbeschreibung
-* Glossar ergänzen
