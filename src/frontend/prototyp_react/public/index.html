@@ -5,6 +5,8 @@
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="theme-color" content="#000000">
+    <link rel="stylesheet" href="bundle-login.css">
+    <link rel="stylesheet" href="fonts.css">
     <!--
       manifest.json provides metadata used when your web app is added to the
       homescreen on Android. See https://developers.google.com/web/fundamentals/web-app-manifest/
@@ -19,13 +21,26 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>React App</title>
+    <title>Prototyp React State</title>
   </head>
   <body>
     <noscript>
       You need to enable JavaScript to run this app.
     </noscript>
-    <div id="root"></div>
+    <header class="mdc-top-app-bar">
+      <div class="mdc-top-app-bar__row">
+        <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+          <a href="#" class="material-icons mdc-top-app-bar__navigation-icon">account_circle</a>
+          <span class="mdc-top-app-bar__title">Valdemar Forsberg</span>
+        </section>
+        <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
+          <a href="#" class="material-icons mdc-top-app-bar__action-item" aria-label="Print this page" alt="Print this page">settings</a>
+          <a href="#" class="material-icons mdc-top-app-bar__action-item" aria-label="Bookmark this page" alt="Bookmark this page">power_settings_new</a>
+        </section>
+      </div>
+    </header>
+    
+    <main id="root"></main>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
@@ -37,4 +52,5 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
   </body>
+  <script src="bundle-login.js" async></script>
 </html>
