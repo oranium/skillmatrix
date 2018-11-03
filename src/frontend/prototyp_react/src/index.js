@@ -1,6 +1,13 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
+import { createStore } from 'redux';
+import {formState} from './reducers';
+import {updateInput} from './actions';
+
 import './index.css';
+
+const store = createStore(formState);
+
 
 function InputField(props) {
     return (
@@ -26,34 +33,11 @@ class Form extends Component {
   }
 }
 class App extends Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            inputs: [
-                {
-                    name: "test",
-                    value: "test",
-                },
-                {
-                    name: "test",
-                    value: "test",
-                },
-            ],
-            test: true,};
-    }
-
     handleChange(value, i){
         console.log('change');
         console.log(value + ' ' + i);
-        let inputs = this.state.inputs;
-        inputs[i].value = "test";
-        this.setState(
-            {
-                inputs: inputs,
-                test: true,
-            }
-        );
-        return
+        updateInput(i, value);
+        console.log(store.getState());
     }
     handleSubmit(){
         console.log('submit');
@@ -65,7 +49,7 @@ class App extends Component {
         <header className="App-header">
         </header>
         <main>
-            <Form inputs={this.state.inputs} name="test" onChange={(value, i) => this.handleChange(value, i)} onSubmit={() => this.handleSubmit()}/>
+            <Form inputs={this.props.value.inputs} name="test" onChange={(value, i) => this.handleChange(value, i)} onSubmit={() => this.handleSubmit()}/>
         </main>
       </div>
     );
@@ -75,6 +59,6 @@ class App extends Component {
   // ========================================
   
   ReactDOM.render(
-    <App/>,
+    <App value={store.getState()}/>,
     document.getElementById('root')
   );
