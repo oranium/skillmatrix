@@ -8,7 +8,6 @@ import { loadState, saveState } from './localStorage';
 import './index.css';
 
 const persistedState = loadState();
-console.log(persistedState);
 
 const store = createStore(
     formState,
