@@ -1,9 +1,7 @@
 // actions >> index.js
 
-export const updateInput = ({i, input}) => ({
+export const updateInput = (index, input) => ({
     type: "UPDATEINPUT",
-    payload: {
-        id: i,
-        input: input,
-    }
+    index: index,
+    input: input
 });

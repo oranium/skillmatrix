@@ -3,28 +3,33 @@
 const defaultState = {
     inputs: [
         {
-            name: "test",
-            value: "test",
+            name: "skill",
+            value: "",
+            type: "text"
         },
         {
-            name: "test",
-            value: "test",
+            name: "date",
+            value: "",
+            type: "date"
         },
+        {
+            name: "textarea",
+            value: "",
+            type: "textarea"
+        }
     ],
     };
 
 export const formState = (state = defaultState, action) => {
     switch(action.type){
         case 'UPDATEINPUT':
-            let inputs = [
-                ...state.inputs.slice(0, action.payload.index),
-                action.payload.input,
-                ...state.inputs.slice(action.payload.index + 1)
-            ];
-            
-            return {
-                inputs: inputs
-            };
+            return Object.assign({}, state, {
+                inputs: [
+                    ...state.inputs.slice(0, action.index),
+                    Object.assign({}, state.inputs[action.index], {value: action.input}),
+                    ...state.inputs.slice(action.index + 1)  
+                ]
+            });
         default:
             return state;
     }

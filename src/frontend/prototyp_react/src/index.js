@@ -10,16 +10,39 @@ const store = createStore(formState);
 
 
 function InputField(props) {
-    return (
-        <input defaultValue={props.value} onChange={(evt)=>props.onChange(evt.target.value, props.index)}></input>
-    )
+    switch (props.data.type){
+        case "textarea":
+            return (
+            <div className="mdc-text-field mdc-text-field--textarea textarea">
+                <textarea value={props.data.value} id="textarea" className="mdc-text-field__input" rows="8" name={props.data.name} onChange={(evt)=>props.onChange(evt.target.value, props.index)}>
+                </textarea>
+                <label htmlFor="textarea" className="mdc-floating-label">Note</label>
+            </div>
+            )
+        default:
+            let className = "mdc-text-field mdc-text-field--outlined " + props.data.name;
+            let id = props.data.name + "-input";
+
+            return (
+                <div className={className}>
+                <input type={props.data.type} className="mdc-text-field__input"  id={id} name={props.data.name} onChange={(evt)=>props.onChange(evt.target.value, props.index)} required/>
+                <label className="mdc-floating-label" htmlFor={id}>{props.data.name}</label>
+                <div className="mdc-notched-outline">
+                    <svg>
+                    <path className="mdc-notched-outline__path"/>
+                    </svg>
+                </div>
+                <div className="mdc-notched-outline__idle"></div>
+                </div>
+            )
+    }
 }
 
 class Form extends Component {
     renderInputFields(){
         let inputs = 
             this.props.inputs.map(
-                (input, i) => (<InputField  key={i} index={i} value={input.value} onChange={(value, i) => this.props.onChange(value, i)}/>) 
+                (input, i) => (<InputField  key={i} index={i} data={input} onChange={(value, i) => this.props.onChange(value, i)}/>) 
             )
         return inputs;
     }
@@ -27,30 +50,27 @@ class Form extends Component {
     return (
         <div className="form">
             {this.renderInputFields()}
-            <button name="submit" onClick={() => this.props.onSubmit()}>Button</button>
+            <div className="button-container">
+                <button className="mdc-button mdc-button--raised submit" name="submit" onClick={() => this.props.onSubmit()}>Next</button>
+            </div>
         </div>
     );
   }
 }
 class App extends Component {
     handleChange(value, i){
-        console.log('change');
-        console.log(value + ' ' + i);
-        updateInput(i, value);
-        console.log(store.getState());
+        store.dispatch(updateInput(i, value));
+        console.log("New State: ");
+        console.log(this.props.value);
     }
     handleSubmit(){
-        console.log('submit');
         return
     }
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-        </header>
-        <main>
+            <h1>Neuen Skill erstellen</h1>
             <Form inputs={this.props.value.inputs} name="test" onChange={(value, i) => this.handleChange(value, i)} onSubmit={() => this.handleSubmit()}/>
-        </main>
       </div>
     );
   }
@@ -58,7 +78,12 @@ class App extends Component {
 
   // ========================================
   
-  ReactDOM.render(
-    <App value={store.getState()}/>,
-    document.getElementById('root')
-  );
+  const render = () => {
+    ReactDOM.render(
+        <App value={store.getState()}/>,
+        document.getElementById('root')
+      );
+  }
+  
+  store.subscribe(render);
+  render();
