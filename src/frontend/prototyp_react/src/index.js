@@ -3,11 +3,22 @@ import ReactDOM from 'react-dom';
 import { createStore } from 'redux';
 import {formState} from './reducers';
 import {updateInput} from './actions';
+import { loadState, saveState } from './localStorage';
 
 import './index.css';
 
-const store = createStore(formState);
+const persistedState = loadState();
+console.log(persistedState);
 
+const store = createStore(
+    formState,
+    persistedState
+);
+
+
+store.subscribe( () => {
+    saveState(store.getState());
+});
 
 function InputField(props) {
     switch (props.data.type){
@@ -25,7 +36,7 @@ function InputField(props) {
 
             return (
                 <div className={className}>
-                <input type={props.data.type} className="mdc-text-field__input"  id={id} name={props.data.name} onChange={(evt)=>props.onChange(evt.target.value, props.index)} required/>
+                <input defaultValue={props.data.value} type={props.data.type} className="mdc-text-field__input"  id={id} name={props.data.name} onChange={(evt)=>props.onChange(evt.target.value, props.index)} required/>
                 <label className="mdc-floating-label" htmlFor={id}>{props.data.name}</label>
                 <div className="mdc-notched-outline">
                     <svg>
