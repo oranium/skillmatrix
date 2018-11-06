@@ -17,6 +17,9 @@ import './index.css';
 
 class App extends Component {
     handleChange(id, value){
+        if (this.props.state.formState.inputs[id].error){
+            store.dispatch(setError(id, false))
+        }
         store.dispatch(updateInput(id, value));
     }
 

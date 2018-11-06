@@ -13,8 +13,8 @@ const styles = theme => ({
       marginRight: theme.spacing.unit,
       width: "500px",
     },
-    levelPicker: {
-       
+    error: {
+        color: "red"
     }
   });
 
@@ -92,19 +92,24 @@ export const LevelPicker = withStyles(styles)(
     (props) => {
         const {classes} = props;
         const id = "levelfield";
-        console.log(props.value);
         const numbers = [
             "1","2","3","4","5"
         ]
+        var className = "";
+        if (props.data.error){
+            className = classes.error;
+        }
+        console.log(className);
         const radio_btns = numbers.map(
             (value, i) => (
                 <Radio   
                     key = {i}      
-                    checked = {props.value === value}
+                    checked = {props.data.value === value}
                     onChange = {(evt)=>props.onChange(id, evt.target.value)}
                     value = {value}
                     aria-label = {"Level " + value}
                     title = {"Level " + value}
+                    className = {className}
                 />
             )
         )
