@@ -19,3 +19,11 @@ export const saveState = (state) => {
         // ignore
     }
 };
+
+export const deleteState = () => {
+    try {
+        localStorage.removeItem('state');
+    } catch (err) {
+        //ignore
+    }
+}
