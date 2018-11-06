@@ -1,51 +1,45 @@
 const defaultInputsState = {
-    inputs: [
-        {
+    inputs: {
+       textfield: {
             name: "Skill",
             value: "",
-            className: "skill",
             error: false,
             type: "text"
         },
-        {
+        datefield: {
             name: "Date",
             value: "",
-            className: "date",
             error: false,
             type: "date"
         },
-        {
+        textarea: {
             name: "Note",
             value: "",
-            className: "textarea",
             error: false,
             type: "textarea"
         }
-    ],
-    page: "form"
-    };
+    }
+};
 
 export const formState = (state = defaultInputsState, action) => {
     switch(action.type){
         case 'UPDATEINPUT':
             return Object.assign({}, state, {
-                inputs: [
-                    ...state.inputs.slice(0, action.index),
-                    Object.assign({}, state.inputs[action.index], {value: action.input}),
-                    ...state.inputs.slice(action.index + 1)  
-                ]
+                inputs: Object.assign({}, state.inputs, {
+                    [action.id]: Object.assign({}, state.inputs[action.id], {value: action.input})
+                }),
             });
-        case 'SWITCHPAGE':
-            return Object.assign({}, state, {page: action.page});
         
         case 'SETERROR':
+            console.log(action);
             return Object.assign({}, state, {
-                inputs: [
-                    ...state.inputs.slice(0, action.index),
-                    Object.assign({}, state.inputs[action.index], {error: action.error}),
-                    ...state.inputs.slice(action.index + 1)  
-                ]
+                inputs: Object.assign({}, state.inputs, {
+                    [action.id]: Object.assign({}, state.inputs[action.id], {error: action.error})
+                }),
             });
+        case 'RESETFORM':
+            return defaultInputsState;
+
         default:
             return state;
     }
@@ -56,6 +50,15 @@ export const user = (state = "Valdemar Forsberg", action) => {
         case 'UPDATEUSERNAME':
             return action.username;
     
+        default: 
+            return state;
+    }
+}
+
+export const page = (state = "form", action) => {
+    switch(action.type){
+        case 'SWITCHPAGE':
+            return action.page;
         default: 
             return state;
     }

@@ -1,18 +1,22 @@
 // actions >> index.js
 
-export const updateInput = (index, input) => ({
+export const updateInput = (id, input) => ({
     type: "UPDATEINPUT",
-    index: index,
+    id: id,
     input: input
 });
 
-export const setError = (index, error) => ({
+export const setError = (id, error) => ({
     type: "SETERROR",
-    index: index,
+    id: id,
     error: error
 })
 
 export const switchPage = (page) => ({
     type: "SWITCHPAGE",
     page: page
+});
+
+export const resetForm = () => ({
+    type: "RESETFORM",
 });

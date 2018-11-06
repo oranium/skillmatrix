@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import InputField from './InputFields';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
+import {SkillNameInput, DateInput, TextArea} from './InputFields';
 
 const styles = theme => ({
     root: {
@@ -38,29 +38,31 @@ Label.propTypes = {
 const LabelField = withStyles(styles)(Label);
 
 export default class Form extends Component {
-    renderInputFields(){
-        let inputs = 
-            this.props.inputs.map(
-                (input, i) => (<InputField  key={i} index={i} data={input} onChange={(value, i) => this.props.onChange(value, i)}/>) 
-            )
-        return inputs;
-    }
     renderLabels(){
         let labels = 
-            this.props.inputs.map(
-                (input, i) => (<LabelField key={i} index={i} name={input.name} value={input.value}/>)
+            Object.keys(this.props.inputs).map(
+                (id, i) => (<LabelField key={i} name={this.props.inputs[id].name} value={this.props.inputs[id].value}/>)
             )
+        console.log(Object.keys(this.props.inputs));
         return labels;
     }
   render(){
       if (this.props.page === "form"){
           return(
             <div className="form">
-            {this.renderInputFields()}
+            
+            <SkillNameInput data={this.props.inputs.textfield} value={this.props.inputs.textfield.value} onChange={(id, value) => this.props.onChange(id, value)}/>
+            <DateInput data={this.props.inputs.datefield} value={this.props.inputs.datefield.value} onChange={(id, value) => this.props.onChange(id, value)}/>
+            <TextArea data={this.props.inputs.textarea} value={this.props.inputs.textarea.value} onChange={(id, value) => this.props.onChange(id, value)}/>
+            
             <div className="button-container">
+                <Button variant="contained" color="primary" onClick={() => this.props.onReset()}>
+                    Reset Form
+                </Button>
                 <Button variant="contained" color="primary" name="submit" onClick={() => this.props.onSubmit("skill")}>
                     Show skill
                 </Button>
+                
             </div>
             </div>
            )

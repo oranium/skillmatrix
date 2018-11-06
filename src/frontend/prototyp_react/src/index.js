@@ -5,44 +5,50 @@ import ReactDOM from 'react-dom';
 //import redux
 import { createStore } from 'redux';
 import reducer from './reducers';
-import {updateInput, switchPage, setError} from './actions';
-import { loadState, saveState } from './localStorage';
+import {updateInput, switchPage, setError, resetForm} from './actions';
+import { loadState, saveState} from './localStorage';
 
 //import page parts
 import Header from './components/Header';
 import Form from './components/Form';
+
 import './index.css';
 
 
 class App extends Component {
-    handleChange(value, i){
-        store.dispatch(updateInput(i, value));
-        console.log("New State: ");
-        console.log(this.props.value);
+    handleChange(id, value){
+        store.dispatch(updateInput(id, value));
     }
+
     handleSubmit(page){
-        const inputs = store.getState().formState.inputs;
+        const state = this.props.state.formState;
         var submit = true;
-        for (let index = 0; index < inputs.length; index++) {
-            const input = inputs[index];
-            if (input.value === ""){
-                store.dispatch(setError(index, true));
-                submit = false;
-            }else {
-                store.dispatch(setError(index, false));
+        if (this.props.state.page === "form"){
+            for (var key in state.inputs){
+                var input = state.inputs[key];
+                if (input.value === ""){
+                    store.dispatch(setError(key, true));
+                    submit = false;
+                }else {
+                    store.dispatch(setError(key, false));
+                }
             }
         }
         if (submit){
             store.dispatch(switchPage(page));
         }
     }
+    handleResetForm(){
+        store.dispatch(resetForm());
+    }
+
   render() {
     return (
         <div>
-            <Header username={this.props.value.user}/>
+            <Header username={this.props.state.user}/>
             <main>
                 <h1>Neuen Skill erstellen</h1>
-                <Form inputs={this.props.value.formState.inputs} page={this.props.value.formState.page} name="test" onChange={(value, i) => this.handleChange(value, i)} onSubmit={(page) => this.handleSubmit(page)}/>
+                <Form inputs={this.props.state.formState.inputs} page={this.props.state.page} name="test" onChange={(id, value) => this.handleChange(id, value)} onSubmit={(page) => this.handleSubmit(page)} onReset={() => this.handleResetForm()}/>
             </main>
         </div>
     );
@@ -53,9 +59,10 @@ class App extends Component {
   
   const render = () => {
     ReactDOM.render(
-        <App value={store.getState()}/>,
+        <App state={store.getState()}/>,
         document.getElementById('root')
       );
+    console.log(store.getState());
   }
 
 
