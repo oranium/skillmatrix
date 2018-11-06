@@ -1,6 +1,7 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import Radio from '@material-ui/core/Radio';
 
 const styles = theme => ({
     container: {
@@ -11,6 +12,9 @@ const styles = theme => ({
       marginLeft: theme.spacing.unit,
       marginRight: theme.spacing.unit,
       width: "500px",
+    },
+    levelPicker: {
+       
     }
   });
 
@@ -66,13 +70,12 @@ export const TextArea = withStyles(styles)(
     (props) => {
         const {classes} = props;
         const id = 'textarea';
-
+        
         return(
             <TextField
                 required
                 multiline
-                id="outlined-required"
-                type = "date"
+                rows="4"
                 label={props.data.name}
                 value={props.data.value}
                 className={classes.textField + " " + props.data.name}
@@ -81,6 +84,34 @@ export const TextArea = withStyles(styles)(
                 variant="outlined"
                 onChange={(evt)=>props.onChange(id, evt.target.value)}
             />
+        )
+    }
+)
+
+export const LevelPicker = withStyles(styles)(
+    (props) => {
+        const {classes} = props;
+        const id = "levelfield";
+        console.log(props.value);
+        const numbers = [
+            "1","2","3","4","5"
+        ]
+        const radio_btns = numbers.map(
+            (value, i) => (
+                <Radio   
+                    key = {i}      
+                    checked = {props.value === value}
+                    onChange = {(evt)=>props.onChange(id, evt.target.value)}
+                    value = {value}
+                    aria-label = {"Level " + value}
+                    title = {"Level " + value}
+                />
+            )
+        )
+        return (
+            <div className={classes.textField+" "+classes.levelPicker}>
+                {radio_btns}
+            </div>
         )
     }
 )

@@ -6,6 +6,11 @@ const defaultInputsState = {
             error: false,
             type: "text"
         },
+        levelfield: {
+            name: "Level",
+            value: "",
+            error: false
+        },
         datefield: {
             name: "Date",
             value: "",

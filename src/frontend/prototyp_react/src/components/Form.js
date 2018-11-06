@@ -4,7 +4,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
-import {SkillNameInput, DateInput, TextArea} from './InputFields';
+import {SkillNameInput, DateInput, TextArea, LevelPicker} from './InputFields';
 
 const styles = theme => ({
     root: {
@@ -52,6 +52,7 @@ export default class Form extends Component {
             <div className="form">
             
             <SkillNameInput data={this.props.inputs.textfield} value={this.props.inputs.textfield.value} onChange={(id, value) => this.props.onChange(id, value)}/>
+            <LevelPicker value={this.props.inputs.levelfield.value} onChange={(id, value) => this.props.onChange(id, value)}/>
             <DateInput data={this.props.inputs.datefield} value={this.props.inputs.datefield.value} onChange={(id, value) => this.props.onChange(id, value)}/>
             <TextArea data={this.props.inputs.textarea} value={this.props.inputs.textarea.value} onChange={(id, value) => this.props.onChange(id, value)}/>
             
