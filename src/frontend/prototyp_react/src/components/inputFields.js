@@ -1,10 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
-import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
-import { Input } from '@material-ui/core';
 
 const styles = theme => ({
     container: {
@@ -20,9 +17,11 @@ const styles = theme => ({
 
 function InputField(props) {
 const {classes} = props;
-var multiline = "";
+var multiline = false;
+var rows = "";
 if (props.data.type === 'textarea'){
     multiline = true;
+    rows = 5;
 }
 var InputLabelProps = {};
 if (props.data.type === 'date') {
@@ -40,6 +39,8 @@ return (
         defaultValue={props.data.value}
         className={classes.textField + " " + props.data.name}
         multiline={multiline}
+        error={props.data.error}
+        rows = {rows}
         margin="normal"
         variant="outlined"
         InputLabelProps={InputLabelProps}
