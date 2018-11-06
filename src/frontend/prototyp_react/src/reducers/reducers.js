@@ -1,18 +1,24 @@
 const defaultInputsState = {
     inputs: [
         {
-            name: "skill",
+            name: "Skill",
             value: "",
+            className: "skill",
+            error: false,
             type: "text"
         },
         {
-            name: "date",
+            name: "Date",
             value: "",
+            className: "date",
+            error: false,
             type: "date"
         },
         {
-            name: "textarea",
+            name: "Note",
             value: "",
+            className: "textarea",
+            error: false,
             type: "textarea"
         }
     ],
@@ -31,6 +37,15 @@ export const formState = (state = defaultInputsState, action) => {
             });
         case 'SWITCHPAGE':
             return Object.assign({}, state, {page: action.page});
+        
+        case 'SETERROR':
+            return Object.assign({}, state, {
+                inputs: [
+                    ...state.inputs.slice(0, action.index),
+                    Object.assign({}, state.inputs[action.index], {error: action.error}),
+                    ...state.inputs.slice(action.index + 1)  
+                ]
+            });
         default:
             return state;
     }

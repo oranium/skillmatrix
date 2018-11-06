@@ -6,6 +6,12 @@ export const updateInput = (index, input) => ({
     input: input
 });
 
+export const setError = (index, error) => ({
+    type: "SETERROR",
+    index: index,
+    error: error
+})
+
 export const switchPage = (page) => ({
     type: "SWITCHPAGE",
     page: page
