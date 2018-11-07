@@ -27,7 +27,6 @@ class CategoryChooser extends Component {
                 name="skillcategory"
                 value={upperKey}
                 key={upperKey + "radio"}
-                checked={upperKey === "Programming" ? true : false}
               />
               {upperKey}
             </label>
