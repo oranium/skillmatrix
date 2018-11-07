@@ -1,20 +1,22 @@
 import React, { Component } from "react";
 
 class Input extends Component {
+  onClick = event => {
+    event.preventDefault();
+    this.props.onChange(
+      this.props.id,
+      document.getElementById(this.props.id).value
+    );
+  };
   render() {
     return (
-      <form
-        onSubmit={event => {
-          event.preventDefault();
-          this.props.onInputStateChanged(
-            document.getElementsByClassName("input")[0].value
-          );
-        }}
-      >
-        <label>Search Request:</label>
-        <input className="input" type="text" />
-        <button type="submit">{this.props.btnValue}</button>
-      </form>
+      <div>
+        <label>{this.props.lblValue}</label>
+        <input className="input" type="text" id={this.props.id} />
+        <button type="submit" onClick={this.onClick}>
+          {this.props.btnValue}
+        </button>
+      </div>
     );
   }
 }
