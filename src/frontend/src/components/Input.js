@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Button from "@material-ui/core/Button";
 
 class Input extends Component {
   onClick = event => {
@@ -13,9 +14,14 @@ class Input extends Component {
       <div>
         <label>{this.props.lblValue}</label>
         <input className="input" type="text" id={this.props.id} />
-        <button type="submit" onClick={this.onClick}>
+        <Button
+          variant="contained"
+          color="primary"
+          type="submit"
+          onClick={this.onClick}
+        >
           {this.props.btnValue}
-        </button>
+        </Button>
       </div>
     );
   }
