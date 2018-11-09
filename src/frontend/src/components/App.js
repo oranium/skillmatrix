@@ -11,7 +11,7 @@ class Search extends Component {
       programming: ["python", "java", "javascript"],
       design: ["photoshop", "after effects", "drawing"]
     },
-    nextCategory: "programming"
+    nextCategory: ""
   };
 
   onChange = (id, value) => {
@@ -28,7 +28,8 @@ class Search extends Component {
     }
   };
 
-  radioAlertChanged = name => {
+  radioOnChange = name => {
+    console.log(name);
     this.setState({
       matches: this.state.matches,
       dataset: this.state.dataset,
@@ -46,12 +47,17 @@ class Search extends Component {
   };
 
   handleAddSkill = skill => {
+    if (this.state.nextCategory === "") {
+      alert("Please choose a category to add your skill to!");
+      return;
+    }
     console.log("in handleAddSkill");
     if (this.state.nextCategory === "programming") {
       if (this.state.dataset.programming.includes(skill)) {
         alert("Skill " + skill + " is already registered in Programming!");
+        return;
       }
-      console.log("adding sskill to programming");
+      console.log("adding skill to programming");
       this.setState({
         matches: this.state.matches,
         dataset: {
@@ -139,7 +145,7 @@ class Search extends Component {
         </form>
         <CategoryChooser
           category={this.state.dataset}
-          radioAlertChanged={this.radioAlertChanged}
+          radioOnChange={this.radioOnChange}
         />
       </div>
     );
