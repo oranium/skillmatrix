@@ -3,10 +3,11 @@ import "./App.css";
 import Input from "./Input";
 import Result from "./Result";
 import CategoryChooser from "./CategoryChooser";
+import Header from "./Header";
 
 class Search extends Component {
   state = {
-    matches: [],
+    matches: { programming: [], design: [] },
     dataset: {
       programming: ["python", "java", "javascript"],
       design: ["photoshop", "after effects", "drawing"]
@@ -54,7 +55,7 @@ class Search extends Component {
     console.log("in handleAddSkill");
     if (this.state.nextCategory === "programming") {
       if (this.state.dataset.programming.includes(skill)) {
-        alert("Skill " + skill + " is already registered in Programming!");
+        alert("Skill " + skill + " is already registered in programming!");
         return;
       }
       console.log("adding skill to programming");
@@ -69,7 +70,7 @@ class Search extends Component {
     }
     if (this.state.nextCategory === "design") {
       if (this.state.dataset.design.includes(skill)) {
-        alert("Skill " + skill + " is already registered in Design!");
+        alert("Skill " + skill + " is already registered in design!");
         return;
       }
       console.log("adding skill to design");
@@ -85,46 +86,33 @@ class Search extends Component {
   };
 
   findMatches = input => {
-    let results = [];
+    let designMatches = [];
+    let programmingMatches = [];
     let dataset = this.state.dataset;
-    if (input === "") return results;
-    for (
-      var i = 0;
-      dataset.design.length > dataset.programming.length
-        ? i < dataset.design.length
-        : i < dataset.programming.length;
-      i++
-    ) {
-      if (
-        dataset.programming[i] &&
-        dataset.programming[i].includes(input.toLowerCase())
-      ) {
-        results.push("Programming: " + dataset.programming[i]);
+
+    if (input === "") return this.state.matches;
+    dataset.design.map(entry => {
+      if (entry.includes(input)) {
+        designMatches.push(entry);
       }
-      if (
-        dataset.design[i] &&
-        dataset.design[i].includes(input.toLowerCase())
-      ) {
-        results.push("Design: " + dataset.design[i]);
-      }
-    }
-    results = results.map(result => {
-      let resWords = result.split(" ");
-      for (let i = 0; i < resWords.length; i++) {
-        resWords[i] =
-          resWords[i].charAt(0).toUpperCase() + resWords[i].slice(1);
-      }
-      console.log("result before magic: ", result);
-      result = resWords.join(" ");
-      console.log("result after magic: ", result);
-      return result;
     });
-    return results;
+    dataset.programming.map(entry => {
+      if (entry.includes(input)) {
+        programmingMatches.push(entry);
+      }
+    });
+    console.log(programmingMatches);
+    return {
+      programming: programmingMatches,
+      design: designMatches
+    };
   };
 
   render() {
     return (
       <div className="Search">
+        <Header username="Valdemar Forsberg" />
+        <p />
         <form>
           <Input
             btnValue="Search"
