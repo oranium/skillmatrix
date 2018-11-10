@@ -25,8 +25,8 @@ Client: moderner Browser, der Javascript unterstützt
 
 == Lösungsstrategie
 
-Das "Chart" stellt in meiner Implementation eine eigene Klasse dar und stellt ein Reac-Component dar. Damit lässt sich das Chart jederzeit mit dem '<Chart/>' Tag in andere JS Dateien einfügen und rendern.
-Die Daten für das Chart werden extern gespeichert. Im Prototyp wird dies durch die Variable json dargestellt, die eine Datenstruktur darstellt und alle nötigen Information über einen Skill liefert. Mithilfe dieser Daten passt sich die Statistik einfach jedem Skill an.
+Das "Chart" stellt in meiner Implementation eine eigene Klasse und damit einen eigenen React-Component dar. Damit lässt sich das Chart jederzeit mit dem '<Chart/>' Tag in andere JS Dateien einfügen und rendern.
+Die Daten für das Chart werden extern gespeichert. Im Prototyp wird dies durch die Variable json dargestellt, die eine Datenstruktur zur Verfügung stellt, in der alle nötigen Information über einen Skill enthalten sind. Mithilfe dieser Daten passt sich die Statistik einfach jedem Skill an.
 
 == Bausteinsicht
 
