@@ -1,17 +1,8 @@
-:imagesdir: ./models/analysis
+:imagesdir: ./models/design
 
 = Entwicklerdokumentation
 
 == Einführung und Ziele
-////
- * Aufgabenstellung
-Erstellung einer Webseite mit Formular, in dem man die Daten für einen einen neuen Skill eingeben, ändern und anzeigen lassen kann. Des Weiteren soll die Eingabe im Local Storage des Browsers gespeichert werden, damit auch bei Neuladen der Seite, die eingegebenen Daten erhalten bleiben. Zur Umsetzung sollen React und Redux oder MobX verwendet werden.
-* Qualitätsziele
--mögliche Eingabe eines Skills über Fomularfelder
--Anzeigen der Eingabe in einer anderen Übersicht, ausgelöst durch einen Button
--Speicherung der Daten in einem State und lokal auf dem Rechner des Anwenders
--Ansprechende Benutzeroberfläche mit _Material-Design_
-////
 
 == Aufgabenstellung
 
@@ -69,6 +60,16 @@ Die MySQL-Datenbank wird mithilfe von Python abgefragt. Mit Flask werden REST-AP
 
 == Bausteinsicht
 * Package-Diagramme +
+
+image:Authentification.jpg[Authentifizierung]
+
+image:ReactState.jpg[State]
+
+image:Search.jpg[Suche]
+
+image:Statistics.jpg[Statistik]
+
+image:DatenbankController.jpg[DatenbankController]
             
 == Entwurfsentscheidungen
 * Architektur
