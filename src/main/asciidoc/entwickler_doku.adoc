@@ -40,7 +40,7 @@ Genauere Informationen können dem Pflichtenheft entnommen werden.
 Es wird ein Server als Host für die Anwendung benötigt. 
 
 * Software-Vorgaben +
-React, Redux, ChartJS, Material-UI , Python/Flask, yaml und MySQL werden genutzt. 
+React, Redux, ChartJS, Material-UI , Python/Flask,LDAP3 yaml und MySQL werden genutzt. 
 
 * Vorgaben zum Betrieb der Software +
 Server: Webserver, um Dateien an die Clienten auszuliefern. +
