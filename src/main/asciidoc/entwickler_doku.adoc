@@ -72,8 +72,8 @@ image:Statistics.jpg[Statistik]
 image:DatenbankController.jpg[DatenbankController]
             
 == Entwurfsentscheidungen
-* Architektur
-* Verwendete Muster
+//* Architektur
+//* Verwendete Muster
 * Persistenz + 
 Die Daten werden in einer MySQL-Datenbank abgelegt. Ist diese abgeschaltet, ist die App nicht funktionsfähig.
 * Benutzeroberfläche +
@@ -87,8 +87,6 @@ Die Benutzeroberfläche wird mit React und Komponenten von Material-UI erstellt.
 |React|JavaScript-Library, um grafische Benutzeroberflächen zu bauen.
 
 |Redux|Framework zur Abkapselung des State vom Rest des Programms,funktionaler Ansatz. Lässt sich gut mit React verbinden.
-
-|Mobx|Framework zur Abkapselung des States vom Rest des Programms, mit einem objektorientierten Ansatz. Lässt sich gut mit React verbinden.
 
 |Material Design|Open-Source-Designsprache, welche von Google entwickelt wird.
 
