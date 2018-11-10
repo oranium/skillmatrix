@@ -1,3 +1,5 @@
+:imagesdir: ./models/analysis
+
 = Entwicklerdokumentation
 
 == Einführung und Ziele
@@ -67,7 +69,6 @@ Die MySQL-Datenbank wird mithilfe von Python abgefragt. Mit Flask werden REST-AP
 
 == Bausteinsicht
 * Package-Diagramme +
-image:./package_diagram_state_prototype.png[Package-Diagramme]
             
 == Entwurfsentscheidungen
 * Architektur
