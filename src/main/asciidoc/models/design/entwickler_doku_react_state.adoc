@@ -21,7 +21,7 @@ Server: Webserver, um Dateien an die Clienten auszuliefern
 Client: moderner Browser, der Javascript unterstützt
 
 == Kontextabgrenzung
-* Externe Schnittstellen
+* Externe Schnittstellen +
 -
 
 == Lösungsstrategie
@@ -66,7 +66,7 @@ Open Source Designsprache, welche von Google entwickelt wird.
 * Material-Ui +
 React Framwwork, welches die Material-Design Elemente als React Componenten bereitstellt.
 
-*Local Storage +
+* Local Storage +
 Speicher im Browser des Anwenders, auf dem Dateien von Webseiten abgelegt und ausgelesen werden können.
 
 * State +
