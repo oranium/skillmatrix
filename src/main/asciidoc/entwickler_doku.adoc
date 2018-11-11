@@ -73,7 +73,7 @@ image:DatenbankController.jpg[DatenbankController]
 
 * Entwurfsklassendiagramm +
 
-image:entwurfsdiagramm.jpg[Entwurfsdiagramm]
+image:entwurfsdiagramm.JPG[Entwurfsdiagramm]
  
 == Entwurfsentscheidungen
 //* Architektur
