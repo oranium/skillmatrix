@@ -70,7 +70,11 @@ image:Search.jpg[Suche]
 image:Statistics.jpg[Statistik]
 
 image:DatenbankController.jpg[DatenbankController]
-            
+
+* Entwurfsklassendiagramm +
+
+image:entwurfsdiagramm.JPG[Entwurfsdiagramm]
+ 
 == Entwurfsentscheidungen
 //* Architektur
 //* Verwendete Muster
