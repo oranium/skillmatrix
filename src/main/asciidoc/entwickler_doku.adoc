@@ -70,7 +70,11 @@ image:Search.jpg[Suche]
 image:Statistics.jpg[Statistik]
 
 image:DatenbankController.jpg[DatenbankController]
-            
+
+* Entwurfsklassendiagramm +
+
+image:entwurfsdiagramm.JPG[Entwurfsdiagramm]
+ 
 == Entwurfsentscheidungen
 //* Architektur
 //* Verwendete Muster
@@ -99,4 +103,9 @@ Die Benutzeroberfläche wird mit React und Komponenten von Material-UI erstellt.
 |yaml|Markup-Language, die an Datenstrukturen in Python angelehnt ist.
 
 |ChartJS|Library für Javascript, um verschiedene Arten von Diagrammen zu erstellen.
+|Lightweight-Directory-Access-Protocol (LDAP)|Dabei handelt es sich um ein Netzwerkprotokoll. Es setzt sich aus einem Client-Sever-Modell zusammen, welches die Kommunikation mit einem externen Directory-Services ermöglicht. 
+Ziel der abfragebasierten Kommunikation ist die Abfrage bzw. Veränderung von Informationen im Directory-Services.
+|Directory-Information-Tree (DIT)| Der Directory-Services besteht aus einem Directory-Information-Tree. Der DIT setzt sich wiederum aus hierarchisch strukturierten Schlüssel-Wert-Paaren zusammen, welche mittels des LDAP verwaltet werden können. 
+|LDAP-Binding-String | Der LDAP-Binding-String ermöglicht den Zugriff auf ein Objekt in der Hierarchie des DIT. 
+
 |===
