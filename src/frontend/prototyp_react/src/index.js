@@ -70,7 +70,7 @@ class App extends Component {
         <App state={store.getState()}/>,
         document.getElementById('root')
       );
-    console.log("State has been changed.....")
+    console.log("State has been changed: ")
     console.log(store.getState());
   }
 
