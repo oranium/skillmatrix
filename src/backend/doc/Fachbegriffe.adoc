@@ -1,16 +1,16 @@
 = Erklärung von prototypebezogenen Fachbegriffen
 
 == LDAP ==
-*-> Lightweight Directory Access Protocol* +
+*-> Lightweight-Directory-Access-Protocol* +
 Dabei handelt es sich um ein Netzwerkprotokoll. Es setzt sich aus einem Client-Sever-Modell zusammen, welches die Kommunikation mit einem externen Directory-Services ermöglicht. 
-Ziel der abfrage basierten Kommunikation ist die Abfrage bzw. Veränderung von Informationen Directory-Services. +
+Ziel der abfragebasierten Kommunikation ist die Abfrage bzw. Veränderung von Informationen im Directory-Services. +
 
 == DIT ==
-*-> directory information tree* +
-Der Directory-Services besteht aus einem Directory-Information-Tree. Der DIT setzt sich wiederum aus hierarchisch strukturierten Schlüssel-Wert-Paaren zusammen, welche mittel des LDAP verwaltet werden können. 
+*-> Directory-Information-Tree* +
+Der Directory-Services besteht aus einem Directory-Information-Tree. Der DIT setzt sich wiederum aus hierarchisch strukturierten Schlüssel-Wert-Paaren zusammen, welche mittels des LDAP verwaltet werden können. 
 
-== LDAP Binging String == 
-Der LDAP-Binging-String ermöglicht den Zugriff auf ein Objekt in der Hierarchie. Das folgende Beispiel zeigt, dass der LDAP-Binging-String aus den Spezifikationen des Objektes besteht. +
+== LDAP-Binding-String == 
+Der LDAP-Binding-String ermöglicht den Zugriff auf ein Objekt in der Hierarchie. Das folgende Beispiel zeigt, dass der LDAP-Binging-String aus den Spezifikationen des Objektes besteht. +
 
 *LDAP://CN=Joe Smith,OU=East,CN=users,DC=MyDomain,DC=com* +
 
