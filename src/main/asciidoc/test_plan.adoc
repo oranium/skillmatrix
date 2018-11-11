@@ -60,6 +60,7 @@ Jede testbezogene Aufgabe muss einem Ansprechpartner zugeordnet werden.
 |U-Statistics-1  |Statistik ansehen              |Nutzer ist auf Profil              |renderStatistics()       |Skill  |Chart
 |U-ERROR-1      |Keine Verbindung zu Active Directory       |Anwendung ist geöffnet       |login()       |Nutzerdaten       |Error,Fehlerquelle 
 |U-ERROR-2       |Keine Verbindung zu Datenbank       |Verschiedene(Suchanfrage,Skill ändern,...)       |-       |-       |Error,Fehlerquelle
+|U-State-1 |State speichern |Nutzer gibt etwas in ein Fomularfeld ein |saveState() |JSON-Objekt |Daten |erfolgreich gespeichert
 
 
 
