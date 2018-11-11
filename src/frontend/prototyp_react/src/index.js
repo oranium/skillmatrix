@@ -16,19 +16,22 @@ import './index.css';
 
 
 class App extends Component {
+
+    //user inputs something into an input field
     handleChange(id, value){
-        if (this.props.state.formState.inputs[id].error){
+        if (this.props.state.formState[id].error){
             store.dispatch(setError(id, false))
         }
         store.dispatch(updateInput(id, value));
     }
 
+    //user clicks button to show form/labels
     handleSubmit(page){
-        const state = this.props.state.formState;
+        const inputs = this.props.state.formState;
         var submit = true;
         if (this.props.state.page === "form"){
-            for (var key in state.inputs){
-                var input = state.inputs[key];
+            for (var key in inputs){
+                var input = inputs[key];
                 if (input.value === ""){
                     store.dispatch(setError(key, true));
                     submit = false;
@@ -41,6 +44,8 @@ class App extends Component {
             store.dispatch(switchPage(page));
         }
     }
+
+    //user wants to reset all input fields
     handleResetForm(){
         store.dispatch(resetForm());
     }
@@ -51,7 +56,7 @@ class App extends Component {
             <Header username={this.props.state.user}/>
             <main>
                 <h1>Neuen Skill erstellen</h1>
-                <Form inputs={this.props.state.formState.inputs} page={this.props.state.page} name="test" onChange={(id, value) => this.handleChange(id, value)} onSubmit={(page) => this.handleSubmit(page)} onReset={() => this.handleResetForm()}/>
+                <Form inputs={this.props.state.formState} page={this.props.state.page} name="test" onChange={(id, value) => this.handleChange(id, value)} onSubmit={(page) => this.handleSubmit(page)} onReset={() => this.handleResetForm()}/>
             </main>
         </div>
     );
@@ -65,6 +70,7 @@ class App extends Component {
         <App state={store.getState()}/>,
         document.getElementById('root')
       );
+    console.log("State has been changed.....")
     console.log(store.getState());
   }
 

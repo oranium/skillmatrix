@@ -1,12 +1,15 @@
+const itemName = "state";
+
 export const loadState = () => {
     try {
-        const serializedState = localStorage.getItem('state');
+        const serializedState = localStorage.getItem(itemName);
         if (serializedState == null) {
             return undefined;
         }
         return JSON.parse(serializedState);
         
     } catch (err)  {
+        console.log("Error: Could not load State from local storage");
         return undefined;
     }
 };
@@ -14,15 +17,15 @@ export const loadState = () => {
 export const saveState = (state) => {
     try {
         const serializedState = JSON.stringify(state);
-        localStorage.setItem('state', serializedState)
+        localStorage.setItem(itemName, serializedState)
     } catch (err) {
-        // ignore
+        console.log("Error: Could not save state to local storage.");
     }
 };
 
 export const deleteState = () => {
     try {
-        localStorage.removeItem('state');
+        localStorage.removeItem(itemName);
     } catch (err) {
         //ignore
     }

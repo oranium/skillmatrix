@@ -99,7 +99,7 @@ export const LevelPicker = withStyles(styles)(
         if (props.data.error){
             className = classes.error;
         }
-        console.log(className);
+        
         const radio_btns = numbers.map(
             (value, i) => (
                 <Radio   

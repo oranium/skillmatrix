@@ -7,3 +7,33 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+html, body {
+  height: 100%; }
+
+body {
+  font-family: 'Roboto';
+  margin: 0;
+  padding-top: 0.1px;
+}
+
+
+main {
+  text-align: center;
+}
+
+.form {
+  width: 500px;
+  margin: auto; }
+  .form .mdc-text-field {
+    margin: 20px auto; }
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin: 20px auto; 
+  width: 500px
+  }
+
+.button-container button {
+  margin: 3px; }

@@ -1,55 +1,52 @@
-const defaultInputsState = {
-    inputs: {
-       textfield: {
-            name: "Skill",
-            value: "",
-            error: false,
-            type: "text"
-        },
-        levelfield: {
-            name: "Level",
-            value: "",
-            error: false
-        },
-        datefield: {
-            name: "Date",
-            value: "",
-            error: false,
-            type: "date"
-        },
-        textarea: {
-            name: "Note",
-            value: "",
-            error: false,
-            type: "textarea"
-        }
+//default map for clean input fields
+const defaultFormState = {
+    textfield: {
+        name: "Skill",
+        value: "",
+        error: false
+    },
+    levelfield: {
+        name: "Level",
+        value: "",
+        error: false
+    },
+    datefield: {
+        name: "Date",
+        value: "",
+        error: false
+    },
+    textarea: {
+        name: "Note",
+        value: "",
+        error: false
     }
 };
 
-export const formState = (state = defaultInputsState, action) => {
+//has all the data for the inputfields
+export const formState = (state = defaultFormState, action) => {
     switch(action.type){
+
+        //return new state, where only the one value of the certain input field has changed to action.input
         case 'UPDATEINPUT':
             return Object.assign({}, state, {
-                inputs: Object.assign({}, state.inputs, {
-                    [action.id]: Object.assign({}, state.inputs[action.id], {value: action.input})
-                }),
+                [action.id]: Object.assign({}, state[action.id], {value: action.input})
             });
-        
+
+        //return new state, where input field with action.id has a new bool
         case 'SETERROR':
-            console.log(action);
             return Object.assign({}, state, {
-                inputs: Object.assign({}, state.inputs, {
-                    [action.id]: Object.assign({}, state.inputs[action.id], {error: action.error})
-                }),
+                [action.id]: Object.assign({}, state[action.id], {error: action.error})
             });
+
         case 'RESETFORM':
-            return defaultInputsState;
+            return defaultFormState;
 
         default:
             return state;
     }
 }
 
+//at the moment this only saves the username
 export const user = (state = "Valdemar Forsberg", action) => {
     switch(action.type){
         case 'UPDATEUSERNAME':
@@ -60,6 +57,7 @@ export const user = (state = "Valdemar Forsberg", action) => {
     }
 }
 
+//defines which page is viewed to the user
 export const page = (state = "form", action) => {
     switch(action.type){
         case 'SWITCHPAGE':
