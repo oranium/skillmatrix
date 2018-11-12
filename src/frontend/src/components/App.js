@@ -112,7 +112,8 @@ class Search extends Component {
     return (
       <div className="Search">
         <Header username="Valdemar Forsberg" />
-        <p />
+        <main>
+        <h1>Skill Search</h1>
         <form>
           <Input
             btnValue="Search"
@@ -135,6 +136,7 @@ class Search extends Component {
           category={this.state.dataset}
           radioOnChange={this.radioOnChange}
         />
+        </main>
       </div>
     );
   }

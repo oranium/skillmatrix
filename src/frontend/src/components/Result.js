@@ -4,7 +4,7 @@ class Result extends Component {
   render() {
     let { programming, design } = this.props.matches;
     return (
-      <div>
+      <div className="list">
         {programming.length > 0 || design.length > 0 ? (
           <ul>
             <li>Programming</li>

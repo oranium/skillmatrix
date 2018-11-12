@@ -23,14 +23,16 @@ class Input extends Component {
           variant="outlined"
           id={this.props.id}
         />
-        <Button
-          variant="contained"
-          color="primary"
-          type="submit"
-          onClick={this.onClick}
-        >
-          {this.props.btnValue}
-        </Button>
+        <div className="button-container">
+          <Button
+            variant="contained"
+            color="primary"
+            type="submit"
+            onClick={this.onClick}
+          >
+            {this.props.btnValue}
+          </Button>
+        </div>
       </div>
     );
   }

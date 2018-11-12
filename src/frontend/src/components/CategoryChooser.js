@@ -17,7 +17,7 @@ class CategoryChooser extends Component {
 
   render() {
     return (
-      <div className="categorychooser>">
+      <div className="categorychooser">
         <FormControl component="fieldset" className="formcontrol">
           <FormLabel component="legend">Category to add to</FormLabel>
           <RadioGroup
