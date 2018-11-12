@@ -11,6 +11,7 @@ import { loadState, saveState} from './localStorage';
 //import page parts
 import Header from './components/Header';
 import Form from './components/Form';
+import Login from './login';
 
 import './index.css';
 
@@ -50,16 +51,30 @@ class App extends Component {
         store.dispatch(resetForm());
     }
 
+    handleLogOut(){
+        store.dispatch(switchPage('login'));
+    }
+
+    handleLogin(){
+        store.dispatch(switchPage('form'));
+    }
+
   render() {
-    return (
-        <div>
-            <Header username={this.props.state.user}/>
-            <main>
-                <h1>Neuen Skill erstellen</h1>
-                <Form inputs={this.props.state.formState} page={this.props.state.page} name="test" onChange={(id, value) => this.handleChange(id, value)} onSubmit={(page) => this.handleSubmit(page)} onReset={() => this.handleResetForm()}/>
-            </main>
-        </div>
-    );
+      if (this.props.state.page === "login"){
+        return (
+            <Login login={this.handleLogin}/>
+        )
+      }else{
+        return (
+            <div>
+                <Header username={this.props.state.user} logout={this.handleLogOut} />
+                <main>
+                    <h1>Neuen Skill erstellen</h1>
+                    <Form inputs={this.props.state.formState} page={this.props.state.page} name="test" onChange={(id, value) => this.handleChange(id, value)} onSubmit={(page) => this.handleSubmit(page)} onReset={() => this.handleResetForm()}/>
+                </main>
+            </div>
+        );
+      }
   }
 }
 

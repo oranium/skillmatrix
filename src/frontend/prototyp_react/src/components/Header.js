@@ -33,7 +33,7 @@ function ButtonAppBar(props) {
           <Typography variant="h6" color="inherit" className={classes.grow}>
             {props.username}
           </Typography>
-          <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
+          <IconButton className={classes.menuButton} onClick={()=>props.logout()} color="inherit" aria-label="Menu">
             <PowerSettingsNew />
           </IconButton>
         </Toolbar>
