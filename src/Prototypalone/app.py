@@ -7,7 +7,7 @@ app = Flask(__name__)
 # MySQL configurations
 app.config['MYSQL_DATABASE_USER'] = 'root'
 app.config['MYSQL_DATABASE_PASSWORD'] = 'Momomomo2'
-app.config['MYSQL_DATABASE_DB'] = 'test'
+app.config['MYSQL_DATABASE_DB'] = 'pre'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql.init_app(app)
 
@@ -17,10 +17,10 @@ def index():
         # Fetch form data
         userDetails = request.form
         name = userDetails['name']
-        passwort = userDetails['email']
+        email = userDetails['email']
         conn = mysql.connect()
         cursor = conn.cursor()
-        cursor.execute("INSERT INTO Daddy(name, passwort) VALUES(%s, %s)",(name, passwort))
+        cursor.execute("INSERT INTO presi2(name, email) VALUES(%s, %s)",(name, email))
         conn.commit()
         cursor.close()
         return redirect('/users')
@@ -30,7 +30,7 @@ def index():
 def users():
     conn = mysql.connect()
     cursor = conn.cursor()
-    resultValue = cursor.execute("SELECT * FROM Daddy")
+    resultValue = cursor.execute("SELECT * FROM presi2")
     if resultValue > 0:
         userDetails = cursor.fetchall()
         return render_template('users.html',userDetails=userDetails)

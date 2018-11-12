@@ -6,6 +6,16 @@ print (d["success"])
 print (d["status"])
 
 
+row = cursor.fetchone()
+ 
+        while row is not None:
+            print(row)
+            row = cursor.fetchone()
+#gibt jede Zeile einzeln als tupel aus
+
+l = list(tupel)
+#macht aus tupeln listen
+
 
 
 
