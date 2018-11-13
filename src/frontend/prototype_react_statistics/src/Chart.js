@@ -8,17 +8,17 @@ var json = {"label":"Python",
 
             "data":[
                 {
-                x: '1. Januar 2015',
+                x: '2015-05-01',
                 y: 0
                 },
                 {
-                x: '5. October 2016',
+                x: '2016-08-03',
                 y: 1
             },{
-                x: '5. Juni 2018',
+                x: '2019-07-06',
                 y: 4
             },{
-                x: '23. November 2019',
+                x: '2021-11-23',
                 y: 5
             }],
 
@@ -67,7 +67,7 @@ class Chart extends React.Component{
                                 position: 'bottom',
                                 time: {
                                   displayFormats: {'month': 'MM/YY'},
-                                  tooltipFormat: 'DD/MM/YY',
+                                  tooltipFormat: 'll',
                                   unit: 'month',
                                  }
                               }],
