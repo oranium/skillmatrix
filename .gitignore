@@ -24,4 +24,5 @@ Desktop.ini
 *.mv.db
 *.h2.db
 
-src/frontend/prototyp_react/
+
+/src/frontend/prototyp_react/node_modules/
