@@ -1,0 +1,48 @@
+= Entwicklerdokumentation
+
+== Einführung und Ziele
+* Aufgabenstellung
+Erstellen einer React-App, in der mithilfe des ChartJS Frameworks ein Skill eines Mitarbeiters graphisch als Statistik gerendert wird.
+* Qualitätsziele
+-Skill graphisch als Linechart ausgeben
+-flexible  Timeline, die man verschieben kann bzw. in der man zoomen kann
+-graphisch ansprechendes Design
+
+== Randbedingungen
+* Hardware-Vorgaben +
+Rechner, der einen kleinen Webserver laufen lassen kann. 
+
+* Software-Vorgaben +
+React
+
+* Vorgaben zum Betrieb des Software +
+Server: Webserver, um Dateien an die Clienten auszuliefern
+Client: moderner Browser, der Javascript unterstützt
+
+== Kontextabgrenzung
+* Externe Schnittstellen +
+-
+
+== Lösungsstrategie
+
+Das "Chart" stellt in meiner Implementation eine eigene Klasse und damit einen eigenen React-Component dar. Damit lässt sich das Chart jederzeit mit dem '<Chart/>' Tag in andere JS Dateien einfügen und rendern.
+Die Daten für das Chart werden extern gespeichert. Im Prototyp wird dies durch die Variable json dargestellt, die eine Datenstruktur zur Verfügung stellt, in der alle nötigen Information über einen Skill enthalten sind. Mithilfe dieser Daten passt sich die Statistik einfach jedem Skill an.
+
+== Bausteinsicht
+
+
+== Entwurfsentscheidungen
+* Architektur
+* Verwendete Muster
+* Persistenz
+* Benutzeroberfläche +
+Material-Design
+
+[appendix]
+== Glossar
+* React +
+Java Script Libary, um grafische Benutzeroberflächen zu bauen.
+
+* ChartJs +
+Franework für Javascript, um verschiedene Arten von Diagrammen zu erstellen.
+
