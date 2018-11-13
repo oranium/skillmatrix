@@ -1,0 +1,79 @@
+= Test-Plan
+
+Dieser Testplan stellt eine vereinfachte Version der IEEE 829-1998 Vorlage dar.
+
+== Einführung
+Der Testplan dient als Orientierung bezüglich der abzudeckenden Testfälle. Er wird kontinuerlich nach Bedarf aktualisiert, zum Beispiel wenn sich Funktionalitäte der Klassen ändern.
+
+== Aufbau der Testbezeichner
+Nach welchem Schema sind die Tests benannt?
+
+*U - K - n <==> Unit-Test Nummer n für Klasse K*
+
+*U - Header - 1, U - Input - 2*
+
+== Testgegenstände
+
+== Zu testende Funktionalitäten
+
+- Datenbank: Speicherung und Ausgabe
+- Frontend: Komponenten, Komposition, Datenübertragung von und zu Backend (POST-,GET-Befehle)
+- Backend: Korrekte Ordnung der Suchergebnisse, Authentifizierung, Datenbankcontroller, Datenübertragung von und zu Frontend 
+
+== Nicht zu testende Funktionalitäten
+- JS-Librarys (React,Redux,...)
+- Flask
+- Active Directory 
+
+== Herangehensweise
+
+*Die JavaScript-Klassen (Components) werden mit jest getestet.*  +
+*Das Python-Backend wird mit unittest getestet.*
+
+== Umgebungsvoraussetzungen
+- Wird spezielle Hardware benötigt?
+* Nein.
+- Welche Daten müssen bereitgestellt werden? Wie werden die Daten bereitgestellt?
+* Testdaten für Suche und Nutzerauthentifizierung. Die Daten werden durch Testdatensätze simuliert.
+- Wird zusätzliche Software für das Testen benötigt?
+* Nein. Die Testsoftware ist in den dependencies enthalten.
+- Wie kommuniziert die Software während des Testens? Internet? Netzwerk?
+* Auf der lokalen Maschine.
+
+== Testfälle und Verantwortlichkeit
+Jede testbezogene Aufgabe muss einem Ansprechpartner zugeordnet werden.
+
+// See http://asciidoctor.org/docs/user-manual/#tables
+[options="headers"]
+|===
+|ID |Anwendungsfall |Vorbedingungen |Methode|Eingabe |Ausgabe
+|U-DBController-1  |Datenbankzugriff              |Datenbank ist online              |retrieveData()       |SQL-Query  |gesuchte Elemente als yaml-Objekt
+|U-DBController-2  |Einpflegen in Datenbank              |Datenbank ist online              |setData()       |JSON-Objekt  |Daten als yaml-Objekt eingepflegt
+|U-DBController-3  |Suchanfrage              |Daten wurden aus Datenbank extrahiert              |getJSON()       |yaml-Objekt  |JSON-Objekt
+|U-Authenticator-1  |Login(Success)           |Anwendung ist geöffnet              |login()       |Username korrekt und Passwort korrekt | loginToken
+|U-Authenticator-2  |Login(Failure)              |Anwendung ist geöffnet              |login()      |Username korrekt und Passwort inkorrekt |Error
+|U-Authenticator-3  |Login(Failure)              |Anwendung ist geöffnet              |login()      |Username inkorrekt und Passwort korrekt  |Error
+|U-Authenticator-3  |Login(Failure)              |Anwendung ist geöffnet              |login()      |Username inkorrekt und Passwort inkorrekt  |Error
+|U-Search-1  |Suchen              |Suche ausgeführt,keine Ergebnisse              |search()       |Suchanfrage  |Keine Ergebnisse
+|U-Search-2  |Suchen              |Suche ausgeführt, mit Ergebnissen              |search()       |Suchanfrage  |Korrekt geordnetet Ergebnisse
+|U-Profile-1 |Profil anzeigen              |Profil wurde angesteuert              |getProfile()       |-  |Profil wird angezeigt
+
+|U-Profile-2  |Skilllevel ändern              |Nutzer ist auf eigenem Profil              |setSkill()       |Skill,Skilllevel,Notiz  |Profil wird korrekt geändert, Änderung gespeichert
+
+|U-Profile-3  |Skilllevel ändern              |Nutzer ist auf eigenem Profil              |setSkill()       |Skilllevel,Notiz  |Profil wird korrekt geändert, Änderung gespeichert
+
+|U-Profile-4  |Skilllevel ändern              |Nutzer ist auf eigenem Profil              |setSkill()       |Skill, Notiz  |Profil wird korrekt geändert, Änderung gespeichert
+
+|U-Profile-5  |Skill hinzufügen              |Nutzer ist auf eigenem Profil              |setSkill()       |Skill, Skilllevel |Profil wird korrekt geändert, Änderung gespeichert
+
+|U-Statistics-1  |Statistik ansehen              |Nutzer ist auf Profil              |renderStatistics()       |Skill  |Chart
+|U-ERROR-1      |Keine Verbindung zu Active Directory       |Anwendung ist geöffnet       |login()       |Nutzerdaten       |Error,Fehlerquelle 
+|U-ERROR-2       |Keine Verbindung zu Datenbank       |Verschiedene(Suchanfrage,Skill ändern,...)       |-       |-       |Error,Fehlerquelle
+|U-State-1 |State speichern |Nutzer gibt etwas in ein Fomularfeld ein |saveState() |JSON-Objekt |Daten erfolgreich gespeichert
+|U-State-2 |State einlesen  |Seite wird geladen |loadState() |Itemname |store Objekt
+|U-State-3 |Wert eines Inputfelds im State ändern |Nutzer gibt etwas in ein Fomularfeld ein |updateInput() |Id, Wert |neuer State
+
+
+
+
+|===
