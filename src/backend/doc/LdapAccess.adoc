@@ -1,0 +1,21 @@
+= Testen des Prototypen 
+
+== Installation 
+
+Mit dem Python Packetmanager kann die Library LDAP3 direkt heruntergeladen und installiert werden. Führen Sie dazu folgenden Befehl auf der Kommandozeile aus. + 
+
+*pip install ldap3* + 
+
+== Ausführung des Scripts 
+Starten Sie die Anwendung, indem Sie auf der Kommandozeile folgenden Befehl ausführen. + 
+
+*python3 ldapAccess.py* + 
+
+Anschließend werden Sie aufgefordert, die entsprechenden Account-Informationen anzugeben. +
+Verwenden Sie für den Test die folgenden Account-Informationen: + 
+
+*Username: AzureAD.SWT.com\ADadmin* +
+*Password: @Administrator* +
+
+
+
