@@ -1,0 +1,111 @@
+:imagesdir: ./models/design
+
+= Entwicklerdokumentation
+
+== Einführung und Ziele
+
+== Aufgabenstellung
+
+Im Rahmen des Softwarepraktikums soll eine webbasierte Anwendung erstellt werden, in der die
+Mitarbeiter in einem Fragebogen ihre aktuellen Fähigkeiten selbst bewerten können. Es ist möglich
+nach Mitarbeitern zu suchen, die eine oder mehrere Technologien beherrschen. Die Suche soll dabei
+als unscharfe Suche realisiert werden und es soll die Möglichkeit bestehen auch ähnliche/verwandte
+Skills zu finden.
+Die Anwendung soll auf Basis von HTML/JavaScript mit React oder Angular realisiert werden. Für das
+UI soll Google's Material Design verwendet werden. Die Daten werden serverseitig in einer MySQL
+Datenbank abgelegt. Die Authentifizierung der Benutzer erfolgt gegen ein Active Directory.
+Die Anwendung soll folgende Funktionalitäten bieten:
+
+**1.) Anmeldung / Login**
+
+**2.) Fähigkeiten bewerten**
+
+**3.) Fähigkeiten suchen**
+
+**4.) Fähigkeiten bearbeiten**
+
+**5.) Mitarbeiterentwicklung**
+
+Genauere Informationen können dem Pflichtenheft entnommen werden.
+
+== Randbedingungen
+* Hardware-Vorgaben +
+Es wird ein Server als Host für die Anwendung benötigt. 
+
+* Software-Vorgaben +
+React, Redux, ChartJS, Material-UI , Python/Flask,LDAP3 yaml und MySQL werden genutzt. 
+
+* Vorgaben zum Betrieb der Software +
+Server: Webserver, um Dateien an die Clienten auszuliefern. +
+Client: Moderner Browser, der Javascript unterstützt.
+
+== Kontextabgrenzung
+* Externe Schnittstellen +
+Die Schnittstellen der App sind die GUI, die der Nutzer bedient, die Datenbank("Database") und das Active Directory, das die Nutzer (hier: Mitarbeiter von 3m5.) indiziert. Die Spalten stellen Aktivitäten der jeweilige Spaltenköpfe dar.
+
+|===
+|*User*|*Database*|*Active Directory*
+|Einloggen|Profildaten speichern |Nutzer authentifizieren 
+|Skills Suchen|Änderungen speichern|
+|SkillMatrix bearbeiten||
+|Statistik betrachten||
+
+|===
+
+== Lösungsstrategie
+
+Die Benutzeroberfläche wird mit der JavaScript-Library React und Material-UI realisiert. Die Features von React werden dementsprechend genutzt (Komponententrennung, State als JavaScript-Objekt). Um die Statistiken der Mitarbeiter darzustellen, wird die ChartJS-Library genutzt. Der State wird mit Redux verarbeitet. Es sollen dabei Daten der Komponenten (name, value), Benutzername und Name der Seite gespeichert werden. Sämtliche Daten werden als im JSON-Format übertragen.
+
+Die MySQL-Datenbank wird mithilfe von Python abgefragt. Mit Flask werden REST-APIs bereitgestellt, von denen die Daten durch einen GET-Befehl als JSON an die React-App übergeben werden. Durch einen POST-Befehl können Datenänderungen in der Datenbank gespeichert werden, beispielsweise Änderungen im Level eines Skills.
+
+== Bausteinsicht
+* Package-Diagramme +
+
+image:Authentification.jpg[Authentifizierung]
+
+image:ReactState.jpg[State]
+
+image:Search.jpg[Suche]
+
+image:Statistics.jpg[Statistik]
+
+image:DatenbankController.jpg[DatenbankController]
+
+* Entwurfsklassendiagramm +
+
+image:entwurfsdiagramm.JPG[Entwurfsdiagramm]
+ 
+== Entwurfsentscheidungen
+//* Architektur
+//* Verwendete Muster
+* Persistenz + 
+Die Daten werden in einer MySQL-Datenbank abgelegt. Ist diese abgeschaltet, ist die App nicht funktionsfähig.
+* Benutzeroberfläche +
+Die Benutzeroberfläche wird mit React und Komponenten von Material-UI erstellt.
+
+[appendix]
+== Glossar
+
+|===
+|Begriff|Erklärung
+|React|JavaScript-Library, um grafische Benutzeroberflächen zu bauen.
+
+|Redux|Framework zur Abkapselung des State vom Rest des Programms,funktionaler Ansatz. Lässt sich gut mit React verbinden.
+
+|Material Design|Open-Source-Designsprache, welche von Google entwickelt wird.
+
+|Material-UI|React-Framework, welches die Material-Design-Elemente als React-Komponenten bereitstellt.
+
+|Local Storage|Speicher im Browser des Anwenders, auf dem Dateien von Webseiten abgelegt und ausgelesen werden können.
+
+|State|Datenstruktur im Bezug auf React, in der man alle Daten,die für den Betrieb der Seite benötigt werden, ablegt, um daraus eine Seite aufzubauen. Änderungen auf der Seite durch den Nutzer, wie zum Beispiel Eingaben, werden auch im State erfasst.
+
+|yaml|Markup-Language, die an Datenstrukturen in Python angelehnt ist.
+
+|ChartJS|Library für Javascript, um verschiedene Arten von Diagrammen zu erstellen.
+|Lightweight-Directory-Access-Protocol (LDAP)|Dabei handelt es sich um ein Netzwerkprotokoll. Es setzt sich aus einem Client-Sever-Modell zusammen, welches die Kommunikation mit einem externen Directory-Services ermöglicht. 
+Ziel der abfragebasierten Kommunikation ist die Abfrage bzw. Veränderung von Informationen im Directory-Services.
+|Directory-Information-Tree (DIT)| Der Directory-Services besteht aus einem Directory-Information-Tree. Der DIT setzt sich wiederum aus hierarchisch strukturierten Schlüssel-Wert-Paaren zusammen, welche mittels des LDAP verwaltet werden können. 
+|LDAP-Binding-String | Der LDAP-Binding-String ermöglicht den Zugriff auf ein Objekt in der Hierarchie des DIT. 
+
+|===

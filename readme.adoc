@@ -1,9 +1,17 @@
-= SWT Group 01
+= Kickstart
 
-== Folder structure
+The kickstart module is a template project to bootstrap the Java project in the Software Engineering lab.
+The project is supposed to be copied into the group's repository to get it started easily.
+It contains the following features:
 
-The *backend* directory contains the SkillMatrix backend, which provides REST-APIs to the frontend of the application. +
-The *frontend* directory contains the SkillMatrix frontend. +
-The *ooa_ood* directory contains analysis and design phases of this project. +
+* a skeleton Java 8 web application based on Spring Boot and Salespoint framework (see `src/main/java`)
+* a placeholder Asciidoc file in `src/main/asciidoc` for documentation
 
-=== The prototypes can be found on branch "prototypes"
+== How to run the application?
+
+* In the IDE: find `Application.java`, richt-click project, select "Run As > Java Application"
+* From the command line: run `mvn spring-boot:run`
+
+== How to package the application?
+
+* Run `mvn clean package`. The packaged application (a JAR in `target/`) can be run with `java -jar $jarName`.
