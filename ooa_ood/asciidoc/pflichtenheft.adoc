@@ -1,0 +1,518 @@
+= Pflichtenheft
+:project_name: Projektname
+SkillMatrix
+:imagesdir: ./models/analysis
+:toc:
+:toc-placement: macro
+
+
+
+[options="header"]
+[cols="1, 1, 1, 1, 4"]
+|===
+|Version | Status      | Bearbeitungsdatum   | Autoren(en) |  Vermerk
+|0.1     | In Arbeit   | 10.10.2017          | Autor       | Initiale Version
+|1.0 |In Arbeit | 23-24.10.2018 |Aron Gaden, Wilhelm Pertsch, Bruno Reinhold |Erste Bearbeitung
+|1.0.1|In Arbeit|24.10.2018|Aron Gaden|Links zu Diagrammen hinzugefügt
+|1.0.2|In Arbeit|28.10.2018|Aron Gaden,Wilhelm Pertsch, Bruno Reinhold, Cornell Ziepel|Bearbeitung von Diagrammen und einzelnen Elementen
+|2|Fertig|28.10.2018|Aron Gaden,Wilhelm Pertsch, Cornell Ziepel|Beseitigung letzter Fehler
+|===
+
+toc::[]
+
+== Zusammenfassung
+//Eine kurze Beschreibung des Dokuments. Wenige Absätze.
+In diesem Pflichtenheft wird beschrieben, wie die Auftragnehmer (Cornell Ziepel, Maximilian Schaller, Bruno Reinhold, Wilhelm Pertsch, Aron Gaden) planen, die Anwendung SkillMatrix umzusetzen. Die Idee folgt den Anforderungen des Auftraggebers (3m5. Media GmbH), die im Folgenden aufgeführt ist.
+
+
+
+== Aufgabenstellung und Zielsetzung
+
+////
+Text aus Aufgabenstellung kopieren und ggfs. präzisieren.
+Insbesondere ergänzen, welche Ziele mit dem Abschluss des Projektes erreicht werden sollen.
+////
+Im Rahmen des Softwarepraktikums soll eine webbasierte Anwendung erstellt werden, in der die
+Mitarbeiter in einem Fragebogen ihre aktuellen Fähigkeiten selbst bewerten können. Es ist möglich
+nach Mitarbeitern zu suchen, die eine oder mehrere Technologien beherrschen. Die Suche soll dabei
+als unscharfe Suche realisiert werden und es soll die Möglichkeit bestehen auch ähnliche/verwandte
+Skills zu finden.
+Die Anwendung soll auf Basis von HTML/JavaScript mit React oder Angular realisiert werden. Für das
+UI soll Google's Material Design verwendet werden. Die Daten werden serverseitig in einer MySQL
+Datenbank abgelegt. Die Authentifizierung der Benutzer erfolgt gegen ein Active Directory.
+Die Anwendung soll folgende Funktionalitäten bieten:
+
+**1.) Anmeldung / Login:**
+Die Benutzer können sich an der Anwendung anmelden. Je nach Benutzergruppe werden
+unterschiedliche Funktionen dargestellt.
+
+**2.) Fähigkeiten bewerten:**
+In einem einfachen Fragebogen kann jeder Mitarbeiter bewerten wie gut er eine bestimmte
+Technologie beherrscht (1 = sehr gut / 5 = gar nicht).
+
+**3.) Fähigkeiten suchen:**
+Über eine Suchmaske kann nach einer oder mehreren Fähigkeiten gesucht werden. Die
+Anwendung liefert eine Liste von Mitarbeitern, welche diese Fähigkeiten besitzen (absteigend
+nach Beherrschungsgrad).
+Wird nach mehreren Fähigkeiten gesucht, muss der Mitarbeiter auch alle diese Fähigkeiten
+besitzen.
+Zusätzlich werden auch Mitarbeiter gefunden die nur Teile der Fähigkeiten besitzen.
+
+**4.) Fähigkeiten bearbeiten:**
+Es soll möglich sein, die bestehenden Fähigkeiten anzupassen. Dafür gibt es Fähigkeiten die für
+eine bestimmte Gruppe von Mitarbeitern zutreffen (z.B. Programmierer = (Java, C++, C#,
+HTML, usw. / Designer = (Photoshop, InDesign, Responsive Webdesign, …).
+Anmerkung: Die Mitarbeitergruppen existieren bereits in der Mitarbeitertabelle.
+
+**5.) Mitarbeiter Entwicklung**
+Statistische Auswertung der Entwicklung der Mitarbeiter. Welche Fähigkeiten wurden
+erworben. Welche Fähigkeiten wurden verbessert usw. Filterung der Statistik nach Zeitraum
+(Monat, Quartal, Jahr, Gesamter Zeitraum, usw.).
+
+== Produktnutzung
+////
+In welchem Kontext soll das System später genutzt werden? Welche Rahmenbedingungen gelten?
+Zusätzlich kurze Einleitung für fachfremde Personen
+////
+
+Die SkillMatrix soll genutzt werden, um die Fähigkeiten der Mitarbeiter zentral zu speichern und abzurufen. Des Weiteren sollen Fähigkeitsentwicklungen ersichtlich sein. Jeder Mitarbeiter hat die Möglichkeit, seine Fertigkeiten zu verwalten und nach anderen Mitarbeitern mit spezifischen Fähigkeiten zu suchen. So soll es den Prozess der Teambildung bei Projekten zu erleichtern.
+
+== Interessensgruppen (Stakeholders)
+////
+Welche realen und juristischen Personen(-gruppen) haben Einfluss auf die Anforderungen im Projekt?
+////
+3m5. Media GmbH +
+Alexander Lehn +
+Dominik Pretzsch +
+
+== Systemgrenze und Top-Level-Architektur
+
+=== Kontextdiagramm
+////
+Das Kontextdiagramm zeigt das geplante Software-System in seiner Umgebung. Zur Umgebung gehören alle Nutzergruppen des Systems und Nachbarsysteme. Die Grafik kann auch informell gehalten sein. Überlegen Sie sich dann geeignete Symbole. Die Grafik kann beispielsweise mit Visio erstellt werden. Wenn nötig, erläutern Sie diese Grafik.
+////
+
+image::contextmodel.jpg[Kontextdiagramm]
+
+
+=== Top-Level-Architektur
+////
+Dokumentieren Sie ihre Top-Level-Architektur mit Hilfe eines Komponentendiagramm.
+////
+
+
+image::toplevelarchitecture.jpg[Top-Level-Architektur]
+
+== Anwendungsfälle
+
+=== Akteure
+////
+Akteure sind die Benutzer des Software-Systems oder Nachbarsysteme, welche darauf zugreifen. Dokumentieren Sie die Akteure in einer Tabelle. Diese Tabelle gibt einen Überblick über die Akteure und beschreibt sie kurz. Die Tabelle hat also mindestens zwei Spalten (Akteur Name und Kommentar).
+Weitere relevante Spalten können bei Bedarf ergänzt werden.
+////
+// See http://asciidoctor.org/docs/user-manual/#tables
+[options="header"]
+[cols="1,4"]
+|===
+|Name |Beschreibung
+|Employee  |Mitarbeiter bei 3m5.
+|===
+
+=== Überblick Anwendungsfalldiagramm
+Anwendungsfall-Diagramm, das alle Anwendungsfälle und alle Akteure darstellt
+
+image::usecasediagram.jpg[Use-Case-Diagramm]
+
+=== Anwendungsfallbeschreibungen
+////
+Dieser Unterabschnitt beschreibt die Anwendungsfälle. In dieser Beschreibung müssen noch nicht alle Sonderfälle und Varianten berücksichtigt werden. Schwerpunkt ist es, die wichtigsten Anwendungsfälle des Systems zu finden. Wichtig sind solche Anwendungsfälle, die für den Auftraggeber, den Nutzer den größten Nutzen bringen.
+Für komplexere Anwendungsfälle ein UML-Sequenzdiagramm ergänzen.
+Einfache Anwendungsfälle mit einem Absatz beschreiben.
+Die typischen Anwendungsfälle (Anlegen, Ändern, Löschen) können zu einem einzigen zusammengefasst werden.
+////
+
+Sequenzdiagramme zu Use-Cases: +
+
+In den Sequenzdiagrammen wird der Einstieg in das Szenario direkt vom Nutzer mit einem Aufruf an die erste agierende Klasse durchgeführt. In der realen Anwendung würde der Nutzer allerdings stattdessen mit der GUI interagieren.
+
+Im Szenario "Login" wird davon ausgegangen, dass der Nutzer auf die Webanwendung navigiert hat und sich bereits auf der Startseite befindet. Der Befehl _verify()_ wird aufgerufen, wenn der Nutzer seine Logindaten eingegeben und abgesendet hat.
+
+image::sdLogin.jpg[Sequenzdiagramm: Login] 
+
+In den folgenden Sequenzdiagrammen wird davon ausgegangen, dass der Nutzer sich bereits eingeloggt hat.
+
+image::sdEditMatrix.jpg[Sequenzdiagramm: Eigene SkillMatrix bearbeiten ] 
+
+Im Szenario "Search skills" wird dargestellt, wie das System mit Suchanfragen umgeht. Insbesondere legt **SkillMatrixProfileManager** neue Objekte der Klasse **SkillMatrixProfile** via _createProfile()_ an, wenn diese nicht bereits vorhanden sind.
+
+image::sdSearch.jpg[Sequenzdiagramm: Fähigkeiten suchen] 
+
+In den folgenden beiden Sequenzdiagrammen befindet sich der Nutzer entweder auf der Ergebnisliste einer Suchanfrage oder auf der Startseite nach Login. _getProfile()_ wird ausgelöst, indem der Nutzer auf den Link einem Profil klickt. Die Profile werden nicht neu via **SkillMatrixProfileManager** kreiert, da diese Funktion entweder aus der vorherigen Suchanfrage oder aus dem Login hervorgeht.
+
+image::sdViewSkillMatrix.jpg[Sequenzdiagramm: SkillMatrix ansehen] 
+
+image::sdViewStatistics.jpg[Sequenzdiagramm: Statistik ansehen]
+
+
+
+== Funktionale Anforderungen
+
+=== Muss-Kriterien
+////
+Was das zu erstellende Programm auf alle Fälle leisten muss.
+////
+* Authentifizierung der Mitarbeiter über Active Directory
+* Hinzufügen und Bearbeiten eigener Skills auf Skala von 1-5 (auch mehrer gleichzeitig)
+* Entwicklungsstatistik mit einstellbarem Zeitraum
+* Speicherung von Profilen in MySQL-Datenbank
+* Unscharfe Suche von Mitarbeitern nach Kriterien (Programmiersprachen, Frameworks, etc.)
+* Trennung von Mitarbeitern mit allen gesuchten und Fähigkeiten von Mitarbeitern mit einem Teil dieser
+* Hinzufügen von Guidelines für Bewertungsniveau ermöglichen
+
+
+=== Kann-Kriterien
+////
+Anforderungen die das Programm leisten können soll, aber für den korrekten Betrieb entbehrlich sind.
+////
+* Hierarchische Unterteilung der Profile (Admin, Senior Developer, etc.) => Anlegen neuer Skills an Berechtigung binden
+* Regelmäßige Benachrichtigungen bei längerer Nichtbenutzung
+
+== Nicht-Funktionale Anforderungen
+
+=== Qualitätsziele
+////
+Dokumentieren Sie in einer Tabelle die Qualitätsziele, welche das System erreichen soll, sowie deren Priorität.
+////
+
+Die Priosierung der Qualitätsziele ist vorläufig und es muss noch Rücksprache mit dem Kunden gehalten werden.   
+|===
+|**Ziele**|1|2|3|4|5
+|**Wartbarkeit**|||X||
+|**Erweiterbarkeit**||||X|
+|**Nutzbarkeit**|||||X
+|**Skalierbarkeit**||X|||
+|**Zuverlässigkeit**||||X|
+|**Performance**|||X||
+|**Sicherheit**|X||||
+|===
+
+=== Konkrete Nicht-Funktionale Anforderungen
+////
+Beschreiben Sie Nicht-Funktionale Anforderungen, welche dazu dienen, die zuvor definierten Qualitätsziele zu erreichen.
+Achten Sie darauf, dass deren Erfüllung (mindestens theoretisch) messbar sein muss.
+////
+* "Wenig Interaktion" => Anzahl der Operationen zur Benutzung gering halten
+* User Interface verwendet Material Design
+* Leichte Nutzbarkeit (z. B. kein horizontales Scrollen)
+
+== GUI Prototyp
+////
+In diesem Kapitel soll ein Entwurf der Navigationsmöglichkeiten und Dialoge des Systems erstellt werden.
+Idealerweise entsteht auch ein grafischer Prototyp, welcher dem Kunden zeigt, wie sein System visuell umgesetzt werden soll.
+Konkrete Absprachen - beispielsweise ob der grafische Prototyp oder die Dialoglandkarte höhere Priorität hat - sind mit dem Kunden zu treffen.
+////
+
+=== Überblick: Dialoglandkarte
+////
+Erstellen Sie ein Übersichtsdiagramm, das das Zusammenspiel Ihrer Masken zur Laufzeit darstellt. Also mit welchen Aktionen zwischen den Masken navigiert wird.
+////
+//Die nachfolgende Abbildung zeigt eine an die Pinnwand gezeichnete Dialoglandkarte. Ihre Karte sollte zusätzlich die Buttons/Funktionen darstellen, mit deren Hilfe Sie zwischen den Masken navigieren.
+
+image::Dialoglandkarte.jpg[Dialoglandkarte]
+
+=== Dialogbeschreibung
+==== Login-Seite
+Durch das Eingeben seiner 3m5-E-Mailadresse und des zugehörigen Passwortes ist es möglich sich auf der Skillmatrix einzuloggen.
+
+image::page_1.png[Login-Seite]
+
+[options="header"]
+[cols="1,3"]
+|===
+|Maskenelemente |Beschreibung
+|Email-Textfeld  |Textfeld zur Eingabe einer 3m5-E-Mailadresse.
+|Passwort-Textfeld  |Textfeld zur Eingabe des zugehörigen Passworts.
+|Login-Button |Bestätigt die Eingaben.
+|===
+
+Das Passwort wird ausgeblendet, lässt sich aber durch das "Auge" anzeigen.
+
+==== Suche-Seite
+Es ist möglich Mitarbeiter, Fertigkeiten oder Fertigkeitsverknüpfungen zu suchen und auf die Profil-Seite gefundener Mitarbeiter zu wechseln.
+
+image::page_2.png[Login-Seite]
+
+[options="header"]
+[cols="1,3"]
+|===
+|Maskenelemente |Beschreibung
+|Suchleiste-Textfeld  |Textfeld zur Eingabe gesuchter Mitarbeiter oder Fähigkeiten.
+|+-Button bei Suche |Spezifiziert die Suche durch Hinzufügen eines weiteren Suchelements.
+|Gelistete Mitarbeiter-Anzeige|Zeigt geordnete Mitarbeiter welche durch die Suche gefunden wurden und deren Qualifizierung für die gesuchte Fähigkeit.
+|+-Button bei Mitarbeitern |Zeigt nähere Angaben zur Fähigkeit des Mitarbeites durch eine Grafik.
+|View Profile-Button |Ermöglicht es auf die Profil-Seite eines Mitarbeites zu wechseln.
+|Logout-Button|Der Mitarbeiter wird ausgeloggt und kommt zurück auf die Login-Seite.
+|===
+
+
+==== Eigene-Profil-Skill-Seite
+Zeigt die eigenen Skills an.
+
+image::page_4.png[Login-Seite]
+
+[options="header"]
+[cols="1,3"]
+|===
+|Maskenelemente |Beschreibung
+|Statistics-Button |Ermöglicht den Wechsel zur Profil-Statistik-Seite eines Mitarbeiters.
+|Skill-Überkategorien-Anzeige  | Zeigt die verschiedenen Bereiche, in welchen der Mitarbeiter Fähigkeiten besitzt.
+|Pfeil-Überkategorie-Button |Klappt eine Liste von Skills aus, welche der Mitarbeiter in der zugehörigen Überkategorie besitzt.
+|Skill-Anzeige  |Zeigt Skills und deren Spezifikationen sowie Level des Skills.
+|Pfeil-Unterkategorie-Button |Klappt eine Liste von Unter-Skills aus, welche der Mitarbeiter in dem zugehörigen Skill besitzt.
+|Unter-Skill-Anzeige  |Zeigt Unter-Skills und deren Spezifikationen sowie Level des Unter-Skills.
+|ADD NEW SKILL-Button|Ermöglicht es einen neuen Skill hinzuzufügen.
+|ADD NEW SKILL-Button|Ermöglicht es einen neuen Skill hinzuzufügen.
+|Logout-Button|Der Mitarbeiter wird ausgeloggt und kommt zurück auf die Login-Seite.
+|===
+
+Die Skill-Überkategorien zeigen auch, wie viele verschiedene Fähigkeiten und Unter-Skills der Mitarbeiter in dieser Kategorie besitzt.
+Die Skill-Level und Skill-Unterkategorie-Level lassen sich sich durch Klicken auf den entsprechenden Punkt bearbeiten. 
+
+==== Add-Milestone-Seite
+Ermöglicht es einen Meilenstein in der Entwicklung eines eigenen Skills hinzuzufügen.
+
+image::page_4_addMilestone.png[Login-Seite]
+
+[options="header"]
+[cols="1,3"]
+|===
+|Maskenelemente |Beschreibung
+|For-Textfeld |Beschreibt für welche Fähigkeit der Meilenstein hinzugefügt werden soll.
+|Datums-Feld  |Ermöglicht das zeitliche Festlegen, wann der Meilenstein erreicht wurde.
+|Meilenstein-Anzeige |Zeigt ältere Meilensteine zu dem spezifischen Skill an.
+|ADD MILESTONE-Button|Legt den Meilenstein mit den oben bestimmten Daten an. Nach anlegen des Meilensteins kommt man zurück auf die Eigene-Profil-Skill-Seite.
+|X-Button  |Ermöglicht das Abbrechen des Meilenstein-Hinzufügen-Prozesses, man kommt wieder auf die Eigene-Profil-Skill-Seite.
+|Pfeil-Button | Ermöglicht es Skills aus einer Liste auszuwählen.
+|===
+
+
+
+
+==== Login-Seite
+Ermöglicht das Hinzufügen eines Skills zu seinem eigenen Skill Repertoire.
+
+image::page_4_addSkill.png[Login-Seite]
+
+[options="header"]
+[cols="1,3"]
+|===
+|Maskenelemente |Beschreibung
+|Such-Textfeld  |Textfeld zur Eingabe von des Skills, welcher hinzugefügt werden soll.
+|Dropdown-Buttonleiste  |Leiste mit Fähigkeiten, welche von der Suche als schon bestehende Skills gefunden wurde. Durch Auswählen einer solchen Fähigkeit, wird bestimmt welche Fähigkeit hinzugefügt werden soll.
+|Level-Buttonleiste |Bestimmt, wie gut die neue Fähigkeit beherrscht wird.
+|ADD SKILL-Button|Legt die Fähigkeit mit den oben bestimmten Daten an. Nach anlegen der Fähigkeit kommt man zurück auf die Eigene-Profil-Skill-Seite.
+|X-Button  |Ermöglicht das Abbrechen des Fähigkeit-Hinzufügen-Prozesses, man kommt wieder auf die Eigene-Profil-Skill-Seite.
+|===
+
+
+
+==== Profil-Skill-Seite
+Zeigt die Skills eines Mitarbeiters, den man in der Suche ausgewählt hat.
+
+image::page_3.png[Login-Seite]
+
+[options="header"]
+[cols="1,3"]
+|===
+|Maskenelemente |Beschreibung
+|Statistics-Button |Ermöglicht den Wechsel zur Profil-Statistik-Seite eines Mitarbeiters.
+|Skill-Überkategorien-Anzeige  | Zeigt die verschiedenen Bereiche in welchen der Mitarbeiter Fähigkeiten besitzt.
+|Pfeil-Überkategorie-Button |Klappt eine Liste von Skills aus, welche der Mitarbeiter in der zugehörigen Überkategorie besitzt.
+|Skill-Anzeige  |Zeigt Skills und deren Spezifikationen sowie Level des Skills.
+|Pfeil-Unterkategorie-Button |Klappt eine Liste von Unter-Skills aus, welche der Mitarbeiter in dem zugehörigen Skill besitzt.
+|Unter-Skill-Anzeige  |Zeigt Unter-Skills und deren Spezifikationen sowie Level des Unter-Skills.
+|Logout-Button|Der Mitarbeiter wird ausgeloggt und kommt zurück auf die Login-Seite.
+|===
+
+Die Skill-Überkategorien zeigen auch wie viele verschiedene Fähigkeiten der Mitarbeiter in dieser Kategorie besitzt.
+Die Skill-Kategorie zeigen auch wie viele verschiedene Unter-Skills der Mitarbeiter zu dieser Skill-Kategorie besitzt.
+
+
+
+==== Profil-Statistik-Seite
+Zeigt die zeitliche Entwicklung der Fähigkeiten eines Mitarbeiters für jeden seiner Skills.
+
+image::Page_5.png[Login-Seite]
+
+[options="header"]
+[cols="1,3"]
+|===
+|Maskenelemente |Beschreibung
+|Suchleiste-Textfeld  |Textfeld zur Eingabe von gesuchten Skills des Mitarbeiters.
+|Lupen-Button  |Bestätigt die Eingabe in der Suchleiste und sucht danach.
+|Kategorien-Anzeige |Zeigt Kategorien, wie z.B. durch Suche gefundene Fähigkeiten oder weitere Fähigkeiten.
+|Pfeil-Button |Ermöglicht das Ein/Ausklappen von Kategorien.
+|Fähigkeits-Anzeige |Zeigt Profil-Statistik-Graph-Seite.
+|Vollbild-Button |Ermöglicht eine genauere Ansicht der zeitlichen Entwicklung einer Fähigkeit.
+|Logout-Button|Der Mitarbeiter wird ausgeloggt und kommt zurück auf die Login-Seite.
+|===
+
+==== Profil-Statistik-Graph-Seite
+Zeigt die zeitliche Entwicklung eines bestimmten Skills eines Mitarbeiters und die dazugehörigen Meilensteine.
+
+image::page_5_skillFullscreen.png[Login-Seite]
+
+[options="header"]
+[cols="1,3"]
+|===
+|Maskenelemente |Beschreibung
+|Skill-Graph-Anzeige  |Zeigt die zeitliche Entwicklung einer Fähigkeit mit den zugehörigen Meilensteinen.
+|Range-Felder |Ermöglicht die Auswahl des im Graphen angezeigten Zeitraums.
+|Meilenstein-Anzeigefelder |Zeigt Meilensteine in der Fähigkeitsentwicklung mit Zeit und Spezifikationen.
+|X-Button  |Schließt das Fenster zur genauen Betrachtung der Entwicklung eines Skills und zeigt wieder die Profil-Statistik-Seite an.
+|===
+
+////
+Für jeden Dialog:
+
+1. Kurze textuelle Dialogbeschreibung eingefügt: Was soll der jeweilige Dialog? Was kann man damit tun? Überblick?
+2. Maskenentwürfe (Screenshot, Mockup)
+3. Maskenelemente (Ein/Ausgabefelder, Aktionen wie Buttons, Listen, …)
+4. Evtl. Maskendetails, spezielle Widgets
+////
+== Datenmodell
+
+=== Überblick: Klassendiagramm
+UML-Analyseklassendiagramm
+
+image::analysisdiagram.jpg[Analyseklassendiagramm]
+
+
+image::guianalysis.jpg[GUI-Analyseklassendiagramm]
+
+=== Klassen und Enumerationen
+////
+Dieser Abschnitt stellt eine Vereinigung von Glossar und der Beschreibung von Klassen/Enumerationen dar. Jede Klasse und Enumeration wird in Form eines Glossars textuell beschrieben. Zusätzlich werden eventuellen Konsistenz- und Formatierungsregeln aufgeführt.
+////
+// See http://asciidoctor.org/docs/user-manual/#tables
+[options="header"]
+|===
+|**Klasse/Enumeration** |Beschreibung
+|**ActiveDirectoryProfile**|Sorgt für Authentifizierung gegen ActiveDirectory.
+|**Database**|Abstraktion der Datenbank mit Nutzerdaten.
+|**Session**|Ordnet dem Nutzer eine Session ID zu.
+|**SkillMatrixProfileManager** | Verwaltet die momentanen SkillMatrix-Profile.
+|**SkillMatrixProfile**| Profil mit Daten eines Mitarbeiters.
+|**Skill**|Prototyp für eine Fähigkeit.
+|**Category**|Fähigkeit, die Unterkategorien haben kann, beispielsweise eine Programmiersprache.
+|**Subcategory**|Fähigkeit, die feingranularer ist als eine Kategorie, beispielsweise ein Framework.
+|**Search**|Organisiert eine Suchanfrage an die **Database**.
+|**Comparator**|Sortiert Suchergebnisse einer Anfrage.
+|**Filter**|Kriterium einer Suchanfrage. Eine **Suche** kann mehrere Filter besitzen.
+|**GUI**|Abstraktion des User Interface.
+|**Login_View**|Zeigt die Login-Seite.
+|**Suche_View**|Zeigt die Suche-Seite.
+|**Render_Graph**|Zeigt Graph.
+|**Profil_View**|Zeigt die Profil-Seite.
+|**Skills_View**|Zeigt die Skills-Seite.
+|**Statistik_View**|Zeigt die Statistik-Seite.
+
+|===
+
+== Akzeptanztestfälle
+////
+Mithilfe von Akzeptanztests wird geprüft, ob die Software die funktionalen Erwartungen und Anforderungen im Gebrauch erfüllt. Diese sollen und können aus den Anwendungsfallbeschreibungen und den UML-Sequenzdiagrammen abgeleitet werden. D.h., pro (komplexen) Anwendungsfall gibt es typischerweise mindestens ein Sequenzdiagramm (welches ein Szenarium beschreibt). Für jedes Szenarium sollte es einen Akzeptanztestfall geben. Listen Sie alle Akzeptanztestfälle in tabellarischer Form auf.
+Jeder Testfall soll mit einer ID versehen werde, um später zwischen den Dokumenten (z.B. im Test-Plan) referenzieren zu können.
+////
+
+//// 
+keeping old table for reference
+|===
+|ID|Case | Akzeptanztestfall
+|1|Login | Benutzer wird gegen Active Directory authentifiziert und eingeloggt.
+|2|Eigene SkillMatrix bearbeiten | Mehrere Fähigkeiten können gleichzeitig verändert bzw. hinzugefügt werden. Die Änderungen werden in der Datenbank gespeichert.
+|3|Fähigkeiten suchen|Es kann nach mehreren Fähigkeiten gleichzeitig gesucht werden. Es werden Profile, die alle Kriterien erfüllen, in absteigender Reihenfolge aufgelistet. Profile, die nur einen Teil der Kriterien erfüllen, werden gesondert aufgelistet.
+|4|SkillMatrix ansehen|Skills des Mitarbeiters werden in tabellarischer Form aufgelistet.
+|5|Statistik ansehen|Statistik wird mit grafischem Diagramm angezeigt. Die Zeitspanne kann manuell festgelegt werden. 
+|6|Verbindung zum Server verloren| Fehlermeldung abgeben
+|7|Verbindung zu Database verloren | Fehlermeldung abgeben
+|8|Verbindungsfehler zum Intranet | Fehlermeldung abgeben
+|===
+////
+**Akzeptanztestfall ID1: Login**
+
+|===
+|**Bedingung**|Nutzer ist nicht eingeloggt und öffnet die SkillMatrix-Webanwendung.
+|**Ereignis**|Nutzer gibt persönliche Logindaten für Active Directory ein.
+|**Ergebnis**|Nutzer wird gegen Active Directory authentifiziert und eingeloggt. 
+|===
+
+**Akzeptanztestfall ID2: Eigenes SkillMatrix-Profil bearbeiten**
+|===
+|**Bedingung**|Nutzer ist eingeloggt und SkillMatrix-Webanwendung geöffnet.
+|**Ereignis**|Nutzer navigiert zum eigenen Profil, ändert die gewünschten Skills oder fügt neue hinzu.
+|**Ergebnis**|Die Änderungen am Profil werden in der Datenbank gespeichert und in der Webanwendung entsprechend angezeigt.
+|===
+
+**Akzeptanztestfall ID3: Fähigkeiten suchen**
+|===
+|**Bedingung**|Nutzer ist eingeloggt und SkillMatrix-Webanwendung geöffnet.
+|**Ereignis**|Nutzer gibt Suchanfrage in die Maske ein und sendet sie ab.
+|**Ergebnis**|Die Suchanfrage wird bearbeitet, der Anfrage entsprechende Ergebnisse werden der Datenbank entnommen und dem Nutzer nach Skill-Level geordnet angezeigt. Ergebnisse, die nur einen Teil der Suche erfüllen, werden gesondert angezeigt.
+|===
+
+**Akzeptanztestfall ID4: SkillMatrix ansehen**
+|===
+|**Bedingung**|Nutzer ist eingeloggt und SkillMatrix-Webanwendung geöffnet und eine Suche durchgeführt.
+|**Ereignis**|Der Nutzer wählt ein beliebiges Profil aus den Suchergebnissen aus und wählt es mit einem Klick aus.
+|**Ergebnis**|Die SkillMatrix des gewählten Profils wird angezeigt. 
+|===
+
+**Akzeptanztestfall ID5: Statistik ansehen**
+|===
+|**Bedingung**|Nutzer ist eingeloggt und SkillMatrix-Webanwendung geöffnet und eine Suche durchgeführt.
+|**Ereignis**|Der Nutzer wählt ein beliebiges Profil aus den Suchergebnissen aus und wählt es mit einem Klick aus. Auf dem Profil wählt er den Reiter "Statistik".
+|**Ergebnis**|Die Statistik, also ein zeitlicher Verlauf der Skill-Entwicklung des Mitarbeiters wird als Graph angezeigt. 
+|===
+
+**Akzeptanztestfall ID6: Verbindung zum Server verloren**
+|===
+|**Bedingung**|Nutzer befindet sich auf der SkillMatrix-Webanwendung.
+|**Ereignis**|Der Nutzer versucht, mit der Webanwendung zu interagieren.
+|**Ergebnis**|Eine Fehlermeldung wird ausgegeben, welche die Verbindung zum Server als Fehlerquelle identifiziert.
+|===
+
+**Akzeptanztestfall ID7: Verbindung zur Datenbank verloren**
+|===
+|**Bedingung**|Nutzer befindet sich auf der SkillMatrix-Webanwendung.
+|**Ereignis**|Der Nutzer versucht, mit der Webanwendung zu interagieren, sodass eine Datenbankanfrage benötigt wird.
+|**Ergebnis**|Eine Fehlermeldung wird ausgegeben, welche die Datenbank als Fehlerquelle identifiziert.
+|===
+
+**Akzeptanztestfall ID8: Verbindungsfehler im Intranet**
+|===
+|**Bedingung**|Nutzer befindet sich auf der SkillMatrix-Webanwendung oder versucht, auf sie zu navigieren.
+|**Ereignis**|Die Webanwendung wird nicht geöffnet bzw. geladen
+|**Ergebnis**|Es kann keine Verbindung zur Webanwendung aufgebaut werden.
+|===
+
+== Glossar
+
+|===
+|Begriff|Erklärung
+|**SkillMatrix**|Webanwendung als Ganzes oder tabellarische Auflistung der Skills eines Mitarbeiters.
+|**Skill**|Kategorie für Fähigkeiten, beispielsweise Programmiersprachen oder Designtechnologien. Kann von 1 bis 5 bewertet werden.
+|**Mitarbeiter**|Mitarbeiter bei 3m5. .
+|**Material Design**|Von Google entwickelte Designsprache.
+|**Active Directory**|Verzeichnisdienst von Microsoft Windows Server.
+|===
+////
+Sämtliche Begriffe, die innerhalb des Projektes verwendet werden und deren gemeinsames Verständnis aller beteiligten Stakeholder essentiell ist, sollten hier aufgeführt werden.
+Insbesondere Begriffe der zu implementierenden Domäne wurden bereits beschrieben, jedoch gibt es meist mehr Begriffe, die einer Beschreibung bedürfen. +
+Beispiel: Was bedeutet "Kunde"? Ein Nutzer des Systems? Der Kunde des Projektes (Auftraggeber)?
+//// 
+== Offene Punkte
+////
+Offene Punkte werden entweder direkt in der Spezifikation notiert. Wenn das Pflichtenheft zum finalen Review vorgelegt wird, sollte es keine offenen Punkte mehr geben.
+////
+* Qualitätsziele mit Kunden absprechen, ggf. überarbeiten
