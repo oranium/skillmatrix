@@ -25,4 +25,4 @@ Desktop.ini
 *.h2.db
 
 
-/src/frontend/prototyp_react/node_modules/
+/frontend/node_modules/
