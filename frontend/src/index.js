@@ -11,7 +11,10 @@ import { loadState, saveState} from './localStorage';
 //import page parts
 import Header from './components/Header';
 import Form from './components/Form';
-import Login from './components/Login';
+import LoginForm from './components/LoginForm';
+
+//import functions for usermanagement
+import Login from './user/Login';
 
 import './index.css';
 
@@ -51,23 +54,24 @@ class App extends Component {
         store.dispatch(resetForm());
     }
 
-    handleLogOut(){
+    handleLogout(){
         store.dispatch(switchPage('login'));
     }
 
-    handleLogin(){
+    handleLogin(username, password){
+        Login(username, password);
         store.dispatch(switchPage('form'));
     }
 
   render() {
       if (this.props.state.page === "login"){
         return (
-            <Login login={this.handleLogin}/>
+            <LoginForm login={(username, password) => this.handleLogin(username, password)}/>
         )
       }else{
         return (
             <div>
-                <Header username={this.props.state.user} logout={this.handleLogOut} />
+                <Header username={this.props.state.user} logout={this.handleLogout} />
                 <main>
                     <h1>Neuen Skill erstellen</h1>
                     <Form inputs={this.props.state.formState} page={this.props.state.page} name="test" onChange={(id, value) => this.handleChange(id, value)} onSubmit={(page) => this.handleSubmit(page)} onReset={() => this.handleResetForm()}/>

@@ -45,6 +45,8 @@ const styles = theme => ({
 
 function SignIn(props) {
   const { classes } = props;
+  var password = "";
+  var username = "";
 
   return (
     <main className={classes.main}>
@@ -56,14 +58,14 @@ function SignIn(props) {
         <Typography component="h1" variant="h4">
           Skill Matrix
         </Typography>
-        <form onSubmit={()=>props.login()} className={classes.form}>
+        <form onSubmit={()=>props.login(username, password)} className={classes.form}>
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="email">Email Address</InputLabel>
-            <Input id="email" name="email" autoComplete="email" autoFocus />
+            <Input id="email" name="email" autoComplete="email" onChange={(evt) => {username = evt.target.value}} autoFocus />
           </FormControl>
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="password">Password</InputLabel>
-            <Input name="password" type="password" id="password" autoComplete="current-password" />
+            <Input name="password" type="password" id="password" onChange={(evt) => {password = evt.target.value}} autoComplete="current-password" />
           </FormControl>
           <Button
             type="submit"
