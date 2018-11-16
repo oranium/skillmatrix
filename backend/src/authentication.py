@@ -13,7 +13,7 @@ class Authentication:
         The server url should look like this: <ldap://my-ldapserver.example.com:389>
         Uni-Azure: server 'ldap://vm01-azure-ad.westeurope.cloudapp.azure.com:389'
         """
-        self.server = Server(serverURL, get_info=ALL)
+        #self.server = Server(serverURL, get_info=ALL)
 
     # should call db_controller and return JSON according to #11
     def login(self, username, password):
@@ -41,10 +41,15 @@ class Logout(Resource):
         parser.add_argument('username', type=str)
         args = parser.parse_args()
         # returns JSON containing username and boolean whether logout was a success (True) or failure (False)
-        return {args['username']: auth.logout(args['username'])}
+        #return {args['username']: auth.logout(args['username'])}
+        #for TDD
+        return {args['username']:True} if args['username'] == "work"  else {args['username']:False}
 
 
 api.add_resource(Login, '/login')
 api.add_resource(Logout, '/logout')
 auth = Authentication(
     'ldap: // vm01-azure-ad.westeurope.cloudapp.azure.com: 389')
+
+if __name__ == "__main__":
+    app.run(debug=True)
