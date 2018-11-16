@@ -27,4 +27,6 @@ Desktop.ini
 
 /src/frontend/prototyp_react/node_modules/
 
+.vscode
+
 /venv
