@@ -20,3 +20,9 @@ export const switchPage = (page) => ({
 export const resetForm = () => ({
     type: "RESETFORM",
 });
+
+
+export const setUsername = (username) => ({
+    type: "SETUSERNAME",
+    username
+});
