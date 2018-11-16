@@ -25,3 +25,6 @@ Desktop.ini
 *.h2.db
 
 src/frontend/prototyp_react/
+
+#vscode
+.vscode
