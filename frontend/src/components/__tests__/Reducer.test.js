@@ -112,11 +112,11 @@ describe('reducer tests', () => {
         expect("login").toEqual(actState['page']);
       });
       //update username
-    //   it('should update the name in the state', () => {
-    //     var actState = reducer(exampleFormState,{
-    //       type: "UPDATEUSERNAME",
-    //       user: 'Vladimir'
-    //   });
-    //   expect("Vladimir").toEqual(actState['user']);
-    // });
+       it('should update the name in the state', () => {
+         var actState = reducer(exampleFormState,{
+           type: "UPDATEUSERNAME",
+           user: 'Vladimir'
+       });
+       expect("Vladimir").toEqual(actState['user']);
+     });
 });
