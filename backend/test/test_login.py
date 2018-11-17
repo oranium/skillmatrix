@@ -6,68 +6,76 @@ import requests
 import json
 import unittest
 from src import authentication
+from flask import request
 '''
 MOCK LDAP doc here: https://ldap3.readthedocs.io/mocking.html
 
 '''
 
-# makes importing authentication possible
+def setUpModule():
+    authentication.app.testing = True
 
-# setup mock server
-server = Server('mock_ad')
-connection = Connection(server, user='cn=mock_user,ou=test,o=lab',
-                        password='mock_password', client_strategy=MOCK_SYNC)
+class TestAuthenticationLogin(unittest.TestCase):
 
-
-class TestAuthentication(unittest.TestCase):
-
-    def set_up(self):
-        pass
-        
-    def test_login_empty_string(self):
-        pass
-
-    def test_login_timeout(self):
-        pass
+    def setUp(self):
+        self.login = authentication.Authentication
+    
+    def test_login_correct_credentials(self):
+        self.assertEqual({"user":{"username":"correctname"},"error":0},self.login.login(self,"correctname","correctpassword"))
 
     def test_login_wrong_credentials(self):
-        pass
+        self.assertEqual({"user":{},"error":1},self.login.login(self,"wrong","wrong"))
 
-    def test_login_correct_credentials(self):
-        pass
+    def test_login_empty_string(self):
+        self.assertEqual({"user":{},"error":2},self.login.login(self,"",""))
+
+    def test_login_timeout(self):
+        self.assertEqual({"user":{},"error":3},self.login.login(self,"anything","anything"))
+
+class TestAuthenticationLogout(unittest.TestCase):
+    def setUp(self):
+        self.logout = authentication.Authentication
 
     def test_logout_successful(self):
-        pass
+        self.assertEqual({"user":True},self.logout.logout(self,"user"))
         
 
     def test_logout_fail(self):
-        pass
+        self.assertEqual({"user":False},self.logout.logout(self,"fail"))
 
-    def test_logout_illegal_method(self):
-        response = requests.get('http://localhost:5000/logout')
-        return self.assertEqual(response.status_code,405)
+class TestLoginAPI(unittest.TestCase):
+    @classmethod
+    def setUpClass(self):
+        self.test_app = authentication.app.test_client()
+    
+    def test_login_api_response_code(self):
+        self.assertEqual(self.test_app.post("/login").status_code,200)
 
-class TestAPI(unittest.TestCase):
+    def test_login_api_illegal_method(self):
+        self.assertEqual(self.test_app.get("/login").status_code,405)
 
-    def set_up(self):
+
+class TestLogoutAPI(unittest.TestCase):
+    @classmethod
+    def setUpClass(self):
+        self.test_app = authentication.app.test_client()
+
+    def setUp(self):
         self.app = authentication.app
 
-
-    def test_login_api(self):
-        pass
-
     def test_logout_api_success(self):
-        response = requests.post('http://localhost:5000/logout',None,{"username":"work"}).json()
+        response = self.test_app.post("/logout",data={"username":"work"}).get_json()
         self.assertEqual(response,{"work":True})
 
     def test_logout_api_fail(self):
-        response = requests.post('http://localhost:5000/logout',None,{"username":"dontwork"}).json()
+        response = self.test_app.post("/logout",data={"username":"dontwork"}).get_json()
         self.assertEqual(response,{"dontwork":False})
 
-    def test_logout_api_illegal(self):
-        response = requests.get('http://localhost:5000/logout')
-        return self.assertEqual(response.status_code,405)
+    def test_logout_response_code(self):
+        return self.assertEqual(self.test_app.post("/logout").status_code,200)
 
+    def test_logout_api_illegal_method(self):
+        return self.assertEqual(self.test_app.get("/logout").status_code,405)
 
 if __name__ == "__main__":
     unittest.main()
