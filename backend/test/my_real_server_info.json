@@ -5,7 +5,7 @@
             "CN=Configuration,DC=AzureAD,DC=SWT,DC=com"
         ],
         "currentTime": [
-            "20181117140200.0Z"
+            "20181117143244.0Z"
         ],
         "defaultNamingContext": [
             "DC=AzureAD,DC=SWT,DC=com"
@@ -26,7 +26,7 @@
             "6"
         ],
         "highestCommittedUSN": [
-            "118838"
+            "118840"
         ],
         "isGlobalCatalogReady": [
             "TRUE"

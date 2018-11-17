@@ -4,7 +4,7 @@ server = Server('ldap://vm01-azure-ad.westeurope.cloudapp.azure.com:389', get_in
 connection = Connection(server, 'AzureAD.SWT.com\ADadmin','@Administrator',authentication=NTLM)
 connection.bind()
 server.info.to_file('my_real_server_info.json')
-#server.schema.to_file('my_real_server_schema.json')
+server.schema.to_file('my_real_server_schema.json')
 print(server.info)
 print(connection)
 
