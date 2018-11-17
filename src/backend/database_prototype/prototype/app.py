@@ -1,5 +1,6 @@
 from flask import Flask, render_template, json, request, redirect
 from flaskext.mysql import MySQL
+from flask_sqlalchemy import SQLAlchemy
 
 mysql = MySQL()
 app = Flask(__name__)
@@ -9,7 +10,11 @@ app.config['MYSQL_DATABASE_USER'] = 'root'
 app.config['MYSQL_DATABASE_PASSWORD'] = 'Momomomo2'
 app.config['MYSQL_DATABASE_DB'] = 'pre'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:Momomomo2@localhost/pre'
+db = SQLAlchemy(app)
 mysql.init_app(app)
+
+
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
