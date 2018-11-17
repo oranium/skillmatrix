@@ -14,7 +14,7 @@ print(connection)
 #print(connection.entries)
 
 
-if connection.search('ou=test,o=lab', '(objectclass=*)', attributes=ALL_ATTRIBUTES):
+if connection.search('CN=Users,DC=AzureAD,DC=SWT,DC=com', '(objectclass=*)', attributes=ALL_ATTRIBUTES):
     connection.response_to_file('my_real_server_entries.json', raw=True)
 
 #connection.response_to_file('my_entries.json', raw=True)
