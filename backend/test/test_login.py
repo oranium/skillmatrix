@@ -8,31 +8,31 @@ import unittest
 from src import authentication
 from flask import request
 
-# Create a fake server from the info and schema json files
-fake_server = Server.from_definition('my_fake_server', 'my_real_server_info.json', 'my_real_server_schema.json')
+# Create a mock server from the info and schema json files
+mock_server = Server.from_definition('my_mock_server', './test/my_real_server_info.json', './test/my_real_server_schema.json')
 
-# Create a MockSyncStrategy connection to the fake server
-fake_connection = Connection(fake_server,'AzureAD.SWT.com\Valdemar.Forsberg','@testuser1 ',authentication=NTLM, client_strategy=MOCK_SYNC)
+# Create a MockSyncStrategy connection to the mock server
+mock_connection = Connection(mock_server,'AzureAD.SWT.com\Valdemar.Forsberg','@testuser1 ',authentication=NTLM, client_strategy=MOCK_SYNC)
 
-# Populate the DIT of the fake server
-fake_connection.strategy.entries_from_json('my_real_server_entries.json')
+# Populate the DIT of the mock server
+mock_connection.strategy.entries_from_json('./test/my_real_server_entries.json')
 
-# Add a fake user for Simple binding
-fake_connection.strategy.add_entry('cn=Forsberg', {'userPassword': '@testuser1 ', 'sn': 'Forsberg', 'revision': 0})
+# Add a mock user for Simple binding
+mock_connection.strategy.add_entry('cn=Forsberg', {'userPassword': '@testuser1 ', 'sn': 'Forsberg', 'revision': 0})
 
-# Bind to the fake server
-fake_connection.bind()
+# Bind to the mock server
+mock_connection.bind()
 
 
 # get info about server
-#print(fake_server.info)
+#print(mock_server.info)
 #get info about connection
-print(fake_connection)
+print(mock_connection)
 
 
 # get info about users 
-#print(fake_connection.search('CN=Users,DC=AzureAD,DC=SWT,DC=com', '(objectclass=*)')) 
-#print(fake_connection.entries)
+#print(mock_connection.search('CN=Users,DC=AzureAD,DC=SWT,DC=com', '(objectclass=*)')) 
+#print(mock_connection.entries)
 
 
 
