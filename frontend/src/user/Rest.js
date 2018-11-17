@@ -8,7 +8,7 @@ class RestCom{
     }
 
     errorHandler(error){
-        console.log(error);
+        console.error(error);
     }
 
     post(){
@@ -21,3 +21,4 @@ class RestCom{
 }
 
 export default RestCom;
+

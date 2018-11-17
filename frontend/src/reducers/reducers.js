@@ -49,7 +49,8 @@ export const formState = (state = defaultFormState, action) => {
 //at the moment this only saves the username
 export const user = (state = "Valdemar Forsberg", action) => {
     switch(action.type){
-        case 'UPDATEUSERNAME':
+        case 'SETUSERNAME':
+            console.log('action: ' + action.username);
             return action.username;
     
         default: 
@@ -63,6 +64,15 @@ export const page = (state = "form", action) => {
         case 'SWITCHPAGE':
             return action.page;
         default: 
+            return state;
+    }
+}
+
+export const errorMsg = (state="", action) => {
+    switch(action.type){
+        case 'SETLOGINERROR':
+            return action.errorMsg;
+        default:
             return state;
     }
 }

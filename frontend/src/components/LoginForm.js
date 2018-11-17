@@ -58,7 +58,8 @@ function SignIn(props) {
         <Typography component="h1" variant="h4">
           Skill Matrix
         </Typography>
-        <form onSubmit={()=>props.login(username, password)} className={classes.form}>
+        <p>{props.errorMsg}</p>
+        <form onSubmit={(evt)=>{props.login(username, password);evt.preventDefault()}} className={classes.form}>
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="email">Email Address</InputLabel>
             <Input id="email" name="email" autoComplete="email" onChange={(evt) => {username = evt.target.value}} autoFocus />

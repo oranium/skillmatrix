@@ -3,10 +3,9 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 
 //import redux
-import { createStore } from 'redux';
-import reducer from './reducers';
+import store from './Store';
 import {updateInput, switchPage, setError, resetForm} from './actions';
-import { loadState, saveState} from './localStorage';
+
 
 //import page parts
 import Header from './components/Header';
@@ -14,7 +13,7 @@ import Form from './components/Form';
 import LoginForm from './components/LoginForm';
 
 //import functions for usermanagement
-import Login from './user/Login';
+import HandleLogin from './user/Login';
 
 import './index.css';
 
@@ -59,14 +58,13 @@ class App extends Component {
     }
 
     handleLogin(username, password){
-        Login(username, password);
-        store.dispatch(switchPage('form'));
+        
     }
 
   render() {
       if (this.props.state.page === "login"){
         return (
-            <LoginForm login={(username, password) => this.handleLogin(username, password)}/>
+            <LoginForm errorMsg={this.props.state.errorMsg} login={(username, password) => HandleLogin(username, password)}/>
         )
       }else{
         return (
@@ -93,24 +91,7 @@ class App extends Component {
     console.log(store.getState());
   }
 
-
-// ==============================
-// state management with redux
-const persistedState = loadState();
-
-
-const store = createStore(
-    reducer,
-    persistedState
-);
-
-
-store.subscribe(
-    () => 
-    {
-        saveState(store.getState());
-    }
-);
+//render App everytime store is updatet 
 store.subscribe(render);
-
+//render App on start
 render();

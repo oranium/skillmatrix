@@ -1,9 +1,10 @@
 // reducers >> index.js
 import { combineReducers } from 'redux';
-import {formState, user, page} from './reducers';
+import {formState, user, page, errorMsg} from './reducers';
 
 export default combineReducers({
     formState,
     page,
-    user
+    user,
+    errorMsg
 })

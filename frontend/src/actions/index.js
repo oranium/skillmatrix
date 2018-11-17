@@ -26,3 +26,8 @@ export const setUsername = (username) => ({
     type: "SETUSERNAME",
     username
 });
+
+export const setLoginError = (errorMsg) => ({
+    type: "SETLOGINERROR",
+    errorMsg
+})

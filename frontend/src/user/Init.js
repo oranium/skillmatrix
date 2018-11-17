@@ -1,5 +1,5 @@
 const RestPoints = {
-    login: 'https://jsonplaceholder.typicode.com/posts',
+    login: '/login',
     logout: '/Logout'
 }
 export default RestPoints;
