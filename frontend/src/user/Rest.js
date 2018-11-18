@@ -1,22 +1,22 @@
 import axios from 'axios';
 
 class RestCom{
-    constructor(restPoint, data, successHandler){
+    constructor(restPoint, data){
         this.restPoint = restPoint;
         this.data = data;
-        this.successHandler = successHandler;
     }
 
     errorHandler(error){
         console.error(error);
     }
 
-    post(){
-        axios.post(this.restPoint, this.data)
-            .then(response => this.successHandler(response))
+    async post(){
+        const response = await axios.post(this.restPoint, this.data)
             .catch(error => {
                 console.log('Error: '+error);
             });
+        
+        return response.data;
     }
 }
 

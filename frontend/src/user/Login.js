@@ -1,62 +1,60 @@
 import RestPoints from './Init';
 import RestCom from './Rest';
 
-import store from '../Store';
-import {switchPage, setUsername, setLoginError} from '../actions'; 
-
-// export default class Login {
-    
-
-//     login (username, password){
-//         const loginData = {
-//             username,
-//             password
-//         }
-
-//         const api = new RestCom(RestPoints.login, loginData, this.prozessLogin);
-//         api.post();
-//     }
-
-//     prozessLogin(response){
-//         console.log(response.data);
-//     }
-// }
-
-export default function (username, password)
+export default async function (username, password)
 {
+    // map data to get the right data structure for posting to server
     const user = {
         username,
         password
     }
 
-    const Rest = new RestCom(RestPoints.login, user, prozessLogin);
-    Rest.post();
+    const Rest = new RestCom(RestPoints.login, user);
 
-    return true;
+    //post and get response from server
+    const response = await Rest.post();
+
+    return errorCodesToErrorMsg(response)
 }
 
 
-const prozessLogin = (response) => {
-    console.log(response.data);
-    let user = response.data.user;
-    let error = response.data.error;
+//translate error codes to error Msg and return a new map that looks like:
+//response = {user: {username: String}, errorMsg: String, success: Bool}
+const errorCodesToErrorMsg = (data) => {
+    
+    //looks like {user: {username: String, ....}}
+    const user = data.user;
+
+    //holds the error code
+    const error = data.error;
+
+
+    const response = {
+        user,
+        errorMsg: "",
+        success: true
+    }
+
     switch (error){
         case 0:
-            console.log(user.username);
-            store.dispatch(setUsername(user.username));
-            store.dispatch(switchPage('form'));
+            response.success = true;
             break;
         case 1:
-            store.dispatch(setLoginError("Wrong login credentials."));
+            response.errorMsg = "Wrong login credentials.";
+            response.success = false;
             break;
         case 2:
-            store.dispatch(setLoginError("Please fill in all form fields."));
+            response.errorMsg = "Please fill in all form fields."
+            response.success = false;
             break;
         case 3:
-            store.dispatch(setLoginError("Server Timeout. Please try again."));
+            response.errorMsg = "Server Timeout. Please try again.";
+            response.success = false;
             break;
         default:
-            store.dispatch(setLoginError("An unknown Error occurred. Please try again."));
+            response.errorMsg = "An unknown Error occurred. Please try again.";
+            response.success = false;
             break;
     }
+    return response;
 }

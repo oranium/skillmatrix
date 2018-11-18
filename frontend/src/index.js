@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 
 //import redux
 import store from './Store';
-import {updateInput, switchPage, setError, resetForm} from './actions';
+import {updateInput, switchPage, setError, resetForm, setUsername, setLoginError} from './actions';
 
 
 //import page parts
@@ -13,7 +13,7 @@ import Form from './components/Form';
 import LoginForm from './components/LoginForm';
 
 //import functions for usermanagement
-import HandleLogin from './user/Login';
+import LoginApi from './user/Login';
 
 import './index.css';
 
@@ -57,14 +57,24 @@ class App extends Component {
         store.dispatch(switchPage('login'));
     }
 
-    handleLogin(username, password){
-        
+    async handleLogin(username, password){
+        const loginResponse = await LoginApi(username, password);
+        if (loginResponse.success) {
+            let username = loginResponse.user.username;
+            store.dispatch(setUsername(username));
+            store.dispatch(switchPage('form'));
+        }else{
+            let erroMsg = loginResponse.user.erroMsg;
+            console.log(errorMsg);
+            store.dispatch(setLoginError(erroMsg));
+            store.dispatch(switchPage('login'));
+        }
     }
 
   render() {
       if (this.props.state.page === "login"){
         return (
-            <LoginForm errorMsg={this.props.state.errorMsg} login={(username, password) => HandleLogin(username, password)}/>
+            <LoginForm errorMsg={this.props.state.errorMsg} login={(username, password) => this.handleLogin(username, password)}/>
         )
       }else{
         return (
@@ -95,3 +105,5 @@ class App extends Component {
 store.subscribe(render);
 //render App on start
 render();
+
+export default store;

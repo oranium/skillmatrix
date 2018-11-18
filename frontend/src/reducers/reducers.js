@@ -50,7 +50,6 @@ export const formState = (state = defaultFormState, action) => {
 export const user = (state = "Valdemar Forsberg", action) => {
     switch(action.type){
         case 'SETUSERNAME':
-            console.log('action: ' + action.username);
             return action.username;
     
         default: 
