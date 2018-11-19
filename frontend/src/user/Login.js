@@ -20,7 +20,22 @@ export default async function (username, password)
 
 //translate error codes to error Msg and return a new map that looks like:
 //response = {user: {username: String}, errorMsg: String, success: Bool}
-const errorCodesToErrorMsg = (data) => {
+const errorCodesToErrorMsg = (apiResponse) => {
+
+    const response = {
+        user: "",
+        errorMsg: "",
+        success: true
+    }
+
+    //there was an Error connecting:
+    if (apiResponse === undefined){
+        response.errorMsg = "An error occured while connecting to the database. Check your Internet connection.";
+        response.success = false;
+        return response;
+    }
+
+    const data = apiResponse.data;
     
     //looks like {user: {username: String, ....}}
     const user = data.user;
@@ -28,15 +43,9 @@ const errorCodesToErrorMsg = (data) => {
     //holds the error code
     const error = data.error;
 
-
-    const response = {
-        user,
-        errorMsg: "",
-        success: true
-    }
-
     switch (error){
         case 0:
+            response.user = user;
             response.success = true;
             break;
         case 1:

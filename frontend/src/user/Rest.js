@@ -16,7 +16,7 @@ class RestCom{
                 console.log('Error: '+error);
             });
         
-        return response.data;
+        return response;
     }
 }
 
