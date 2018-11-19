@@ -17,9 +17,9 @@ export const switchPage = (page) => ({
     page: page
 });
 
-export const resetForm = () => ({
+export const resetForm = {
     type: "RESETFORM",
-});
+};
 
 
 export const setUsername = (username) => ({
@@ -31,3 +31,7 @@ export const setLoginError = (errorMsg) => ({
     type: "SETLOGINERROR",
     errorMsg
 })
+
+export const resetState = {
+    type: "RESETSTATE"
+}

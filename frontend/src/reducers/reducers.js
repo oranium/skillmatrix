@@ -22,6 +22,10 @@ const defaultFormState = {
     }
 };
 
+const defaultUsername = "Undefined";
+const defaultPage = "login";
+const defaultErrorMsg = "";
+
 //has all the data for the inputfields
 export const formState = (state = defaultFormState, action) => {
     switch(action.type){
@@ -41,36 +45,44 @@ export const formState = (state = defaultFormState, action) => {
         case 'RESETFORM':
             return defaultFormState;
 
+        case 'RESETSTATE':
+            return defaultFormState;
+
         default:
             return state;
     }
 }
 
 //at the moment this only saves the username
-export const user = (state = "Valdemar Forsberg", action) => {
+export const user = (state = defaultUsername, action) => {
     switch(action.type){
         case 'SETUSERNAME':
             return action.username;
-    
+        case 'RESETSTATE':
+            return defaultUsername;
         default: 
             return state;
     }
 }
 
 //defines which page is viewed to the user
-export const page = (state = "form", action) => {
+export const page = (state = defaultPage, action) => {
     switch(action.type){
         case 'SWITCHPAGE':
             return action.page;
+        case 'RESETSTATE':
+            return defaultPage;
         default: 
             return state;
     }
 }
 
-export const errorMsg = (state="", action) => {
+export const errorMsg = (state=defaultErrorMsg, action) => {
     switch(action.type){
         case 'SETLOGINERROR':
             return action.errorMsg;
+        case 'RESETSTATE':
+            return defaultErrorMsg;
         default:
             return state;
     }
