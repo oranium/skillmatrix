@@ -119,4 +119,13 @@ describe('reducer tests', () => {
        });
        expect("Vladimir").toEqual(actState['user']);
      });
+
+     it('set errorMsg right', () => {
+        var actState = reducer(exampleFormState,{
+          type: "SETLOGINERROR",
+          errorMsg: "server timeout"
+      });
+      
+      expect("server timeout").toEqual(actState['errorMsg']);
+    });
 });
