@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 
 //import redux
 import store from './Store';
-import {updateInput, switchPage, setError, resetForm, setUsername, setLoginError} from './actions';
+import {updateInput, switchPage, setError, resetForm, setUsername, setLoginError, resetState} from './actions';
 
 
 //import page parts
@@ -14,6 +14,7 @@ import LoginForm from './components/LoginForm';
 
 //import functions for usermanagement
 import LoginApi from './user/Login';
+import LogoutApi from './user/Logout';
 
 import './index.css';
 
@@ -53,8 +54,18 @@ class App extends Component {
         store.dispatch(resetForm());
     }
 
-    handleLogout(){
-        store.dispatch(switchPage('login'));
+    async handleLogout(){
+        const logoutResponse = await LogoutApi(this.props.state.username);
+        if (!logoutResponse)
+        {   //error on logout => show to user
+        }else 
+        {   //logout in frontend
+            //reset state
+            store.dispatch(resetState);
+
+            //go back to login
+            store.dispatch(switchPage('login'));
+        }
     }
 
     async handleLogin(username, password){
@@ -64,9 +75,9 @@ class App extends Component {
             store.dispatch(setUsername(username));
             store.dispatch(switchPage('form'));
         }else{
-            let erroMsg = loginResponse.user.erroMsg;
+            let errorMsg = loginResponse.errorMsg;
             console.log(errorMsg);
-            store.dispatch(setLoginError(erroMsg));
+            store.dispatch(setLoginError(errorMsg));
             store.dispatch(switchPage('login'));
         }
     }
