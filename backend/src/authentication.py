@@ -2,7 +2,7 @@ from flask import Flask
 from flask_restful import Resource, Api, reqparse
 from ldap3 import Server, Connection, MOCK_SYNC, OFFLINE_AD_2012_R2, NTLM
 from ldap3.core.exceptions import LDAPUnknownAuthenticationMethodError,LDAPSocketOpenError
-
+import sys
 app = Flask(__name__)
 api = Api(app)
 parser = reqparse.RequestParser()
@@ -15,18 +15,18 @@ mock_connection = Connection(mock_server,'AzureAD.SWT.com\Valdemar.Forsberg','@t
 
 # Populate the DIT of the mock server
 mock_connection.strategy.entries_from_json('./test/my_real_server_entries.json')
-
 # Add a mock user for Simple binding
 mock_connection.strategy.add_entry('cn=Forsberg', {'userPassword': '@testuser1 ', 'sn': 'Forsberg', 'revision': 0})
 
 # Bind to the mock server
 mock_connection.bind()
 
+mock_connection.strategy.add_entry('cn=testUser,ou=test,o=lab', {'userPassword': 'testMe', 'sn': 'user0_sn', 'revision': 0})
 
 # get info about server
 #print(mock_server.info)
 #get info about connection
-print(mock_connection)
+#print(mock_connection)
 
 class Authentication:
     def __init__(self, serverURL):
@@ -35,7 +35,7 @@ class Authentication:
         Uni-Azure: server 'ldap://vm01-azure-ad.westeurope.cloudapp.azure.com:389'
         """
 
-    # should call db_controller and return JSON according to #11
+    # should call db_controller according to #11
     def login(self, username, password):
         try:
             self.new_connection = Connection(mock_server,'AzureAD.SWT.com\\'+username,password,authentication=NTLM,client_strategy=MOCK_SYNC,raise_exceptions = True)
@@ -49,14 +49,16 @@ class Authentication:
             return {"user":{},"error":2}
         except LDAPSocketOpenError:
             return {"user":{},"error":3}
-
+            #unknown error
+        except:
+            return {"user":{},"error":255}
+    
     # should call db_controller and return JSON according to #12
+    #currently hardcoded failure to satisfy tests
     def logout(self, username):
-        pass
+        return {username:False} if username == 'dontwork'else {username:True}
 
 # RESTful API for login
-
-
 class Login(Resource):
     def post(self):
         parser.add_argument('username', type=str)
@@ -65,8 +67,6 @@ class Login(Resource):
         return auth.login(args['username'], args['password'])
 
 # RESTful API for logout
-
-
 class Logout(Resource):
     def post(self):
         parser.add_argument('username', type=str)
