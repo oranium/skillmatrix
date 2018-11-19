@@ -1,6 +1,6 @@
 import React from 'react';
 import { render,shallow, mount } from 'enzyme';
-import Login from '../Login';
+import LoginForm from '../LoginForm';
 import Form from '../Form';
 import Header from '../Header';
 import {SkillNameInput, DateInput, TextArea, LevelPicker} from '../InputFields';
@@ -8,7 +8,7 @@ import {SkillNameInput, DateInput, TextArea, LevelPicker} from '../InputFields';
 
 
 describe("test Login Components",() => {
-    const wrapper = shallow(<Login/>);
+    const wrapper = shallow(<LoginForm/>);
         it("render Login component", () => {
             expect(wrapper).toMatchSnapshot();
     });
