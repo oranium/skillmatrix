@@ -8,6 +8,7 @@ import unittest
 from src import authentication
 from flask import request
 
+
 # Create a mock server from the info and schema json files
 mock_server = Server.from_definition('my_mock_server', './test/my_real_server_info.json', './test/my_real_server_schema.json')
 
@@ -27,7 +28,7 @@ mock_connection.bind()
 # get info about server
 #print(mock_server.info)
 #get info about connection
-print(mock_connection)
+#print(mock_connection)
 
 
 # get info about users 
@@ -38,6 +39,7 @@ print(mock_connection)
 
 def setUpModule():
     authentication.app.testing = True
+    #mock_connection.strategy.add_entry('cn=testUser,ou=test,o=lab', {'userPassword': 'testMe', 'sn': 'user0_sn', 'revision': 0})
 
 class TestAuthenticationLogin(unittest.TestCase):
 
@@ -45,7 +47,7 @@ class TestAuthenticationLogin(unittest.TestCase):
         self.login = authentication.Authentication
     
     def test_login_correct_credentials(self):
-        self.assertEqual({"user":{"username":"correctname"},"error":0},self.login.login(self,"correctname","correctpassword"))
+        self.assertEqual({"user":{"username":"testUser"},"error":0},self.login.login(self,"testUser","testMe"))
 
     def test_login_wrong_credentials(self):
         self.assertEqual({"user":{},"error":1},self.login.login(self,"wrong","wrong"))
@@ -63,9 +65,8 @@ class TestAuthenticationLogout(unittest.TestCase):
     def test_logout_successful(self):
         self.assertEqual({"user":True},self.logout.logout(self,"user"))
         
-
     def test_logout_fail(self):
-        self.assertEqual({"user":False},self.logout.logout(self,"fail"))
+        self.assertEqual({"dontwork":False},self.logout.logout(self,"dontwork"))
 
 class TestLoginAPI(unittest.TestCase):
     @classmethod
