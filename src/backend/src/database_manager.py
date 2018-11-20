@@ -29,7 +29,7 @@ db.session.add(aron)
 user.query.all()
 user.query.filter_by(username='willy').first()
 
-
+print('all good')
 
 #class Skill(db.Model):
 #    id = db.Column(db.Integer, primary_key=True)
