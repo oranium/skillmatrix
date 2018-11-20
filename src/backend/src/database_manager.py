@@ -2,7 +2,6 @@ from flask import Flask, json, request, redirect
 from flask_restful import Resource, Api
 from flask_sqlalchemy import SQLAlchemy
 
-
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Momomomo2@localhost/sm1'
 api = Api(app)
@@ -19,7 +18,6 @@ class user(db.Model):
 
     def __repr__(self):
         return '<user %r>' % self.username
-
 db.drop_all()
 db.create_all()
 
@@ -31,7 +29,7 @@ db.session.add(aron)
 user.query.all()
 user.query.filter_by(username='willy').first()
 
-print('hallo hallo hallo')
+
 
 #class Skill(db.Model):
 #    id = db.Column(db.Integer, primary_key=True)
