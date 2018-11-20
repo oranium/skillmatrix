@@ -1,4 +1,4 @@
-from flask import Flask, render_template, json, request, redirect
+from flask import Flask, json, request, redirect
 from flask_restful import Resource, Api
 from flask_sqlalchemy import SQLAlchemy
 
@@ -31,6 +31,8 @@ db.session.add(aron)
 user.query.all()
 user.query.filter_by(username='willy').first()
 
+print('hallo hallo hallo')
+
 #class Skill(db.Model):
 #    id = db.Column(db.Integer, primary_key=True)
 #    name = db.Column(db.String(127), nullable=False)
@@ -58,4 +60,4 @@ user.query.filter_by(username='willy').first()
 #api.add_resource(Multi, '/multi/<int:num>')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
