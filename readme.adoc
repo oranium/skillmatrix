@@ -4,6 +4,6 @@
 
 The *backend* directory contains the SkillMatrix backend, which provides REST-APIs to the frontend of the application. +
 The *frontend* directory contains the SkillMatrix frontend. +
-The *ooa_ood* directory contains analysis and design phases of this project. +
+The *main* directory contains analysis and design phases of this project. +
 
 === The prototypes can be found on branch "prototypes"

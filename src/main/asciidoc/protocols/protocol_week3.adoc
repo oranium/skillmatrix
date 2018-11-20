@@ -1,0 +1,73 @@
+= Protokoll Gruppe 01
+
+Treffen am 22.10.2018
+
+Ort:      WILL C103 +
+Beginn:   15:35 Uhr +
+Ende:     16:35 Uhr
+
+__Schriftführer:__
+Bruno Reinhold
+*Nächstes Treffen:* +
+30.10.2018, 13:00 Uhr,  Ort des nächsten Treffens: *APB*
+
+__Teilnehmer:__ +
+//Tabellarisch oder Aufzählung, Kennzeichnung von Teilnehmern mit besonderer Rolle (z.B. Kunde)
+Dominik Pretzsch (stakeholder) +
+Paul Hoffmann (product owner) +
+Aron Gaden (scrum master, scrum team) +
+Willy Pertsch (scrum team) +
+Maximilian Schaller (scrum team) +
+Cornell Ziepel (scrum team) +
+Bruno Reinhold (Schriftführer, scrum team) +
+
+== Bemerkungen
+Verwarnungen, besondere Vorfälle, Organisatorisches, wichtige getroffene Entscheidungen
+
+->  *Zeiten erfassen, ansonsten Verwarnung* +
+-> *Prototypen:* 
+-> Willy: SQL Python-webserver Konnektivität herstellen | 2x REST Endpunkt um jeweils einen neuen skill anzulegen und einen skill zu suchen | Schnittstelle schaffen (Kooperation mit Aron) +
+-> Cornell: Statemanagement im Redux/Mobx | Seite wiederherstellbar +
+-> Aron: skill suchen (backend) | Schnittstelle schaffen (Kooperation mit Willy) | UI soll Suche zeigen (react) +
+-> Bruno: LDAP Testserver in docker container (Windows und Linux)| Testbarkeit gewährleisten  +
+-> Max: UI für statistische Auswertung (mit D3)+  
+
+*zur Analyse:* +
+-> Sequenzdiagramm 1-2 pro usecase +
+
+ 
+
+== Retrospektive des letzten Sprints
+*Issue referenziert die Issue ID von GitHub*
+// Wie ist der Status der im letzten Sprint erstellten Issues/veteilten Aufgaben?
+
+// See http://asciidoctor.org/docs/user-manual/=tables
+[option="headers"]
+|===
+|Issue |Aufgabe |Status |Bemerkung
+|…     |…       |…      |…
+|===
+
+
+== Aktueller Stand
+-> erste Use-Case-Diagramme erstellt (in Arbeit) +
+-> erste CRC-Card-Diagramme erstellt (in Arbeit) + 
+-> erste Sequenzdiagramme erstellt (in Arbeit) +
+-> erste Mockups erstellt erstellt (in Arbeit) +
+
+
+
+== Planung des nächsten Sprints +
+*Analysephase bis 28.10.2018:* + 
+-> Pflichtenheft +
+-> Analyseklassendiagramme +   
+-> Analysephase abschließen  +
+-> Prototypen bearbeiten + 
+*Issue referenziert die Issue ID von GitHub*
+
+// See http://asciidoctor.org/docs/user-manual/=tables
+[option="headers"]
+|===
+|Issue |Titel |Beschreibung |Verantwortlicher |Status
+|…     |…     |…            |…                |…
+|===

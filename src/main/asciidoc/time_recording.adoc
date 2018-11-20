@@ -1,0 +1,35 @@
+= Zeiterfassung für Gruppe 01
+
+Notieren Sie die Zeit in Minuten für jeden Entwickler und – getrennt davon – für Team-Treffen pro Woche (Wochengranularität).
+Die individuell erfasste Zeit beinhaltet auch das Lesen von Dokumentationen, Besprechungen mit Teamkollegen und sonstige auf das Praktikum bezogene Aufgaben, jedoch *nicht* das Team-Treffen (= letzte Spalte).
+
+// See http://asciidoctor.org/docs/user-manual/#tables
+[option="headers"]
+|===
+|Woche |Aron |Max |Cornell |Willy |Bruno |Meeting
+|1  |180   |180    |120    |180    |180   |45       
+|2  |120   |200    |160   |120    |960    |45
+|3  |1230   |1080    |1260    |900    |1080    |60    
+|4  |870   |720    |600   |540    |660    |30    
+|5  |2200   |600    |360    |1400    |1560   |15 
+|6  |…   |…    |…    |…    |…    |…    
+|7  |…   |…    |…    |…    |…    |…       
+|8  |…   |…    |…    |…    |…    |…       
+|9  |…   |…    |…    |…    |…    |…       
+|10  |…   |…    |…    |…    |…    |…       
+|11  |…   |…    |…    |…    |…    |…       
+|12  |…   |…    |…    |…    |…    |…       
+|===
+
+Bitte tragen Sie am Ende des Praktikums noch folgende weitere Werte ein:
+Summe der Arbeitsstunden pro Student:
+
+SUMME(SPALTE(DevX))
+
+Arbeitsstunden pro Woche pro Student:
+
+SUMME(SPALTE(DevX)) / 12
+
+Durchschnittliche Arbeitzeit aller Studenten pro Woche:
+
+(SUMME(SPALTE(Dev1)) + SUMME(SPALTE(Dev2)) + SUMME(SPALTE(Dev3)) + SUMME(SPALTE(Dev4)) + SUMME(SPALTE(Dev5)) +SUMME(SPALTE(Dev6))) / 6
