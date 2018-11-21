@@ -1,8 +1,9 @@
+#sets backend root as starting directory
+import parentdir
 from flask import Flask, Response
 import json
 from flask_restful import Resource, Api, reqparse
-import sys
-import authentication
+from src.authentication import Authentication
 
 app = Flask(__name__)
 api = Api(app)
@@ -15,12 +16,12 @@ class Login(Resource):
         parser.add_argument('password', type=str)
         args = parser.parse_args()
         try:
-            return authentication.Authentication.login(self,args['username'], args['password'])
+            return Authentication.login(self,args['username'], args['password'])
         except AttributeError:
             return Response(status=400)
         except TimeoutError:
             return Response(status=504)
-        except BaseException:
+        except Exception:
             return Response(status=520)
 
 # RESTful API for logout
@@ -28,16 +29,11 @@ class Logout(Resource):
     def post(self):
         parser.add_argument('username', type=str)
         args = parser.parse_args()
-        # returns JSON containing username and boolean whether logout was a success (True) or failure (False)
-        #return {args['username']: auth.logout(args['username'])}
         #for TDD
         try:
-            return {args['username']:False} if args['username'] == "dontwork"  else {args['username']:True}
-        except AttributeError:
-            return Response(status=400)
-        except TimeoutError:
-            return Response(status=504)
-        except BaseException:
+            Authentication.logout(self,args['username'])
+            return Response(status=200)
+        except Exception:
             return Response(status=520)
 
 api.add_resource(Login, '/login')
