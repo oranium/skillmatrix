@@ -32,3 +32,6 @@ node_modules/
 
 #python virtual environments
 venv/
+
+#python cache
+__pycache__/
