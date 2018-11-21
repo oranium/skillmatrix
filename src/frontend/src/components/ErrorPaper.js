@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -14,23 +13,18 @@ const styles = theme => ({
 
 function PaperSheet(props) {
   const { classes } = props;
+  const { errorMsg } = props;
 
   return (
     <div>
       <Paper className={classes.root} elevation={1}>
         <Typography variant="h5" component="h3">
-          This is a sheet of paper.
+          Error
         </Typography>
-        <Typography component="p">
-          Paper can be used to build surface or other elements for your application.
-        </Typography>
+        <Typography component="p">{errorMsg}</Typography>
       </Paper>
     </div>
   );
 }
-
-PaperSheet.propTypes = {
-  classes: PropTypes.instanceOf(styles).isRequired,
-};
 
 export default withStyles(styles)(PaperSheet);

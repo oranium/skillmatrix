@@ -6,8 +6,8 @@ export const updateInput = (id, input) => ({
   input,
 });
 
-export const setError = (id, error) => ({
-  type: 'SETERROR',
+export const setInputError = (id, error) => ({
+  type: 'SETINPUTERROR',
   id,
   error,
 });
@@ -26,8 +26,8 @@ export const setUsername = username => ({
   username,
 });
 
-export const setLoginError = errorMsg => ({
-  type: 'SETLOGINERROR',
+export const setError = errorMsg => ({
+  type: 'SETERROR',
   errorMsg,
 });
 

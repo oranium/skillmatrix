@@ -6,10 +6,10 @@ import store from '../Store';
 import {
   updateInput,
   switchPage,
+  setInputError,
   setError,
   resetForm,
   setUsername,
-  setLoginError,
   resetState,
 } from '../actions';
 
@@ -17,6 +17,7 @@ import {
 import Header from './Header';
 import Form from './Form';
 import LoginForm from './LoginForm';
+import ErrorPaper from './ErrorPaper';
 
 // Rest
 import RestPoints from '../rest/Init';
@@ -36,7 +37,7 @@ class App extends Component {
       store.dispatch(setUsername(user.username));
       store.dispatch(switchPage('form'));
     } catch (e) {
-      store.dispatch(setLoginError(e.message));
+      store.dispatch(setError(e.message));
       store.dispatch(switchPage('login'));
     }
   }
@@ -46,12 +47,18 @@ class App extends Component {
     store.dispatch(resetForm());
   }
 
+  constructor(props) {
+    super(props);
+    // This binding is necessary to make `this` work in the callback
+    this.handleLogout = this.handleLogout.bind(this);
+  }
+
   // user inputs something into an input field
   handleChange(id, value) {
     const { state } = this.props;
 
     if (state.formState[id].error) {
-      store.dispatch(setError(id, false));
+      store.dispatch(setInputError(id, false));
     }
     store.dispatch(updateInput(id, value));
   }
@@ -68,10 +75,10 @@ class App extends Component {
       keys.foreach((key) => {
         const input = inputs[key];
         if (input.value === '') {
-          store.dispatch(setError(key, true));
+          store.dispatch(setInputError(key, true));
           submit = false;
         } else {
-          store.dispatch(setError(key, false));
+          store.dispatch(setInputError(key, false));
         }
       });
     }
@@ -90,31 +97,38 @@ class App extends Component {
       await Rest.post();
       // logout in frontend
       // reset state
-      store.dispatch(resetState);
+      store.dispatch(resetState());
       // go back to login
       store.dispatch(switchPage('login'));
     } catch (e) {
       // display error Message to user
+      console.log(e);
+      store.dispatch(setError(e.message));
     }
   }
 
   render() {
     const { state } = this.props;
     const {
-      page, errorMsg, user, formState,
+      page, error, user, formState,
     } = state;
 
     if (page === 'login') {
       return (
         <LoginForm
-          errorMsg={errorMsg}
+          errorMsg={error.message}
           login={(username, password) => App.handleLogin(username, password)}
         />
       );
     }
+    let errorPaper = '';
+    console.log(error);
+    if (error.hasError) {
+      errorPaper = <ErrorPaper errorMsg={error.message} />;
+    }
     return (
       <div>
-        <Header username={user} logout={App.handleLogout} />
+        <Header username={user} logout={this.handleLogout} />
         <main>
           <h1>Neuen Skill erstellen</h1>
           <Form
@@ -125,6 +139,7 @@ class App extends Component {
             onSubmit={newPage => this.handleSubmit(newPage)}
             onReset={() => this.handleResetForm()}
           />
+          {errorPaper}
         </main>
       </div>
     );

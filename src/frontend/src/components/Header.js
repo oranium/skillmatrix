@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -21,7 +20,7 @@ const styles = {
 };
 
 function ButtonAppBar(props) {
-  const { classes, username } = props;
+  const { classes, username, logout } = props;
 
   return (
     <div className={classes.root}>
@@ -33,7 +32,7 @@ function ButtonAppBar(props) {
           <Typography variant="h6" color="inherit" className={classes.grow}>
             {username}
           </Typography>
-          <IconButton className={classes.menuButton} onClick={() => props.logout()} color="inherit" aria-label="Menu">
+          <IconButton className={classes.menuButton} onClick={logout} color="inherit" aria-label="Menu">
             <PowerSettingsNew />
           </IconButton>
         </Toolbar>
@@ -41,9 +40,5 @@ function ButtonAppBar(props) {
     </div>
   );
 }
-
-ButtonAppBar.propTypes = {
-  classes: PropTypes.instanceOf(styles).isRequired,
-};
 
 export default withStyles(styles)(ButtonAppBar);

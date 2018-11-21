@@ -23,8 +23,11 @@ const defaultFormState = {
 };
 
 const defaultUsername = 'Undefined';
-const defaultPage = 'login';
-const defaultErrorMsg = '';
+const defaultPage = 'form';
+const defaultError = {
+  hasError: false,
+  message: '',
+};
 
 // has all the data for the inputfields
 export const formState = (state = defaultFormState, action) => {
@@ -41,7 +44,7 @@ export const formState = (state = defaultFormState, action) => {
       });
 
     // return new state, where input field with action.id has a new bool
-    case 'SETERROR':
+    case 'SETINPUTERROR':
       return Object.assign({}, state, {
         [action.id]: Object.assign({}, state[action.id], {
           error: action.error,
@@ -83,12 +86,15 @@ export const page = (state = defaultPage, action) => {
   }
 };
 
-export const errorMsg = (state = defaultErrorMsg, action) => {
+export const error = (state = defaultError, action) => {
   switch (action.type) {
-    case 'SETLOGINERROR':
-      return action.errorMsg;
+    case 'SETERROR':
+      return ({
+        hasError: true,
+        message: action.errorMsg,
+      });
     case 'RESETSTATE':
-      return defaultErrorMsg;
+      return defaultError;
     default:
       return state;
   }
