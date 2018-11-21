@@ -1,5 +1,5 @@
 const RestPoints = {
-    login: '/login',
-    logout: '/logout'
-}
+  login: '/login',
+  logout: '/logout',
+};
 export default RestPoints;
