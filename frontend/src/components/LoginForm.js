@@ -44,9 +44,9 @@ const styles = theme => ({
 });
 
 function SignIn(props) {
-  const { classes } = props;
-  var password = "";
-  var username = "";
+  const { classes, errorMsg } = props;
+  let password = '';
+  let username = '';
 
   return (
     <main className={classes.main}>
@@ -58,15 +58,15 @@ function SignIn(props) {
         <Typography component="h1" variant="h4">
           Skill Matrix
         </Typography>
-        <p>{props.errorMsg}</p>
-        <form onSubmit={(evt)=>{props.login(username, password);evt.preventDefault()}} className={classes.form}>
+        <p>{errorMsg}</p>
+        <form onSubmit={(evt) => { props.login(username, password); evt.preventDefault(); }} className={classes.form}>
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="email">Email Address</InputLabel>
-            <Input id="email" name="email" autoComplete="email" onChange={(evt) => {username = evt.target.value}} autoFocus />
+            <Input id="email" name="email" autoComplete="email" onChange={(evt) => { username = evt.target.value; }} autoFocus />
           </FormControl>
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="password">Password</InputLabel>
-            <Input name="password" type="password" id="password" onChange={(evt) => {password = evt.target.value}} autoComplete="current-password" />
+            <Input name="password" type="password" id="password" onChange={(evt) => { password = evt.target.value; }} autoComplete="current-password" />
           </FormControl>
           <Button
             type="submit"
@@ -84,7 +84,7 @@ function SignIn(props) {
 }
 
 SignIn.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.instanceOf(styles).isRequired,
 };
 
 export default withStyles(styles)(SignIn);

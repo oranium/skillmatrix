@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import React from 'react';
 
 const styles = theme => ({
   root: {
@@ -29,7 +30,7 @@ function PaperSheet(props) {
 }
 
 PaperSheet.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.instanceOf(styles).isRequired,
 };
 
 export default withStyles(styles)(PaperSheet);

@@ -5,7 +5,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import {AccountCircle, PowerSettingsNew} from '@material-ui/icons';
+import { AccountCircle, PowerSettingsNew } from '@material-ui/icons';
 
 const styles = {
   root: {
@@ -21,7 +21,7 @@ const styles = {
 };
 
 function ButtonAppBar(props) {
-  const { classes } = props;
+  const { classes, username } = props;
 
   return (
     <div className={classes.root}>
@@ -31,9 +31,9 @@ function ButtonAppBar(props) {
             <AccountCircle />
           </IconButton>
           <Typography variant="h6" color="inherit" className={classes.grow}>
-            {props.username}
+            {username}
           </Typography>
-          <IconButton className={classes.menuButton} onClick={()=>props.logout()} color="inherit" aria-label="Menu">
+          <IconButton className={classes.menuButton} onClick={() => props.logout()} color="inherit" aria-label="Menu">
             <PowerSettingsNew />
           </IconButton>
         </Toolbar>
@@ -43,7 +43,7 @@ function ButtonAppBar(props) {
 }
 
 ButtonAppBar.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.instanceOf(styles).isRequired,
 };
 
 export default withStyles(styles)(ButtonAppBar);

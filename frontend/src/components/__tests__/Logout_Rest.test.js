@@ -4,21 +4,21 @@ import Logout from '../../user/Logout';
 import RestPoints from '../../user/Init';
 
 const mock = new MockAdapter(axios);
-const username = "Valdemar Forsberg";
+const username = 'Valdemar Forsberg';
 
 describe('Testing Logout Connection to rest api', () => {
-    it('Logout should return true if api says logout was successful', async () => {
-        mock.onPost(RestPoints.logout).reply(200, {
-            success: true
-        });
-        const actReturn = await Logout(username);
-        expect(actReturn).toEqual(true);
+  it('Logout should return true if api says logout was successful', async () => {
+    mock.onPost(RestPoints.logout).reply(200, {
+      success: true,
     });
-    it('Logout should return false if api says logout was not successful', async () => {
-        mock.onPost(RestPoints.logout).reply(200, {
-            success: false
-        });
-        const actReturn = await Logout(username);
-        expect(actReturn).toEqual(false);
+    const actReturn = await Logout(username);
+    expect(actReturn).toEqual(true);
+  });
+  it('Logout should return false if api says logout was not successful', async () => {
+    mock.onPost(RestPoints.logout).reply(200, {
+      success: false,
     });
+    const actReturn = await Logout(username);
+    expect(actReturn).toEqual(false);
+  });
 });
