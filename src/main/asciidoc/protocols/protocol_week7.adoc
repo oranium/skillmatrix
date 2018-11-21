@@ -1,0 +1,102 @@
+= Protokoll Gruppe 01
+
+Treffen am 20.11.2018
+
+Ort:      APB 2101 +
+Beginn:   13:05 Uhr +
+Ende:     14:15 Uhr
+
+__Schriftführer:__ +
+Bruno Reinhold +
+*Nächstes Treffen:* +
+
+27.11.2018, 13:00 Uhr,  Ort des nächsten Treffens: *APB*
+
+__Teilnehmer:__ +
+//Tabellarisch oder Aufzählung, Kennzeichnung von Teilnehmern mit besonderer Rolle (z.B. Kunde)
+Paul Hoffmann (product owner) +
+Aron Gaden (scrum master, scrum team) +
+Willy Pertsch (scrum team) +
+Maximilian Schaller (scrum team) +
+Cornell Ziepel (scrum team) +
+Bruno Reinhold (Schriftführer, scrum team) +
+
+== Bemerkungen
+Verwarnungen, besondere Vorfälle, Organisatorisches, wichtige getroffene Entscheidungen +
+
+20.11.2018 ab 16:40 Uhr in E042 continuous integration Absprachen +
+
+-> Model-View-Controller Pattern prüfen +
+->  .vscode aus GitHub entfernen +
+*Backend* +
+-> eigene Klasse fpr REST Endpunkte 
+-> Aron/Bruno REST-Schnittstellen mit Flask-RESTful +
+-> Willy Datenbank objektrelationaler Wrapper mit SQL-Alchemy +
+
+*Frontend* + 
+-> Maximilian/Cornell Entwicklung der Login & Suche Components unter Einbeziehung von Redux + 
+-> Maximilian React Component Testing mit jest + 
+
+== Retrospektive des letzten Sprints
+*Issue referenziert die Issue ID von GitHub*
+// Wie ist der Status der im letzten Sprint erstellten Issues/veteilten Aufgaben?
+
+// See http://asciidoctor.org/docs/user-manual/=tables
+[option="headers"]
+|===
+|Issue |Aufgabe |Status |Bemerkung
+|#7    |Authentication: test login()|WIP    |-
+|#9    |Login: add rest connection |WIP | - 
+|#8 |Login: loginform | closed |-
+|#10 |Authentication: test logout()|closed |-
+|#11 |Authentication:RESTful API for login | closed |-
+|#12 |Authentication: RESTful API for logout| closed |-
+|#19 |database: replace mysql with SQL-Alchemy| closed|-
+|===
+
+
+== Aktueller Stand +
+-> Verteilung der Issues/Packeges an die Teammitglieder + 
+-> Implementierung der Unit-Tests + 
+-> Basisfunktionalität in Arbeit + 
+-> ES Lint als linting tool +
+
+
+== Planung des nächsten Sprints + 
+*bis 25.11.2018:* 
+*Implementierung und Tests (OOP)* +
+ 
+-> Implementierung weiterer Unit-Tests + 
+-> fortlaufende Ergänzung der Entwicklerdokumentation + 
+
+
+
+
+*Erinnerung* +
+*bis 25.11.2018 muss die Basisfunktionalität stehen* +
+-> Login +
+-> Grundfunktion der Suche +  
+
+
+*Issue referenziert die Issue ID von GitHub*
+
+// See http://asciidoctor.org/docs/user-manual/=tables
+[option="headers"]
+|===
+|Issue |Titel |Beschreibung |Verantwortlicher |Status
+
+
+|#9   |Login:add rest connection |impl rest connection|Cornell|WIP 
+|#7   |Authentication: test login()     |test login |Aron, Bruno            |WIP
+|#13 |Authentication: mocking active directory    | mocking active directory          | Aron, Bruno              |WIP
+|#14 |Login: test rest connection in Login method     | test rest connection in Login method         | Cornell Maximilian               |WIP
+|#15 | Authentication: Create functional mock AD    |Create functional mock AD        |Aron, Bruno               |WIP
+|#16 |improve integration of redux store |new connection between react components and redux store with connect() |Cornell |WIP
+|#17 | Login: write logout method |- |Cornell |WIP
+|#18|Login: test logout rest connection |test logout rest connection |Cornell, Maximilian |WIP
+|#20 | database: REST |Hauptsächlich Absprache mit TEAM-AD |Willy, Cornell |WIP
+|#21 | database: Testen und mocken |-| Willy, Bruno |WIP
+|#26 | database: many to many relations |Connect user and skill |Willy |WIP
+
+
+|===
