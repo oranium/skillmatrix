@@ -24,9 +24,11 @@ Desktop.ini
 *.mv.db
 *.h2.db
 
+#npm packages
+node_modules/
 
-/src/frontend/prototyp_react/node_modules/
+#vscode settings
+.vscode/
 
-.vscode
-
-/venv
+#python virtual environments
+venv/
