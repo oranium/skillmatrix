@@ -19,22 +19,27 @@ import Header from './components/Header';
 import Form from './components/Form';
 import LoginForm from './components/LoginForm';
 
-// import functions for usermanagement
-import LoginApi from './user/Login';
-import LogoutApi from './user/Logout';
+// Rest
+import RestPoints from './rest/Init';
+import RestCom from './rest/Rest';
 
 import './index.css';
 
 class App extends Component {
   static async handleLogin(username, password) {
-    const loginResponse = await LoginApi(username, password);
-    if (loginResponse.success) {
-      const user = loginResponse.user.username;
-      store.dispatch(setUsername(user));
+    const loginCredentials = {
+      username,
+      password,
+    };
+    const Rest = new RestCom(RestPoints.login, loginCredentials);
+
+    try {
+      const { data } = await Rest.post();
+      const { user } = data;
+      store.dispatch(setUsername(user.username));
       store.dispatch(switchPage('form'));
-    } else {
-      const { errorMsg } = loginResponse;
-      store.dispatch(setLoginError(errorMsg));
+    } catch (e) {
+      store.dispatch(setLoginError(e.message));
       store.dispatch(switchPage('login'));
     }
   }
@@ -80,17 +85,19 @@ class App extends Component {
 
   async handleLogout() {
     const { state } = this.props;
-    const { user } = state;
-    const logoutResponse = await LogoutApi(user);
-    if (!logoutResponse) {
-      // error on logout => show to user
-    } else {
+    const user = {
+      user: state.user,
+    };
+    const Rest = new RestCom(RestPoints.logout, user);
+    try {
+      await Rest.post();
       // logout in frontend
       // reset state
       store.dispatch(resetState);
-
       // go back to login
       store.dispatch(switchPage('login'));
+    } catch (e) {
+      // display error Message to user
     }
   }
 
