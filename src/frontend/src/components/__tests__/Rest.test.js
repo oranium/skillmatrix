@@ -1,59 +1,65 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import Login from '../../user/Login';
+import RestCom from '../../rest/Rest'
+
 
 const mock = new MockAdapter(axios);
 const username = 'Valdemar Forsberg';
-
 describe('Testing Login Connection to rest api', () => {
-  it('Login should return empty error message and correct username for error code 0', async () => {
+  it('Login should return correct error Msg for error code 400', async () => {
     mock.onPost('/login').reply(200, {
       user: {
         username,
       },
-      error: 0,
+      error: 400,
     });
-    const response = await Login(username, 'password');
-    const actMsg = response.errorMsg;
-    expect(actMsg).toEqual('');
-
-    expect(response.user.username).toEqual(username);
+    try {
+      await new RestCom(username, 'password');
+    } catch (error) {
+      expect(error).toEqual('Wrong login credentials.');
+                    }
   });
 
-  it('Login should return correct error Msg for error code 1', async () => {
+  it('Login should return correct error Msg for error code 404', async () => {
     mock.onPost('/login').reply(200, {
       user: {
         username,
       },
-      error: 1,
+      error: 404,
     });
-    const response = await Login(username, 'password');
-    const actMsg = response.errorMsg;
-    expect(actMsg).toEqual('Wrong login credentials.');
+    try {
+      await new RestCom(username, 'password');
+    } catch (error) {
+      expect(error).toEqual('Couldnt connect to Server. Please try again.');
+                    }
   });
 
-  it('Login should return correct error Msg for error code 2', async () => {
+  it('Login should return correct error Msg for error code 504', async () => {
     mock.onPost('/login').reply(200, {
       user: {
         username,
       },
-      error: 2,
+      error: 504,
     });
-    const response = await Login(username, 'password');
-    const actMsg = response.errorMsg;
-    expect(actMsg).toEqual('Please fill in all form fields.');
+    try {
+      await new RestCom(username, 'password');
+    } catch (error) {
+      expect(error).toEqual('Active Directory timeout. Please try again.');
+                    }
   });
 
-  it('Login should return correct error Msg for error code 3', async () => {
+  it('Login should return correct error Msg for error code 520', async () => {
     mock.onPost('/login').reply(200, {
       user: {
         username,
       },
-      error: 3,
+      error: 520,
     });
-    const response = await Login(username, 'password');
-    const actMsg = response.errorMsg;
-    expect(actMsg).toEqual('Server Timeout. Please try again.');
+    try {
+      await new RestCom(username, 'password');
+    } catch (error) {
+      expect(error).toEqual('An unknown error occured. Please try again.');
+                    }
   });
 
   it('Login should return correct error Msg for unknown error code', async () => {
@@ -61,10 +67,14 @@ describe('Testing Login Connection to rest api', () => {
       user: {
         username,
       },
-      error: 100,
+      error: 999,
     });
-    const response = await Login(username, 'password');
-    const actMsg = response.errorMsg;
-    expect(actMsg).toEqual('An unknown Error occurred. Please try again.');
+    try {
+      await new RestCom(username, 'password');
+    } catch (error) {
+      expect(error).toEqual('An unknown error occured. Please try again.');
+                    }
   });
+
+  
 });

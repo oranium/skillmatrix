@@ -1,7 +1,6 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import Login from '../../user/Login';
-import '../../index';
+import '../components/App';
 
 const mock = new MockAdapter(axios);
 const username = 'Valdemar Forsberg';
