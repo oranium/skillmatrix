@@ -44,6 +44,8 @@ exports[`test Login Components render Login component 1`] = `
       "submit": "SignIn-submit-5",
     }
   }
+  errorMsg=""
+  login={[Function]}
 />
 `;
 

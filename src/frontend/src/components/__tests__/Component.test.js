@@ -1,22 +1,24 @@
 import React from 'react';
-import { render, shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import LoginForm from '../LoginForm';
 import Form from '../Form';
 import Header from '../Header';
+import App from '../App';
 import {
   SkillNameInput, DateInput, TextArea, LevelPicker,
 } from '../InputFields';
-
+const username = "Valdemar Forsberg"
+const password = "password"
 
 describe('test Login Components', () => {
-  const wrapper = shallow(<LoginForm />);
+  const wrapper = shallow(<LoginForm errorMsg = {''}  login={(username, password) => App.handleLogin(username, password)}/>);
   it('render Login component', () => {
     expect(wrapper).toMatchSnapshot();
   });
 });
 
 describe('test Form component', () => {
-  const wrapper = shallow(<Form inputs="" page="login" />);
+  const wrapper = shallow(<Form inputs="" page="login" name="test" onChange = { '' }  onSubmit = { '' } onClick = { '' } />);
   it('contains important components as children', () => {
     expect(wrapper.contains([<SkillNameInput />, <DateInput />, <TextArea />, <LevelPicker />]));
   });
