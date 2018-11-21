@@ -18,7 +18,16 @@ class user(db.Model):
 #   skill = db.relationship('Skill', backref='author', lazy=True, nullable=True)
 
     def __repr__(self):
-        return '<user %r>' % self.username
+        return '<id {0} und Vorname {1}>'.format(self.id, self.forename) 
+
+class session(db.Model):
+    __tablename__ = 'session'
+    id = db.Column(db.Integer, primary_key=True)
+    val = db.Column(db.Integer, nullable=False)
+
+    def __repr__(self):
+        return '<id {0}>'.format(self.id) 
+
 
 #db.drop_all()
 #db.create_all()
