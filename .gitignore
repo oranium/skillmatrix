@@ -24,5 +24,14 @@ Desktop.ini
 *.mv.db
 *.h2.db
 
+#npm packages
+node_modules/
 
-/src/frontend/node_modules/
+#vscode settings
+.vscode/
+
+#python virtual environments
+venv/
+
+#python cache
+__pycache__/
