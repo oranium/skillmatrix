@@ -1,9 +1,7 @@
 import unittest
 
 #test modules
-import test_authentication
-import test_rest_api
-import test_database_manager
+from test import test_authentication,test_rest_api,test_database_manager
 
 
 #initialize the test suite

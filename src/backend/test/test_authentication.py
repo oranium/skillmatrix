@@ -1,5 +1,4 @@
 #sets backend root as starting directory
-import parentdir
 from ldap3 import Server, Connection, MOCK_SYNC, OFFLINE_AD_2012_R2, NTLM
 import requests
 import json
