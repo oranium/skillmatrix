@@ -24,14 +24,14 @@ Bruno Reinhold (Schriftführer, scrum team) +
 == Bemerkungen
 Verwarnungen, besondere Vorfälle, Organisatorisches, wichtige getroffene Entscheidungen +
 
-20.11.2018 ab 16:40 Uhr in E042 continuous integration Absprachen +
+20.11.2018 ab 16:40 Uhr in E042 Continuous Integration Absprachen +
 
 -> Model-View-Controller Pattern prüfen +
 ->  .vscode aus GitHub entfernen +
 *Backend* +
--> eigene Klasse fpr REST Endpunkte 
+-> eigene Klasse für REST Endpunkte 
 -> Aron/Bruno REST-Schnittstellen mit Flask-RESTful +
--> Willy Datenbank objektrelationaler Wrapper mit SQL-Alchemy +
+-> Willy Datenbank mit objektrelationalem Mapper SQL-Alchemy +
 
 *Frontend* + 
 -> Maximilian/Cornell Entwicklung der Login & Suche Components unter Einbeziehung von Redux + 
@@ -56,7 +56,7 @@ Verwarnungen, besondere Vorfälle, Organisatorisches, wichtige getroffene Entsch
 
 
 == Aktueller Stand +
--> Verteilung der Issues/Packeges an die Teammitglieder + 
+-> Verteilung der Issues/Packages an die Teammitglieder + 
 -> Implementierung der Unit-Tests + 
 -> Basisfunktionalität in Arbeit + 
 -> ES Lint als linting tool +
