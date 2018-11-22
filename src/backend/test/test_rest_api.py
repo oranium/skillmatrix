@@ -1,5 +1,3 @@
-#sets backend root as starting directory
-import parentdir
 import unittest
 import json
 from src import rest_api
