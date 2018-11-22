@@ -8,11 +8,19 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Momomomo2@localhos
 api = Api(app)
 db = SQLAlchemy(app)
 
+class database_handler:
+    def add_user(self, username1, surname1, forename1):
+        user1 = users(username = username1, surname = surname1, forename = forename1)
+        db.session.add(user1)
+        db.session.commit()
+
+
+
 class users(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(45), nullable=False)
-    surename = db.Column(db.String(45), nullable=False)
+    surname = db.Column(db.String(45), nullable=False)
     forename = db.Column(db.String(45), nullable=False)
     place = db.Column(db.String(45), nullable=True)
 #   skill = db.relationship('Skill', backref='author', lazy=True, nullable=True)
@@ -32,9 +40,9 @@ class session(db.Model):
 #db.drop_all()
 #db.create_all()
 
-#willy = user(username='willyadmin', surename ='Pertsch', forename = 'Wilhelm', place = 'wund')
-#aron = user(username='aronnormal', surename ='Gaden', forename = 'Aron', place = 'blau')
-#bruno = user(username='bruenonormal', surename ='Reinhold', forename = 'Bruno', place = 'dresden')
+#willy = user(username='willyadmin', surname ='Pertsch', forename = 'Wilhelm', place = 'wund')
+#aron = user(username='aronnormal', surname ='Gaden', forename = 'Aron', place = 'blau')
+#bruno = user(username='bruenonormal', surname ='Reinhold', forename = 'Bruno', place = 'dresden')
 
 #db.session.add(willy)
 #db.session.add(aron)
@@ -75,18 +83,20 @@ class session(db.Model):
 
 
 class HelloWorld(Resource):
+    dbh = database_handler()
     print('in hw')
+    dbh.add_user('carlacarlos', 'karl', 'los')
     #db.drop_all()
     #db.create_all()
 
-    willy = users(username='willynormal', surename ='Pertsch', forename = 'Wilhelm', place = 'wund')
-    #aron = users(username='aronnormal', surename ='Gaden', forename = 'Aron', place = 'blau')
-    bruno = users(username='bruenonormal', surename ='Reinhold', forename = 'Bruno', place = 'dresden')
-    #willy2 = users(username='willynormal2', surename ='Pertsch', forename = 'Wilhelm', place = 'wund')
+    #willy = users(username='willynormal', surname ='Pertsch', forename = 'Wilhelm')
+    #aron = users(username='aronnormal', surname ='Gaden', forename = 'Aron', place = 'blau')
+    #bruno = users(username='bruenonormal', surname ='Reinhold', forename = 'Bruno', place = 'dresden')
+    #willy2 = users(username='willynormal2', surname ='Pertsch', forename = 'Wilhelm', place = 'wund')
 
-    db.session.add(willy)
+    #db.session.add(willy)
     #db.session.add(aron)
-    db.session.add(bruno)
+    #db.session.add(bruno)
     #db.session.add(willy2)
     #delete_this = users.query.filter_by(id=2).first
     #db.session.delete(delete_this)
