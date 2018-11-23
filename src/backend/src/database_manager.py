@@ -9,14 +9,17 @@ api = Api(app)
 db = SQLAlchemy(app)
 
 class database_handler:
-    def add_user(self, username1, surname1, forename1):
-        user1 = users(username = username1, surname = surname1, forename = forename1)
+'''Class to handle everything about table-manipulation'''
+    def add_user(self, username1, surname1, forename1, place1= None):
+        '''Adds user to database. Place is optional and is NULL if not given.'''
+        user1 = users(username = username1, surname = surname1, forename = forename1, place = place1)
         db.session.add(user1)
         db.session.commit()
 
 
 
 class users(db.Model):
+    '''SQL-Alchemy object users. Has an autoincremented id, an username, a surname, a forename and a place which can be NULL'''
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(45), nullable=False)
@@ -85,6 +88,7 @@ class session(db.Model):
 class HelloWorld(Resource):
     dbh = database_handler()
     print('in hw')
+    #dbh.add_user('carlacarlos', 'karl', 'los')
     dbh.add_user('carlacarlos', 'karl', 'los')
     #db.drop_all()
     #db.create_all()
