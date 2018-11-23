@@ -9,12 +9,32 @@ api = Api(app)
 db = SQLAlchemy(app)
 
 class database_handler:
-'''Class to handle everything about table-manipulation'''
+    '''Class to handle everything about table-manipulation'''
     def add_user(self, username1, surname1, forename1, place1= None):
         '''Adds user to database. Place is optional and is NULL if not given.'''
         user1 = users(username = username1, surname = surname1, forename = forename1, place = place1)
         db.session.add(user1)
         db.session.commit()
+
+    def change_user(self, username1, surname1, forename1, place1= None):
+        '''Changes a colum of the users-table, based on the username (the username is ad-given and can not be changed here).'''
+    
+    def clear_database(self):
+        '''Destroys the whole tablestructure and builds a new one with empty colums. For professionals only'''
+        db.drop_all()
+        db.create_all()
+
+    def delete_user(self, username1):
+        '''Deletes a colum of the users-table, based on the given username.'''
+        delete_this = users.query.filter_by(username=username1).first
+        print(delete_this)
+        print('das wird gelöscht')
+        db.session.delete(delete_this)
+        db.session.commit()
+
+    
+
+
 
 
 
