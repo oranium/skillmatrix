@@ -20,10 +20,15 @@ const defaultFormState = {
     value: '',
     error: false,
   },
+  searchfield: {
+    name: 'Search',
+    value: '',
+    error: false,
+  },
 };
 
 const defaultUsername = 'Undefined';
-const defaultPage = 'form';
+const defaultPage = 'search';
 const defaultError = {
   hasError: false,
   message: '',
@@ -89,10 +94,10 @@ export const page = (state = defaultPage, action) => {
 export const error = (state = defaultError, action) => {
   switch (action.type) {
     case 'SETERROR':
-      return ({
+      return {
         hasError: true,
         message: action.errorMsg,
-      });
+      };
     case 'RESETSTATE':
       return defaultError;
     default:

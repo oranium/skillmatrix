@@ -16,6 +16,7 @@ import {
 // import page parts
 import Header from './Header';
 import Form from './Form';
+import Search from './Search';
 import LoginForm from './LoginForm';
 import ErrorPaper from './ErrorPaper';
 
@@ -35,7 +36,7 @@ class App extends Component {
       const { data } = await Rest.post();
       const { user } = data;
       store.dispatch(setUsername(user.username));
-      store.dispatch(switchPage('form'));
+      store.dispatch(switchPage('search'));
     } catch (e) {
       store.dispatch(setError(e.message));
       store.dispatch(switchPage('login'));
@@ -56,6 +57,8 @@ class App extends Component {
   // user inputs something into an input field
   handleChange(id, value) {
     const { state } = this.props;
+
+    console.log(`${id}  ${value}`);
 
     if (state.formState[id].error) {
       store.dispatch(setInputError(id, false));
@@ -87,6 +90,24 @@ class App extends Component {
     }
   }
 
+  async handleSearch() {
+    const { state } = this.props;
+    const { user } = state;
+    const { value } = state.formState.searchfield;
+    const search = {
+      username: user,
+      query: value,
+    };
+    const Rest = new RestCom(RestPoints.search, search);
+    try {
+      const result = await Rest.post();
+      console.log(result);
+    } catch (e) {
+      store.dispatch(setError(e.message));
+      console.log(e);
+    }
+  }
+
   async handleLogout() {
     const { state } = this.props;
     const user = {
@@ -112,6 +133,7 @@ class App extends Component {
     const {
       page, error, user, formState,
     } = state;
+    let main = '';
 
     if (page === 'login') {
       return (
@@ -121,6 +143,32 @@ class App extends Component {
         />
       );
     }
+    switch (page) {
+      case 'form':
+        main = (
+          <Form
+            inputs={formState}
+            page={page}
+            name="test"
+            onChange={(id, value) => this.handleChange(id, value)}
+            onSubmit={newPage => this.handleSubmit(newPage)}
+            onReset={() => this.handleResetForm()}
+          />
+        );
+        break;
+      case 'search':
+        main = (
+          <Search
+            searchField={formState.searchfield}
+            onChange={(id, value) => this.handleChange(id, value)}
+            onSearch={() => this.handleSearch()}
+          />
+        );
+        break;
+      default:
+        return 'Error';
+    }
+
     let errorPaper = '';
     console.log(error);
     if (error.hasError) {
@@ -130,15 +178,7 @@ class App extends Component {
       <div>
         <Header username={user} logout={this.handleLogout} />
         <main>
-          <h1>Neuen Skill erstellen</h1>
-          <Form
-            inputs={formState}
-            page={page}
-            name="test"
-            onChange={(id, value) => this.handleChange(id, value)}
-            onSubmit={newPage => this.handleSubmit(newPage)}
-            onReset={() => this.handleResetForm()}
-          />
+          {main}
           {errorPaper}
         </main>
       </div>

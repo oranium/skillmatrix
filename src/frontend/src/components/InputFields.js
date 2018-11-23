@@ -41,6 +41,29 @@ export const SkillNameInput = withStyles(styles)(
 );
 
 
+export const SearchInput = withStyles(styles)(
+  (props) => {
+    const { classes } = props;
+    const id = 'searchfield';
+
+    return (
+      <TextField
+        required
+        id="outlined-required"
+        type="text"
+        label={props.data.name}
+        value={props.data.value}
+        className={`${classes.textField} ${props.data.name}`}
+        error={props.data.error}
+        margin="normal"
+        variant="outlined"
+        onChange={evt => props.onChange(id, evt.target.value)}
+      />
+    );
+  },
+);
+
+
 export const DateInput = withStyles(styles)(
   (props) => {
     const { classes } = props;

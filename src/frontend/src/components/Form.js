@@ -54,6 +54,7 @@ export default class Form extends Component {
     if (page === 'form') {
       return (
         <div className="form">
+          <h1>Neuen Skill erstellen</h1>
           <SkillNameInput
             data={inputs.textfield}
             value={inputs.textfield.value}
