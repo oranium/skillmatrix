@@ -1,6 +1,8 @@
 """authentication contains the Authentication class."""
+import parentdir
 from ldap3 import Server, Connection, MOCK_SYNC, NTLM
 from ldap3.core.exceptions import LDAPUnknownAuthenticationMethodError, LDAPSocketOpenError
+import json
 # if info about the server is required:
 # get info about server
 # print(mock_server.info)
@@ -40,7 +42,6 @@ class Authentication:
             self.connections["mock"] = self.mock_connection
             return
 
-
     # should call db_controller according to #11
     def login(self, username, password):
         '''
@@ -60,16 +61,16 @@ class Authentication:
                 raise AttributeError
             self.connections[username] = new_connection
             self.connections[username].bind()
-            print(self.connections[username])
+            #print(self.connections[username])
             #successful login
-            return {"user":{"username":username}}
+            return json.dumps(dict(user = dict(username = username)))
         #catch empty input
         except LDAPUnknownAuthenticationMethodError:
             raise AttributeError
-        #timeout while calling AD
+        #catch timeout while calling AD
         except LDAPSocketOpenError:
             raise TimeoutError
-        #something else went wrong
+        #something else went wrong, likely bind
         except Exception:
             return Exception
     
@@ -79,11 +80,10 @@ class Authentication:
         Logs out the user and returns True if no error, False if error
         '''
         try:
-            self.connections[username].unbind()
-            self.connections.pop(username)
+            del_connection = self.connections.pop(username)
+            del_connection.unbind()
             return True
         except KeyError:
-            print("Connection " +username+ " doesn't exist.")
             return False
 
 
