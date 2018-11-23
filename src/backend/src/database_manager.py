@@ -18,6 +18,13 @@ class database_handler:
 
     def change_user(self, username1, surname1, forename1, place1= None):
         '''Changes a colum of the users-table, based on the username (the username is ad-given and can not be changed here).'''
+        update_this = users.query.filter_by(username = username1).first()
+        update_this.surname = surname1
+        update_this.forename = forename1
+        #if place1 != NULL:
+        #    update_this.place = place1
+        db.session.commit()
+
     
     def clear_database(self):
         '''Destroys the whole tablestructure and builds a new one with empty colums. For professionals only'''
@@ -26,7 +33,7 @@ class database_handler:
 
     def delete_user(self, username1):
         '''Deletes a colum of the users-table, based on the given username.'''
-        delete_this = users.query.filter_by(username=username1).first
+        delete_this = users.query.filter_by(username = username1).first
         print(delete_this)
         print('das wird gelöscht')
         db.session.delete(delete_this)
