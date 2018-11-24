@@ -9,24 +9,26 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Momomomo2@localhos
 api = Api(app)
 db = SQLAlchemy(app)
 
-def handle_query(self, query):
-    '''Accepts the query from REST-API and hands it to database_handler, returns JSON'''
+'''def handle_query(self, query):
+    Accepts the query from REST-API and hands it to database_handler, returns JSON
     results = database_handler.search(self,query)
     if(results is None):
          raise ValueError
-    return json.dumps(results)
+    return json.dumps(results)'''
     
 
 class database_handler:
     '''Class to handle everything about table-manipulation'''
     def add_user(self, username1, surname1, forename1, place1= None):
         '''Adds user to database. Place is optional and is NULL if not given.'''
+        #works
         user1 = users(username = username1, surname = surname1, forename = forename1, place = place1)
         db.session.add(user1)
         db.session.commit()
 
     def change_user(self, username1, surname1, forename1, place1= None):
         '''Changes a colum of the users-table, based on the username (the username is ad-given and can not be changed here).'''
+        #works
         update_this = users.query.filter_by(username = username1).first()
         update_this.surname = surname1
         update_this.forename = forename1
@@ -37,16 +39,22 @@ class database_handler:
     
     def clear_database(self):
         '''Destroys the whole tablestructure and builds a new one with empty colums. For professionals only'''
+        #works
         db.drop_all()
         db.create_all()
 
     def delete_user(self, username1):
         '''Deletes a colum of the users-table, based on the given username.'''
-        delete_this = users.query.filter_by(username = username1).first
-        print(delete_this)
-        print('das wird gelöscht')
+        #works
+        delete_this = users.query.filter_by(username = username1).first()
+        #print(delete_this)
+        #print('das wird gelöscht')
         db.session.delete(delete_this)
         db.session.commit()
+
+    #def search(self, query):
+
+
 
 class users(db.Model):
     '''SQL-Alchemy object users. Has an autoincremented id, an username, a surname, a forename and a place which can be NULL'''
@@ -59,7 +67,17 @@ class users(db.Model):
 #   skill = db.relationship('Skill', backref='author', lazy=True, nullable=True)
 
     def __repr__(self):
-        return '<id {0} und Vorname {1}>'.format(self.id, self.forename) 
+        return '<id {0} und Vorname {1}>'.format(self.id, self.forename)
+
+class skill(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(127), nullable=False)
+    level = db.Column(db.Integer, nullable=False)
+    #date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    description = db.Column(db.Text, nullable=True)
+
+    def __repr__(self):
+        return '<name {0} und level {1}>'.format(self.name, self.level) 
 
 class session(db.Model):
     __tablename__ = 'session'
@@ -119,7 +137,9 @@ class HelloWorld(Resource):
     dbh = database_handler()
     print('in hw')
     #dbh.add_user('carlacarlos', 'karl', 'los')
-    dbh.add_user('carlacarlos', 'karl', 'los')
+    dbh.add_user('willy1', 'wil2', 'ly')
+    dbh.add_user('willy1', 'wil', 'ly2')
+    dbh.add_user('willy2', 'wil', 'l2y')
     #db.drop_all()
     #db.create_all()
 
@@ -136,7 +156,7 @@ class HelloWorld(Resource):
     #db.session.delete(delete_this)
     db.session.commit()
 
-    data = users.query.all()
+    data = users.query.filter_by(username = 'willy1').all()
 
     def get(self):
         sotr = ''.join(str(e) for e in self.data)
