@@ -4,7 +4,7 @@ from flask import Flask, Response
 import json
 from flask_restful import Resource, Api, reqparse
 from src.authentication import Authentication
-import database_manager
+from src import database_manager
 
 app = Flask(__name__)
 api = Api(app)
