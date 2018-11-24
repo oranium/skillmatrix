@@ -1,3 +1,4 @@
+import parentdir
 from flask import Flask, json, request, redirect
 from flask_restful import Resource, Api
 from flask_sqlalchemy import SQLAlchemy
@@ -7,6 +8,14 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Momomomo2@localhost/sm1'
 api = Api(app)
 db = SQLAlchemy(app)
+
+def handle_query(self, query):
+    '''Accepts the query from REST-API and hands it to database_handler, returns JSON'''
+    results = database_handler.search(self,query)
+    if(results is None):
+         raise ValueError
+    return json.dumps(results)
+    
 
 class database_handler:
     '''Class to handle everything about table-manipulation'''
@@ -38,12 +47,6 @@ class database_handler:
         print('das wird gelöscht')
         db.session.delete(delete_this)
         db.session.commit()
-
-    
-
-
-
-
 
 class users(db.Model):
     '''SQL-Alchemy object users. Has an autoincremented id, an username, a surname, a forename and a place which can be NULL'''
