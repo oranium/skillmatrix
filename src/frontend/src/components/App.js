@@ -34,7 +34,7 @@ class App extends Component {
       username,
       password,
     };
-    const Rest = new RestCom(RestPoints.login, loginCredentials);
+    const Rest = new RestCom(RestPoints.login, JSON.stringify(loginCredentials));
 
     try {
       const { data } = await Rest.post();
@@ -102,7 +102,7 @@ class App extends Component {
       username: user,
       query: value,
     };
-    const Rest = new RestCom(RestPoints.search, search);
+    const Rest = new RestCom(RestPoints.search, JSON.stringify(search));
     store.dispatch(showSearchResults);
     const result = {
       java: {
@@ -124,7 +124,7 @@ class App extends Component {
     const user = {
       user: state.user,
     };
-    const Rest = new RestCom(RestPoints.logout, user);
+    const Rest = new RestCom(RestPoints.logout, JSON.stringify(user));
     store.dispatch(hideSearchResults);
     try {
       await Rest.post();
