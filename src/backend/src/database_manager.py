@@ -9,6 +9,10 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Momomomo2@localhos
 api = Api(app)
 db = SQLAlchemy(app)
 
+from session import Session
+from skill import Skill
+from user import Users
+
 def handle_query(self, query):
     #Accepts the query from REST-API and hands it to database_handler, returns JSON
     results = database_handler.search(self,query)
@@ -21,16 +25,17 @@ class database_handler:
     '''Class to handle everything about table-manipulation'''
     def add_skill(self, skill1, level1):
         '''Adds skill to database.'''
-        object_name = skill(name = skill1, level = level1)
+        object_name = Skill(name = skill1, level = level1)
         db.session.add(object_name)
         db.session.commit()
 
     def add_user(self, username1):
         '''Adds user to database. #Place is optional and is NULL if not given.'''
         #works
-        object_name = users(username = username1)
+        object_name = Users(username = username1)
         db.session.add(object_name)
         db.session.commit()
+        
 
     #def change_user(self, username1, surname1, forename1, place1= None):
         #'''Changes a colum of the users-table, based on the username (the username is ad-given and can not be changed here).'''
@@ -52,7 +57,7 @@ class database_handler:
     def delete_user(self, username1):
         '''Deletes a colum of the users-table, based on the given username.'''
         #works
-        delete_this = users.query.filter_by(username = username1).first()
+        delete_this = Users.query.filter_by(username = username1).first()
         db.session.delete(delete_this)
         db.session.commit()
 
@@ -61,7 +66,7 @@ class database_handler:
         #lsite aller level
         alistname = []
         #liste aller usernamen
-        data = skill.query.filter_by(name = query).all()
+        data = Skill.query.filter_by(name = query).all()
         for skill1 in data:
             alistlevel.append(skill1.give_level())
             for users1 in skill1.has_user:
@@ -72,54 +77,7 @@ class database_handler:
         #dict von Usernames in Verbindung mit Skilllevel
         big_dict = dict(skill= query,result= name_skilllevel_dict)
         #print(big_dict)
-        return big_dict
-        
-
-
-
-user_skill = db.Table('user_skill',
-    db.Column('users_id', db.Integer, db.ForeignKey('users.id')),
-    db.Column('skill_id', db.Integer, db.ForeignKey('skill.id'))
-)
-
-class users(db.Model):
-    '''SQL-Alchemy object users. Has an autoincremented id, an username, a surname, a forename and a place which can be NULL'''
-    __tablename__ = 'users'
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(45), nullable=False)
-    #surname = db.Column(db.String(45), nullable=False)
-    #forename = db.Column(db.String(45), nullable=False)
-    #place = db.Column(db.String(45), nullable=True)
-    has_skill = db.relationship('skill', secondary=user_skill, backref=db.backref('has_user', lazy = 'dynamic'))
-
-    def give_name(self):
-        return self.username
-
-    def __repr__(self):
-        return '<id = {0} und username = {1}>'.format(self.id, self.username)
-
-
-
-class skill(db.Model):
-    __tablename__ = 'skill'
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(127), nullable=False)
-    level = db.Column(db.Integer, nullable=False)
-    #description = db.Column(db.Text, nullable=True)
-    
-    def give_level(self):
-        return self.level
-
-    def __repr__(self):
-        return '<name {0} und level {1}>'.format(self.name, self.level) 
-
-class session(db.Model):
-    __tablename__ = 'session'
-    id = db.Column(db.Integer, primary_key=True)
-    val = db.Column(db.Integer, nullable=False)
-
-    def __repr__(self):
-        return '<id {0}>'.format(self.id) 
+        return big_dic
 
 
 class HelloWorld(Resource):
@@ -173,7 +131,7 @@ class HelloWorld(Resource):
     db.session.commit()
 
     #data = users.query.filter_by(username = 'willy1').all()
-    data = users.query.all()
+    data = Users.query.all()
     #data = dbh.search('schnell_laufen')
 
     def get(self):

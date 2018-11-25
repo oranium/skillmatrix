@@ -1,82 +1,89 @@
 import parentdir
-from flask import Flask
+import unittest
+from unittest.mock import patch
 from flask import Flask, json, request, redirect
 from flask_restful import Resource, Api
 from flask_sqlalchemy import SQLAlchemy
-from flask_restful import Resource, Api
-import unittest
-from unittest.mock import patch
 from src import database_manager
-from src.database_manager import users, db
+
 
 def setUpModule():
     database_manager.app.testing = True
     
-    
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
+api = Api(app)
+db = SQLAlchemy(app)
+
+from src.user import User
+from src.skill import Skill
+from src.session import Session
+
 
 class Test_TestDatabaseController(unittest.TestCase):
     '''unittests for the database manager'''
 
-    def SetUp(self):
-        db.create_all()
-        self.database_table_test = users
-        self.database_handler_test = database_manager.database_handler()
+    def setUp(self):
+        #self.database_table_test = users
+        #self.database_handler_test = database_manager.database_handler()
         
-        '''
-        app = Flask(__name__)
-        app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Momomomo2@localhost/sm1'
-        api = Api(app)
-        db = SQLAlchemy(app)
-        with self.app.app_context():
-            db.create_all()
+        db.drop_all()
+        db.create_all()
             # add testdata here
 
-        '''
-
     def tearDown(self):
+        db.session.remove()
+        db.drop_all()
+ 
+    def test_clear_database(self):
+        empty_skill_table =  Skill.query.all()
+        empty_user_talbe = Users.query.all()
+        empty_session_table = Session.query.all()
+        assertEquals(empty_skill_table, None, "The skill table was not cleared.")
+        assertEquals(empty_user_talbe, None, "The user table was not cleared.")
+        assertEquals(empty_session_table, None, "The session table was not cleared.")
 
-        self.app = Flask(__name__)
-        with self.app.app_context():
-            db.session.remove()
-            db.drop_all()
-
-        
         
     def test_get_all(self, level):
-        
         pass
 
     def test_set_skill(self, level, date):
-        
         pass
 
     def test_get_profile(self, user):
-
         pass
+    
 
-    def test_add_user(self, username1, surname1, forename1, place1= None):
-        self.database_handler_test.add_user("someusername","somesurname","someforename")
-        user_object = self.database_table_test.query.filter_by(username = username1).first()
-        self.assertEqual(user_object.username, "someusername", "The user was not correctly inserted into the database.")
-        
-        '''
+
+    def test_add_user_success(self, user, place1= None):
         with patch.object(database_manager.database_handler(),"add_user") as mock_add_user:
-            with patch.object(database_manager.)
-            mock_add_user.add_user
-            mock_add_user.assert_("someusername","somesurname","someforename")
+            mock_add_user("someusername")
+            user_object = user.Users.query.filter_by(username = user).first()
+            self.assertEqual(user_object.username, "someusername", "The user was not correctly inserted into the database.")
+
             
-            self.assert
-        '''
+    def test_delete_user_success(self, user):
+        with patch.object(database_manager.database_handler(),"delete_user") as mock_delete_user:
+            mock_delete_user("someusername")
+            user_object = database_table_test.query.filter_by(username = user).first()
+            self.assertEqual(user_object, None, "The user was not correctly deleted from the database.")
 
 
-    def test_delete_user(self, user):
-        pass
+    def test_add_skill_success(self, user, skill1, level1, date):
 
-    def test_add_skill(self, user):
-        pass
+        with patch.object(database_manager.database_handler(),"add_skill") as mock_add_skill:
+            object_name = Users(username = user)
+            db.session.add(object_name)
+            db.session.commit()
+
+            mock_add_skill("someusername", "skill", 5)
+            user_object = user.Users.query.filter_by(username = user).first()
+            self.assertEqual(user_object.username, "someusername", "The user was not correctly inserted into the database.")
+
 
     def test_handle_query_success(self):
         search_result = dict(skill="Java",result = dict(Aron=1,Willy=5))
+        search_result.keys
         with patch.object(database_manager.database_handler, "search") as mock_search:
             mock_search.return_value = search_result
             self.assertEqual(search_result,database_manager.handle_query(self,"Java")) 
