@@ -30,7 +30,7 @@ import RestCom from '../rest/Rest';
 
 class App extends Component {
   static async handleLogin(username, password) {
-    const loginCredential = {
+    const loginCredentials = {
       username,
       password,
     };
@@ -49,7 +49,7 @@ class App extends Component {
 
   // user wants to reset all input fields
   static handleResetForm() {
-    store.dispatch(resetForm());
+    store.dispatch(resetForm);
   }
 
   constructor(props) {

@@ -28,7 +28,7 @@ const defaultFormState = {
 };
 
 const defaultUsername = 'Undefined';
-const defaultPage = 'search';
+const defaultPage = 'login';
 const defaultError = {
   hasError: false,
   message: '',
