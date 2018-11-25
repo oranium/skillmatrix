@@ -35,14 +35,7 @@ const defaultError = {
 };
 
 const defaultSearchResults = {
-  results: {
-    java: {
-      Herbert: 4,
-      Tom: 4,
-      Tim: 3,
-      Olaf: 3,
-    },
-  },
+  results: {},
   showResults: true,
 };
 
