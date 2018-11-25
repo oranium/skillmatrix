@@ -61,8 +61,6 @@ class App extends Component {
   handleChange(id, value) {
     const { state } = this.props;
 
-    console.log(`${id}  ${value}`);
-
     if (state.formState[id].error) {
       store.dispatch(setInputError(id, false));
     }
@@ -104,9 +102,9 @@ class App extends Component {
     };
     const Rest = new RestCom(RestPoints.search, JSON.stringify(search));
     try {
-      const results = await Rest.post();
+      const { data } = await Rest.post();
       // store results into state
-      store.dispatch(setSearchResults(results));
+      store.dispatch(setSearchResults(data));
       // show results to user
       store.dispatch(showSearchResults);
     } catch (e) {

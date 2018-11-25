@@ -36,7 +36,7 @@ const defaultError = {
 
 const defaultSearchResults = {
   results: {},
-  showResults: true,
+  showResults: false,
 };
 
 // has all the data for the inputfields

@@ -28,7 +28,6 @@ function ControlledExpansionPanels(props) {
       id={i}
       username={username}
       level={results[username]}
-      onChange={() => console.log('test')}
     />
   ));
 

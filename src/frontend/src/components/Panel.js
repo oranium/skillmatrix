@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
@@ -25,18 +24,13 @@ const styles = theme => ({
 
 function Panel(props) {
   const {
-    classes, onChange, id, isExpanded, username, level,
+    classes, isExpanded, username, level,
   } = props;
 
   console.log(props);
   return (
     <ExpansionPanel
       expanded={isExpanded}
-      onChange={(expanded) => {
-        onChange(id);
-        console.log(id);
-        console.log(`exp ${expanded}`);
-      }}
     >
       <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
         <Typography className={classes.heading}>{username}</Typography>
@@ -51,9 +45,5 @@ function Panel(props) {
     </ExpansionPanel>
   );
 }
-
-Panel.propTypes = {
-  classes: PropTypes.instanceOf(styles).isRequired,
-};
 
 export default withStyles(styles)(Panel);
