@@ -19,22 +19,22 @@ db = SQLAlchemy(app)
 
 class database_handler:
     '''Class to handle everything about table-manipulation'''
-    def add_user(self, username1, surname1, forename1, place1= None):
+    def add_user(self, username1):
         '''Adds user to database. Place is optional and is NULL if not given.'''
         #works
-        user1 = users(username = username1, surname = surname1, forename = forename1, place = place1)
+        user1 = users(username = username1)
         db.session.add(user1)
         db.session.commit()
 
-    def change_user(self, username1, surname1, forename1, place1= None):
-        '''Changes a colum of the users-table, based on the username (the username is ad-given and can not be changed here).'''
+    #def change_user(self, username1, surname1, forename1, place1= None):
+        #'''Changes a colum of the users-table, based on the username (the username is ad-given and can not be changed here).'''
         #works
-        update_this = users.query.filter_by(username = username1).first()
-        update_this.surname = surname1
-        update_this.forename = forename1
+        #update_this = users.query.filter_by(username = username1).first()
+        #update_this.surname = surname1
+        #update_this.forename = forename1
         #if place1 != NULL:
         #    update_this.place = place1
-        db.session.commit()
+        #db.session.commit()
 
     
     def clear_database(self):
@@ -54,22 +54,29 @@ class database_handler:
 
     #def search(self, query):
 
-
+user_skill = db.Table('user_skill',
+    db.Column('users_id', db.Integer, db.ForeignKey('users.id')),
+    db.Column('skill_id', db.Integer, db.ForeignKey('skill.id'))
+)
 
 class users(db.Model):
     '''SQL-Alchemy object users. Has an autoincremented id, an username, a surname, a forename and a place which can be NULL'''
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(45), nullable=False)
-    surname = db.Column(db.String(45), nullable=False)
-    forename = db.Column(db.String(45), nullable=False)
-    place = db.Column(db.String(45), nullable=True)
+    #surname = db.Column(db.String(45), nullable=False)
+    #forename = db.Column(db.String(45), nullable=False)
+    #place = db.Column(db.String(45), nullable=True)
+    has_skill = db.relationship('skill', secondary=user_skill, backref=db.backref('has_users', lazy = 'dynamic'))
 #   skill = db.relationship('Skill', backref='author', lazy=True, nullable=True)
 
     def __repr__(self):
-        return '<id {0} und Vorname {1}>'.format(self.id, self.forename)
+        return '<id = {0} und usermane = {1}>'.format(self.id, self.username)
+
+
 
 class skill(db.Model):
+    __tablename__ = 'skill'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(127), nullable=False)
     level = db.Column(db.Integer, nullable=False)
@@ -135,11 +142,12 @@ class session(db.Model):
 
 class HelloWorld(Resource):
     dbh = database_handler()
+    dbh.clear_database()
     print('in hw')
     #dbh.add_user('carlacarlos', 'karl', 'los')
-    dbh.add_user('willy1', 'wil2', 'ly')
-    dbh.add_user('willy1', 'wil', 'ly2')
-    dbh.add_user('willy2', 'wil', 'l2y')
+    dbh.add_user('willy1')
+    #dbh.add_user('willy1', 'wil', 'ly2')
+    #dbh.add_user('willy2', 'wil', 'l2y')
     #db.drop_all()
     #db.create_all()
 
