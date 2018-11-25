@@ -1,15 +1,18 @@
 import parentdir
+from src import rest_api
+from rest_api import db
 from flask import Flask, json, request, redirect
 from flask_restful import Resource, Api
 from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Resource, Api
+import sys
 
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Momomomo2@localhost/sm1'
-api = Api(app)
-db = SQLAlchemy(app)
+#app = Flask(__name__)
+#api = Api(app)
+#db = SQLAlchemy(app)
 
 def handle_query(self, query):
+    print()
     #Accepts the query from REST-API and hands it to database_handler, returns JSON
     results = database_handler.search(self,query)
     if(results is None):
@@ -121,66 +124,66 @@ class session(db.Model):
     def __repr__(self):
         return '<id {0}>'.format(self.id) 
 
-
-class HelloWorld(Resource):
-    dbh = database_handler()
-    dbh.clear_database()
-    Valdemar = users(username='Valdemar-Forsberg')
-    Karl = users(username='Karl.Kalagin')
-    Isaac = users(username='Isaac.Hunt')
-    Ozoemena = users(username='Ozoemena.Somayina')
-    Yvonne = users(username='Yvonne.Thompsome')
-    
-    db.session.add(Valdemar)
-    db.session.add(Karl)
-    db.session.add(Isaac)
-    db.session.add(Ozoemena)
-    db.session.add(Yvonne)
-    java1 = skill(name = 'Java', level = 5)
-    java2 = skill(name = 'Java', level = 2)
-    java3 = skill(name = 'Java', level = 3)
-    python1 = skill(name = 'Python', level = 4)
-    python2 = skill(name = 'Python', level = 3)
-    js1 = skill(name = 'JavaScript', level = 4)
-    js2 = skill(name = 'JavaScript', level = 2)
-    js3 = skill(name = 'JavaScript', level = 1)
-    db.session.add(java1)
-    db.session.add(java2)
-    db.session.add(java3)
-    db.session.add(python1)
-    db.session.add(python2)
-    db.session.add(js1)
-    db.session.add(js2)
-    db.session.add(js3)
-    java1.has_user.append(Valdemar)
-    java1.has_user.append(Karl)
-    java2.has_user.append(Isaac)
-    java3.has_user.append(Ozoemena)
-    java3.has_user.append(Yvonne)
-
-    python1.has_user.append(Valdemar)
-    python1.has_user.append(Karl)
-    python1.has_user.append(Isaac)
-    python2.has_user.append(Ozoemena)
-    python2.has_user.append(Yvonne)
-
-    js1.has_user.append(Valdemar)
-    js2.has_user.append(Karl)
-    js2.has_user.append(Isaac)
-    js2.has_user.append(Ozoemena)
-    js3.has_user.append(Yvonne)
-
-    db.session.commit()
-
-    #data = users.query.filter_by(username = 'willy1').all()
-    data = users.query.all()
-    #data = dbh.search('schnell_laufen')
-
-    def get(self):
-        sotr = ''.join(str(e) for e in self.data)
-        return {'results' : sotr}, 201
-
-api.add_resource(HelloWorld, '/')
-
-if __name__ == '__main__':
-    app.run()
+#commenting out the API, so it doesn't interfere with the server
+#class HelloWorld(Resource):
+#    dbh = database_handler()
+#    dbh.clear_database()
+#    Valdemar = users(username='Valdemar-Forsberg')
+#    Karl = users(username='Karl.Kalagin')
+#    Isaac = users(username='Isaac.Hunt')
+#    Ozoemena = users(username='Ozoemena.Somayina')
+#    Yvonne = users(username='Yvonne.Thompsome')
+#    
+#    db.session.add(Valdemar)
+#    db.session.add(Karl)
+#    db.session.add(Isaac)
+#    db.session.add(Ozoemena)
+#    db.session.add(Yvonne)
+#    java1 = skill(name = 'Java', level = 5)
+#    java2 = skill(name = 'Java', level = 2)
+#    java3 = skill(name = 'Java', level = 3)
+#    python1 = skill(name = 'Python', level = 4)
+#    python2 = skill(name = 'Python', level = 3)
+#    js1 = skill(name = 'JavaScript', level = 4)
+#    js2 = skill(name = 'JavaScript', level = 2)
+#    js3 = skill(name = 'JavaScript', level = 1)
+#    db.session.add(java1)
+#    db.session.add(java2)
+#    db.session.add(java3)
+#    db.session.add(python1)
+#    db.session.add(python2)
+#    db.session.add(js1)
+#    db.session.add(js2)
+#    db.session.add(js3)
+#    java1.has_user.append(Valdemar)
+#    java1.has_user.append(Karl)
+#    java2.has_user.append(Isaac)
+#    java3.has_user.append(Ozoemena)
+#    java3.has_user.append(Yvonne)
+#
+#    python1.has_user.append(Valdemar)
+#    python1.has_user.append(Karl)
+#    python1.has_user.append(Isaac)
+#    python2.has_user.append(Ozoemena)
+#    python2.has_user.append(Yvonne)
+#
+#    js1.has_user.append(Valdemar)
+#    js2.has_user.append(Karl)
+#    js2.has_user.append(Isaac)
+#    js2.has_user.append(Ozoemena)
+#    js3.has_user.append(Yvonne)
+#
+#    db.session.commit()
+#
+#    #data = users.query.filter_by(username = 'willy1').all()
+#    data = users.query.all()
+#    #data = dbh.search('schnell_laufen')
+#
+#    def get(self):
+#        sotr = ''.join(str(e) for e in self.data)
+#        return {'results' : sotr}, 201
+#
+#api.add_resource(HelloWorld, '/')
+#
+#if __name__ == '__main__':
+#    app.run()
