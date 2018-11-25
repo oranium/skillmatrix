@@ -49,7 +49,7 @@ class App extends Component {
 
   // user wants to reset all input fields
   static handleResetForm() {
-    store.dispatch(resetForm());
+    store.dispatch(resetForm);
   }
 
   constructor(props) {
