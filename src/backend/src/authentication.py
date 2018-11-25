@@ -1,8 +1,9 @@
 """authentication contains the Authentication class."""
 import parentdir
-from ldap3 import Server, Connection, MOCK_SYNC, NTLM
+from ldap3 import Server, Connection, MOCK_SYNC, ALL, NTLM
 from ldap3.core.exceptions import LDAPUnknownAuthenticationMethodError, LDAPSocketOpenError
 import json
+import sys
 # if info about the server is required:
 # get info about server
 # print(mock_server.info)
@@ -41,6 +42,7 @@ class Authentication:
             self.mock_connection.bind()
             self.connections["mock"] = self.mock_connection
             return
+        self.server = Server(serverURL, get_info=ALL)
 
     # should call db_controller according to #11
     def login(self, username, password):
@@ -50,29 +52,36 @@ class Authentication:
         AttributeError for wrong credentials, TimeoutError if the AD doesn't respond.
         '''
         try:
-            new_connection = Connection(self.mock_server,
-                                        'AzureAD.SWT.com\\'+username,
+            print("create connection", file=sys.stderr)
+            new_connection = Connection(self.server,
+                                        r'AzureAD.SWT.com\\'+username,
                                         password,
                                         authentication=NTLM,
-                                        client_strategy=MOCK_SYNC,
                                         raise_exceptions=True)
+            print("created connection!", file=sys.stderr)            
             #wrong credentials
             if new_connection is None:
+                print("wrong cred",file=sys.stderr)
                 raise AttributeError
+            print("adding connection", file=sys.stderr)
             self.connections[username] = new_connection
+            print("binding connection", file=sys.stderr)
             self.connections[username].bind()
-            #print(self.connections[username])
             #successful login
-            return json.dumps(dict(user = dict(username = username)))
+            message = json.dumps(dict(user = dict(username = username)))
+            print(message,file=sys.stderr)
+            return message
         #catch empty input
         except LDAPUnknownAuthenticationMethodError:
+            print("empty",file=sys.stderr)
             raise AttributeError
         #catch timeout while calling AD
         except LDAPSocketOpenError:
             raise TimeoutError
+        #some kind of serialization error
         #something else went wrong, likely bind
-        except Exception:
-            return Exception
+        #except Exception:
+        #    raise Exception
     
     # should call db_controller according to #12
     def logout(self, username):
@@ -88,6 +97,6 @@ class Authentication:
 
 
 if __name__ == "__main__":
-    AUTH = Authentication("mock")
-    AUTH.login("Valdemar.Forseberg", "@testuser69")
-    AUTH.logout("Valdemar.Forsberg")
+    AUTH = Authentication("ldap://vm01-azure-ad.westeurope.cloudapp.azure.com:389")
+    AUTH.login("ADadmin", "@Admin")
+    #AUTH.logout("Valdemar.Forsberg")
