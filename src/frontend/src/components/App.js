@@ -94,6 +94,7 @@ class App extends Component {
     }
   }
 
+  // get results for query when user clicks on search button and store them into state
   async handleSearch() {
     const { state } = this.props;
     const { user } = state;
@@ -103,16 +104,12 @@ class App extends Component {
       query: value,
     };
     const Rest = new RestCom(RestPoints.search, JSON.stringify(search));
-    store.dispatch(showSearchResults);
-    const result = {
-      java: {
-        caro: 3,
-      },
-    };
-    store.dispatch(setSearchResults(result));
     try {
       const results = await Rest.post();
+      // store results into state
       store.dispatch(setSearchResults(results));
+      // show results to user
+      store.dispatch(showSearchResults);
     } catch (e) {
       store.dispatch(setError(e.message));
       console.log(e);
@@ -125,7 +122,6 @@ class App extends Component {
       user: state.user,
     };
     const Rest = new RestCom(RestPoints.logout, JSON.stringify(user));
-    store.dispatch(hideSearchResults);
     try {
       await Rest.post();
       // logout in frontend
@@ -134,7 +130,7 @@ class App extends Component {
       // go back to login
       store.dispatch(switchPage('login'));
     } catch (e) {
-      // display error Message to user
+      // display error Message to user<
       console.log(e);
       store.dispatch(setError(e.message));
     }
@@ -191,7 +187,6 @@ class App extends Component {
     }
 
     let errorPaper = '';
-    console.log(error);
     if (error.hasError) {
       errorPaper = <ErrorPaper errorMsg={error.message} />;
     }
