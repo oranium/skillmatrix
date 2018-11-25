@@ -19,12 +19,19 @@ const errorCodesToErrorMsg = (errorCode) => {
 
 class RestCom {
   constructor(restPoint, data) {
-    this.restApi = config + restPoint;
+    this.restApi = config.APISERVER + restPoint;
+    console.log(this.restApi);
     this.data = data;
   }
 
   async post() {
-    const response = await axios.post(this.restApi, this.data).catch((error) => {
+    const headers = {
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json',
+      },
+    };
+    const response = await axios.post(this.restApi, this.data, headers).catch((error) => {
       if (error.response) {
         // The request was made and the server responded with a status code
         // that falls out of the range of 2xx
@@ -33,7 +40,9 @@ class RestCom {
         // The request was made but no response was received
         // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
         // http.ClientRequest in node.js
-        throw new Error('An error occured while connecting to the server. Please check your Internet connection.');
+        throw new Error(
+          'An error occured while connecting to the server. Please check your Internet connection.',
+        );
       } else {
         // Something happened in setting up the request that triggered an Error
         throw new Error(errorCodesToErrorMsg(520));

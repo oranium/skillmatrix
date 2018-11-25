@@ -25,10 +25,12 @@ import RestCom from '../rest/Rest';
 
 class App extends Component {
   static async handleLogin(username, password) {
-    const loginCredentials = {
+    const loginCredential = {
       username,
       password,
     };
+    const loginCredentials = JSON.stringify(loginCredential);
+    console.log(loginCredentials);
     const Rest = new RestCom(RestPoints.login, loginCredentials);
 
     try {

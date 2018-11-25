@@ -23,7 +23,7 @@ const defaultFormState = {
 };
 
 const defaultUsername = 'Undefined';
-const defaultPage = 'form';
+const defaultPage = 'login';
 const defaultError = {
   hasError: false,
   message: '',
