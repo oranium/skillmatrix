@@ -2,6 +2,8 @@ import axios from 'axios';
 
 const config = require('../config.json');
 
+const { APISERVER } = config;
+
 const errorCodesToErrorMsg = (errorCode) => {
   switch (errorCode) {
     case 400:
@@ -19,8 +21,7 @@ const errorCodesToErrorMsg = (errorCode) => {
 
 class RestCom {
   constructor(restPoint, data) {
-    this.restApi = config.APISERVER + restPoint;
-    console.log(this.restApi);
+    this.restApi = APISERVER + restPoint;
     this.data = data;
   }
 

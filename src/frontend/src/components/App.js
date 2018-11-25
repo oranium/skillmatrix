@@ -11,13 +11,18 @@ import {
   resetForm,
   setUsername,
   resetState,
+  setSearchResults,
+  showSearchResults,
+  hideSearchResults,
 } from '../actions';
 
 // import page parts
 import Header from './Header';
 import Form from './Form';
+import Search from './Search';
 import LoginForm from './LoginForm';
 import ErrorPaper from './ErrorPaper';
+import ControlledExpansionPanels from './ControlledExpansionPanels';
 
 // Rest
 import RestPoints from '../rest/Init';
@@ -29,15 +34,13 @@ class App extends Component {
       username,
       password,
     };
-    const loginCredentials = JSON.stringify(loginCredential);
-    console.log(loginCredentials);
-    const Rest = new RestCom(RestPoints.login, loginCredentials);
+    const Rest = new RestCom(RestPoints.login, JSON.stringify(loginCredentials));
 
     try {
       const { data } = await Rest.post();
       const { user } = data;
       store.dispatch(setUsername(user.username));
-      store.dispatch(switchPage('form'));
+      store.dispatch(switchPage('search'));
     } catch (e) {
       store.dispatch(setError(e.message));
       store.dispatch(switchPage('login'));
@@ -58,6 +61,8 @@ class App extends Component {
   // user inputs something into an input field
   handleChange(id, value) {
     const { state } = this.props;
+
+    console.log(`${id}  ${value}`);
 
     if (state.formState[id].error) {
       store.dispatch(setInputError(id, false));
@@ -89,12 +94,34 @@ class App extends Component {
     }
   }
 
+  // get results for query when user clicks on search button and store them into state
+  async handleSearch() {
+    const { state } = this.props;
+    const { user } = state;
+    const { value } = state.formState.searchfield;
+    const search = {
+      username: user,
+      query: value,
+    };
+    const Rest = new RestCom(RestPoints.search, JSON.stringify(search));
+    try {
+      const results = await Rest.post();
+      // store results into state
+      store.dispatch(setSearchResults(results));
+      // show results to user
+      store.dispatch(showSearchResults);
+    } catch (e) {
+      store.dispatch(setError(e.message));
+      console.log(e);
+    }
+  }
+
   async handleLogout() {
     const { state } = this.props;
     const user = {
       user: state.user,
     };
-    const Rest = new RestCom(RestPoints.logout, user);
+    const Rest = new RestCom(RestPoints.logout, JSON.stringify(user));
     try {
       await Rest.post();
       // logout in frontend
@@ -103,7 +130,7 @@ class App extends Component {
       // go back to login
       store.dispatch(switchPage('login'));
     } catch (e) {
-      // display error Message to user
+      // display error Message to user<
       console.log(e);
       store.dispatch(setError(e.message));
     }
@@ -112,8 +139,9 @@ class App extends Component {
   render() {
     const { state } = this.props;
     const {
-      page, error, user, formState,
+      page, error, user, formState, searchResults,
     } = state;
+    let main = [];
 
     if (page === 'login') {
       return (
@@ -123,16 +151,10 @@ class App extends Component {
         />
       );
     }
-    let errorPaper = '';
-    console.log(error);
-    if (error.hasError) {
-      errorPaper = <ErrorPaper errorMsg={error.message} />;
-    }
-    return (
-      <div>
-        <Header username={user} logout={this.handleLogout} />
-        <main>
-          <h1>Neuen Skill erstellen</h1>
+    const { results } = searchResults;
+    switch (page) {
+      case 'form':
+        main = (
           <Form
             inputs={formState}
             page={page}
@@ -141,6 +163,38 @@ class App extends Component {
             onSubmit={newPage => this.handleSubmit(newPage)}
             onReset={() => this.handleResetForm()}
           />
+        );
+        break;
+      case 'search':
+        main.push(
+          <Search
+            searchField={formState.searchfield}
+            onChange={(id, value) => this.handleChange(id, value)}
+            onSearch={() => this.handleSearch()}
+            key="search"
+          />,
+        );
+        if (searchResults.showResults) {
+          main.push(
+            Object.keys(results).map((category, i) => (
+              <ControlledExpansionPanels results={results[category]} key={i} />
+            )),
+          );
+        }
+        break;
+      default:
+        return 'Error';
+    }
+
+    let errorPaper = '';
+    if (error.hasError) {
+      errorPaper = <ErrorPaper errorMsg={error.message} />;
+    }
+    return (
+      <div>
+        <Header username={user} logout={this.handleLogout} />
+        <main>
+          {main}
           {errorPaper}
         </main>
       </div>

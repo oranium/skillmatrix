@@ -20,13 +20,30 @@ const defaultFormState = {
     value: '',
     error: false,
   },
+  searchfield: {
+    name: 'Search',
+    value: '',
+    error: false,
+  },
 };
 
 const defaultUsername = 'Undefined';
-const defaultPage = 'login';
+const defaultPage = 'search';
 const defaultError = {
   hasError: false,
   message: '',
+};
+
+const defaultSearchResults = {
+  results: {
+    java: {
+      Herbert: 4,
+      Tom: 4,
+      Tim: 3,
+      Olaf: 3,
+    },
+  },
+  showResults: true,
 };
 
 // has all the data for the inputfields
@@ -89,12 +106,25 @@ export const page = (state = defaultPage, action) => {
 export const error = (state = defaultError, action) => {
   switch (action.type) {
     case 'SETERROR':
-      return ({
+      return {
         hasError: true,
         message: action.errorMsg,
-      });
+      };
     case 'RESETSTATE':
       return defaultError;
+    default:
+      return state;
+  }
+};
+
+export const searchResults = (state = defaultSearchResults, action) => {
+  switch (action.type) {
+    case 'SETRESULTS':
+      return Object.assign(state, { results: action.results });
+    case 'SHOWRESULTS':
+      return Object.assign(state, { showResults: true });
+    case 'HIDERESULTS':
+      return Object.assign(state, { showResults: false });
     default:
       return state;
   }
