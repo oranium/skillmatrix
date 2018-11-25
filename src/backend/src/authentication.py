@@ -10,6 +10,8 @@ import sys
 # get info about connection
 # print(mock_connection)
 
+SERVER = Server('ldap://vm01-azure-ad.westeurope.cloudapp.azure.com:389',get_info=ALL)
+
 class Authentication:
     '''
     The Authentication class handles communication
@@ -42,7 +44,6 @@ class Authentication:
             self.mock_connection.bind()
             self.connections["mock"] = self.mock_connection
             return
-        self.server = Server(serverURL, get_info=ALL)
 
     # should call db_controller according to #11
     def login(self, username, password):
@@ -52,9 +53,12 @@ class Authentication:
         AttributeError for wrong credentials, TimeoutError if the AD doesn't respond.
         '''
         try:
-            print("create connection", file=sys.stderr)
-            new_connection = Connection(self.server,
-                                        r'AzureAD.SWT.com\\'+username,
+            print(username, file=sys.stderr)
+            print(password, file=sys.stderr)
+            login_name = 'AzureAD.SWT.com\\'+username
+            print(login_name, file=sys.stderr)
+            new_connection = Connection(SERVER,
+                                        login_name,
                                         password,
                                         authentication=NTLM,
                                         raise_exceptions=True)
@@ -97,6 +101,4 @@ class Authentication:
 
 
 if __name__ == "__main__":
-    AUTH = Authentication("ldap://vm01-azure-ad.westeurope.cloudapp.azure.com:389")
-    AUTH.login("ADadmin", "@Admin")
-    #AUTH.logout("Valdemar.Forsberg")
+    pass

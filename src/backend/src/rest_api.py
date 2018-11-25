@@ -12,22 +12,23 @@ app = Flask(__name__)
 api = Api(app)
 parser = reqparse.RequestParser()
 api.decorators=[cors.crossdomain(origin='http://localhost:3000', headers=['accept', 'Content-Type', 'access-control-allow-origin'])]
+AUTH = Authentication("ldap://vm01-azure-ad.westeurope.cloudapp.azure.com:389")
 
 class Login(Resource):
     '''Login-API deserializes JSON and hands it to the Authentication class of authentication module'''
     def post(self):
         parser.add_argument("username", type=str)
         parser.add_argument("password", type=str)
-        print("parsing is next",file=sys.stderr)
         args = parser.parse_args()
         try:
-            print(Authentication.login(self,args["username"], args["password"]),file=sys.stderr)
-            return Response("", status=200, mimetype="application/json")
+            message = AUTH.login(args["username"], args["password"])
+            return Response(message, status=200, mimetype="application/json")
         except AttributeError:
             return Response(status=400)
         except TimeoutError:
             return Response(status=504)
         except Exception as e:
+            print(e,file=sys.stderr)
             return Response(status=520)
     
     def options(self):
@@ -39,7 +40,7 @@ class Logout(Resource):
         parser.add_argument("username", type=str)
         args = parser.parse_args()
         try:
-            Authentication.logout(self,args["username"])
+            AUTH.logout(args["username"])
             return Response(status=200)
         except Exception:
             return Response(status=520)
