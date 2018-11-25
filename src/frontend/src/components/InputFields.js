@@ -9,8 +9,6 @@ const styles = theme => ({
     flexWrap: 'wrap',
   },
   textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
     width: '500px',
   },
   error: {
@@ -22,6 +20,29 @@ export const SkillNameInput = withStyles(styles)(
   (props) => {
     const { classes } = props;
     const id = 'textfield';
+
+    return (
+      <TextField
+        required
+        id="outlined-required"
+        type="text"
+        label={props.data.name}
+        value={props.data.value}
+        className={`${classes.textField} ${props.data.name}`}
+        error={props.data.error}
+        margin="normal"
+        variant="outlined"
+        onChange={evt => props.onChange(id, evt.target.value)}
+      />
+    );
+  },
+);
+
+
+export const SearchInput = withStyles(styles)(
+  (props) => {
+    const { classes } = props;
+    const id = 'searchfield';
 
     return (
       <TextField
