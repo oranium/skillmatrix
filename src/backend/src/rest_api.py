@@ -1,18 +1,25 @@
 '''The rest_api module provides REST-APIs for communication to the SkillMatrix frontend.'''
 import parentdir
+from src.authentication import Authentication
 from flask import Flask, Response
 import json
 from flask_restful import Resource, Api, reqparse
 from flask_restful.utils import cors
-from src.authentication import Authentication
+from flask_sqlalchemy import SQLAlchemy
 import sys
-import traceback
+
 
 app = Flask(__name__)
 api = Api(app)
 parser = reqparse.RequestParser()
 api.decorators=[cors.crossdomain(origin='http://localhost:3000', headers=['accept', 'Content-Type', 'access-control-allow-origin'])]
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Momomomo2@localhost/sm1'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 AUTH = Authentication("ldap://vm01-azure-ad.westeurope.cloudapp.azure.com:389")
+db = SQLAlchemy(app)
+
+from src import database_manager
+
 
 class Login(Resource):
     '''Login-API deserializes JSON and hands it to the Authentication class of authentication module'''
@@ -49,8 +56,26 @@ class Logout(Resource):
         pass
         
             
+class Search(Resource):
+    '''Search-API deserializes the query. 
+    Takes id of the searching user and an array of skills (currently only one term)'''
+    def post(self):
+        parser.add_argument("query", type=str)
+        args = parser.parse_args()
+        try:
+            message = database_manager.handle_query(self,args["query"])
+            print(message,file=sys.stderr) 
+            return Response(message, status=200, mimetype="application/json")
+        except ValueError:
+            print(json.dumps(list()))
+            return json.dumps(list())
+
+    def options(self):
+        pass
+
 api.add_resource(Login, "/login")
 api.add_resource(Logout, "/logout")
+api.add_resource(Search,"/search")
 
 if __name__ == "__main__":
     app.run(debug=True)
