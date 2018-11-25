@@ -67,11 +67,11 @@ class users(db.Model):
     #surname = db.Column(db.String(45), nullable=False)
     #forename = db.Column(db.String(45), nullable=False)
     #place = db.Column(db.String(45), nullable=True)
-    has_skill = db.relationship('skill', secondary=user_skill, backref=db.backref('has_users', lazy = 'dynamic'))
+    has_skill = db.relationship('skill', secondary=user_skill, backref=db.backref('has_user', lazy = 'dynamic'))
 #   skill = db.relationship('Skill', backref='author', lazy=True, nullable=True)
 
     def __repr__(self):
-        return '<id = {0} und usermane = {1}>'.format(self.id, self.username)
+        return '<id = {0} und username = {1}>'.format(self.id, self.username)
 
 
 
@@ -81,7 +81,7 @@ class skill(db.Model):
     name = db.Column(db.String(127), nullable=False)
     level = db.Column(db.Integer, nullable=False)
     #date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    description = db.Column(db.Text, nullable=True)
+    #description = db.Column(db.Text, nullable=True)
 
     def __repr__(self):
         return '<name {0} und level {1}>'.format(self.name, self.level) 
@@ -145,7 +145,7 @@ class HelloWorld(Resource):
     dbh.clear_database()
     print('in hw')
     #dbh.add_user('carlacarlos', 'karl', 'los')
-    dbh.add_user('willy1')
+    #dbh.add_user('willy1')
     #dbh.add_user('willy1', 'wil', 'ly2')
     #dbh.add_user('willy2', 'wil', 'l2y')
     #db.drop_all()
@@ -162,9 +162,34 @@ class HelloWorld(Resource):
     #db.session.add(willy2)
     #delete_this = users.query.filter_by(id=2).first
     #db.session.delete(delete_this)
+
+    aron = users(username='aronadmin')
+    bruno = users(username='brunonormal')
+    cornell = users(username='cornellnormal')
+    maximilian = users(username='maxnormal')
+    willy = users(username='willynormal')
+    db.session.add(aron)
+    db.session.add(bruno)
+    db.session.add(cornell)
+    db.session.add(maximilian)
+    db.session.add(willy)
+    laufen1 = skill(name = 'schnell_laufen', level = 5)
+    laufen2 = skill(name = 'schnell_laufen', level = 2)
+    robben1 = skill(name = 'rum_robben', level = 4)
+    robben2 = skill(name = 'rum_robben', level = 3)
+    db.session.add(laufen1)
+    db.session.add(laufen2)
+    db.session.add(robben1)
+    db.session.add(robben2)
+    laufen1.has_user.append(bruno)
+    laufen1.has_user.append(cornell)
+    laufen2.has_user.append(willy)
+    robben1.has_user.append(aron)
+    robben2.has_user.append(maximilian)
     db.session.commit()
 
-    data = users.query.filter_by(username = 'willy1').all()
+    #data = users.query.filter_by(username = 'willy1').all()
+    data = users.query.all()
 
     def get(self):
         sotr = ''.join(str(e) for e in self.data)
