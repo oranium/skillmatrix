@@ -103,8 +103,9 @@ class App extends Component {
     const Rest = new RestCom(RestPoints.search, JSON.stringify(search));
     try {
       const { data } = await Rest.post();
+      const { result } = data;
       // store results into state
-      store.dispatch(setSearchResults(data));
+      store.dispatch(setSearchResults(result));
       // show results to user
       store.dispatch(showSearchResults);
     } catch (e) {
