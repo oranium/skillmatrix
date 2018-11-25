@@ -34,6 +34,18 @@ const defaultError = {
   message: '',
 };
 
+const defaultSearchResults = {
+  results: {
+    java: {
+      Herbert: 4,
+      Tom: 4,
+      Tim: 3,
+      Olaf: 3,
+    },
+  },
+  showResults: true,
+};
+
 // has all the data for the inputfields
 export const formState = (state = defaultFormState, action) => {
   switch (action.type) {
@@ -100,6 +112,19 @@ export const error = (state = defaultError, action) => {
       };
     case 'RESETSTATE':
       return defaultError;
+    default:
+      return state;
+  }
+};
+
+export const searchResults = (state = defaultSearchResults, action) => {
+  switch (action.type) {
+    case 'SETRESULTS':
+      return Object.assign(state, { results: action.results });
+    case 'SHOWRESULTS':
+      return Object.assign(state, { showResults: true });
+    case 'HIDERESULTS':
+      return Object.assign(state, { showResults: false });
     default:
       return state;
   }

@@ -11,6 +11,9 @@ import {
   resetForm,
   setUsername,
   resetState,
+  setSearchResults,
+  showSearchResults,
+  hideSearchResults,
 } from '../actions';
 
 // import page parts
@@ -19,6 +22,7 @@ import Form from './Form';
 import Search from './Search';
 import LoginForm from './LoginForm';
 import ErrorPaper from './ErrorPaper';
+import ControlledExpansionPanels from './ControlledExpansionPanels';
 
 // Rest
 import RestPoints from '../rest/Init';
@@ -99,9 +103,16 @@ class App extends Component {
       query: value,
     };
     const Rest = new RestCom(RestPoints.search, search);
+    store.dispatch(showSearchResults);
+    const result = {
+      java: {
+        caro: 3,
+      },
+    };
+    store.dispatch(setSearchResults(result));
     try {
-      const result = await Rest.post();
-      console.log(result);
+      const results = await Rest.post();
+      store.dispatch(setSearchResults(results));
     } catch (e) {
       store.dispatch(setError(e.message));
       console.log(e);
@@ -114,6 +125,7 @@ class App extends Component {
       user: state.user,
     };
     const Rest = new RestCom(RestPoints.logout, user);
+    store.dispatch(hideSearchResults);
     try {
       await Rest.post();
       // logout in frontend
@@ -131,9 +143,9 @@ class App extends Component {
   render() {
     const { state } = this.props;
     const {
-      page, error, user, formState,
+      page, error, user, formState, searchResults,
     } = state;
-    let main = '';
+    let main = [];
 
     if (page === 'login') {
       return (
@@ -143,6 +155,7 @@ class App extends Component {
         />
       );
     }
+    const { results } = searchResults;
     switch (page) {
       case 'form':
         main = (
@@ -157,13 +170,21 @@ class App extends Component {
         );
         break;
       case 'search':
-        main = (
+        main.push(
           <Search
             searchField={formState.searchfield}
             onChange={(id, value) => this.handleChange(id, value)}
             onSearch={() => this.handleSearch()}
-          />
+            key="search"
+          />,
         );
+        if (searchResults.showResults) {
+          main.push(
+            Object.keys(results).map((category, i) => (
+              <ControlledExpansionPanels results={results[category]} key={i} />
+            )),
+          );
+        }
         break;
       default:
         return 'Error';

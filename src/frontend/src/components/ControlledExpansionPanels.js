@@ -20,14 +20,7 @@ const styles = theme => ({
 });
 
 function ControlledExpansionPanels(props) {
-  const { classes } = props;
-  const results = {
-    Herbert: 4,
-    Tom: 4,
-    Tim: 3,
-    Olaf: 3,
-
-  };
+  const { classes, results } = props;
 
   const panels = Object.keys(results).map((username, i) => (
     <Panel

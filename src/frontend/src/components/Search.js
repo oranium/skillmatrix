@@ -39,7 +39,6 @@ function Search(props) {
           Search
         </Button>
       </form>
-      <Panel />
     </div>
   );
 }

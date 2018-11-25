@@ -34,3 +34,16 @@ export const setError = errorMsg => ({
 export const resetState = {
   type: 'RESETSTATE',
 };
+
+export const setSearchResults = results => ({
+  type: 'SETRESULTS',
+  results,
+});
+
+export const showSearchResults = {
+  type: 'SHOWRESULTS',
+};
+
+export const hideSearchResults = {
+  type: 'HIDERESULTS',
+};
