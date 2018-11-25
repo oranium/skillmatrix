@@ -16,7 +16,7 @@ def handle_query(self, query):
     #Accepts the query from REST-API and hands it to database_handler, returns JSON
     results = database_handler.search(self,query)
     if(results is None):
-         raise ValueError
+        raise ValueError
     return json.dumps(results)
     
 
@@ -48,9 +48,54 @@ class database_handler:
     
     def clear_database(self):
         '''Destroys the whole tablestructure and builds a new one with empty colums. For professionals only'''
-        #works
+        ##works
         db.drop_all()
         db.create_all()
+        Valdemar = users(username='Valdemar-Forsberg')
+        Karl = users(username='Karl-Kalagin')
+        Isaac = users(username='Isaac-Hunt')
+        Ozoemena = users(username='Ozoemena-Somayina')
+        Yvonne = users(username='Yvonne-Thompsome')
+        db.session.add(Valdemar)
+        db.session.add(Karl)
+        db.session.add(Isaac)
+        db.session.add(Ozoemena)
+        db.session.add(Yvonne)
+        java1 = skill(name = 'Java', level = 5)
+        java2 = skill(name = 'Java', level = 2)
+        java3 = skill(name = 'Java', level = 3)
+        python1 = skill(name = 'Python', level = 4)
+        python2 = skill(name = 'Python', level = 3)
+        js1 = skill(name = 'JavaScript', level = 4)
+        js2 = skill(name = 'JavaScript', level = 2)
+        js3 = skill(name = 'JavaScript', level = 1)
+        db.session.add(java1)
+        db.session.add(java2)
+        db.session.add(java3)
+        db.session.add(python1)
+        db.session.add(python2)
+        db.session.add(js1)
+        db.session.add(js2)
+        db.session.add(js3)
+        java1.has_user.append(Valdemar)
+        java1.has_user.append(Karl)
+        java2.has_user.append(Isaac)
+        java3.has_user.append(Ozoemena)
+        java3.has_user.append(Yvonne)
+
+        python1.has_user.append(Valdemar)
+        python1.has_user.append(Karl)
+        python1.has_user.append(Isaac)
+        python2.has_user.append(Ozoemena)
+        python2.has_user.append(Yvonne)
+
+        js1.has_user.append(Valdemar)
+        js2.has_user.append(Karl)
+        js2.has_user.append(Isaac)
+        js2.has_user.append(Ozoemena)
+        js3.has_user.append(Yvonne)
+
+        db.session.commit()
 
     def delete_user(self, username1):
         '''Deletes a colum of the users-table, based on the given username.'''
@@ -60,6 +105,7 @@ class database_handler:
         db.session.commit()
 
     def search(self, query):
+        database_handler.clear_database(self)
         alistlevel = []
         #lsite aller level
         alistname = []
@@ -72,6 +118,8 @@ class database_handler:
 
         name_skilllevel = zip(alistname, alistlevel)
         name_skilllevel_dict = dict(name_skilllevel)
+        if not name_skilllevel_dict:
+            return None
         #dict von Usernames in Verbindung mit Skilllevel
         big_dict = dict(skill= query,result= name_skilllevel_dict)
         #print(big_dict)

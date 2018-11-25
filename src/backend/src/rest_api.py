@@ -63,8 +63,11 @@ class Search(Resource):
         parser.add_argument("query", type=str)
         args = parser.parse_args()
         try:
-            return database_manager.handle_query(self,args["query"])
+            message = database_manager.handle_query(self,args["query"])
+            print(message,file=sys.stderr) 
+            return Response(message, status=200, mimetype="application/json")
         except ValueError:
+            print(json.dumps(list()))
             return json.dumps(list())
 
     def options(self):
