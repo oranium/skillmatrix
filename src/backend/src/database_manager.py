@@ -97,6 +97,11 @@ class database_handler:
         js2.has_user.append(Ozoemena)
         js3.has_user.append(Yvonne)
         
+        user_skill = db.Table('user_skill',
+            db.Column('users_id', db.Integer, db.ForeignKey('users.id')),
+            db.Column('skill_id', db.Integer, db.ForeignKey('skill.id'))
+        )
+
         db.session.commit()
 
     def delete_user(self, username1):
