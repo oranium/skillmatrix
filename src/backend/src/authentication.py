@@ -70,7 +70,7 @@ class Authentication:
             print("adding connection", file=sys.stderr)
             self.connections[username] = new_connection
             print("binding connection", file=sys.stderr)
-            self.connections[username].bind()
+            #self.connections[username].bind()
             #successful login
             message = json.dumps(dict(user = dict(username = username)))
             print(message,file=sys.stderr)
