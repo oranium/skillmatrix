@@ -126,7 +126,7 @@ class App extends Component {
       await Rest.post();
       // logout in frontend
       // reset state
-      store.dispatch(resetState());
+      store.dispatch(resetState);
       // go back to login
       store.dispatch(switchPage('login'));
     } catch (e) {
