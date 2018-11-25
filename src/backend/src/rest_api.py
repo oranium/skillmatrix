@@ -1,12 +1,13 @@
 '''The rest_api module provides REST-APIs for communication to the SkillMatrix frontend.'''
 import parentdir
+from src import database_manager
+from src.authentication import Authentication
 from flask import Flask, Response
 import json
 from flask_restful import Resource, Api, reqparse
 from flask_restful.utils import cors
-from src.authentication import Authentication
 import sys
-import traceback
+
 
 app = Flask(__name__)
 api = Api(app)
@@ -49,6 +50,17 @@ class Logout(Resource):
         pass
         
             
+class Search(Resource):
+    '''Search-API deserializes the query. 
+    Takes id of the searching user and an array of skills (currently only one term)'''
+    def post(self):
+        parser.add_argument("query", type=str)
+        args = parser.parse_args()
+        try:
+            return database_manager.handle_query(self,args["query"])
+        except ValueError:
+            return json.dumps(list())
+
 api.add_resource(Login, "/login")
 api.add_resource(Logout, "/logout")
 
