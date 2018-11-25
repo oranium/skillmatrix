@@ -16,7 +16,7 @@ def handle_query(self, query):
     #Accepts the query from REST-API and hands it to database_handler, returns JSON
     results = database_handler.search(self,query)
     if(results is None):
-         raise ValueError
+        raise ValueError
     return json.dumps(results)
     
 
@@ -48,11 +48,9 @@ class database_handler:
     
     def clear_database(self):
         '''Destroys the whole tablestructure and builds a new one with empty colums. For professionals only'''
-        #works
+        ##works
         db.drop_all()
         db.create_all()
-        dbh = database_handler()
-        dbh.clear_database()
         Valdemar = users(username='Valdemar-Forsberg')
         Karl = users(username='Karl-Kalagin')
         Isaac = users(username='Isaac-Hunt')
@@ -96,11 +94,6 @@ class database_handler:
         js2.has_user.append(Isaac)
         js2.has_user.append(Ozoemena)
         js3.has_user.append(Yvonne)
-        
-        user_skill = db.Table('user_skill',
-            db.Column('users_id', db.Integer, db.ForeignKey('users.id')),
-            db.Column('skill_id', db.Integer, db.ForeignKey('skill.id'))
-        )
 
         db.session.commit()
 
@@ -125,6 +118,8 @@ class database_handler:
 
         name_skilllevel = zip(alistname, alistlevel)
         name_skilllevel_dict = dict(name_skilllevel)
+        if not name_skilllevel_dict:
+            return None
         #dict von Usernames in Verbindung mit Skilllevel
         big_dict = dict(skill= query,result= name_skilllevel_dict)
         #print(big_dict)
