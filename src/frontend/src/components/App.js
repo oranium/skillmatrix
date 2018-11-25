@@ -49,7 +49,7 @@ class App extends Component {
 
   // user wants to reset all input fields
   static handleResetForm() {
-    store.dispatch(resetForm());
+    store.dispatch(resetForm);
   }
 
   constructor(props) {
@@ -126,7 +126,7 @@ class App extends Component {
       await Rest.post();
       // logout in frontend
       // reset state
-      store.dispatch(resetState());
+      store.dispatch(resetState);
       // go back to login
       store.dispatch(switchPage('login'));
     } catch (e) {

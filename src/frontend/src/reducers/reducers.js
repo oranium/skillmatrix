@@ -28,21 +28,14 @@ const defaultFormState = {
 };
 
 const defaultUsername = 'Undefined';
-const defaultPage = 'search';
+const defaultPage = 'login';
 const defaultError = {
   hasError: false,
   message: '',
 };
 
 const defaultSearchResults = {
-  results: {
-    java: {
-      Herbert: 4,
-      Tom: 4,
-      Tim: 3,
-      Olaf: 3,
-    },
-  },
+  results: {},
   showResults: true,
 };
 
