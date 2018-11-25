@@ -104,6 +104,8 @@ class App extends Component {
     try {
       const { data } = await Rest.post();
       const { result } = data;
+      console.log(result);
+      console.log(state);
       // store results into state
       store.dispatch(setSearchResults(result));
       // show results to user
@@ -173,11 +175,7 @@ class App extends Component {
           />,
         );
         if (searchResults.showResults) {
-          main.push(
-            Object.keys(results).map((category, i) => (
-              <ControlledExpansionPanels results={results[category]} key={i} />
-            )),
-          );
+          main.push(<ControlledExpansionPanels results={results} key="panels" />);
         }
         break;
       default:
