@@ -60,6 +60,7 @@ class database_handler:
         db.session.commit()
 
     def search(self, query):
+        database_handler.clear_database(self)
         alistlevel = []
         #lsite aller level
         alistname = []
