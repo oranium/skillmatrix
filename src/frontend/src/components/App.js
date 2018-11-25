@@ -1,7 +1,7 @@
 // import react
 import React, { Component } from 'react';
 
-// import redux
+// import redux parts
 import store from '../Store';
 import {
   updateInput,
@@ -13,7 +13,6 @@ import {
   resetState,
   setSearchResults,
   showSearchResults,
-  hideSearchResults,
 } from '../actions';
 
 // import page parts
