@@ -23,6 +23,7 @@ import Search from "./Search";
 import LoginForm from "./LoginForm";
 import ErrorPaper from "./ErrorPaper";
 import ControlledExpansionPanels from "./ControlledExpansionPanels";
+import Profile from "./Profile";
 
 // Rest
 import RestPoints from "../rest/Init";
@@ -177,12 +178,15 @@ class App extends Component {
         );
         if (searchResults.showResults) {
           main.push(
-            Object.keys(results).map((category, i) => (
-              <ControlledExpansionPanels results={results[category]} key={i} />
-            ))
+            <ControlledExpansionPanels results={results} key="panels" />
           );
         }
         break;
+
+      case "profile":
+        main.push(<Profile />);
+        break;
+
       default:
         return "Error";
     }
