@@ -1,24 +1,26 @@
-import React from "react";
-import { withStyles } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
-import Radio from "@material-ui/core/Radio";
+import React from 'react';
+import { withStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import Radio from '@material-ui/core/Radio';
+import SearchIcon from '@material-ui/icons/Search';
+import InputAdornment from '@material-ui/core/InputAdornment';
 
-const styles = theme => ({
+const styles = {
   container: {
-    display: "flex",
-    flexWrap: "wrap"
+    display: 'flex',
+    flexWrap: 'wrap',
   },
   textField: {
-    width: "500px"
+    width: '500px',
   },
   error: {
-    color: "red"
-  }
-});
+    color: 'red',
+  },
+};
 
-export const SkillNameInput = withStyles(styles)(props => {
+export const SkillNameInput = withStyles(styles)((props) => {
   const { classes } = props;
-  const id = "textfield";
+  const id = 'textfield';
 
   return (
     <TextField
@@ -36,9 +38,9 @@ export const SkillNameInput = withStyles(styles)(props => {
   );
 });
 
-export const SearchInput = withStyles(styles)(props => {
+export const SearchInput = withStyles(styles)((props) => {
   const { classes } = props;
-  const id = "searchfield";
+  const id = 'searchfield';
 
   return (
     <TextField
@@ -52,13 +54,20 @@ export const SearchInput = withStyles(styles)(props => {
       margin="normal"
       variant="outlined"
       onChange={evt => props.onChange(id, evt.target.value)}
+      InputProps={{
+        endAdornment: (
+          <InputAdornment position="end">
+            <SearchIcon />
+          </InputAdornment>
+        ),
+      }}
     />
   );
 });
 
-export const DateInput = withStyles(styles)(props => {
+export const DateInput = withStyles(styles)((props) => {
   const { classes } = props;
-  const id = "datefield";
+  const id = 'datefield';
 
   return (
     <TextField
@@ -72,16 +81,16 @@ export const DateInput = withStyles(styles)(props => {
       margin="normal"
       variant="outlined"
       InputLabelProps={{
-        shrink: true
+        shrink: true,
       }}
       onChange={evt => props.onChange(id, evt.target.value)}
     />
   );
 });
 
-export const TextArea = withStyles(styles)(props => {
+export const TextArea = withStyles(styles)((props) => {
   const { classes } = props;
-  const id = "textarea";
+  const id = 'textarea';
 
   return (
     <TextField
@@ -99,11 +108,11 @@ export const TextArea = withStyles(styles)(props => {
   );
 });
 
-export const LevelPicker = withStyles(styles)(props => {
+export const LevelPicker = withStyles(styles)((props) => {
   const { classes } = props;
-  const id = "levelfield";
-  const numbers = ["1", "2", "3", "4", "5"];
-  let className = "";
+  const id = 'levelfield';
+  const numbers = ['1', '2', '3', '4', '5'];
+  let className = '';
   if (props.data.error) {
     className = classes.error;
   }
@@ -119,9 +128,5 @@ export const LevelPicker = withStyles(styles)(props => {
       className={className}
     />
   ));
-  return (
-    <div className={`${classes.textField} ${classes.levelPicker}`}>
-      {radioBtns}
-    </div>
-  );
+  return <div className={`${classes.textField} ${classes.levelPicker}`}>{radioBtns}</div>;
 });

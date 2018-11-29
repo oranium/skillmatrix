@@ -1,8 +1,8 @@
 // import react
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
-// import redux
-import store from "../Store";
+// import redux parts
+import store from '../Store';
 import {
   updateInput,
   switchPage,
@@ -11,43 +11,35 @@ import {
   resetForm,
   setUsername,
   resetState,
-  setSearchResults,
-  showSearchResults,
-  hideSearchResults
-} from "../actions";
+} from '../actions';
 
 // import page parts
-import Header from "./Header";
-import Form from "./Form";
-import Search from "./Search";
-import LoginForm from "./LoginForm";
-import ErrorPaper from "./ErrorPaper";
-import ControlledExpansionPanels from "./ControlledExpansionPanels";
-import Profile from "./Profile";
+import Header from './Header';
+import Form from './Form';
+import SearchController from '../controller/SearchController';
+import LoginForm from './LoginForm';
+import ErrorPaper from './ErrorPaper';
 
 // Rest
-import RestPoints from "../rest/Init";
-import RestCom from "../rest/Rest";
+import RestPoints from '../rest/Init';
+import RestCom from '../rest/Rest';
 
 class App extends Component {
   static async handleLogin(username, password) {
     const loginCredentials = {
       username,
-      password
+      password,
     };
-    const Rest = new RestCom(
-      RestPoints.login,
-      JSON.stringify(loginCredentials)
-    );
+    const Rest = new RestCom(RestPoints.login, JSON.stringify(loginCredentials));
 
     try {
       const { data } = await Rest.post();
       const { user } = data;
       store.dispatch(setUsername(user.username));
-      store.dispatch(switchPage("search"));
+      store.dispatch(switchPage('search'));
     } catch (e) {
       store.dispatch(setError(e.message));
-      store.dispatch(switchPage("login"));
+      store.dispatch(switchPage('login'));
     }
   }
 
@@ -66,8 +58,6 @@ class App extends Component {
   handleChange(id, value) {
     const { state } = this.props;
 
-    console.log(`${id}  ${value}`);
-
     if (state.formState[id].error) {
       store.dispatch(setInputError(id, false));
     }
@@ -81,11 +71,11 @@ class App extends Component {
 
     const inputs = state.formState;
     let submit = true;
-    if (page === "form") {
+    if (page === 'form') {
       const keys = Object.keys(inputs);
-      keys.foreach(key => {
+      keys.foreach((key) => {
         const input = inputs[key];
-        if (input.value === "") {
+        if (input.value === '') {
           store.dispatch(setInputError(key, true));
           submit = false;
         } else {
@@ -98,32 +88,10 @@ class App extends Component {
     }
   }
 
-  // get results for query when user clicks on search button and store them into state
-  async handleSearch() {
-    const { state } = this.props;
-    const { user } = state;
-    const { value } = state.formState.searchfield;
-    const search = {
-      username: user,
-      query: value
-    };
-    const Rest = new RestCom(RestPoints.search, JSON.stringify(search));
-    try {
-      const { data } = await Rest.post();
-      // store results into state
-      store.dispatch(setSearchResults(data));
-      // show results to user
-      store.dispatch(showSearchResults);
-    } catch (e) {
-      store.dispatch(setError(e.message));
-      console.log(e);
-    }
-  }
-
   async handleLogout() {
     const { state } = this.props;
     const user = {
-      user: state.user
+      user: state.user,
     };
     const Rest = new RestCom(RestPoints.logout, JSON.stringify(user));
     try {
@@ -132,7 +100,7 @@ class App extends Component {
       // reset state
       store.dispatch(resetState);
       // go back to login
-      store.dispatch(switchPage("login"));
+      store.dispatch(switchPage('login'));
     } catch (e) {
       // display error Message to user<
       console.log(e);
@@ -142,20 +110,22 @@ class App extends Component {
 
   render() {
     const { state } = this.props;
-    const { page, error, user, formState, searchResults } = state;
-    let main = [];
+    const {
+      page, error, user, formState,
+    } = state;
+    const { hasError } = error;
 
-    if (page === "login") {
-      return (
-        <LoginForm
-          errorMsg={error.message}
-          login={(username, password) => App.handleLogin(username, password)}
-        />
-      );
-    }
-    const { results } = searchResults;
+    let main;
+
     switch (page) {
-      case "form":
+      case 'login':
+        return (
+          <LoginForm
+            errorMsg={error.message}
+            login={(username, password) => App.handleLogin(username, password)}
+          />
+        );
+      case 'profile':
         main = (
           <Form
             inputs={formState}
@@ -164,23 +134,14 @@ class App extends Component {
             onChange={(id, value) => this.handleChange(id, value)}
             onSubmit={newPage => this.handleSubmit(newPage)}
             onReset={() => this.handleResetForm()}
+            key="ownProfile"
           />
         );
         break;
-      case "search":
-        main.push(
-          <Search
-            searchField={formState.searchfield}
-            onChange={(id, value) => this.handleChange(id, value)}
-            onSearch={() => this.handleSearch()}
-            key="search"
-          />
+      case 'search':
+        main = (
+          <SearchController onChange={(id, value) => this.handleChange(id, value)} state={state} />
         );
-        if (searchResults.showResults) {
-          main.push(
-            <ControlledExpansionPanels results={results} key="panels" />
-          );
-        }
         break;
 
       case "profile":
@@ -188,19 +149,19 @@ class App extends Component {
         break;
 
       default:
-        return "Error";
+        return 'Error';
     }
 
-    let errorPaper = "";
-    if (error.hasError) {
-      errorPaper = <ErrorPaper errorMsg={error.message} />;
-    }
     return (
       <div>
-        <Header username={user} logout={this.handleLogout} />
+        <Header
+          username={user}
+          switchToProfile={() => this.handleSubmit('profile')}
+          logout={this.handleLogout}
+        />
         <main>
           {main}
-          {errorPaper}
+          {hasError && <ErrorPaper errorMsg={error.message} />}
         </main>
       </div>
     );

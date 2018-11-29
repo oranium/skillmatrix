@@ -28,7 +28,7 @@ const defaultFormState = {
 };
 
 const defaultUsername = 'Undefined';
-const defaultPage = 'login';
+const defaultPage = 'search';
 const defaultError = {
   hasError: false,
   message: '',
@@ -36,7 +36,14 @@ const defaultError = {
 
 const defaultSearchResults = {
   results: {},
-  showResults: true,
+  showResults: false,
+};
+
+const defaultProfilePageState = {
+  person: 1,
+  isEditable: true,
+  view: 'profile',
+  profiles: [],
 };
 
 // has all the data for the inputfields
@@ -118,6 +125,13 @@ export const searchResults = (state = defaultSearchResults, action) => {
       return Object.assign(state, { showResults: true });
     case 'HIDERESULTS':
       return Object.assign(state, { showResults: false });
+    default:
+      return state;
+  }
+};
+
+export const profilePage = (state = defaultProfilePageState, action) => {
+  switch (action.type) {
     default:
       return state;
   }

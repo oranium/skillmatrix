@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -82,9 +81,5 @@ function SignIn(props) {
     </main>
   );
 }
-
-SignIn.propTypes = {
-  classes: PropTypes.instanceOf(styles).isRequired,
-};
 
 export default withStyles(styles)(SignIn);

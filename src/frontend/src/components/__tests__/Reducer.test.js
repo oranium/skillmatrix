@@ -21,6 +21,11 @@ const defaultFormState = {
     value: '',
     error: false,
   },
+  searchfield: {
+    name: 'Search',
+    value: '',
+    error: false,
+  },
 };
 const exampleFormState = {
   formState: {
@@ -69,11 +74,10 @@ describe('reducer tests', () => {
   it('should return the Errorpage state after Event "SETERROR"', () => {
     const errorState = reducer(exampleFormState, {
       type: 'SETERROR',
-      id: 1,
-      error: 'server timeout',
+      errorMsg: 'server timeout',
     });
 
-    expect({ error: 'server timeout' }).toEqual(errorState.formState['1']);
+    expect(errorState.error).toEqual({"hasError": true, "message": "server timeout"});
   });
 
   it('should update the actual state after Event "UPDATEINPUT"', () => {
@@ -85,32 +89,58 @@ describe('reducer tests', () => {
       input: '123@gmx.de',
     });
 
-    expect({ value: '123@gmx.de' }).toEqual(actState.formState.email);
+    expect(actState.formState.email).toEqual({ value: '123@gmx.de' });
   });
 
   // changes the state --> update page
-  it('should return the next page', () => {
+  it('should update the actual state after Event "SWITCHPAGE"', () => {
     const actState = reducer(exampleFormState, {
       type: 'SWITCHPAGE',
       page: 'login',
     });
-    expect('login').toEqual(actState.page);
+    expect(actState.page).toEqual('login');
   });
   // update username
-  it('should update the name in the state', () => {
+  it('should update the actual state after Event "SETUSERNAME"', () => {
     const actState = reducer(exampleFormState, {
-      type: 'UPDATEUSERNAME',
-      user: 'Vladimir',
+      type: 'SETUSERNAME',
+      username: 'Vladimir',
     });
-    expect('Vladimir').toEqual(actState.user);
+    expect(actState.user).toEqual('Vladimir');
   });
 
-  it('set errorMsg right', () => {
+  it('should update the actual state after Event "SETINPUTERROR"', () => {
     const actState = reducer(exampleFormState, {
-      type: 'SETLOGINERROR',
-      errorMsg: 'server timeout',
+      type: 'SETINPUTERROR',
+      id : "error",
+      error: 'wrong input ',
     });
 
-    expect('server timeout').toEqual(actState.errorMsg);
+    expect(actState.formState.error).toEqual({"error": "wrong input "});
+  });
+  
+  it('should update the actual state after Event "SETRESULTS"', () => {
+    const actState = reducer(exampleFormState, {
+      type: 'SETRESULTS',
+      results: 'Python'
+    });
+
+    expect(actState.searchResults.results).toEqual('Python');
+  });
+
+  it('should update the actual state after Event "SHOWRESULTS"', () => {
+    const actState = reducer(exampleFormState, {
+      type: 'SHOWRESULTS',
+    });
+
+    expect(actState.searchResults.showResults).toBe(true);
+  });
+
+  it('should update the actual state after Event "HIDERESULTS"', () => {
+    const actState = reducer(exampleFormState, {
+      type: 'HIDERESULTS',
+    });
+
+    expect(actState.searchResults.showResults).toBe(false);
   });
 });
