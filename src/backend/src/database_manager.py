@@ -82,7 +82,15 @@ user_skill = db.Table('user_skill',
     db.Column('skill_id', db.Integer, db.ForeignKey('skill.id'))
 )
 
-class users(db.Model):
+class Milestone(db.Model):
+    '''SQL-Alchemy object milestone.'''
+    __tablename__ = 'milestone'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(45), nullable=False)
+    time = db.Column(db.DateTime, nullable=False)
+    description = db.Column(db.Text, nullable=True)
+
+class Users(db.Model):
     '''SQL-Alchemy object users. Has an autoincremented id, an username, a surname, a forename and a place which can be NULL'''
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
@@ -100,7 +108,7 @@ class users(db.Model):
 
 
 
-class skill(db.Model):
+class Skill(db.Model):
     __tablename__ = 'skill'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(127), nullable=False)
@@ -113,7 +121,7 @@ class skill(db.Model):
     def __repr__(self):
         return '<name {0} und level {1}>'.format(self.name, self.level) 
 
-class session(db.Model):
+class Session(db.Model):
     __tablename__ = 'session'
     id = db.Column(db.Integer, primary_key=True)
     val = db.Column(db.Integer, nullable=False)
