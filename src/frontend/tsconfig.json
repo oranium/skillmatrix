@@ -10,7 +10,9 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "noEmit": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "module": "esnext",
+    "isolatedModules": true
   },
   "include": ["src"]
 }
