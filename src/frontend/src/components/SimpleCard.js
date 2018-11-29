@@ -111,10 +111,10 @@ export class ClickableChart extends React.Component {
                   <Chart //render small chart at the Card
                     height={400}
                     width={800}
-                    display={false}
+                    display={true}
                     skill={this.props.skill}
                     data={classes.data}
-                    enabledZoom={false}
+                    enabledZoom={true}
                   />
                 </Typography>
               </CardContent>

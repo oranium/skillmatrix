@@ -15,8 +15,8 @@ import {
 
 // import page parts
 import Header from './Header';
-import Form from './Form';
 import SearchController from '../controller/SearchController';
+import ProfileController from '../controller/ProfileController';
 import LoginForm from './LoginForm';
 import ErrorPaper from './ErrorPaper';
 
@@ -125,27 +125,14 @@ class App extends Component {
             login={(username, password) => App.handleLogin(username, password)}
           />
         );
-      case 'profile':
-        main = (
-          <Form
-            inputs={formState}
-            page={page}
-            name="test"
-            onChange={(id, value) => this.handleChange(id, value)}
-            onSubmit={newPage => this.handleSubmit(newPage)}
-            onReset={() => this.handleResetForm()}
-            key="ownProfile"
-          />
-        );
-        break;
       case 'search':
         main = (
           <SearchController onChange={(id, value) => this.handleChange(id, value)} state={state} />
         );
         break;
 
-      case "profile":
-        main.push(<Profile />);
+      case 'profile':
+        main = <ProfileController state={state} />;
         break;
 
       default:

@@ -47,3 +47,8 @@ export const showSearchResults = {
 export const hideSearchResults = {
   type: 'HIDERESULTS',
 };
+
+export const changeView = view => ({
+  type: 'CHANGEVIEW',
+  view,
+});

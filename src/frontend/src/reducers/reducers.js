@@ -39,11 +39,83 @@ const defaultSearchResults = {
   showResults: false,
 };
 
+// die datenstruktur soll so im state gespeichert werden skills: Oberkategorien :
+// Unterkategorien und jeweils actLevel und milestones
+const exState = {
+  skills: {
+    Python: {
+      actLevel: 5,
+      milestones: [
+        {
+          x: '2015-05-01',
+          y: 0,
+        },
+        {
+          x: '2016-08-03',
+          y: 1,
+        },
+        {
+          x: '2019-07-06',
+          y: 4,
+        },
+        {
+          x: '2021-11-23',
+          y: 5,
+        },
+      ],
+      subcategorys: {
+        PythonFlask: {
+          actLevel: 5,
+          milestones: [
+            {
+              x: '2015-05-01',
+              y: 0,
+            },
+            {
+              x: '2016-08-03',
+              y: 1,
+            },
+            {
+              x: '2019-07-06',
+              y: 4,
+            },
+            {
+              x: '2021-11-23',
+              y: 5,
+            },
+          ],
+        },
+      },
+    },
+    Java: {
+      actLevel: 5,
+      milestones: [
+        {
+          x: '2016-04-18',
+          y: 0,
+        },
+        {
+          x: '2017-08-29',
+          y: 1,
+        },
+        {
+          x: '2019-11-19',
+          y: 4,
+        },
+        {
+          x: '2020-02-03',
+          y: 5,
+        },
+      ],
+    },
+  },
+};
+
 const defaultProfilePageState = {
-  person: 1,
+  person: 0,
   isEditable: true,
-  view: 'profile',
-  profiles: [],
+  view: 0,
+  profiles: [exState],
 };
 
 // has all the data for the inputfields
@@ -130,8 +202,10 @@ export const searchResults = (state = defaultSearchResults, action) => {
   }
 };
 
-export const profilePage = (state = defaultProfilePageState, action) => {
+export const profile = (state = defaultProfilePageState, action) => {
   switch (action.type) {
+    case 'CHANGEVIEW':
+      return Object.assign(state, { view: action.view });
     default:
       return state;
   }
