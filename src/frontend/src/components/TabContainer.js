@@ -38,9 +38,10 @@ class SimpleTabs extends React.Component {
   };
 
   render() {
-    //Loop over # of skills given from Profile and render # of cards
+    //Loop over # of skills given from Profile and render # of cards --> in SimpleCard ist also the Chart rendered
     const skillItems = Object.keys(this.props.state.skills).map(key => (
       <div>
+        {" "}
         <SimpleCard
           skill={key}
           data={this.props.state.skills[key]["milestones"]}

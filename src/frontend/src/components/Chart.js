@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Line } from "react-chartjs-2";
+import * as zoom from "chartjs-plugin-zoom";
 
 // example for "Skill" in json format
 
@@ -53,11 +54,11 @@ class Chart extends Component {
               ]
             },
             pan: {
-              enabled: true,
+              enabled: this.props.enabledZoom,
               mode: "x"
             },
             zoom: {
-              enabled: true,
+              enabled: this.props.enabledZoom,
               mode: "xy"
             },
             startAtZero: true,
