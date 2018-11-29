@@ -3,6 +3,7 @@ from flask import Flask, json, request, redirect
 from flask_restful import Resource, Api
 from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Resource, Api
+import datetime
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Momomomo2@localhost/sm1'
@@ -78,8 +79,8 @@ class database_handler:
 
 
 user_skill = db.Table('user_skill',
-    db.Column('users_id', db.Integer, db.ForeignKey('users.id')),
-    db.Column('skill_id', db.Integer, db.ForeignKey('skill.id'))
+    db.Column('Users_id', db.Integer, db.ForeignKey('users.id')),
+    db.Column('Skill_id', db.Integer, db.ForeignKey('skill.id'))
 )
 
 class Milestone(db.Model):
@@ -87,7 +88,8 @@ class Milestone(db.Model):
     __tablename__ = 'milestone'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(45), nullable=False)
-    time = db.Column(db.DateTime, nullable=False)
+    time = db.Column(db.DateTime, nullable=True, default=datetime.datetime.utcnow())
+    #z.B. '9999-12-12 22:58:58'
     description = db.Column(db.Text, nullable=True)
 
 class Users(db.Model):
@@ -98,7 +100,7 @@ class Users(db.Model):
     #surname = db.Column(db.String(45), nullable=False)
     #forename = db.Column(db.String(45), nullable=False)
     #place = db.Column(db.String(45), nullable=True)
-    has_skill = db.relationship('skill', secondary=user_skill, backref=db.backref('has_user', lazy = 'dynamic'))
+    has_skill = db.relationship('Skill', secondary=user_skill, backref=db.backref('has_user', lazy = 'dynamic'))
 
     def give_name(self):
         return self.username
@@ -133,25 +135,25 @@ class Session(db.Model):
 class HelloWorld(Resource):
     dbh = database_handler()
     dbh.clear_database()
-    Valdemar = users(username='Valdemar-Forsberg')
-    Karl = users(username='Karl.Kalagin')
-    Isaac = users(username='Isaac.Hunt')
-    Ozoemena = users(username='Ozoemena.Somayina')
-    Yvonne = users(username='Yvonne.Thompsome')
+    Valdemar = Users(username='Valdemar-Forsberg')
+    Karl = Users(username='Karl.Kalagin')
+    Isaac = Users(username='Isaac.Hunt')
+    Ozoemena = Users(username='Ozoemena.Somayina')
+    Yvonne = Users(username='Yvonne.Thompsome')
     
     db.session.add(Valdemar)
     db.session.add(Karl)
     db.session.add(Isaac)
     db.session.add(Ozoemena)
     db.session.add(Yvonne)
-    java1 = skill(name = 'Java', level = 5)
-    java2 = skill(name = 'Java', level = 2)
-    java3 = skill(name = 'Java', level = 3)
-    python1 = skill(name = 'Python', level = 4)
-    python2 = skill(name = 'Python', level = 3)
-    js1 = skill(name = 'JavaScript', level = 4)
-    js2 = skill(name = 'JavaScript', level = 2)
-    js3 = skill(name = 'JavaScript', level = 1)
+    java1 = Skill(name = 'Java', level = 5)
+    java2 = Skill(name = 'Java', level = 2)
+    java3 = Skill(name = 'Java', level = 3)
+    python1 = Skill(name = 'Python', level = 4)
+    python2 = Skill(name = 'Python', level = 3)
+    js1 = Skill(name = 'JavaScript', level = 4)
+    js2 = Skill(name = 'JavaScript', level = 2)
+    js3 = Skill(name = 'JavaScript', level = 1)
     db.session.add(java1)
     db.session.add(java2)
     db.session.add(java3)
@@ -178,10 +180,15 @@ class HelloWorld(Resource):
     js2.has_user.append(Ozoemena)
     js3.has_user.append(Yvonne)
 
+    milestone1 = Milestone(name = 'hackaton', description = 'war ganz nice. die Jungs von der Uni hatten aber keine Ahnung')
+    milestone2 = Milestone(name = 'profie.de.com testingcup', time = '9999-12-12 22:58:58', description = 'mit testen hatte das nichts zu tun. braten war aber nice')
+    db.session.add(milestone1)
+    db.session.add(milestone2)
+
     db.session.commit()
 
     #data = users.query.filter_by(username = 'willy1').all()
-    data = users.query.all()
+    data = Users.query.all()
     #data = dbh.search('schnell_laufen')
 
     def get(self):
