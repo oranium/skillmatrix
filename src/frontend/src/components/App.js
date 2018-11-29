@@ -11,17 +11,14 @@ import {
   resetForm,
   setUsername,
   resetState,
-  setSearchResults,
-  showSearchResults,
 } from '../actions';
 
 // import page parts
 import Header from './Header';
 import Form from './Form';
-import Search from './Search';
+import SearchController from '../controller/SearchController';
 import LoginForm from './LoginForm';
 import ErrorPaper from './ErrorPaper';
-import ControlledExpansionPanels from './ControlledExpansionPanels';
 
 // Rest
 import RestPoints from '../rest/Init';
@@ -91,31 +88,6 @@ class App extends Component {
     }
   }
 
-  // get results for query when user clicks on search button and store them into state
-  async handleSearch() {
-    const { state } = this.props;
-    const { user } = state;
-    const { value } = state.formState.searchfield;
-    const search = {
-      username: user,
-      query: value,
-    };
-    const Rest = new RestCom(RestPoints.search, JSON.stringify(search));
-    try {
-      const { data } = await Rest.post();
-      const { result } = data;
-      console.log(result);
-      console.log(state);
-      // store results into state
-      store.dispatch(setSearchResults(result));
-      // show results to user
-      store.dispatch(showSearchResults);
-    } catch (e) {
-      store.dispatch(setError(e.message));
-      console.log(e);
-    }
-  }
-
   async handleLogout() {
     const { state } = this.props;
     const user = {
@@ -139,21 +111,21 @@ class App extends Component {
   render() {
     const { state } = this.props;
     const {
-      page, error, user, formState, searchResults,
+      page, error, user, formState,
     } = state;
-    let main = [];
+    const { hasError } = error;
 
-    if (page === 'login') {
-      return (
-        <LoginForm
-          errorMsg={error.message}
-          login={(username, password) => App.handleLogin(username, password)}
-        />
-      );
-    }
-    const { results } = searchResults;
+    let main;
+
     switch (page) {
-      case 'form':
+      case 'login':
+        return (
+          <LoginForm
+            errorMsg={error.message}
+            login={(username, password) => App.handleLogin(username, password)}
+          />
+        );
+      case 'profile':
         main = (
           <Form
             inputs={formState}
@@ -162,36 +134,29 @@ class App extends Component {
             onChange={(id, value) => this.handleChange(id, value)}
             onSubmit={newPage => this.handleSubmit(newPage)}
             onReset={() => this.handleResetForm()}
+            key="ownProfile"
           />
         );
         break;
       case 'search':
-        main.push(
-          <Search
-            searchField={formState.searchfield}
-            onChange={(id, value) => this.handleChange(id, value)}
-            onSearch={() => this.handleSearch()}
-            key="search"
-          />,
+        main = (
+          <SearchController onChange={(id, value) => this.handleChange(id, value)} state={state} />
         );
-        if (searchResults.showResults) {
-          main.push(<ControlledExpansionPanels results={results} key="panels" />);
-        }
         break;
       default:
         return 'Error';
     }
 
-    let errorPaper = '';
-    if (error.hasError) {
-      errorPaper = <ErrorPaper errorMsg={error.message} />;
-    }
     return (
       <div>
-        <Header username={user} logout={this.handleLogout} />
+        <Header
+          username={user}
+          switchToProfile={() => this.handleSubmit('profile')}
+          logout={this.handleLogout}
+        />
         <main>
           {main}
-          {errorPaper}
+          {hasError && <ErrorPaper errorMsg={error.message} />}
         </main>
       </div>
     );

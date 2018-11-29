@@ -20,19 +20,31 @@ const styles = {
 };
 
 function ButtonAppBar(props) {
-  const { classes, username, logout } = props;
+  const {
+    classes, username, logout, switchToProfile,
+  } = props;
 
   return (
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
+          <IconButton
+            className={classes.menuButton}
+            onClick={() => switchToProfile()}
+            color="inherit"
+            aria-label="Menu"
+          >
             <AccountCircle />
           </IconButton>
           <Typography variant="h6" color="inherit" className={classes.grow}>
             {username}
           </Typography>
-          <IconButton className={classes.menuButton} onClick={logout} color="inherit" aria-label="Menu">
+          <IconButton
+            className={classes.menuButton}
+            onClick={logout}
+            color="inherit"
+            aria-label="Menu"
+          >
             <PowerSettingsNew />
           </IconButton>
         </Toolbar>
