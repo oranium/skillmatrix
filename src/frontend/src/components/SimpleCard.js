@@ -33,18 +33,6 @@ const styles = theme => ({
 
   card: {
     minWidth: 150
-  },
-
-  bullet: {
-    display: "inline-block",
-    margin: "0 2px",
-    transform: "scale(0.8)"
-  },
-  title: {
-    fontSize: 14
-  },
-  pos: {
-    marginBottom: 12
   }
 });
 
@@ -63,6 +51,13 @@ export class ClickableChart extends React.Component {
 
   render() {
     const { classes } = this.props;
+
+    const milestones = Object.keys(classes.data).map(key => (
+      <Typography>
+        Datum: {classes.data[key].x}, Level update auf: {classes.data[key].y}{" "}
+        Beschreibung: {classes.data[key].comment}
+      </Typography>
+    ));
     return (
       <div>
         <Card className={classes.card}>
@@ -117,6 +112,7 @@ export class ClickableChart extends React.Component {
                     enabledZoom={true}
                   />
                 </Typography>
+                <Typography>Milestones: {milestones} </Typography>
               </CardContent>
             </Card>
           </Typography>

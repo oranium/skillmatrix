@@ -1,8 +1,8 @@
 // import react
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 // import redux parts
-import store from '../Store';
+import store from "../Store";
 import {
   updateInput,
   switchPage,
@@ -10,36 +10,39 @@ import {
   setError,
   resetForm,
   setUsername,
-  resetState,
-} from '../actions';
+  resetState
+} from "../actions";
 
 // import page parts
-import Header from './Header';
-import SearchController from '../controller/SearchController';
-import ProfileController from '../controller/ProfileController';
-import LoginForm from './LoginForm';
-import ErrorPaper from './ErrorPaper';
+import Header from "./Header";
+import SearchController from "../controller/SearchController";
+import ProfileController from "../controller/ProfileController";
+import LoginForm from "./LoginForm";
+import ErrorPaper from "./ErrorPaper";
 
 // Rest
-import RestPoints from '../rest/Init';
-import RestCom from '../rest/Rest';
+import RestPoints from "../rest/Init";
+import RestCom from "../rest/Rest";
 
 class App extends Component {
   static async handleLogin(username, password) {
     const loginCredentials = {
       username,
-      password,
+      password
     };
-    const Rest = new RestCom(RestPoints.login, JSON.stringify(loginCredentials));
+    const Rest = new RestCom(
+      RestPoints.login,
+      JSON.stringify(loginCredentials)
+    );
 
     try {
       const { data } = await Rest.post();
       const { user } = data;
       store.dispatch(setUsername(user.username));
-      store.dispatch(switchPage('search'));
+      store.dispatch(switchPage("search"));
     } catch (e) {
       store.dispatch(setError(e.message));
-      store.dispatch(switchPage('login'));
+      store.dispatch(switchPage("login"));
     }
   }
 
@@ -71,11 +74,11 @@ class App extends Component {
 
     const inputs = state.formState;
     let submit = true;
-    if (page === 'form') {
+    if (page === "form") {
       const keys = Object.keys(inputs);
-      keys.foreach((key) => {
+      keys.foreach(key => {
         const input = inputs[key];
-        if (input.value === '') {
+        if (input.value === "") {
           store.dispatch(setInputError(key, true));
           submit = false;
         } else {
@@ -91,7 +94,7 @@ class App extends Component {
   async handleLogout() {
     const { state } = this.props;
     const user = {
-      user: state.user,
+      user: state.user
     };
     const Rest = new RestCom(RestPoints.logout, JSON.stringify(user));
     try {
@@ -100,7 +103,7 @@ class App extends Component {
       // reset state
       store.dispatch(resetState);
       // go back to login
-      store.dispatch(switchPage('login'));
+      store.dispatch(switchPage("login"));
     } catch (e) {
       // display error Message to user<
       console.log(e);
@@ -110,40 +113,41 @@ class App extends Component {
 
   render() {
     const { state } = this.props;
-    const {
-      page, error, user, formState,
-    } = state;
+    const { page, error, user, formState } = state;
     const { hasError } = error;
 
     let main;
 
     switch (page) {
-      case 'login':
+      case "login":
         return (
           <LoginForm
             errorMsg={error.message}
             login={(username, password) => App.handleLogin(username, password)}
           />
         );
-      case 'search':
+      case "search":
         main = (
-          <SearchController onChange={(id, value) => this.handleChange(id, value)} state={state} />
+          <SearchController
+            onChange={(id, value) => this.handleChange(id, value)}
+            state={state}
+          />
         );
         break;
 
-      case 'profile':
+      case "profile":
         main = <ProfileController state={state} />;
         break;
 
       default:
-        return 'Error';
+        return "Error";
     }
 
     return (
       <div>
         <Header
           username={user}
-          switchToProfile={() => this.handleSubmit('profile')}
+          switchToProfile={() => this.handleSubmit("profile")}
           logout={this.handleLogout}
         />
         <main>
