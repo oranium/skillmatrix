@@ -1,11 +1,9 @@
-"Contains the Database class"
+"""Singleton. contains the DB model from SQLAlchemy, gets created by the App and used by DatabaseController"""
+from flask_sqlalchemy import SQLAlchemy
 
-class Database:
-    """"Singleton. contains the DB model from SQLAlchemy, gets created by the App and used by
-    DatabaseController"""
-    @staticmethod
-    def get_instance():
-        pass
+db = None
 
-    def __init__(self,app):
-        pass
+
+def set_db(app):
+    global db
+    db = SQLAlchemy(app)
