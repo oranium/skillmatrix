@@ -2,14 +2,13 @@
 from flask import Response
 from flask_restful import Resource,reqparse
 
-from src.controller.controller import Controller
+from src.controller.controller import controller
 
 
 class Milestone(Resource):
     """The Milestone-API takes the given milestone and user, hands them to the backend controller"""
 
     def post(self):
-        controller = Controller.get_instance()
         parser = reqparse.RequestParser()
         parser.add_argument("username", type=str)
         parser.add_argument("skill", type=str)
