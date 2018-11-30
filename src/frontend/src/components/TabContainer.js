@@ -36,7 +36,6 @@ class SimpleTabs extends React.Component {
   handleChange = (event, value) => {
     this.setState({ value });
   };
-
   render() {
     const { value, isEditable, state } = this.props;
     const { username, skills } = state;
@@ -46,19 +45,62 @@ class SimpleTabs extends React.Component {
     } else {
       ownerArticle = username + "'s ";
     }
-    const skillNames = Object.keys(skills);
-    const numberOfSkills = skillNames.length;
-    //Loop over # of skills given from Profile and render # of cards --> in SimpleCard ist also the Chart rendered
-    const skillItems = skillNames.map((key, i) => (
+    // this.props.state.categories["Programming"]["Python"][
+    //   "subcategories"
+    // ]["PythonFlask"]["milestones"]
+    //Loop over # of skills given from Profile and render # of cards --> in SimpleCard is also the Chart rendered
+    var index = 0;
+    const skillItems = Object.keys(this.props.state.categories).map(category =>
+      Object.keys(this.props.state.categories[category]).map(
+        skill => (
+          (index = 0),
+          Object.keys(
+            this.props.state.categories[category][skill]["subcategories"]
+          ).map((
+            subcategory //render subcategories
+          ) => {
+            index = index + 1;
+            return index < 2 ? (
+              <div>
+                {" "}
+                <SimpleCard
+                  skill={skill}
+                  data={
+                    this.props.state.categories[category][skill]["milestones"]
+                  } //skill = Java, Python ... = key
+                // data -> data for every milestone
+                />{" "}
+                <SimpleCard
+                  skill={subcategory}
+                  data={
+                    this.props.state.categories[category][skill][
+                    "subcategories"
+                    ][subcategory]["milestones"]
+                  } //skill = Java, Python ... = key
+                // data -> data for every milestone
+                />
+              </div>
+            ) : (
+                <div>
+                  {" "}
+                  <SimpleCard
+                    skill={subcategory}
+                    data={
+                      this.props.state.categories[category][skill][
+                      "subcategories"
+                      ][subcategory]["milestones"]
+                    } //skill = Java, Python ... = key
+                  // data -> data for every milestone
+                  />{" "}
+                </div>
+              );
+          })
+        )
+      )
+    );
+    const panels = Object.keys(this.props.state.categories).map(category => (
       <div>
-        {' '}
-        <SimpleCard key={i} skill={key} data={this.props.state.skills[key]['milestones']} />{' '}
-      </div>
-    ));
-
-    const panels = Object.keys(this.props.state.skills).map(key => (
-      <div>
-        <ProfileExpansionPanel skill={key}> </ProfileExpansionPanel>
+        <ProfileExpansionPanel skill={category}> </ProfileExpansionPanel>
       </div>
     ));
     const { classes, onChange, view } = this.props;
@@ -71,7 +113,7 @@ class SimpleTabs extends React.Component {
             <Tab label={ownerArticle + 'Statistics'} />
           </Tabs>
         </AppBar>
-        {view === 0 && <TabContainer><h1>Anzahl Skills: {numberOfSkills}</h1>{panels}</TabContainer>}
+        {view === 0 && <TabContainer>{panels}</TabContainer>}
         {view === 1 && <TabContainer>{skillItems}</TabContainer>}
       </div>
     );

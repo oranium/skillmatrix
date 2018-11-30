@@ -1,7 +1,7 @@
 // react
-import React, { Component } from 'react';
+import React, { Component } from "react";
 // react components
-import TabContainer from '../components/TabContainer';
+import TabContainer from "../components/TabContainer";
 
 // redux
 import store from '../Store';
