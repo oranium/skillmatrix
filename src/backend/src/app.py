@@ -10,12 +10,11 @@ from flask_restful import Api
 from flask_restful.utils import cors
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Momomomo2@localhost/sm1'
 database.set_db(app)
 api = Api(app)
 api.decorators=[cors.crossdomain(origin='http://localhost:3000', headers=['accept', 'Content-Type', 'access-control-allow-origin'])]
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Momomomo2@localhost/sm1'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
 api.add_resource(Login, "/login")
 api.add_resource(Logout, "/logout")
 api.add_resource(Search, "/search")
