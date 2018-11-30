@@ -12,11 +12,13 @@ import sys
 
 SERVER = Server('ldap://vm01-azure-ad.westeurope.cloudapp.azure.com:389',get_info=ALL)
 
+
 class Authentication:
-    '''
+
+    """
     The Authentication class handles communication
     to the Active Directory server via ldap3 library
-    '''
+    """
     def __init__(self, serverURL):
         #The server url should look like this: <'''ldap://my-ldapserver.example.com:389>
         #Uni-Azure: server 'ldap://vm01-azure-ad.westeurope.cloudapp.azure.com:389'

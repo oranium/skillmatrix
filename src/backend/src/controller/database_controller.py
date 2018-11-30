@@ -1,5 +1,5 @@
 import parentdir
-from src import rest_api
+from src import app
 from rest_api import db
 from flask import Flask, json, request, redirect
 from flask_restful import Resource, Api
