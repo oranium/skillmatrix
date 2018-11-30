@@ -1,30 +1,49 @@
-import { withStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
 import React from 'react';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
-const styles = theme => ({
-  root: {
-    ...theme.mixins.gutters(),
-    paddingTop: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 2,
-  },
-});
+// redux
+import store from '../Store';
+import { hideErrorDialog, setError } from '../actions';
 
-function PaperSheet(props) {
-  const { classes } = props;
-  const { errorMsg } = props;
+class AlertDialog extends React.Component {
+  static openErrorDialog = msg => {
+    store.dispatch(setError(msg));
+  };
 
-  return (
-    <div>
-      <Paper className={classes.root} elevation={1}>
-        <Typography variant="h5" component="h3">
-          Error
-        </Typography>
-        <Typography component="p">{errorMsg}</Typography>
-      </Paper>
-    </div>
-  );
+  static handleClose = () => {
+    store.dispatch(hideErrorDialog);
+  };
+
+  render() {
+    const { state } = this.props;
+    const { error } = state;
+    const { hasError, message } = error;
+    return (
+      <div>
+        <Dialog
+          open={hasError}
+          onClose={this.constructor.handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">{'An Error occured!'}</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">{message}</DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.constructor.handleClose} color="primary" autoFocus>
+              Close
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
+    );
+  }
 }
 
-export default withStyles(styles)(PaperSheet);
+export default AlertDialog;

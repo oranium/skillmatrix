@@ -52,3 +52,12 @@ export const changeView = view => ({
   type: 'CHANGEVIEW',
   view,
 });
+
+export const changeProfileOwner = person => ({
+  type: 'CHANGEPROFILEOWNER',
+  person,
+});
+
+export const hideErrorDialog = {
+  type: 'HIDEERRORDIALOG',
+};
