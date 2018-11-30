@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 
 // import redux parts
-import store from '../Store';
+import store from 'Store';
 import {
   updateInput,
   switchPage,
@@ -10,18 +10,21 @@ import {
   setError,
   resetForm,
   setUsername,
-} from '../actions';
+} from 'actions';
 
 // import page parts
-import Header from './Header';
-import SearchController from '../controller/SearchController';
-import ProfileController from '../controller/ProfileController';
-import LoginForm from './LoginForm';
-import ErrorPaper from './ErrorPaper';
+import SearchController from 'components/search/SearchController';
+import ProfileController from 'components/profile/ProfileController';
+
+import LoginForm from 'components/login/LoginForm';
+
+import Header from 'components/header/Header';
+
+import ErrorDialog from 'components/error/ErrorDialog';
 
 // Rest
-import RestPoints from '../rest/Init';
-import RestCom from '../rest/Rest';
+import RestPoints from 'rest/Init';
+import RestCom from 'rest/Rest';
 
 class App extends Component {
   static async handleLogin(username, password) {
@@ -120,7 +123,7 @@ class App extends Component {
         />
         <main>
           {main}
-          {hasError && <ErrorPaper state={state} />}
+          {hasError && <ErrorDialog state={state} />}
         </main>
       </div>
     );

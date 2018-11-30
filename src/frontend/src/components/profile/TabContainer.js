@@ -1,4 +1,7 @@
+// react
 import React from 'react';
+
+// material-ui
 import PropTypes, { number } from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -6,8 +9,8 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 
-import SimpleCard from './SimpleCard';
-import ProfileExpansionPanel from './ProfileExpansionPanel';
+import SimpleCard from 'components/profile/statistics/SimpleCard';
+import ProfileExpansionPanel from 'components/profile/statistics/ProfileExpansionPanel';
 
 function TabContainer(props) {
   return (

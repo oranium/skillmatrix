@@ -7,17 +7,17 @@ import IconButton from '@material-ui/core/IconButton';
 import { AccountCircle, PowerSettingsNew, Search } from '@material-ui/icons';
 
 // import redux parts
-import store from '../Store';
+import store from '../../Store';
 import {
   switchPage,
   setError,
   resetState,
   changeProfileOwner,
-} from '../actions';
+} from '../../actions';
 
 // Rest
-import RestPoints from '../rest/Init';
-import RestCom from '../rest/Rest';
+import RestPoints from '../../rest/Init';
+import RestCom from '../../rest/Rest';
 
 const styles = {
   root: {

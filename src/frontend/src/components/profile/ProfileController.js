@@ -1,11 +1,11 @@
 // react
 import React, { Component } from "react";
 // react components
-import TabContainer from "../components/TabContainer";
+import TabContainer from "components/profile/TabContainer";
 
 // redux
-import store from '../Store';
-import { changeView } from '../actions';
+import store from 'Store';
+import { changeView } from 'actions';
 
 class ProfileController extends Component {
   handleChange = (evt, value) => {

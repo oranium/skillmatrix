@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Panel from './Panel';
+
+import Panel from 'components/search/Panel';
 
 const styles = theme => ({
   root: {

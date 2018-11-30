@@ -7,8 +7,8 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 // redux
-import store from '../Store';
-import { hideErrorDialog, setError } from '../actions';
+import store from '../../Store';
+import { hideErrorDialog, setError } from '../../actions';
 
 class AlertDialog extends React.Component {
   static openErrorDialog = msg => {

@@ -2,16 +2,16 @@
 import React, { Component } from 'react';
 
 // react components
-import SearchForm from '../components/SearchForm';
-import ControlledExpansionPanels from '../components/ControlledExpansionPanels';
+import SearchForm from 'components/search/SearchForm';
+import ControlledExpansionPanels from 'components/common/ControlledExpansionPanels';
 
 // redux
-import store from '../Store';
-import { setError, setSearchResults, showSearchResults } from '../actions';
+import store from 'Store';
+import { setError, setSearchResults, showSearchResults } from 'actions';
 
 // Rest
-import RestPoints from '../rest/Init';
-import RestCom from '../rest/Rest';
+import RestPoints from 'rest/Init';
+import RestCom from 'rest/Rest';
 
 class SearchController extends Component {
   // get results for query when user clicks on search button and store them into state
