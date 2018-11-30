@@ -78,10 +78,30 @@ class database_handler:
 
 
 
+class Association(db.Model):
+    __tablename__ = 'association'
+    users_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
+    skill_id = db.Column(db.Integer, db.ForeignKey('skill.id'), primary_key=True)
+    level = db.Column(db.Integer, nullable=False)
+    time_id = db.Column(db.Integer, db.ForeignKey('time.id'), nullable=False)
+    milestone_id = db.Column(db.Integer, db.ForeignKey('milestone.id'), nullable=True)
+    users_assoc = db.relationship("Users", back_populates="users_association")
+    skill_assoc = db.relationship("Skill", back_populates="skill_association")
+    time_assoc = db.relationship("Time", back_populates="time_association")
+    milestone_assoc = db.relationship("Milestone", back_populates="milestone_association")
+    #parent = relationship("Parent", back_populates="children")
+
 user_skill = db.Table('user_skill',
     db.Column('Users_id', db.Integer, db.ForeignKey('users.id')),
-    db.Column('Skill_id', db.Integer, db.ForeignKey('skill.id'))
-)
+    db.Column('Skill_id', db.Integer, db.ForeignKey('skill.id')))
+
+class Time(db.Model):
+    '''SQL-Alchemy object time.'''
+    __tablename__ = 'time'
+    id = db.Column(db.Integer, primary_key=True)
+    time = db.Column(db.DateTime, nullable=True, default=datetime.datetime.utcnow())
+    time_association = db.relationship("Association", back_populates="time_assoc")
+    #z.B. '9999-12-12 22:58:58'
 
 class Milestone(db.Model):
     '''SQL-Alchemy object milestone.'''
@@ -89,6 +109,7 @@ class Milestone(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(45), nullable=False)
     time = db.Column(db.DateTime, nullable=True, default=datetime.datetime.utcnow())
+    milestone_association = db.relationship("Association", back_populates="milestone_assoc")
     #z.B. '9999-12-12 22:58:58'
     description = db.Column(db.Text, nullable=True)
 
@@ -100,7 +121,8 @@ class Users(db.Model):
     #surname = db.Column(db.String(45), nullable=False)
     #forename = db.Column(db.String(45), nullable=False)
     #place = db.Column(db.String(45), nullable=True)
-    has_skill = db.relationship('Skill', secondary=user_skill, backref=db.backref('has_user', lazy = 'dynamic'))
+    #has_skill = db.relationship('Skill', secondary=user_skill, backref=db.backref('has_user', lazy = 'dynamic'))
+    users_association = db.relationship("Association", back_populates="users_assoc")
 
     def give_name(self):
         return self.username
@@ -115,6 +137,7 @@ class Skill(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(127), nullable=False)
     level = db.Column(db.Integer, nullable=False)
+    skill_association = db.relationship("Association", back_populates="skill_assoc")
     #description = db.Column(db.Text, nullable=True)
     
     def give_level(self):
@@ -162,28 +185,19 @@ class HelloWorld(Resource):
     db.session.add(js1)
     db.session.add(js2)
     db.session.add(js3)
-    java1.has_user.append(Valdemar)
-    java1.has_user.append(Karl)
-    java2.has_user.append(Isaac)
-    java3.has_user.append(Ozoemena)
-    java3.has_user.append(Yvonne)
-
-    python1.has_user.append(Valdemar)
-    python1.has_user.append(Karl)
-    python1.has_user.append(Isaac)
-    python2.has_user.append(Ozoemena)
-    python2.has_user.append(Yvonne)
-
-    js1.has_user.append(Valdemar)
-    js2.has_user.append(Karl)
-    js2.has_user.append(Isaac)
-    js2.has_user.append(Ozoemena)
-    js3.has_user.append(Yvonne)
-
+    
+    time1 = Time()
+    db.session.add(time1)
     milestone1 = Milestone(name = 'hackaton', description = 'war ganz nice. die Jungs von der Uni hatten aber keine Ahnung')
     milestone2 = Milestone(name = 'profie.de.com testingcup', time = '9999-12-12 22:58:58', description = 'mit testen hatte das nichts zu tun. braten war aber nice')
     db.session.add(milestone1)
     db.session.add(milestone2)
+    a = Association(level = 9001)
+
+    a.skill_assoc= js3
+    a.time_assoc= time1
+    a.milestone_assoc= milestone2
+    Valdemar.users_association.append(a)
 
     db.session.commit()
 
