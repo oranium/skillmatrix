@@ -12,7 +12,7 @@ class Search(Resource):
     Takes id of the searching user and an array of skills (currently only one term)'''
     def post(self):
         parser = reqparse.RequestParser()
-        parser.add_argument("query", type=str)
+        parser.add_argument("query", type=dict)
         args = parser.parse_args()
         try:
             message = controller.search(self, args["query"])
