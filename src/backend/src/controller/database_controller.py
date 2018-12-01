@@ -1,14 +1,6 @@
 import parentdir
 from src.controller.database import db
-
-
-def handle_query(self, query):
-    print()
-    #Accepts the query from REST-API and hands it to database_handler, returns JSON
-    results = database_handler.search(self,query)
-    if(results is None):
-        raise ValueError
-    return json.dumps(results)
+from src.model.database_model import Association, MilestoneAssociation, Skill, Time, Users
 
 
 class DatabaseController:
@@ -28,7 +20,7 @@ class DatabaseController:
 
     @staticmethod
     def delete_user(username1):
-        '''Deletes a colum of the users-table, based on the given username.'''
+        """Deletes a colum of the users-table, based on the given username."""
         delete_this = users.query.filter_by(username=username1).first()
         db.session.delete(delete_this)
         db.session.commit()
@@ -39,7 +31,7 @@ class DatabaseController:
         # lsite aller level
         alistname = []
         # liste aller usernamen
-        data = skill.query.filter_by(name = query).all()
+        data = skill.query.filter_by(name=query)
         for skill1 in data:
             alistlevel.append(skill1.give_level())
             for users1 in skill1.has_user:
@@ -50,9 +42,32 @@ class DatabaseController:
         if not name_skilllevel_dict:
             return None
         # dict von Usernames in Verbindung mit Skilllevel
-        big_dict = dict(skill= query,result= name_skilllevel_dict)
+        big_dict = dict(skill=query, result=name_skilllevel_dict)
         # print(big_dict)
         return big_dict
+
+    @staticmethod
+    def set_skill(username, skills):
+        ctime = Time()
+        user = Users.query.filter_by(username=username).first()
+        db.session.add(ctime)
+        for skill, level in skills.items():
+            new_skill = Skill.query.filter_by(name=skill).first()
+            assoc = Association(level=level)
+            assoc.skill_assoc = new_skill
+            assoc.time_assoc = ctime
+            user.users_association.append(assoc)
+        db.commit()
+
+    @staticmethod
+    def add_milestone(username, skill, date, name):
+        user = Users.query.filter_by(username=username).first()
+        mskill = Skill.query.filter_by(name=skill).first()
+        mdate = Time(time=date)
+        m = MilestoneAssociation(name=name)
+        m.user_assoc = user
+        m.time_assoc = mdate
+        mskill.milestone_association.append(m)
 
 
 database_controller = DatabaseController()
