@@ -51,9 +51,7 @@ class AuthenticationController:
             print("adding connection", file=sys.stderr)
             # successful login
             self.connections[username] = new_connection
-            message = json.dumps(dict(user=dict(username=username)))
-            print(message, file=sys.stderr)
-            return message
+            return username
         # catch empty input
         except (LDAPUnknownAuthenticationMethodError, LDAPInvalidCredentialsResult):
             print("empty", file=sys.stderr)
