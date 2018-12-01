@@ -67,7 +67,6 @@ class TestSearchModel(unittest.TestCase):
                                       )
 
     def test_to_json(self):
-        self.maxDiff = None
         self.assertEqual(self.SEARCH_JSON, self.TEST_SEARCH.to_json())
 
 
