@@ -62,7 +62,6 @@ class Users(db.Model):
     username = db.Column(db.String(45), nullable=False)
     surname = db.Column(db.String(45), nullable=False)
     forename = db.Column(db.String(45), nullable=False)
-    place = db.Column(db.String(45), nullable=True)
     users_association = db.relationship("Association", back_populates="users_assoc")
 
     def give_name(self):
