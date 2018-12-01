@@ -1,7 +1,7 @@
 import unittest
 
 #test modules
-from test import test_authentication,test_rest_api,test_database_controller
+from test import test_authentication,test_rest_api,test_database_controller, test_model
 
 
 #initialize the test suite
@@ -14,7 +14,7 @@ suite = unittest.TestSuite()
 suite.addTests(loader.loadTestsFromModule(test_authentication))
 suite.addTests(loader.loadTestsFromModule(test_rest_api))
 #suite.addTests(loader.loadTestsFromModule(test_database_controller))
-
+suite.addTests(loader.loadTestsFromModule(test_model))
 #run tests
 runner = unittest.TextTestRunner()
 result = runner.run(suite) 
