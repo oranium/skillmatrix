@@ -1,3 +1,4 @@
+from model.search_model import SearchModel
 from src.model.model import Model
 from src.model.skill_model import SkillModel
 from src.model.logout_model import LogoutModel
@@ -36,11 +37,11 @@ class TestMilestoneModel(unittest.TestCase):
 class TestProfileModel(unittest.TestCase):
 
     def setUp(self):
-        self.TEST_MILESTONE1 = MilestoneModel(datetime.datetime(2018, 11, 30), "comment")
-        self.TEST_MILESTONE2 = MilestoneModel(datetime.datetime(2014, 1, 22), "other comment")
-        self.TEST_SKILL = SkillModel("Java", 3, [self.TEST_MILESTONE2, self.TEST_MILESTONE1])
-        self.TEST_PROFILE_MODEL = ProfileModel("Aron", [self.TEST_SKILL])
-        self.PROFILE_JSON = json.dumps(dict(username="Aron", skills=[self.TEST_SKILL.to_json()]))
+        test_milestone1 = MilestoneModel(datetime.datetime(2018, 11, 30), "comment")
+        test_milestone2 = MilestoneModel(datetime.datetime(2014, 1, 22), "other comment")
+        test_skill = SkillModel("Java", 3, [test_milestone2, test_milestone1])
+        self.TEST_PROFILE_MODEL = ProfileModel("Aron", [test_skill])
+        self.PROFILE_JSON = json.dumps(dict(username="Aron", skills=[test_skill.to_json()]))
 
     # TODO
     def test_to_json(self):
@@ -48,7 +49,25 @@ class TestProfileModel(unittest.TestCase):
 
 
 class TestSearchModel(unittest.TestCase):
-    pass
+
+    def setUp(self):
+        search_query = {"Java": 3, "Python": 2}
+        search_results = {"has_some": [ProfileModel("Aron", [SkillModel("Java", 3)])],
+                          "has_all": [ProfileModel("Peter", [SkillModel("Java", 4), SkillModel("Python", 5)])]}
+        self.TEST_SEARCH = SearchModel(search_query, search_results)
+        self.SEARCH_JSON = json.dumps(dict
+                                      (query=search_query,
+                                       has_all=[ProfileModel
+                                                ("Peter", [SkillModel("Java", 4), SkillModel("Python", 5)])
+                                                .to_json()],
+                                       has_some=[ProfileModel
+                                                 ("Aron", [SkillModel("Java", 3)])
+                                                 .to_json()]
+                                       )
+                                      )
+
+    def test_to_json(self):
+        self.assertEqual(self.SEARCH_JSON, self.TEST_SEARCH.to_json())
 
 
 class TestLogoutModel(unittest.TestCase):

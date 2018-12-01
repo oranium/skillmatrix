@@ -16,7 +16,7 @@ suite.addTests(loader.loadTestsFromModule(test_rest_api))
 suite.addTests(loader.loadTestsFromModule(test_database_controller))
 suite.addTests(loader.loadTestsFromModule(test_model))
 
-# run tests
+#run tests
 runner = unittest.TextTestRunner()
 result = runner.run(suite) 
 
