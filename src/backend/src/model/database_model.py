@@ -53,10 +53,8 @@ class Time(db.Model):
         return self.time
 
 
-
 class Users(db.Model):
-    """SQL-Alchemy object users. Has an autoincremented id, an username, a surname, a forename and a place
-     which can be NULL"""
+    """SQL-Alchemy object users. Has an autoincremented id, an username, a surname and a forename"""
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(45), nullable=False)
