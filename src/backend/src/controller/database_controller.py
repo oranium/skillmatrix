@@ -27,24 +27,34 @@ class DatabaseController:
 
     @staticmethod
     def search(query):
-        alistlevel = []
-        # lsite aller level
-        alistname = []
-        # liste aller usernamen
-        data = skill.query.filter_by(name=query)
-        for skill1 in data:
-            alistlevel.append(skill1.give_level())
-            for users1 in skill1.has_user:
-                alistname.append(users1.give_name())
+        # commented out legacy code for reference purposes
 
-        name_skilllevel = zip(alistname, alistlevel)
-        name_skilllevel_dict = dict(name_skilllevel)
-        if not name_skilllevel_dict:
-            return None
-        # dict von Usernames in Verbindung mit Skilllevel
-        big_dict = dict(skill=query, result=name_skilllevel_dict)
-        # print(big_dict)
-        return big_dict
+        # alistlevel = []
+        # lsite aller level
+        # alistname = []
+        # liste aller usernamen
+        # data = skill.query.filter_by(name=query)
+        # for skill1 in data:
+        #    alistlevel.append(skill1.give_level())
+        #    for users1 in skill1.has_user:
+        #        alistname.append(users1.give_name())
+        # name_skilllevel = zip(alistname, alistlevel)
+        # name_skilllevel_dict = dict(name_skilllevel)
+        # if not name_skilllevel_dict:
+        #     return None
+        # # dict von Usernames in Verbindung mit Skilllevel
+        # big_dict = dict(skill=query, result=name_skilllevel_dict)
+        # # print(big_dict)
+        # return big_dict
+        has_all = {}
+        has_some = {}
+        # TODO: query all users from database
+        users = []  # query here
+        for user in users:
+            for skill, min_level in query.items():
+                # TODO: check if user has each skill on required level, add to has_all
+                pass
+        return dict(has_all=has_all, has_some=has_some)
 
     @staticmethod
     def set_skill(username, skills):
