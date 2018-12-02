@@ -5,81 +5,75 @@ from src.model.database_model import Association, MilestoneAssociation, Skill, T
 
 class DatabaseController:
     """Class to handle everything about table-manipulation"""
-    def add_skill(self, skill1, level1):
-        """Adds skill to database."""
-        object_name = skill(name = skill1, level = level1)
-        db.session.add(object_name)
-        db.session.commit()
-
-    @staticmethod
-    def add_user(username1):
-        """Adds user to database. is optional and is NULL if not given."""
-        object_name = users(username=username1)
-        db.session.add(object_name)
-        db.session.commit()
-
-    @staticmethod
-    def delete_user(username1):
-        """Deletes a colum of the users-table, based on the given username."""
-        delete_this = users.query.filter_by(username=username1).first()
-        db.session.delete(delete_this)
-        db.session.commit()
 
     @staticmethod
     def search(query):
-        # commented out legacy code for reference purposes
-
-        # alistlevel = []
-        # lsite aller level
-        # alistname = []
-        # liste aller usernamen
-        # data = skill.query.filter_by(name=query)
-        # for skill1 in data:
-        #    alistlevel.append(skill1.give_level())
-        #    for users1 in skill1.has_user:
-        #        alistname.append(users1.give_name())
-        # name_skilllevel = zip(alistname, alistlevel)
-        # name_skilllevel_dict = dict(name_skilllevel)
-        # if not name_skilllevel_dict:
-        #     return None
-        # # dict von Usernames in Verbindung mit Skilllevel
-        # big_dict = dict(skill=query, result=name_skilllevel_dict)
-        # # print(big_dict)
-        # return big_dict
-        has_all = {}
-        has_some = {}
-        # TODO: query all users from database
-        users = []  # query here
+        """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+        Search through all users with a query from the backend controller.
+        Finds all users that fulfill all restrictions, and all users that fulfill some but not all.
+        """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+        has_some = []
+        # list of all users
+        users = database_controller.get_all_users()
+        has_all = users
         for user in users:
             for skill, min_level in query.items():
-                # TODO: check if user has each skill on required level, add to has_all
-                pass
+                # check if user has each skill on required level, add to has_all
+                skill_id = database_controller.get_skill_id(skill)
+                skill_assoc = database_controller.get_assoc(skill_id=skill_id, level=min_level)
+                if user in skill_assoc:
+                    if user not in has_some:
+                        has_some.add(user)
+                else:
+                    has_all.remove(user)
+        for user in has_all:
+            if user in has_some:
+                has_some.remove(user)
+
         return dict(has_all=has_all, has_some=has_some)
 
     @staticmethod
     def set_skill(username, skills):
         ctime = Time()
-        user = Users.query.filter_by(username=username).first()
+        user = database_controller.get_username(username)
         db.session.add(ctime)
         for skill, level in skills.items():
-            new_skill = Skill.query.filter_by(name=skill).first()
+            new_skill = database_controller.get_skill(skill)
             assoc = Association(level=level)
             assoc.skill_assoc = new_skill
             assoc.time_assoc = ctime
             assoc.users_assoc = user
-            # user.users_association.append(assoc) did not work
         db.session.commit()
-
 
     @staticmethod
     def add_milestone(username, skill, date, name):
-        user = Users.query.filter_by(username=username).first()
-        mskill = Skill.query.filter_by(name=skill).first()
+        user = database_controller.get_user(username)
+        mskill = database_controller.get_skill(skill)
         mdate = Time(time=date)
         m = MilestoneAssociation(name=name)
         m.user_assoc = user
         m.time_assoc = mdate
         mskill.milestone_association.append(m)
+    
+    @staticmethod
+    def get_all_users():
+        return Users.query.all()
+
+    @staticmethod
+    def get_skill_id(skillname):
+        return Skill.query.filter_by(name=skillname).first().id
+
+    @staticmethod
+    def get_assoc(**kwargs):
+        return Association.query.filter_by(**{key: value for key, value in kwargs if value is not None}).all()
+
+    @staticmethod
+    def get_skill(skillname):
+        return Skill.query.filter_by(name=skillname).first()
+
+    @staticmethod
+    def get_user(username):
+        return Users.query.filter_by(username=username).first()
 
 
 database_controller = DatabaseController()
