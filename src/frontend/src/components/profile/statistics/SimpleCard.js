@@ -112,7 +112,6 @@ export class ClickableChart extends React.Component {
           </DialogActions>
         </Dialog>
         <div>
-          <h1 />
         </div>
       </div>
     );
