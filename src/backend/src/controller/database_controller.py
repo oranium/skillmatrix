@@ -50,10 +50,12 @@ class DatabaseController:
         user = database_controller.get_user(username)
         mskill = database_controller.get_skill(skill)
         mdate = Time(time=date)
+        db.session.add(mdate)
         m = MilestoneAssociation(name=name)
-        m.user_assoc = user
-        m.time_assoc = mdate
-        mskill.milestone_association.append(m)
+        m.skill_milestone_assoc = mskill
+        m.time_milestone_assoc = mdate
+        m.users_milestone_assoc = user
+        db.session.commit()
     
     @staticmethod
     def get_all_users():
