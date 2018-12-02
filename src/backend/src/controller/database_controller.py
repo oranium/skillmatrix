@@ -66,8 +66,10 @@ class DatabaseController:
             assoc = Association(level=level)
             assoc.skill_assoc = new_skill
             assoc.time_assoc = ctime
-            user.users_association.append(assoc)
-        db.commit()
+            assoc.users_assoc = user
+            # user.users_association.append(assoc) did not work
+        db.session.commit()
+
 
     @staticmethod
     def add_milestone(username, skill, date, name):
