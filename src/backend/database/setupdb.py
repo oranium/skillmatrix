@@ -1,7 +1,10 @@
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
 import datetime
 
-from src.controller.database import db
-
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Momomomo2@localhost/sm1'
+db = SQLAlchemy(app)
 
 class Association(db.Model):
     __tablename__ = 'association'
@@ -57,6 +60,7 @@ class Time(db.Model):
         return self.time
 
 
+
 class Users(db.Model):
     """SQL-Alchemy object users. Has an autoincremented id, an username, a surname, a forename and a place
      which can be NULL"""
@@ -73,3 +77,9 @@ class Users(db.Model):
 
     def __repr__(self):
         return '<id = {0} und username = {1}>'.format(self.id, self.username)
+
+db.drop_all()
+db.create_all()
+
+if __name__ == '__main__':
+    app.run()

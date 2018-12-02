@@ -1,10 +1,11 @@
 import unittest
 from unittest.mock import patch
-from src.controller.controller import controller
+
+from controller.controller import controller
 
 
 class TestDatabaseController(unittest.TestCase):
-    '''unittests for database controller'''
+    """unittests for database controller"""
 
     def test_get_all(self, level):
         pass
@@ -25,7 +26,7 @@ class TestDatabaseController(unittest.TestCase):
         pass
 
     def test_search_success(self):
-        search_result = dict(skill="Java",result = dict(Aron=1,Willy=5))
+        search_result = dict(skill="Java", result=dict(Aron=1, Willy=5))
         with patch.object(controller, "search") as mock_search:
             mock_search.return_value = search_result
             self.assertEqual(search_result, controller.search(self, "Java"))
@@ -34,4 +35,3 @@ class TestDatabaseController(unittest.TestCase):
         with patch.object(controller, "search") as mock_search:
             mock_search.return_value = None
             self.assertRaises(ValueError, controller.search, self, "bad request that yields no results")
-
