@@ -15,3 +15,15 @@ The _requirements.txt_ contains pylint. To run pylint on all files in `src/backe
 $ cd src/backend
 $ pylint src && pylint test
 ....
+The app can be started with different arguments. To run the app, the config.py file is required.
+....
+$ cd src/backend/src
+$ python3 app.py ARG
+....
+Where ARG can be one of the following: +
+
+*0 for production (not implemented) +
+*1 for testing +
+*2 for debugging. +
+
+If ARG is not given, the app defaults to debugging mode.
