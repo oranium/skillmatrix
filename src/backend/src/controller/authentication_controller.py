@@ -3,6 +3,7 @@ import parentdir
 from ldap3 import Server, Connection, ALL, NTLM
 from ldap3.core.exceptions import LDAPUnknownAuthenticationMethodError, LDAPSocketOpenError, \
     LDAPInvalidCredentialsResult
+from src import config
 import json
 import sys
 # if info about the server is required:
@@ -11,18 +12,37 @@ import sys
 # get info about connection
 # print(mock_connection)
 
+authentication_controller = None
+
+
+def set_controller(arg):
+    global authentication_controller
+    if arg == "0":
+        print("AD PRODUCTION MODE")
+        authentication_controller = AuthenticationController(config.PRODUCTION_AD_CONFIG["SERVER_URL"],
+                                                             config.PRODUCTION_AD_CONFIG["SERVER_PREFIX"])
+    if arg == "1":
+        print("AD TESTING MODE")
+        authentication_controller = AuthenticationController(config.TEST_AD_CONFIG["SERVER_URL"],
+                                                             config.TEST_AD_CONFIG["SERVER_PREFIX"])
+    if arg == "2":
+        print("AD DEBUGGING MODE")
+        authentication_controller = AuthenticationController(config.DEBUGGING_AD_CONFIG["SERVER_URL"],
+                                                             config.DEBUGGING_AD_CONFIG["SERVER_PREFIX"])
+
 
 class AuthenticationController:
     """
     The Authentication class handles communication
     to the Active Directory server via ldap3 library
     """
-    def __init__(self, server_url):
+    def __init__(self, server_url, prefix):
         # The server url should look like this: <'''ldap://my-ldapserver.example.com:389>
         # Uni-Azure: server 'ldap://vm01-azure-ad.westeurope.cloudapp.azure.com:389'
 
         self.connections = {}
         self.server = Server(server_url, get_info=ALL)
+        self.login_prefix = prefix
 
     # should call db_controller according to #11
     def login(self, username, password):
@@ -34,7 +54,7 @@ class AuthenticationController:
         try:
             print(username, file=sys.stderr)
             print(password, file=sys.stderr)
-            login_name = 'AzureAD.SWT.com\\'+username
+            login_name = self.login_prefix+username
             print(login_name, file=sys.stderr)
             new_connection = Connection(self.server,
                                         login_name,
@@ -73,6 +93,3 @@ class AuthenticationController:
             return True
         except KeyError:
             return False
-
-
-authentication_controller = AuthenticationController('ldap://vm01-azure-ad.westeurope.cloudapp.azure.com:389')
