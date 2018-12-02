@@ -22,8 +22,11 @@ class Controller:
 
     @staticmethod
     def search(query):
-        results = database_controller.search(query)
-        return SearchModel(query, results)
+        formatted_query = {}
+        for k, v in query["query"].items():
+            formatted_query[k] = int(v)
+        results = database_controller.search(formatted_query)
+        return SearchModel(formatted_query, results)
 
     @staticmethod
     def set_skills(username, skills):

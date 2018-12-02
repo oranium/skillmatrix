@@ -1,15 +1,8 @@
 """Configures and sets up the app connecting frontend to backend via RESTful APIs"""
 from src.controller import database
-from src.api.login import Login
-from src.api.logout import Logout
-from src.api.search import Search
-from src.api.milestone import Milestone
-from src.api.set_skill import SetSkill
 from src.controller import authentication_controller
 import sys
 from flask import Flask
-from flask_restful import Api
-from flask_restful.utils import cors
 
 
 def configure_app(capp, arg):
@@ -35,6 +28,16 @@ else:
     authentication_controller.set_controller("2")
 
 database.set_db(app)
+
+from src.api.login import Login
+from src.api.logout import Logout
+from src.api.search import Search
+from src.api.milestone import Milestone
+from src.api.set_skill import SetSkill
+from flask_restful import Api
+from flask_restful.utils import cors
+
+
 api = Api(app)
 api.decorators = [cors.crossdomain(origin='http://localhost:3000', headers=['accept', 'Content-Type', 'access-control-allow-origin'])]
 api.add_resource(Login, "/login")
