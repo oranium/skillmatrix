@@ -30,6 +30,7 @@ class Skill(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(127), nullable=False)
     description = db.Column(db.Text, nullable=True)
+    category = db.Column(db.String(127), nullable=False)
     skill_association = db.relationship("Association", back_populates="skill_assoc")
     skill_milestone_association = db.relationship("MilestoneAssociation", back_populates="skill_milestone_assoc")
 
