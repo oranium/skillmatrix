@@ -15,7 +15,7 @@ class DebugConfig:
     TESTING = False
     DEBUG = True
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:Momomomo2@localhost/sm1'
+    SQLALCHEMY_DATABASE_URI = # fill with own database info, structure: 'mysql+pymysql://root:pass@localhost/db_name'
 
 
 class ProductionConfig:
