@@ -22,8 +22,8 @@ $ python3 app.py ARG
 ....
 Where ARG can be one of the following: +
 
-*0 for production (not implemented) +
-*1 for testing +
-*2 for debugging. +
+* 0 for production (not implemented) +
+* 1 for testing +
+* 2 for debugging. +
 
 If ARG is not given, the app defaults to debugging mode.
