@@ -16,8 +16,8 @@ class SetSkill(Resource):
         try:
             message = controller.set_skills(self, args["username"], args["skills"])
             return Response(message, status=200, mimetype="application/json")
-        except BaseException:
-            pass
+        except TimeoutError:
+            return Response(status=504)
 
     def options(self):
         pass
