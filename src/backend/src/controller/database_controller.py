@@ -56,7 +56,7 @@ class DatabaseController:
         return dict(has_all=has_all, has_some=has_some)
 
     @staticmethod
-    def set_skill(username, skills):
+    def set_skills(username, skills):
         ctime = Time()
         user = database_controller.get_username(username)
         db.session.add(ctime)
