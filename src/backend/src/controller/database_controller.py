@@ -12,10 +12,10 @@ class DatabaseController:
 
     @staticmethod
     def search(query):
-        """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+        """ dict(str=int) -> dict(str=[ProfileModel],str=[ProfileModel]
         Search through all users with a query from the backend controller.
         Finds all users that fulfill all restrictions, and all users that fulfill some but not all.
-        """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+        """
         has_some = []
         # list of all users
         users = database_controller.get_all_users()
@@ -41,7 +41,8 @@ class DatabaseController:
                 # if the user does not have the current skill at the required level, he gets removed from has_all
                 else:
                     print("{0} has {1} not on level {2}".format(user.username, skill, min_level))
-                    has_all.remove(user)
+                    if user in has_all:
+                        has_all.remove(user)
         # remove intersection of has_all and has_some
         for user in has_all:
             if user in has_some:
@@ -49,6 +50,9 @@ class DatabaseController:
         # extract ProfileModels from the results and return them in a dictionary
         has_all = database_controller.get_profile_models(has_all)
         has_some = database_controller.get_profile_models(has_some)
+        # sort the results by descending order of sum of queried skills
+        has_all.sort(key=lambda p: database_controller.sum_relevant_skills(p, list(query.keys())), reverse=True)
+        has_some.sort(key=lambda p: database_controller.sum_relevant_skills(p, list(query.keys())), reverse=True)
         return dict(has_all=has_all, has_some=has_some)
 
     @staticmethod
@@ -75,7 +79,7 @@ class DatabaseController:
         m.time_milestone_assoc = mdate
         m.users_milestone_assoc = user
         db.session.commit()
-    
+
     @staticmethod
     def get_all_users():
         return Users.query.all()
@@ -115,7 +119,7 @@ class DatabaseController:
 
     @staticmethod
     def get_profile_models(users):
-        """projects [Users] -> [ProfileModel]"""
+        """[Users] -> [ProfileModel]"""
         profile_models = []
         # iterate over the users
         for user in users:
@@ -134,6 +138,21 @@ class DatabaseController:
             # creates ProfileModel from username and list of SkillModel
             profile_models.append(ProfileModel(user.username, skill_models))
         return profile_models
+
+    @staticmethod
+    def sum_relevant_skills(profile, skills):
+        """ProfileModel,[str] -> int
+        Takes a ProfileModel and a list of skills and checks for the sum of the levels of corresponding skills.
+        Used as a key for ordering search results.
+        """
+        rel_sum = 0
+        # look for every skill in list of skills
+        for skill in skills:
+            for skill_model in profile.skills:
+                if skill_model.skill_name.lower() == skill.lower():
+                    rel_sum += skill_model.level
+        print("returning {0} for {1}".format(rel_sum, profile.username))
+        return rel_sum
 
 
 database_controller = DatabaseController()
