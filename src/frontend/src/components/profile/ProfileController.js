@@ -1,14 +1,16 @@
 // react
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
 // redux
 import store from 'Store';
-import { changeView } from 'actions';
+import { changeView, openProfileDialog } from 'actions';
 
 // react components
-import TabContainer from "components/profile/TabContainer";
+import TabContainer from 'components/profile/TabContainer';
 import SkillProfileList from 'components/profile/skills/SkillProfileList';
 import SkillStatisticsGrid from 'components/profile/statistics/SkillStatisticsGrid';
+import NewMilestoneDialog from 'components/profile/skills/NewMilestoneDialog';
+import NewSkillDialog from 'components/profile/skills/NewSkillDialog';
 
 // material-ui
 import PropTypes from 'prop-types';
@@ -16,8 +18,7 @@ import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-
-
+import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
   root: {
@@ -27,28 +28,41 @@ const styles = theme => ({
 });
 
 class ProfileController extends Component {
-  getOwnerArticle(){
+  getOwnerArticle() {
     const { state } = this.props;
-    const { isEditable, username } = state.profile;
+    const { person, isEditable } = state.profile;
+    const { username } = state.profile.profiles[person];
 
     if (isEditable) {
       return 'My ';
     }
-    
-    return  username + "'s ";
+
+    return username + "'s ";
   }
 
   handleChange = (evt, value) => {
     store.dispatch(changeView(value));
   };
 
+  handleNewSkill = () => {
+    console.log('NewSkill');
+  };
+
+  handleNewMilestone = () => {
+    console.log('NewMilestone');
+  };
+
+  openNewMilestoneDialog = () => {
+    store.dispatch(openProfileDialog('milestone'));
+  };
+
   render() {
     const { state, classes } = this.props;
     // person: array index in profiles
-    const { person, profiles, view} = state.profile;
-    const categories = profiles[person].categories;
+    const { person, profiles, view, showDialog, isEditable } = state.profile;
+    const skills = profiles[person].skills;
     const ownerArticle = this.getOwnerArticle();
-    
+
     return (
       <div className={classes.root}>
         <AppBar position="static">
@@ -59,12 +73,32 @@ class ProfileController extends Component {
         </AppBar>
         {view === 0 && (
           <TabContainer>
-            <SkillProfileList categories={categories} />
+            <SkillProfileList categories={skills} />
+
+            {isEditable && (
+              <div>
+                <NewMilestoneDialog open={showDialog === 'milestone'} />
+                <NewSkillDialog />
+                <div className="button-container">
+                  <Button variant="contained" color="primary" onClick={this.openNewMilestoneDialog}>
+                    New Milestone
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    name="submit"
+                    onClick={this.handleNewSkill}
+                  >
+                    New Skill
+                  </Button>
+                </div>
+              </div>
+            )}
           </TabContainer>
         )}
         {view === 1 && (
           <TabContainer>
-            <SkillStatisticsGrid categories={categories} />
+            <SkillStatisticsGrid categories={skills} />
           </TabContainer>
         )}
       </div>

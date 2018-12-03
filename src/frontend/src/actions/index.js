@@ -61,3 +61,12 @@ export const changeProfileOwner = person => ({
 export const hideErrorDialog = {
   type: 'HIDEERRORDIALOG',
 };
+
+export const openProfileDialog = dialogName => ({
+  type: 'OPENPROFILEDIALOG',
+  dialogName,
+});
+
+export const closeProfileDialog = {
+  type: 'ClOSEPROFILEDIALOG',
+};
