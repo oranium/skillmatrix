@@ -19,6 +19,9 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Button from '@material-ui/core/Button';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 
 const styles = theme => ({
   root: {
@@ -98,7 +101,12 @@ class ProfileController extends Component {
         )}
         {view === 1 && (
           <TabContainer>
-            <SkillStatisticsGrid categories={skills} />
+            <ExpansionPanel>
+              <ExpansionPanelSummary>{skills['0'].skillname}</ExpansionPanelSummary>
+              <ExpansionPanelDetails>
+                <SkillStatisticsGrid categories={skills} />
+              </ExpansionPanelDetails>
+            </ExpansionPanel>
           </TabContainer>
         )}
       </div>
