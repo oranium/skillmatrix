@@ -11,6 +11,7 @@ import SkillProfileList from 'components/profile/skills/SkillProfileList';
 import SkillStatisticsGrid from 'components/profile/statistics/SkillStatisticsGrid';
 import NewMilestoneDialog from 'components/profile/skills/NewMilestoneDialog';
 import NewSkillDialog from 'components/profile/skills/NewSkillDialog';
+import SimpleCard from 'components/profile/statistics/SimpleCard';
 
 // material-ui
 import PropTypes from 'prop-types';
@@ -19,6 +20,9 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Button from '@material-ui/core/Button';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 
 const styles = theme => ({
   root: {
@@ -98,7 +102,16 @@ class ProfileController extends Component {
         )}
         {view === 1 && (
           <TabContainer>
-            <SkillStatisticsGrid categories={skills} />
+            <ExpansionPanel>
+              <ExpansionPanelSummary>
+                {' '}
+                Python
+                {/*<SimpleCard skill={skills['0'].skillname} data={skills['0'].milestones} > */}
+              </ExpansionPanelSummary>
+              <ExpansionPanelDetails>
+                <SkillStatisticsGrid categories={skills} />
+              </ExpansionPanelDetails>
+            </ExpansionPanel>
           </TabContainer>
         )}
       </div>
