@@ -20,7 +20,7 @@ class DatabaseController:
         # list of all users
         users = database_controller.get_all_users()
         # has_all starts off with every user, removes those who don't have one of the required skills
-        has_all = users
+        has_all = users.copy()
         # iterate through every user and look up their skills
         for user in users:
             print("searching through skills of " + user.username)
