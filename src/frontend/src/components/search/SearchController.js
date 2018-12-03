@@ -17,11 +17,15 @@ class SearchController extends Component {
   // get results for query when user clicks on search button and store them into state
   async handleSearch() {
     const { state } = this.props;
-    const { user } = state;
-    const { value } = state.formState.searchfield;
+    const { searchValues } = state.search;
+    const query = {};
+    // put each search value as key into map
+    // 1 => min Level
+    searchValues.forEach((tag) => {
+      query[tag.value] = 1;
+    });
     const search = {
-      username: user,
-      query: value,
+      query,
     };
     const Rest = new RestCom(RestPoints.search, JSON.stringify(search));
     try {
@@ -39,8 +43,8 @@ class SearchController extends Component {
 
   render() {
     const { state, onChange } = this.props;
-    const { searchResults, formState } = state;
-    const { showResults, results } = searchResults;
+    const { search, formState } = state;
+    const { showResults, results } = search;
     return (
       <div>
         <SearchForm

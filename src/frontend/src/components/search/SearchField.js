@@ -15,50 +15,13 @@ import CancelIcon from '@material-ui/icons/Cancel';
 import { emphasize } from '@material-ui/core/styles/colorManipulator';
 
 
-const suggestions = [
-  { label: 'Python' },
-  { label: 'Java' },
-  { label: 'Albania' },
-  { label: 'Algeria' },
-  { label: 'American Samoa' },
-  { label: 'Andorra' },
-  { label: 'Angola' },
-  { label: 'Anguilla' },
-  { label: 'Antarctica' },
-  { label: 'Antigua and Barbuda' },
-  { label: 'Argentina' },
-  { label: 'Armenia' },
-  { label: 'Aruba' },
-  { label: 'Australia' },
-  { label: 'Austria' },
-  { label: 'Azerbaijan' },
-  { label: 'Bahamas' },
-  { label: 'Bahrain' },
-  { label: 'Bangladesh' },
-  { label: 'Barbados' },
-  { label: 'Belarus' },
-  { label: 'Belgium' },
-  { label: 'Belize' },
-  { label: 'Benin' },
-  { label: 'Bermuda' },
-  { label: 'Bhutan' },
-  { label: 'Bolivia, Plurinational State of' },
-  { label: 'Bonaire, Sint Eustatius and Saba' },
-  { label: 'Bosnia and Herzegovina' },
-  { label: 'Botswana' },
-  { label: 'Bouvet Island' },
-  { label: 'Brazil' },
-  { label: 'British Indian Ocean Territory' },
-  { label: 'Brunei Darussalam' },
-].map(suggestion => ({
-  value: suggestion.label,
-  label: suggestion.label,
-}));
+// redux
+import store from 'Store';
+import { setQuery } from 'actions';
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    height: 250,
   },
   input: {
     display: 'flex',
@@ -211,19 +174,19 @@ const components = {
 };
 
 class IntegrationReactSelect extends React.Component {
-  state = {
-    single: null,
-    multi: null,
-  };
-
-  handleChange = name => value => {
-    this.setState({
-      [name]: value,
-    });
+  handleChange = value => {
+    store.dispatch(setQuery(value));
   };
 
   render() {
     const { classes, theme } = this.props;
+    const state = store.getState();
+    const { searchValues } = state.search;
+    const {allSkills} = state;
+    const suggestions = allSkills.map(suggestion => ({
+      value: suggestion,
+      label: suggestion,
+    }));
 
     const selectStyles = {
       input: base => ({
@@ -242,16 +205,15 @@ class IntegrationReactSelect extends React.Component {
             classes={classes}
             styles={selectStyles}
             textFieldProps={{
-              label: 'Label',
               InputLabelProps: {
                 shrink: true,
-              }
+              },
             }}
             options={suggestions}
             components={components}
-            value={this.state.multi}
-            onChange={this.handleChange('multi')}
-            placeholder="Select multiple countries"
+            value={searchValues}
+            onChange={this.handleChange}
+            placeholder="Select one or more skills you want to search for"
             isMulti
           />
         </NoSsr>
