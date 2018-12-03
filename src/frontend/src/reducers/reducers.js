@@ -41,7 +41,7 @@ const defaultSearchResults = {
 
 // die datenstruktur soll so im state gespeichert werden skills: Oberkategorien :
 // Unterkategorien und jeweils actLevel und milestones
-const exState = {
+const oldexState = {
   categories: {
     Programming: {
       Python: {
@@ -167,11 +167,50 @@ const exState = {
   },
 };
 
+const exMilestone = {
+  x: '2015-05-01',
+  y: 0,
+  comment: 'init',
+};
+
+const exSkill = {
+  skillname: 'Python',
+  level: 4,
+  milestones: [
+    {
+      x: '2015-05-01',
+      y: 0,
+      comment: 'init',
+    },
+    {
+      x: '2016-08-03',
+      y: 1,
+      comment: 'Buch Hacking with Python gelesen',
+    },
+    {
+      x: '2019-07-06',
+      y: 4,
+      comment: '72h Python workshop',
+    },
+    {
+      x: '2021-11-23',
+      y: 5,
+      comment: 'Python Hackaton gewonnen',
+    },
+  ],
+};
+
+const exState = {
+  username: 'Valdemar',
+  skills: [exSkill, exSkill, exSkill],
+};
+
 const defaultProfilePageState = {
   person: 0,
   isEditable: true,
   view: 0,
-  profiles: [exState],
+  showDialog: false,
+  profiles: [exState, exState],
 };
 
 // has all the data for the inputfields
@@ -269,6 +308,10 @@ export const profile = (state = defaultProfilePageState, action) => {
       return Object.assign(state, { view: action.view });
     case 'CHANGEPROFILEOWNER':
       return Object.assign(state, { person: action.person });
+    case 'OPENPROFILEDIALOG':
+      return Object.assign(state, { showDialog: action.dialogName });
+    case 'ClOSEPROFILEDIALOG':
+      return Object.assign(state, { showDialog: false });
     default:
       return state;
   }

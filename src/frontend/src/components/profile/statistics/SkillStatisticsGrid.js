@@ -10,40 +10,48 @@ const SkillStatisticsPage = (props) => {
   //   "subcategories"
   // ]["PythonFlask"]["milestones"]
   // Loop over # of skills given from Profile and render # of cards --> in SimpleCard is also the Chart rendered
-  let index = 0;
-  const skillItems = Object.keys(categories).map(category => Object.keys(categories[category]).map(
-    skill => (
-      (index = 0),
-      Object.keys(categories[category][skill].subcategories).map((
-        subcategory, // render subcategories
-      ) => {
-        index += 1;
-        return index === 1 ? (
-          <Grid key={index} item>
-            <SimpleCard
-              skill={skill}
-              data={categories[category][skill].milestones}
-            />
-            <SimpleCard
-              skill={subcategory}
-              data={
-                  categories[category][skill].subcategories[subcategory].milestones
-                }
-            />
-          </Grid>
-        ) : (
-          <Grid key={index} item>
-            <SimpleCard
-              skill={subcategory}
-              data={
-                  categories[category][skill].subcategories[subcategory].milestones
-                }
-            />
-            {' '}
-          </Grid>
-        );
-      })
-    ),
+  const index = 0;
+  // const skillItems = Object.keys(categories).map(category => Object.keys(categories[category]).map(
+  //   skill => (
+  //     (index = 0),
+  //     Object.keys(categories[category][skill].subcategories).map((
+  //       subcategory, // render subcategories
+  //     ) => {
+  //       index += 1;
+  //       return index === 1 ? (
+  //         <Grid key={index} item>
+  //           <SimpleCard
+  //             skill={skill}
+  //             data={categories[category][skill].milestones}
+  //           />
+  //           <SimpleCard
+  //             skill={subcategory}
+  //             data={
+  //                 categories[category][skill].subcategories[subcategory].milestones
+  //               }
+  //           />
+  //         </Grid>
+  //       ) : (
+  //         <Grid key={index} item>
+  //           <SimpleCard
+  //             skill={subcategory}
+  //             data={
+  //                 categories[category][skill].subcategories[subcategory].milestones
+  //               }
+  //           />
+  //           {' '}
+  //         </Grid>
+  //       );
+  //     })
+  //   ),
+  // ));
+  const skillItems = categories.map(skill => (
+    <Grid key={index} item>
+      <SimpleCard
+        skill={skill.skillname}
+        data={skill.milestones}
+      />
+    </Grid>
   ));
 
   return (
