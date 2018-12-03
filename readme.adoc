@@ -7,6 +7,8 @@ include::src/frontend/readme.adoc[]
 include::src/backend/readme.adoc[]
 
 
+
+
 == Login Credentials:
 
 *Test-User: Valdemar Forsberg* +
@@ -28,8 +30,3 @@ PW: @testuser4 +
 *Test-User: Yvonne Thompsome* +
 User: AzureAD.SWT.com\Yvonne-Thompsome +
 PW: @testuser5 +
-
-
-
-
-

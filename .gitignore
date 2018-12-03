@@ -39,3 +39,5 @@ venv/
 #python cache
 __pycache__/
 
+#config file
+config.py
