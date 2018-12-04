@@ -24,7 +24,7 @@ class MilestoneAssociation(db.Model):
     milestone_skill_id = db.Column(db.Integer, db.ForeignKey('skill.id'), primary_key=True)
     milestone_date_id = db.Column(db.Integer, db.ForeignKey('date.id'), primary_key=True)
     comment = db.Column(db.String(85), primary_key=True)
-    level = db.Column(db.Integer, nullable = False)
+    level = db.Column(db.Integer, nullable = True)
     users_milestone_assoc = db.relationship("Users", back_populates="users_milestone_association")
     skill_milestone_assoc = db.relationship("Skill", back_populates="skill_milestone_association")
     date_milestone_assoc = db.relationship("Date", back_populates="date_milestone_association")
@@ -115,7 +115,7 @@ def dummy_entries():
     db.session.commit()
 
 
-def create_skill(level, skill, dtae, username):
+def create_skill(level, skill, date, username):
     a = Association(level=level)
     a.skill_assoc = skill
     a.date_assoc = date
