@@ -1,4 +1,6 @@
-from model.search_model import SearchModel
+import set_root_backend
+
+from src.model.search_model import SearchModel
 from src.model.model import Model
 from src.model.skill_model import SkillModel
 from src.model.logout_model import LogoutModel

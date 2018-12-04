@@ -1,4 +1,5 @@
 import unittest
+import set_root_backend
 
 # test modules
 from test import test_model  # , test_controller, test_authentication_controller, test_db_model

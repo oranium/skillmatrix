@@ -1,4 +1,5 @@
 """Configures and sets up the app connecting frontend to backend via RESTful APIs"""
+import set_root_backend
 from src.controller import database
 from src.controller import authentication_controller
 import sys

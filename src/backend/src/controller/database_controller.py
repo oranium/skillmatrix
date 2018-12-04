@@ -1,8 +1,8 @@
-import parentdir
+import set_root_backend
 import sys
 
-from model.profile_model import ProfileModel
-from model.skill_model import SkillModel
+from src.model.profile_model import ProfileModel
+from src.model.skill_model import SkillModel
 from src.controller.database import db
 from src.model.database_model import Association, MilestoneAssociation, Skill, Time, Users
 
