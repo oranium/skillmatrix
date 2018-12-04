@@ -56,7 +56,7 @@ class DatabaseController:
         return dict(has_all=has_all, has_some=has_some)
 
     @staticmethod
-    def set_skill(username, skills):
+    def set_skills(username, skills):
         ctime = Time()
         user = database_controller.get_username(username)
         db.session.add(ctime)
@@ -81,12 +81,12 @@ class DatabaseController:
         db.session.commit()
 
     @staticmethod
-    def get_all_users():
-        return Users.query.all()
-
-    @staticmethod
-    def get_skill_id(skillname):
-        return Skill.query.filter_by(name=skillname).first().id
+    def get_milestones(username, skillname):
+        muser = database_controller.get_user_id(username)
+        mskillid = database_controller.get_skill_id(skillname)
+        milestonelist = MilestoneAssociation.query.filter(MilestoneAssociation.milestone_users_id == muser,
+                                                          MilestoneAssociation.milestone_skill_id == mskillid).all()
+        return milestonelist
 
     # TODO: un-hardcode this
     @staticmethod
@@ -100,8 +100,20 @@ class DatabaseController:
         return assoc
 
     @staticmethod
+    def get_all_users():
+        return Users.query.all()
+
+    @staticmethod
+    def get_skill_id(skillname):
+        return Skill.query.filter_by(name=skillname).first().id
+
+    @staticmethod
     def get_skill(skillname):
         return Skill.query.filter_by(name=skillname).first()
+
+    @staticmethod
+    def get_user_id(username):
+        return Users.query.filter_by(username=username).first().id
 
     @staticmethod
     def get_user(username):
