@@ -13,7 +13,7 @@ class Login(Resource):
         parser.add_argument("password", type=str)
         args = parser.parse_args()
         try:
-            message = controller.login(self, args["username"], args["password"])
+            message = controller.login(self, args["username"], args["password"]).replace("\\", "")
             return Response(message, status=200, mimetype="application/json")
         except AttributeError:
             return Response(status=400)

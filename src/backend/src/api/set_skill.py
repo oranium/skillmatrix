@@ -14,7 +14,7 @@ class SetSkill(Resource):
         parser.add_argument("skills", type=dict)
         args = parser.parse_args()
         try:
-            message = controller.set_skills(self, args["username"], args["skills"])
+            message = controller.set_skills(self, args["username"], args["skills"]).replace("\\", "")
             return Response(message, status=200, mimetype="application/json")
         except TimeoutError:
             return Response(status=504)
