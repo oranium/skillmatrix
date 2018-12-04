@@ -1,32 +1,31 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
-import { SearchInput } from 'components/common/InputFields';
+import SearchField from 'components/search/SearchField';
+import SearchIcon from '@material-ui/icons/Search';
 
-const styles = () => ({
+const styles = theme => ({
   root: {
     width: '500px',
     margin: '2em auto',
   },
   button: {
-    displax: 'block',
-    width: '100%',
-    marginTop: '2em',
+    margin: theme.spacing.unit,
+  },
+  leftIcon: {
+    marginRight: theme.spacing.unit,
+  },
+  rightIcon: {
+    marginLeft: theme.spacing.unit,
   },
 });
 
 function Search(props) {
-  const {
-    classes, searchField, onChange, onSearch,
-  } = props;
+  const { classes, onSearch } = props;
   return (
     <div className={classes.root}>
       <h1>Skill Search</h1>
-      <SearchInput
-        data={searchField}
-        value={searchField.value}
-        onChange={(id, value) => onChange(id, value)}
-      />
+      <SearchField />
       <Button
         className={classes.button}
         variant="contained"
@@ -35,6 +34,7 @@ function Search(props) {
         onClick={() => onSearch()}
       >
         Search
+        <SearchIcon className={classes.rightIcon} />
       </Button>
     </div>
   );

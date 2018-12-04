@@ -53,7 +53,8 @@ class ControlledExpansionPanels extends React.Component {
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
             <Typography>
-              Latest Milestone ({milestones[milestones.length - 1].x}): {milestones[milestones.length - 1].comment}
+              Latest Milestone ({milestones[milestones.length - 1].x}):{' '}
+              {milestones[milestones.length - 1].comment}
             </Typography>
           </ExpansionPanelDetails>
         </ExpansionPanel>

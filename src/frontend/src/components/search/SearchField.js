@@ -15,20 +15,13 @@ import CancelIcon from '@material-ui/icons/Cancel';
 import { emphasize } from '@material-ui/core/styles/colorManipulator';
 
 
-const suggestions = [
-  { label: 'Python' },
-  { label: 'Java' },
-  { label: 'Flask' },
-  { label: 'Brainfukk' },
-].map(suggestion => ({
-  value: suggestion.label,
-  label: suggestion.label,
-}));
+// redux
+import store from 'Store';
+import { setQuery } from 'actions';
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    height: 250,
   },
   input: {
     display: 'flex',
@@ -181,19 +174,19 @@ const components = {
 };
 
 class IntegrationReactSelect extends React.Component {
-  state = {
-    single: null,
-    multi: null,
-  };
-
-  handleChange = name => value => {
-    this.setState({
-      [name]: value,
-    });
+  handleChange = value => {
+    store.dispatch(setQuery(value));
   };
 
   render() {
     const { classes, theme } = this.props;
+    const state = store.getState();
+    const { searchValues } = state.search;
+    const {allSkills} = state;
+    const suggestions = allSkills.map(suggestion => ({
+      value: suggestion,
+      label: suggestion,
+    }));
 
     const selectStyles = {
       input: base => ({
@@ -211,29 +204,18 @@ class IntegrationReactSelect extends React.Component {
           <Select
             classes={classes}
             styles={selectStyles}
-            options={suggestions}
-            components={components}
-            value={this.state.single}
-            onChange={this.handleChange('single')}
-            placeholder="Search a country (start with a)"
-          />
-          <div className={classes.divider} />
-          {/* <Select
-            classes={classes}
-            styles={selectStyles}
             textFieldProps={{
-              label: 'Label',
               InputLabelProps: {
                 shrink: true,
-              }
+              },
             }}
             options={suggestions}
             components={components}
-            value={this.state.multi}
-            onChange={this.handleChange('multi')}
-            placeholder="Select multiple countries"
+            value={searchValues}
+            onChange={this.handleChange}
+            placeholder="Select one or more skills you want to search for"
             isMulti
-          /> */}
+          />
         </NoSsr>
       </div>
     );

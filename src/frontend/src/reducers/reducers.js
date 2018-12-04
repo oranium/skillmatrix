@@ -34,7 +34,8 @@ const defaultError = {
   message: '',
 };
 
-const defaultSearchResults = {
+const defaultSearch = {
+  searchValues: {},
   results: {},
   showResults: false,
 };
@@ -213,6 +214,8 @@ const defaultProfilePageState = {
   profiles: [exState, exState],
 };
 
+const defaultSkillList = ['Python', 'Java', 'Go', 'C++', 'C#', 'PHP'];
+
 // has all the data for the inputfields
 export const formState = (state = defaultFormState, action) => {
   switch (action.type) {
@@ -289,8 +292,10 @@ export const error = (state = defaultError, action) => {
   }
 };
 
-export const searchResults = (state = defaultSearchResults, action) => {
+export const search = (state = defaultSearch, action) => {
   switch (action.type) {
+    case 'SETQUERY':
+      return Object.assign(state, { searchValues: action.values });
     case 'SETRESULTS':
       return Object.assign(state, { results: action.results });
     case 'SHOWRESULTS':
@@ -312,6 +317,15 @@ export const profile = (state = defaultProfilePageState, action) => {
       return Object.assign(state, { showDialog: action.dialogName });
     case 'ClOSEPROFILEDIALOG':
       return Object.assign(state, { showDialog: false });
+    default:
+      return state;
+  }
+};
+
+export const allSkills = (state = defaultSkillList, action) => {
+  switch (action.type) {
+    case 'SETALLSKILLS':
+      return action.skills;
     default:
       return state;
   }

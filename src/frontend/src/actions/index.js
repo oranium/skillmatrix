@@ -70,3 +70,13 @@ export const openProfileDialog = dialogName => ({
 export const closeProfileDialog = {
   type: 'ClOSEPROFILEDIALOG',
 };
+
+export const setQuery = values => ({
+  type: 'SETQUERY',
+  values,
+});
+
+export const setAllSkills = skills => ({
+  type: 'SETALLSKILLS',
+  skills,
+});
