@@ -302,6 +302,8 @@ export const search = (state = defaultSearch, action) => {
       return Object.assign(state, { showResults: true });
     case 'HIDERESULTS':
       return Object.assign(state, { showResults: false });
+    case 'SETSEARCHERROR':
+      return { ...state, error: action.error };
     default:
       return state;
   }

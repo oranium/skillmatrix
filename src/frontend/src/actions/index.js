@@ -90,3 +90,8 @@ export const setOwnProfile = profile => ({
   type: 'SETOWNPROFILE',
   profile,
 });
+
+export const setSearchError = error => ({
+  type: 'SETSEARCHERROR',
+  error,
+});

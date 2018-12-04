@@ -25,17 +25,19 @@ function Search(props) {
   return (
     <div className={classes.root}>
       <h1>Skill Search</h1>
-      <SearchField />
-      <Button
-        className={classes.button}
-        variant="contained"
-        color="primary"
-        name="submit"
-        onClick={() => onSearch()}
-      >
-        Search
-        <SearchIcon className={classes.rightIcon} />
-      </Button>
+      <form onSubmit={onSearch}>
+        <SearchField />
+        <Button
+          className={classes.button}
+          type="submit"
+          variant="contained"
+          color="primary"
+          name="submit"
+        >
+          Search
+          <SearchIcon className={classes.rightIcon} />
+        </Button>
+      </form>
     </div>
   );
 }

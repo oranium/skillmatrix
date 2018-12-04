@@ -8,7 +8,7 @@ import ControlledExpansionPanels from 'components/common/ControlledExpansionPane
 // redux
 import store from 'Store';
 import {
-  setError, setSearchResults, showSearchResults, addProfile,
+  setError, setSearchResults, showSearchResults, setSearchError,
 } from 'actions';
 
 // Rest
@@ -17,9 +17,15 @@ import RestCom from 'rest/Rest';
 
 class SearchController extends Component {
   // get results for query when user clicks on search button and store them into state
-  async handleSearch() {
+  async handleSearch(e) {
+    e.preventDefault();
     const { state } = this.props;
     const { searchValues } = state.search;
+    if (!Object.keys(searchValues).length) {
+      // search field is empty
+      store.dispatch(setSearchError(true));
+      return;
+    }
     const query = {};
     // put each search value as key into map
     // 1 => min Level
@@ -52,7 +58,7 @@ class SearchController extends Component {
         <SearchForm
           searchField={formState.searchfield}
           onChange={(id, value) => onChange(id, value)}
-          onSearch={() => this.handleSearch()}
+          onSearch={event => this.handleSearch(event)}
         />
         {showResults && <ControlledExpansionPanels results={results} />}
       </div>
