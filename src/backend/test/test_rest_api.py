@@ -1,8 +1,8 @@
-import parentdir
+import set_root_backend
+from src.controller.controller import controller
 import unittest
 from unittest.mock import patch, ANY
 import json
-from src.controller.controller import controller
 from app import app
 
 

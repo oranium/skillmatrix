@@ -1,5 +1,7 @@
 """Singleton. contains the DB model from SQLAlchemy, gets created by the App and used by DatabaseController"""
 from flask_sqlalchemy import SQLAlchemy
+
+
 db = None
 
 

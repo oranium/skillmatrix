@@ -1,10 +1,9 @@
 """authentication contains the Authentication class."""
-import parentdir
+import set_root_backend
+from src import config
 from ldap3 import Server, Connection, ALL, NTLM
 from ldap3.core.exceptions import LDAPUnknownAuthenticationMethodError, LDAPSocketOpenError, \
     LDAPInvalidCredentialsResult
-from src import config
-import json
 import sys
 # if info about the server is required:
 # get info about server

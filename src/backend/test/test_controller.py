@@ -1,7 +1,7 @@
+import set_root_backend
+from src.controller.controller import controller
 import unittest
 from unittest.mock import patch
-
-from controller.controller import controller
 
 
 class TestDatabaseController(unittest.TestCase):

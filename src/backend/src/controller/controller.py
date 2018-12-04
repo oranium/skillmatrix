@@ -1,7 +1,8 @@
 """Contains the backend controller"""
-from model.logout_model import LogoutModel
-from model.profile_model import ProfileModel
-from model.search_model import SearchModel
+import set_root_backend
+from src.model.logout_model import LogoutModel
+from src.model.profile_model import ProfileModel
+from src.model.search_model import SearchModel
 from src.controller.authentication_controller import authentication_controller
 from src.controller.database_controller import database_controller
 import datetime

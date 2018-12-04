@@ -1,10 +1,9 @@
-import sys
-
-import json
-from flask import Response, request
-from flask_restful import Resource, reqparse
-
+import set_root_backend
 from src.controller.controller import controller
+import sys
+import json
+from flask import Response
+from flask_restful import Resource, reqparse
 
 
 class Search(Resource):
