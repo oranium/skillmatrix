@@ -5,7 +5,8 @@ Make sure your Password in general (or to the sm1 database) is Momomomo2 (Momo w
 You can change it: https://www.geeksforgeeks.org/mysql-change-user-password/ (user has to be 'root')
 
 You should be able to use the command line (for windows user I suggest the programm 'MySQL 8.0 Command Line Client') 
-to connect to mysql: 'mysql -u root -p' and enter password after.
+to connect to mysql:(linux) 'mysql -u root -p' and enter password after.
+		     (MacOs) '/usr/local/mysql/bin/mysql -uroot -p'and enter password after.
 If the password does not work make sure mysql is running (for example on windows you have to start the mysql-service via taskmanager)
 if it is still broken you can change the password: https://www.geeksforgeeks.org/mysql-change-user-password/ (user has to be 'root')
 

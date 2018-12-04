@@ -11,7 +11,7 @@ class Association(db.Model):
     __tablename__ = 'association'
     users_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
     skill_id = db.Column(db.Integer, db.ForeignKey('skill.id'), primary_key=True)
-    time_id = db.Column(db.Integer, db.ForeignKey('time.id'), nullable=False)
+    time_id = db.Column(db.Integer, db.ForeignKey('time.id'), primary_key=True)
     level = db.Column(db.Integer, primary_key=True)
     users_assoc = db.relationship("Users", back_populates="users_association")
     skill_assoc = db.relationship("Skill", back_populates="skill_association")
@@ -22,7 +22,7 @@ class MilestoneAssociation(db.Model):
     __tablename__ = 'milestoneassociation'
     milestone_users_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
     milestone_skill_id = db.Column(db.Integer, db.ForeignKey('skill.id'), primary_key=True)
-    milestone_time_id = db.Column(db.Integer, db.ForeignKey('time.id'), nullable=False)
+    milestone_time_id = db.Column(db.Integer, db.ForeignKey('time.id'), primary_key=True)
     name = db.Column(db.String(85), primary_key=True)
     users_milestone_assoc = db.relationship("Users", back_populates="users_milestone_association")
     skill_milestone_assoc = db.relationship("Skill", back_populates="skill_milestone_association")
