@@ -104,6 +104,10 @@ class DatabaseController:
         return Users.query.all()
 
     @staticmethod
+    def get_all_skills():
+        return Skill.query.all()
+
+    @staticmethod
     def get_skill_id(skillname):
         return Skill.query.filter_by(name=skillname).first().id
 
