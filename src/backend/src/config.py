@@ -1,9 +1,10 @@
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""
    Configurations for the database and Active Directory.
    TEST configurations connect to no AD and an in-memory database. DEBUGGING connects to a local test database and  a
    small testing AD. PRODUCTION will connect to the real database and AD.
-""""""""""""""
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""
+
+
 class TestConfig:
     TESTING = True
     DEBUG = True
