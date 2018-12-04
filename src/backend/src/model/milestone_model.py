@@ -1,8 +1,7 @@
 """Contains model for a Milestone"""
-import json
 import set_root_backend
-
 from src.model.model import Model
+import json
 
 
 class MilestoneModel(Model):

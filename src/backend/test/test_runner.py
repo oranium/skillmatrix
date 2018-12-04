@@ -1,8 +1,7 @@
-import unittest
 import set_root_backend
-
 # test modules
 from test import test_model  # , test_controller, test_authentication_controller, test_db_model
+import unittest
 
 # initialize the test suite
 
@@ -11,7 +10,7 @@ suite = unittest.TestSuite()
 
 # add tests to suite
 # suite.addTests(loader.loadTestsFromModule(test_authentication_controller))
-#suite.addTests(loader.loadTestsFromModule(test_rest_api))
+# suite.addTests(loader.loadTestsFromModule(test_rest_api))
 # suite.addTests(loader.loadTestsFromModule(test_controller))
 suite.addTests(loader.loadTestsFromModule(test_model))
 # suite.addTests(loader.loadTestsFromModule(test_db_model))
