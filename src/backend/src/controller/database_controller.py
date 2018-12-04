@@ -67,12 +67,12 @@ class DatabaseController:
         db.session.commit()
 
     @staticmethod
-    def add_milestone(username, skill, date, name):
+    def add_milestone(username, skill, date, comment, level):
         user = database_controller.get_user(username)
         mskill = database_controller.get_skill(skill)
         mdate = Date(date=date)
         db.session.add(mdate)
-        m = MilestoneAssociation(name=name)
+        m = MilestoneAssociation(name=comment)
         m.skill_milestone_assoc = mskill
         m.date_milestone_assoc = mdate
         m.users_milestone_assoc = user

@@ -13,8 +13,8 @@ class Controller:
     @staticmethod
     def login(username, password):
         authentication_controller.login(username, password)
-        user_skills = database_controller.skills(username)
-        return ProfileModel(username, user_skills)
+        user_skills = database_controller.get_skills(username)
+        return dict(user=ProfileModel(username, user_skills).to_json(), allSkills=database_controller.get_all_skills())
 
     @staticmethod
     def logout(username):
@@ -30,13 +30,15 @@ class Controller:
     @staticmethod
     def set_skills(username, skills):
         database_controller.set_skills(username, skills)
-        return True
+        user_skills = database_controller.get_skills(username)
+        return ProfileModel(username, user_skills)
 
     @staticmethod
-    def add_milestone(username, skill, date, name):
+    def add_milestone(username, skill, date, comment, level):
         date = datetime.datetime.strptime(date, "%Y-%m-%d").date()
-        database_controller.add_milestone(username, skill, date, name)
-        return True
+        database_controller.add_milestone(username, skill, date, comment, level)
+        user_skills = database_controller.get_skills(username)
+        return ProfileModel(username, user_skills)
 
 
 controller = Controller()
