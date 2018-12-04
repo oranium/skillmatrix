@@ -7,7 +7,9 @@ import ControlledExpansionPanels from 'components/common/ControlledExpansionPane
 
 // redux
 import store from 'Store';
-import { setError, setSearchResults, showSearchResults } from 'actions';
+import {
+  setError, setSearchResults, showSearchResults, addProfile,
+} from 'actions';
 
 // Rest
 import RestPoints from 'rest/Init';

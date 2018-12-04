@@ -201,7 +201,7 @@ const exSkill = {
   ],
 };
 
-const exState = {
+const exProfile = {
   username: 'Valdemar',
   skills: [exSkill, exSkill, exSkill],
 };
@@ -211,7 +211,7 @@ const defaultProfilePageState = {
   isEditable: true,
   view: 0,
   showDialog: false,
-  profiles: [exState, exState],
+  profiles: [exProfile, exProfile],
 };
 
 const defaultSkillList = ['Python', 'Java', 'Go', 'C++', 'C#', 'PHP'];
@@ -317,6 +317,12 @@ export const profile = (state = defaultProfilePageState, action) => {
       return Object.assign(state, { showDialog: action.dialogName });
     case 'ClOSEPROFILEDIALOG':
       return Object.assign(state, { showDialog: false });
+    case 'ADDPROFILE':
+      // return Object.assign(state, { profiles: [...state.profiles, action.profile] });
+      return { ...state, profiles: [...state.profiles, action.profile] };
+    case 'SETOWNPROFILE':
+      // changes the element on index 0 in array profiles
+      return { ...state, profiles: [action.profile, ...state.profiles.slice(1)] };
     default:
       return state;
   }

@@ -10,6 +10,8 @@ import {
   setError,
   resetForm,
   setUsername,
+  setAllSkills,
+  setOwnProfile,
 } from 'actions';
 
 // import page parts
@@ -36,8 +38,10 @@ class App extends Component {
 
     try {
       const { data } = await Rest.post();
-      const { user } = data;
+      const { user, allSkills } = data;
       store.dispatch(setUsername(user.username));
+      store.dispatch(setAllSkills(allSkills));
+      store.dispatch(setOwnProfile(user));
       store.dispatch(switchPage('search'));
     } catch (e) {
       store.dispatch(setError(e.message));
