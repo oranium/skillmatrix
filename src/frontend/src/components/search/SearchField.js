@@ -173,6 +173,8 @@ const components = {
   ValueContainer,
 };
 
+const required = value => (value == null ? 'Required' : undefined);
+
 class IntegrationReactSelect extends React.Component {
   handleChange = value => {
     store.dispatch(setQuery(value));
@@ -211,6 +213,7 @@ class IntegrationReactSelect extends React.Component {
               InputLabelProps: {
                 shrink: true,
               },
+              error: required(searchValues)
             }}
             options={suggestions}
             components={components}
