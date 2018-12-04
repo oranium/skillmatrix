@@ -181,7 +181,10 @@ class IntegrationReactSelect extends React.Component {
   render() {
     const { classes, theme } = this.props;
     const state = store.getState();
-    const { searchValues } = state.search;
+    let { searchValues } = state.search;
+    if (!Object.keys(searchValues).length){
+      searchValues = null;
+    }
     const {allSkills} = state;
     const suggestions = allSkills.map(suggestion => ({
       value: suggestion,
