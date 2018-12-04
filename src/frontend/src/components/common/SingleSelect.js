@@ -19,6 +19,14 @@ const suggestions = [
   { label: 'Java' },
   { label: 'Flask' },
   { label: 'Brainfukk' },
+  { label: 'C' },
+  { label: 'C++' },
+  { label: 'C#' },
+  { label: 'BASIC' },
+  { label: 'React' },
+  { label: 'Hacking' },
+  { label: 'Dancing' },
+  { label: 'Drinking' },
 ].map(suggestion => ({
   value: suggestion.label,
   label: suggestion.label,
@@ -27,7 +35,7 @@ const suggestions = [
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    height: 250,
+    marginTop: 2,
   },
   input: {
     display: 'flex',
@@ -40,15 +48,7 @@ const styles = theme => ({
     alignItems: 'center',
     overflow: 'hidden',
   },
-  chip: {
-    margin: `${theme.spacing.unit / 2}px ${theme.spacing.unit / 4}px`,
-  },
-  chipFocused: {
-    backgroundColor: emphasize(
-      theme.palette.type === 'light' ? theme.palette.grey[300] : theme.palette.grey[700],
-      0.08,
-    ),
-  },
+
   noOptionsMessage: {
     padding: `${theme.spacing.unit}px ${theme.spacing.unit * 2}px`,
   },
@@ -59,16 +59,6 @@ const styles = theme => ({
     position: 'absolute',
     left: 2,
     fontSize: 16,
-  },
-  paper: {
-    position: 'absolute',
-    zIndex: 1,
-    marginTop: theme.spacing.unit,
-    left: 0,
-    right: 0,
-  },
-  divider: {
-    height: theme.spacing.unit * 2,
   },
 });
 
@@ -146,20 +136,6 @@ function ValueContainer(props) {
   return <div className={props.selectProps.classes.valueContainer}>{props.children}</div>;
 }
 
-function MultiValue(props) {
-  return (
-    <Chip
-      tabIndex={-1}
-      label={props.children}
-      className={classNames(props.selectProps.classes.chip, {
-        [props.selectProps.classes.chipFocused]: props.isFocused,
-      })}
-      onDelete={props.removeProps.onClick}
-      deleteIcon={<CancelIcon {...props.removeProps} />}
-    />
-  );
-}
-
 function Menu(props) {
   return (
     <Paper square className={props.selectProps.classes.paper} {...props.innerProps}>
@@ -171,7 +147,6 @@ function Menu(props) {
 const components = {
   Control,
   Menu,
-  MultiValue,
   NoOptionsMessage,
   Option,
   Placeholder,
@@ -182,7 +157,6 @@ const components = {
 class IntegrationReactSelect extends React.Component {
   state = {
     single: null,
-    multi: null,
   };
 
   handleChange = name => value => {
@@ -214,25 +188,8 @@ class IntegrationReactSelect extends React.Component {
             components={components}
             value={this.state.single}
             onChange={this.handleChange('single')}
-            placeholder="Search a country (start with a)"
+            placeholder="Select "
           />
-          <div className={classes.divider} />
-          {/* <Select
-            classes={classes}
-            styles={selectStyles}
-            textFieldProps={{
-              label: 'Label',
-              InputLabelProps: {
-                shrink: true,
-              },
-            }}
-            options={suggestions}
-            components={components}
-            value={this.state.multi}
-            onChange={this.handleChange('multi')}
-            placeholder="Select multiple countries"
-            isMulti
-          /> */}
         </NoSsr>
       </div>
     );

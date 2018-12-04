@@ -47,10 +47,14 @@ class ControlledExpansionPanels extends React.Component {
           onChange={this.handleChange(this.props.skill)}
         >
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography className={classes.Heading}>{skillname}, Level: {level}</Typography>
+            <Typography className={classes.Heading}>
+              {skillname}, Level: {level}
+            </Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
-            <Typography>Latest Milestone ({milestones[0].x}): {milestones[0].comment}</Typography>
+            <Typography>
+              Latest Milestone ({milestones[milestones.length - 1].x}): {milestones[milestones.length - 1].comment}
+            </Typography>
           </ExpansionPanelDetails>
         </ExpansionPanel>
       </div>

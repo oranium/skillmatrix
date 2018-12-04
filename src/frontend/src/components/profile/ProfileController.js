@@ -11,7 +11,6 @@ import SkillProfileList from 'components/profile/skills/SkillProfileList';
 import SkillStatisticsGrid from 'components/profile/statistics/SkillStatisticsGrid';
 import NewMilestoneDialog from 'components/profile/skills/NewMilestoneDialog';
 import NewSkillDialog from 'components/profile/skills/NewSkillDialog';
-import SimpleCard from 'components/profile/statistics/SimpleCard';
 
 // material-ui
 import PropTypes from 'prop-types';
@@ -49,7 +48,7 @@ class ProfileController extends Component {
   };
 
   handleNewSkill = () => {
-    console.log('NewSkill');
+    store.dispatch(openProfileDialog('skill'));
   };
 
   handleNewMilestone = () => {

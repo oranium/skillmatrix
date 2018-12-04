@@ -7,11 +7,12 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { DateInput, TextArea, LevelPicker } from 'components/common/InputFields';
-import MultiSelect from 'components/common/MultiSelect';
+
+import SingleSelect from 'components/common/SingleSelect';
 
 // redux
 import store from 'Store';
-import { changeView, openProfileDialog, closeProfileDialog } from 'actions';
+import { changeView, openProfileDialog, closeProfileDialog, updateInput, resetForm } from 'actions';
 
 export default class FormDialog extends React.Component {
   handleClickOpen = () => {
@@ -19,6 +20,7 @@ export default class FormDialog extends React.Component {
   };
 
   handleClose = () => {
+    store.dispatch(resetForm);
     store.dispatch(closeProfileDialog);
   };
 
@@ -27,23 +29,31 @@ export default class FormDialog extends React.Component {
     this.handleClose();
   };
 
+  handleChange(id, value) {
+    store.dispatch(updateInput(id, value));
+  }
+
   render() {
     const state = store.getState();
     const { showDialog } = state.profile;
     const { datefield, textarea, levelfield } = state.formState;
+
     return (
       <div>
-        <Dialog open={showDialog === 'skill'} onClose={this.handleClose} aria-labelledby="form-dialog-title">
+        <Dialog
+          open={showDialog === 'skill'}
+          onClose={this.handleClose}
+          aria-labelledby="form-dialog-title"
+        >
           <DialogTitle id="form-dialog-title">New skill</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              To subscribe to this website, please enter your email address here. We will send
-              updates occasionally.
+              To add a new Skill please fill in all inputfields.
             </DialogContentText>
-            <MultiSelect />
-            <LevelPicker data={levelfield} />
-            <DateInput data={datefield} />
-            <TextArea data={textarea} />
+            <SingleSelect />
+            <LevelPicker data={levelfield} onChange={(id, value) => this.handleChange(id, value)} />
+            <DateInput data={datefield} onChange={(id, value) => this.handleChange(id, value)} />
+            <TextArea data={textarea} onChange={(id, value) => this.handleChange(id, value)} />
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
