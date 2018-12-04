@@ -4,7 +4,7 @@ import sys
 from model.profile_model import ProfileModel
 from model.skill_model import SkillModel
 from src.controller.database import db
-from src.model.database_model import Association, MilestoneAssociation, Skill, Time, Users
+from src.model.database_model import Association, MilestoneAssociation, Skill, Date, Users
 
 
 class DatabaseController:
@@ -57,14 +57,14 @@ class DatabaseController:
 
     @staticmethod
     def set_skills(username, skills):
-        ctime = Time()
+        cdate = Date()
         user = database_controller.get_username(username)
-        db.session.add(ctime)
+        db.session.add(cdate)
         for skill, level in skills.items():
             new_skill = database_controller.get_skill(skill)
             assoc = Association(level=level)
             assoc.skill_assoc = new_skill
-            assoc.time_assoc = ctime
+            assoc.date_assoc = cdate
             assoc.users_assoc = user
         db.session.commit()
 
@@ -72,11 +72,11 @@ class DatabaseController:
     def add_milestone(username, skill, date, name):
         user = database_controller.get_user(username)
         mskill = database_controller.get_skill(skill)
-        mdate = Time(time=date)
+        mdate = Date(date=date)
         db.session.add(mdate)
         m = MilestoneAssociation(name=name)
         m.skill_milestone_assoc = mskill
-        m.time_milestone_assoc = mdate
+        m.date_milestone_assoc = mdate
         m.users_milestone_assoc = user
         db.session.commit()
 
