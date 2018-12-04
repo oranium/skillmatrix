@@ -72,7 +72,7 @@ class DatabaseController:
         mskill = database_controller.get_skill(skill)
         mdate = Date(date=date)
         db.session.add(mdate)
-        m = MilestoneAssociation(name=comment)
+        m = MilestoneAssociation(name=comment,level=level)
         m.skill_milestone_assoc = mskill
         m.date_milestone_assoc = mdate
         m.users_milestone_assoc = user
@@ -103,7 +103,11 @@ class DatabaseController:
 
     @staticmethod
     def get_all_skills():
-        return Skill.query.all()
+        skills = Skill.query.all()
+        liste = []
+        for skill in skills:
+            liste.append(skill.name)
+        return liste
 
     @staticmethod
     def get_skill_id(skillname):
