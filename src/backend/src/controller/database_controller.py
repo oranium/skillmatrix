@@ -1,4 +1,4 @@
-import parentdir
+import set_root_backend
 import sys
 
 from model.profile_model import ProfileModel

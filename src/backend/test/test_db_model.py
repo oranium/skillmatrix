@@ -1,3 +1,5 @@
+import set_root_backend
+
 from src.app import app
 from src.model.database_model import Time, Users, Milestone
 from src.controller.database import db

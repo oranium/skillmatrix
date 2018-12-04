@@ -1,4 +1,5 @@
 """Contains the backend controller"""
+import set_root_backend
 from model.logout_model import LogoutModel
 from model.profile_model import ProfileModel
 from model.search_model import SearchModel
