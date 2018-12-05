@@ -1,8 +1,9 @@
 """Contains the Milestone API"""
-import set_root_backend
-from src.controller.controller import controller
+import json
 from flask import Response
 from flask_restful import Resource, reqparse
+import set_root_backend
+from src.controller.controller import controller
 
 
 class Milestone(Resource):
@@ -16,12 +17,12 @@ class Milestone(Resource):
         parser.add_argument("date", type=str)
         parser.add_argument("comment", type=str)
         args = parser.parse_args()
-        message = controller.add_milestone(self,
-                                           args["username"],
-                                           args["skill"],
-                                           args["date"],
-                                           args["comment"],
-                                           args["level"]).replace("\\", "")
+        message = json.dumps(controller.add_milestone(self,
+                                                      args["username"],
+                                                      args["skill"],
+                                                      args["date"],
+                                                      args["comment"],
+                                                      args["level"]))
         try:
             return Response(message, status=200, mimetype="application/json")
         except TimeoutError:
