@@ -9,11 +9,16 @@ import datetime
 
 
 class Controller:
-    """Singleton, calls DatabaseController and AuthenticationController. Returns JSONs from models to APIs"""
+    """Singleton, calls DatabaseController and AuthenticationController. Returns JSONs from models to APIs
+       Acts as a facade to the Database controller and AuthenticationController.
+    """
     @staticmethod
     def login(username, password):
         authentication_controller.login(username, password)
         user_skills = database_controller.get_skills(username)
+        if not database_controller.exists(username):
+            name = authentication_controller.get_name(username)
+            database_controller.create_user(username, name[0], name[1])
         return dict(user=ProfileModel(username, user_skills).to_json(), allSkills=database_controller.get_all_skills())
 
     @staticmethod
