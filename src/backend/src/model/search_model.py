@@ -20,5 +20,5 @@ class SearchModel(Model):
         has_some_json = []
         for profile in self.has_some:
             has_some_json.append(profile.to_json())
-        model = dict(query=self.query, has_all=has_all_json, has_some=has_some_json)
+        model = dict(query=self.query, results=dict(has_all=has_all_json, has_some=has_some_json))
         return json.dumps(model)
