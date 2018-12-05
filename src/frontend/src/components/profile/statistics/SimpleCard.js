@@ -77,17 +77,6 @@ export class ClickableChart extends React.Component {
           </ButtonBase>
         </Card>
         <Dialog open={this.state.open} onClose={this.handleClose} TransitionComponent={Transition}>
-          <AppBar className={classes.appBar}>
-            <Toolbar>
-              <IconButton color="inherit" onClick={this.handleClose} aria-label="Close">
-                <CloseIcon />
-              </IconButton>
-              <Typography variant="h6" color="inherit" className={classes.flex}>
-                {this.props.skill}
-              </Typography>
-            </Toolbar>
-          </AppBar>
-
           <Typography variant="h5" component="h2">
             <Card>
               <CardContent>

@@ -9,6 +9,7 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import RadioGroup from '../../common/RadioGroup';
 
 const styles = theme => ({
   root: {
@@ -20,7 +21,6 @@ const styles = theme => ({
     flexShrink: 0,
   },
   secondaryHeading: {
-    fontSize: theme.typography.pxToRem(15),
     color: theme.palette.text.secondary,
   },
 });
@@ -47,12 +47,12 @@ class ControlledExpansionPanels extends React.Component {
           onChange={this.handleChange(this.props.skill)}
         >
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography className={classes.Heading}>
-              {skillname}, Level: {level}
-            </Typography>
+            <Typography className={classes.Heading}>{skillname}</Typography>
+            <Typography className={classes.secondaryHeading}> </Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
             <Typography>
+              <RadioGroup level={level} />
               Latest Milestone ({milestones[milestones.length - 1].x}):{' '}
               {milestones[milestones.length - 1].comment}
             </Typography>

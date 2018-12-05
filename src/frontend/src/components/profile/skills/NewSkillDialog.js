@@ -26,7 +26,6 @@ export default class FormDialog extends React.Component {
 
   handleSubmit = skill => {
     console.log(skill);
-
     //skill objekt an api übergenen
 
     this.handleClose();
@@ -53,9 +52,8 @@ export default class FormDialog extends React.Component {
     ];
 
     const aktSkill = {
-      skillname: singleselect.value,
-      level: levelfield.value,
-      milestones: aktMilestone,
+      username: profile.username,
+      skills: { skillname: singleselect.value, level: levelfield.value, milestones: aktMilestone },
     };
     const allSkillsOfUser = [];
     Object.keys(profile.skills).map(element => {
