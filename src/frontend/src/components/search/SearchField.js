@@ -96,6 +96,7 @@ function Control(props) {
         },
       }}
       {...props.selectProps.textFieldProps}
+      required
     />
   );
 }
@@ -173,6 +174,8 @@ const components = {
   ValueContainer,
 };
 
+const required = (value, error) => (value == null && error ? 'Required' : undefined);
+
 class IntegrationReactSelect extends React.Component {
   handleChange = value => {
     store.dispatch(setQuery(value));
@@ -181,7 +184,11 @@ class IntegrationReactSelect extends React.Component {
   render() {
     const { classes, theme } = this.props;
     const state = store.getState();
-    const { searchValues } = state.search;
+    const {error} = state.search;
+    let { searchValues } = state.search;
+    if (!Object.keys(searchValues).length){
+      searchValues = null;
+    }
     const {allSkills} = state;
     const suggestions = allSkills.map(suggestion => ({
       value: suggestion,
@@ -208,6 +215,7 @@ class IntegrationReactSelect extends React.Component {
               InputLabelProps: {
                 shrink: true,
               },
+              error: required(searchValues, error)
             }}
             options={suggestions}
             components={components}

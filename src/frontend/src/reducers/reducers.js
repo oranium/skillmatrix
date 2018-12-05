@@ -135,7 +135,7 @@ const exSkill3 = {
   ],
 };
 
-const exState = {
+const exProfile = {
   username: 'Valdemar',
   skills: [exSkill, exSkill2, exSkill3], //alle skills übergeben
 };
@@ -145,7 +145,7 @@ const defaultProfilePageState = {
   isEditable: true,
   view: 0,
   showDialog: false,
-  profiles: [exState, exState],
+  profiles: [exProfile, exProfile],
 };
 
 const defaultSkillList = [
@@ -248,6 +248,8 @@ export const search = (state = defaultSearch, action) => {
       return Object.assign(state, { showResults: true });
     case 'HIDERESULTS':
       return Object.assign(state, { showResults: false });
+    case 'SETSEARCHERROR':
+      return { ...state, error: action.error };
     default:
       return state;
   }
@@ -263,6 +265,12 @@ export const profile = (state = defaultProfilePageState, action) => {
       return Object.assign(state, { showDialog: action.dialogName });
     case 'ClOSEPROFILEDIALOG':
       return Object.assign(state, { showDialog: false });
+    case 'ADDPROFILE':
+      // return Object.assign(state, { profiles: [...state.profiles, action.profile] });
+      return { ...state, profiles: [...state.profiles, action.profile] };
+    case 'SETOWNPROFILE':
+      // changes the element on index 0 in array profiles
+      return { ...state, profiles: [action.profile, ...state.profiles.slice(1)] };
     default:
       return state;
   }
