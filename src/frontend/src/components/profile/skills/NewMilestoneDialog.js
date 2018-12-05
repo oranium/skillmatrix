@@ -12,6 +12,7 @@ import SingleSelect from 'components/common/SingleSelect';
 // redux
 import store from 'Store';
 import { closeProfileDialog, updateInput, resetForm } from 'actions';
+import { Typography } from '@material-ui/core';
 
 export default class FormDialog extends React.Component {
   handleClickOpen = () => {
@@ -23,10 +24,10 @@ export default class FormDialog extends React.Component {
     store.dispatch(closeProfileDialog);
   };
 
-  handleSubmit = () => {
-    console.log('submit');
+  handleSubmit(milestone) {
+    console.log(milestone);
     this.handleClose();
-  };
+  }
 
   handleChange(id, value) {
     store.dispatch(updateInput(id, value));
@@ -35,7 +36,32 @@ export default class FormDialog extends React.Component {
   render() {
     const state = store.getState();
     const { showDialog } = state.profile;
-    const { datefield, textarea, levelfield } = state.formState;
+    const { datefield, textarea, singleselect } = state.formState;
+    var profile = state.profile.profiles[state.profile.person];
+
+    const aktSkill = singleselect.value;
+
+    var aktLevel = 'choose a Skill';
+
+    //holt das aktuelle Level des im Select ausgewählten Skill aus dem State
+    Object.keys(profile.skills).map(index => {
+      if (profile.skills[index].skillname == aktSkill) {
+        aktLevel = profile.skills[index].level;
+      }
+    });
+    const aktMilestone = {
+      username: profile.username,
+      skill: aktSkill,
+      datum: datefield.value,
+      level: aktLevel,
+      comment: textarea.value,
+    };
+
+    const allSkillsOfUser = [];
+    //holt alle skills, die der User besitzt aus dem State
+    Object.keys(profile.skills).map(element => {
+      allSkillsOfUser[element] = profile.skills[element].skillname;
+    });
     return (
       <div>
         <Dialog
@@ -48,8 +74,8 @@ export default class FormDialog extends React.Component {
             <DialogContentText>
               To add a new milestone please fill in all inputfields.
             </DialogContentText>
-            <SingleSelect />
-            <LevelPicker data={levelfield} onChange={(id, value) => this.handleChange(id, value)} />
+            <SingleSelect allSkills={allSkillsOfUser} />
+            <Typography>Level: {aktLevel}</Typography>
             <DateInput data={datefield} onChange={(id, value) => this.handleChange(id, value)} />
             <TextArea data={textarea} onChange={(id, value) => this.handleChange(id, value)} />
           </DialogContent>
@@ -57,7 +83,7 @@ export default class FormDialog extends React.Component {
             <Button onClick={this.handleClose} color="primary">
               Cancel
             </Button>
-            <Button onClick={this.handleSubmit} color="primary">
+            <Button onClick={() => this.handleSubmit(aktMilestone)} color="primary">
               Submit
             </Button>
           </DialogActions>

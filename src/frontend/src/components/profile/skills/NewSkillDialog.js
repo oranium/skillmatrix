@@ -24,8 +24,10 @@ export default class FormDialog extends React.Component {
     store.dispatch(closeProfileDialog);
   };
 
-  handleSubmit = () => {
-    console.log('submit');
+  handleSubmit = skill => {
+    console.log(skill);
+    //skill objekt an api übergenen
+
     this.handleClose();
   };
 
@@ -35,8 +37,35 @@ export default class FormDialog extends React.Component {
 
   render() {
     const state = store.getState();
+
     const { showDialog } = state.profile;
-    const { datefield, textarea, levelfield } = state.formState;
+    var { datefield, textarea, levelfield, singleselect } = state.formState;
+
+    var profile = state.profile.profiles[state.profile.person];
+
+    const aktMilestone = [
+      {
+        datum: datefield.value,
+        level: levelfield.value,
+        comment: textarea.value,
+      },
+    ];
+
+    const aktSkill = {
+      username: profile.username,
+      skills: { skillname: singleselect.value, level: levelfield.value, milestones: aktMilestone },
+    };
+    const allSkillsOfUser = [];
+    Object.keys(profile.skills).map(element => {
+      allSkillsOfUser[element] = profile.skills[element].skillname;
+    });
+    const availableNewSkills = [];
+
+    Object.keys(state.allSkills).map(index => {
+      if (!allSkillsOfUser.includes(state.allSkills[index])) {
+        availableNewSkills.push(state.allSkills[index]);
+      }
+    });
 
     return (
       <div>
@@ -50,7 +79,7 @@ export default class FormDialog extends React.Component {
             <DialogContentText>
               To add a new Skill please fill in all inputfields.
             </DialogContentText>
-            <SingleSelect />
+            <SingleSelect allSkills={availableNewSkills} />
             <LevelPicker data={levelfield} onChange={(id, value) => this.handleChange(id, value)} />
             <DateInput data={datefield} onChange={(id, value) => this.handleChange(id, value)} />
             <TextArea data={textarea} onChange={(id, value) => this.handleChange(id, value)} />
@@ -59,7 +88,7 @@ export default class FormDialog extends React.Component {
             <Button onClick={this.handleClose} color="primary">
               Cancel
             </Button>
-            <Button onClick={this.handleSubmit} color="primary">
+            <Button onClick={() => this.handleSubmit(aktSkill)} color="primary">
               Submit
             </Button>
           </DialogActions>
