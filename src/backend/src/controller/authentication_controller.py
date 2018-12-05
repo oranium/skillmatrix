@@ -35,6 +35,7 @@ class AuthenticationController:
     The Authentication class handles communication
     to the Active Directory server via ldap3 library
     """
+
     def __init__(self, server_url, prefix):
         # The server url should look like this: <'''ldap://my-ldapserver.example.com:389>
         # Uni-Azure: server 'ldap://vm01-azure-ad.westeurope.cloudapp.azure.com:389'
@@ -43,7 +44,7 @@ class AuthenticationController:
         self.server = Server(server_url, get_info=ALL)
         self.login_prefix = prefix
 
-    # should call db_controller according to #11
+    @staticmethod
     def login(self, username, password):
         """
         Creates a new connection to the AD.
@@ -79,7 +80,7 @@ class AuthenticationController:
         except LDAPSocketOpenError:
             raise TimeoutError
     
-    # should call db_controller according to #12
+    @staticmethod
     def logout(self, username):
         """
         Logs out the user and returns True if no error, False if error
@@ -90,3 +91,19 @@ class AuthenticationController:
             return True
         except KeyError:
             return False
+
+    # TODO: extract name from Active Directory
+    @staticmethod
+    def get_name(username):
+        """Gets the name of a user in the Active Directory.
+
+        Args:
+            username (str): the Active Directory username.
+        Returns:
+            tuple (str,str): Contains the forename at index 0, surname at index 1
+        """
+
+        return tuple("forename", "surename")
+
+
+authentication_controller = AuthenticationController()
