@@ -1,7 +1,6 @@
 """Contains model for Logout"""
 import set_root_backend
 from src.model.model import Model
-import json
 
 
 class LogoutModel(Model):
@@ -11,5 +10,5 @@ class LogoutModel(Model):
     def __init__(self, username):
         self.user = username
 
-    def to_json(self):
-        return json.dumps(dict(user=self.username))
+    def jsonable(self):
+        return dict(user=self.username)
