@@ -26,7 +26,7 @@ if sys.argv.__len__() > 1:
     authentication_controller.set_controller(sys.argv[1])
 else:
     print("no argument, defaulting to debug config")
-    configure_app(app, 2)
+    configure_app(app, "2")
     authentication_controller.set_controller("2")
 
 database.set_db(app)
