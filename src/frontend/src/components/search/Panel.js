@@ -24,22 +24,25 @@ const styles = theme => ({
 
 function Panel(props) {
   const {
-    classes, isExpanded, username, level,
+    classes, isExpanded, username, skills,
   } = props;
+  console.log(skills);
 
-  console.log(props);
+  const skillsList = [];
+  skills.forEach((skill) => {
+    skillsList.push(<p>{`Skillname: ${skill.skillname}, Level: ${skill.level}`}</p>);
+  });
   return (
-    <ExpansionPanel
-      expanded={isExpanded}
-    >
+    <ExpansionPanel expanded={isExpanded}>
       <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
         <Typography className={classes.heading}>{username}</Typography>
-        <Typography className={classes.secondaryHeading}>{`Level: ${level}`}</Typography>
+        <Typography className={classes.secondaryHeading}>
+          {`matches ${skills.length} search therm(s)`}
+        </Typography>
       </ExpansionPanelSummary>
       <ExpansionPanelDetails>
         <Typography>
-          Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus
-          est, id dignissim quam.
+          {skillsList}
         </Typography>
       </ExpansionPanelDetails>
     </ExpansionPanel>

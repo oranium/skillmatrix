@@ -14,6 +14,40 @@ import RestPoints from 'rest/Init';
 import RestCom from 'rest/Rest';
 import { addProfiles } from 'actions';
 
+//Test
+const exProfile1 = {
+  username: 'Valdemar Forsberg',
+  skills: [
+    {
+      skillname: 'Java',
+      level: 2,
+      milestones: [],
+    },
+    { skillname: 'Python', level: 3, milestones: [] },
+    { skillname: 'C', level: 4, milestones: [] },
+  ],
+};
+
+const exProfile2 = {
+  username: 'Yvonne Thompson',
+  skills: [
+    {
+      skillname: 'Java',
+      level: 2,
+      milestones: [],
+    },
+    { skillname: 'C#', level: 5, milestones: [] },
+  ],
+};
+
+const exSearchResult = {
+  query: { Python: 1, Java: 1 },
+  results: {
+    has_all: [exProfile1],
+    has_some: [exProfile2],
+  },
+};
+
 class SearchController extends Component {
   // build query object for api request
   getSearchQuery = searchValues => {
@@ -28,22 +62,22 @@ class SearchController extends Component {
 
   prozessSearchResults = data => {
     console.log(data);
-    const {query, results} = data;
-    const {has_all, has_some} = results;
+    const { query, results } = data;
+    const { has_all, has_some } = results;
     const allProfiles = has_all.concat(has_some);
-    // add all profiles to profile array 
+    // add all profiles to profile array
     store.dispatch(addProfiles(allProfiles));
 
     // build map from skills that only match query
     const searchResults = {
       hasAll: [],
       hasSome: [],
-    }
-    has_all.forEach( profile => {
-      const {skills} = profile;
+    };
+    has_all.forEach(profile => {
+      const { skills } = profile;
       const searchSkills = [];
-      skills.forEach(skill =>{
-        if (query.hasOwnProperty(skill.skillname)){
+      skills.forEach(skill => {
+        if (query.hasOwnProperty(skill.skillname)) {
           searchSkills.push(skill);
         }
       });
@@ -51,11 +85,11 @@ class SearchController extends Component {
       searchResults.hasAll.push(profile);
     });
 
-    has_some.forEach( profile => {
-      const {skills} = profile;
+    has_some.forEach(profile => {
+      const { skills } = profile;
       const searchSkills = [];
-      skills.forEach(skill =>{
-        if (query.hasOwnProperty(skill.skillname)){
+      skills.forEach(skill => {
+        if (query.hasOwnProperty(skill.skillname)) {
           searchSkills.push(skill);
         }
       });
@@ -63,7 +97,7 @@ class SearchController extends Component {
       searchResults.hasSome.push(profile);
     });
     return searchResults;
-  }
+  };
 
   // get results for query when user clicks on search button and store them into state
   async handleSearch(e) {
@@ -79,9 +113,10 @@ class SearchController extends Component {
       query: this.getSearchQuery(searchValues),
     };
     const Rest = new RestCom(RestPoints.search, JSON.stringify(search));
-    // try to send data to api and 
+    // try to send data to api and
     try {
-      const { data } = await Rest.post();
+      // const { data } = await Rest.post();
+      const data = exSearchResult;
       store.dispatch(setSearchResults(this.prozessSearchResults(data)));
       // show results to user
       store.dispatch(showSearchResults);
@@ -102,7 +137,12 @@ class SearchController extends Component {
           searchField={formState.searchfield}
           onSearch={event => this.handleSearch(event)}
         />
-        {showResults && <ControlledExpansionPanels results={results} />}
+        {showResults && (
+          <div>
+            <ControlledExpansionPanels heading={"Matches all search therms"} results={results.hasAll} />
+            <ControlledExpansionPanels heading={"Matches some search therms"} results={results.hasSome} />
+          </div>
+        )}
       </div>
     );
   }
