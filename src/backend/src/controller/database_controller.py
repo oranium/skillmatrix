@@ -63,7 +63,7 @@ class DatabaseController:
             # if skill is not found in database, it will be added
             if not new_skill:
                 new_skill = Skill(name=skill, category="Programming")
-                database_controller.add_skill_to_db(new_skill)
+                database_controller.create_skill(new_skill)
             assoc = Association(level=level)
             assoc.skill_assoc = new_skill
             assoc.date_assoc = cdate
@@ -134,8 +134,35 @@ class DatabaseController:
         return Skill.query.filter_by(id=skill_id).first()
 
     @staticmethod
-    def add_skill_to_db(skill_name):
-        db.session.add(skill_name)
+    def create_skill(skill):
+        """Create a skill in the database.
+           Args:
+                skill (Skill): The skill to add.
+        """
+        db.session.add(skill)
+        db.session.commit()
+
+    @staticmethod
+    def exists(username):
+        """Check if a user exists in the database.
+           Args:
+               username (str): the username to check
+            Returns:
+                bool: True if user exists, false otherwise.
+        """
+        if Users.query.filter_by(username=username):
+            return True
+        return False
+
+    @staticmethod
+    def create_user(username, forename, surname):
+        """Create a user in the database.
+           Args:
+               username (str): the username of the user to add - should be identical to the Active Directory username.
+               forename (str): The forename of the user to add.
+               surname (str): The surname of the user to add.
+        """
+        db.session.add(Users(username=username, forename=forename, surname=surname))
         db.session.commit()
 
     @staticmethod
