@@ -12,15 +12,17 @@ class Milestone(Resource):
         parser = reqparse.RequestParser()
         parser.add_argument("username", type=str)
         parser.add_argument("skill", type=str)
+        parser.add_argument("level", type=int)
         parser.add_argument("date", type=str)
-        parser.add_argument("name", type=str)
+        parser.add_argument("comment", type=str)
         args = parser.parse_args()
+        message = controller.add_milestone(self,
+                                           args["username"],
+                                           args["skill"],
+                                           args["date"],
+                                           args["comment"],
+                                           args["level"]).replace("\\", "")
         try:
-            message = controller.add_milestone(self,
-                                               args["username"],
-                                               args["skill"],
-                                               args["date"],
-                                               args["name"])
             return Response(message, status=200, mimetype="application/json")
         except TimeoutError:
             return Response(status=504)

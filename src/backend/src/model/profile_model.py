@@ -8,7 +8,7 @@ class ProfileModel(Model):
 
     """This class converts a user to a JSON to hand over to the frontend"""
 
-    def __init__(self, username, skills):
+    def __init__(self, username, skills=None):
         self.username = username
         self.skills = skills
 
