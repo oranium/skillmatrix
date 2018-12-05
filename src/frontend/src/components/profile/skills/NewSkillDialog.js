@@ -42,7 +42,7 @@ export default class FormDialog extends React.Component {
     var { datefield, textarea, levelfield, singleselect } = state.formState;
 
     var profile = state.profile.profiles[state.profile.person];
-
+    var newSkill = '';
     const aktMilestone = [
       {
         datum: datefield.value,
@@ -59,6 +59,7 @@ export default class FormDialog extends React.Component {
     Object.keys(profile.skills).map(element => {
       allSkillsOfUser[element] = profile.skills[element].skillname;
     });
+
     const availableNewSkills = [];
 
     Object.keys(state.allSkills).map(index => {
@@ -80,6 +81,15 @@ export default class FormDialog extends React.Component {
               To add a new Skill please fill in all inputfields.
             </DialogContentText>
             <SingleSelect allSkills={availableNewSkills} />
+            <TextField
+              id="standard-with-placeholder"
+              label="With placeholder"
+              placeholder="Placeholder"
+              margin="normal"
+              onChange={event => (newSkill = event.target.value)}
+            />
+
+            <Button onClick={() => (singleselect.value = newSkill)}>+</Button>
             <LevelPicker data={levelfield} onChange={(id, value) => this.handleChange(id, value)} />
             <DateInput data={datefield} onChange={(id, value) => this.handleChange(id, value)} />
             <TextArea data={textarea} onChange={(id, value) => this.handleChange(id, value)} />
