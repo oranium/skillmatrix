@@ -13,27 +13,11 @@ import Chip from '@material-ui/core/Chip';
 import MenuItem from '@material-ui/core/MenuItem';
 import CancelIcon from '@material-ui/icons/Cancel';
 import { emphasize } from '@material-ui/core/styles/colorManipulator';
+import Button from '@material-ui/core/Button';
+
 //import redux
 import store from 'Store';
 import { updateInput } from 'actions';
-
-const suggestions = [
-  { label: 'Python' },
-  { label: 'Java' },
-  { label: 'Flask' },
-  { label: 'Brainfukk' },
-  { label: 'C' },
-  { label: 'C++' },
-  { label: 'C#' },
-  { label: 'BASIC' },
-  { label: 'React' },
-  { label: 'Hacking' },
-  { label: 'Dancing' },
-  { label: 'Drinking' },
-].map(suggestion => ({
-  value: suggestion.label,
-  label: suggestion.label,
-}));
 
 const styles = theme => ({
   root: {
@@ -67,13 +51,17 @@ const styles = theme => ({
 
 function NoOptionsMessage(props) {
   return (
-    <Typography
-      color="textSecondary"
-      className={props.selectProps.classes.noOptionsMessage}
+    <MenuItem
+      buttonRef={props.innerRef}
+      selected={props.isFocused}
+      component="div"
+      style={{
+        fontWeight: props.isSelected ? 500 : 400,
+      }}
       {...props.innerProps}
     >
       {props.children}
-    </Typography>
+    </MenuItem>
   );
 }
 
@@ -118,7 +106,7 @@ function Option(props) {
 function Placeholder(props) {
   return (
     <Typography
-      color="textSecondary"
+      color="textSplaceholderecondary"
       className={props.selectProps.classes.placeholder}
       {...props.innerProps}
     >
@@ -174,6 +162,7 @@ class IntegrationReactSelect extends React.Component {
       value: skill,
       label: skill,
     }));
+    // allSkills.push({ value: 'hallo', label: 'hallo' });
     const { classes, theme } = this.props;
 
     const selectStyles = {
