@@ -19,7 +19,7 @@ class Controller:
         if not database_controller.exists(username):
             name = authentication_controller.get_name(username)
             database_controller.create_user(username, name[0], name[1])
-        return dict(user=ProfileModel(username, user_skills).to_json(), allSkills=database_controller.get_all_skills())
+        return dict(user=ProfileModel(username, user_skills).jsonable(), allSkills=database_controller.get_all_skills())
 
     @staticmethod
     def logout(username):
@@ -30,7 +30,7 @@ class Controller:
     def search(query):
         print(query)
         results = database_controller.search(query)
-        return SearchModel(query, results).to_json()
+        return SearchModel(query, results).jsonable()
 
     @staticmethod
     def set_skills(username, skills):
