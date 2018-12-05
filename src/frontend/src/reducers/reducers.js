@@ -1,5 +1,9 @@
 // default map for clean input fields
 const defaultFormState = {
+  singleselect: {
+    value: '',
+  },
+
   textfield: {
     name: 'Skill',
     value: '',
@@ -40,138 +44,10 @@ const defaultSearch = {
   showResults: false,
 };
 
-// die datenstruktur soll so im state gespeichert werden skills: Oberkategorien :
-// Unterkategorien und jeweils actLevel und milestones
-const oldexState = {
-  categories: {
-    Programming: {
-      Python: {
-        actLevel: 5,
-        milestones: [
-          {
-            x: '2015-05-01',
-            y: 0,
-            comment: 'init',
-          },
-          {
-            x: '2016-08-03',
-            y: 1,
-            comment: 'Buch Hacking with Python gelesen',
-          },
-          {
-            x: '2019-07-06',
-            y: 4,
-            comment: '72h Python workshop',
-          },
-          {
-            x: '2021-11-23',
-            y: 5,
-            comment: 'Python Hackaton gewonnen',
-          },
-        ],
-        subcategories: {
-          PythonFlask: {
-            actLevel: 5,
-            milestones: [
-              {
-                x: '2015-05-01',
-                y: 0,
-              },
-              {
-                x: '2016-08-03',
-                y: 1,
-              },
-              {
-                x: '2019-07-06',
-                y: 4,
-              },
-              {
-                x: '2021-11-23',
-                y: 5,
-              },
-            ],
-          },
-        },
-      },
-      Java: {
-        actLevel: 5,
-        milestones: [
-          {
-            x: '2016-04-18',
-            y: 0,
-            comment: '',
-          },
-          {
-            x: '2017-08-29',
-            y: 1,
-            comment: '',
-          },
-          {
-            x: '2019-11-19',
-            y: 4,
-            comment: '',
-          },
-          {
-            x: '2020-02-03',
-            y: 5,
-            comment: '',
-          },
-        ],
-        subcategories: {
-          Java_Springer: {
-            actLevel: 5,
-            milestones: [
-              {
-                x: '2015-05-01',
-                y: 0,
-              },
-              {
-                x: '2016-08-03',
-                y: 1,
-              },
-              {
-                x: '2019-07-06',
-                y: 4,
-              },
-              {
-                x: '2021-11-23',
-                y: 5,
-              },
-            ],
-          },
-          Java_Springer2: {
-            actLevel: 5,
-            milestones: [
-              {
-                x: '2015-05-01',
-                y: 0,
-              },
-              {
-                x: '2016-08-03',
-                y: 1,
-              },
-              {
-                x: '2019-07-06',
-                y: 4,
-              },
-              {
-                x: '2021-11-23',
-                y: 5,
-              },
-            ],
-          },
-        },
-      },
-    },
-
-    Design: {},
-  },
-};
-
-const exMilestone = {
-  x: '2015-05-01',
-  y: 0,
-  comment: 'init',
+const defaultMilestone = {
+  datum: '',
+  level: 0,
+  comment: '',
 };
 
 const exSkill = {
@@ -184,6 +60,11 @@ const exSkill = {
       comment: 'init',
     },
     {
+      x: '2016-05-01',
+      y: 1,
+      comment: 'reversed engineering buch unters kopfkissen gelegt',
+    },
+    {
       x: '2016-08-03',
       y: 1,
       comment: 'Buch Hacking with Python gelesen',
@@ -193,17 +74,70 @@ const exSkill = {
       y: 4,
       comment: '72h Python workshop',
     },
+  ],
+};
+const exSkill2 = {
+  skillname: 'Java',
+  level: 5,
+  milestones: [
+    {
+      x: '2015-09-11',
+      y: 0,
+      comment: 'init',
+    },
+    {
+      x: '2016-11-23',
+      y: 1,
+      comment: 'reversed engineering buch unters kopfkissen gelegt',
+    },
+    {
+      x: '2017-01-20',
+      y: 1,
+      comment: 'Buch Hacking with Java gelesen',
+    },
+    {
+      x: '2018-02-06',
+      y: 4,
+      comment: '36h Java workshop',
+    },
+    {
+      x: '2020-11-23',
+      y: 5,
+      comment: 'Java Hackaton gewonnen',
+    },
+  ],
+};
+
+const exSkill3 = {
+  skillname: 'C++',
+  level: 3,
+  milestones: [
+    {
+      x: '2011-09-11',
+      y: 0,
+      comment: 'init',
+    },
+    {
+      x: '2017-01-20',
+      y: 1,
+      comment: 'C++ Workshop',
+    },
+    {
+      x: '2018-02-06',
+      y: 2,
+      comment: 'C++ Lehrgang',
+    },
     {
       x: '2021-11-23',
-      y: 5,
-      comment: 'Python Hackaton gewonnen',
+      y: 3,
+      comment: 'C++ 3 jähriges Projekt fertig gestellt, mit 100000 Zeilen c++ Code',
     },
   ],
 };
 
 const exState = {
   username: 'Valdemar',
-  skills: [exSkill, exSkill, exSkill],
+  skills: [exSkill, exSkill2, exSkill3], //alle skills übergeben
 };
 
 const defaultProfilePageState = {
@@ -214,7 +148,19 @@ const defaultProfilePageState = {
   profiles: [exState, exState],
 };
 
-const defaultSkillList = ['Python', 'Java', 'Go', 'C++', 'C#', 'PHP'];
+const defaultSkillList = [
+  'Python',
+  'Java',
+  'Go',
+  'C++',
+  'C#',
+  'PHP',
+  'CSS',
+  'C',
+  'Pascal',
+  'Haskell',
+  'Prolog',
+];
 
 // has all the data for the inputfields
 export const formState = (state = defaultFormState, action) => {

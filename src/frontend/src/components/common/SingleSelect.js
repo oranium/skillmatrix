@@ -13,6 +13,9 @@ import Chip from '@material-ui/core/Chip';
 import MenuItem from '@material-ui/core/MenuItem';
 import CancelIcon from '@material-ui/icons/Cancel';
 import { emphasize } from '@material-ui/core/styles/colorManipulator';
+//import redux
+import store from 'Store';
+import { updateInput } from 'actions';
 
 const suggestions = [
   { label: 'Python' },
@@ -160,12 +163,17 @@ class IntegrationReactSelect extends React.Component {
   };
 
   handleChange = name => value => {
+    store.dispatch(updateInput('singleselect', value.value));
     this.setState({
       [name]: value,
     });
   };
 
   render() {
+    const allSkills = this.props.allSkills.map(skill => ({
+      value: skill,
+      label: skill,
+    }));
     const { classes, theme } = this.props;
 
     const selectStyles = {
@@ -184,7 +192,7 @@ class IntegrationReactSelect extends React.Component {
           <Select
             classes={classes}
             styles={selectStyles}
-            options={suggestions}
+            options={allSkills}
             components={components}
             value={this.state.single}
             onChange={this.handleChange('single')}

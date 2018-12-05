@@ -3,7 +3,7 @@ import ProfileExpansionPanel from 'components/profile/skills/ProfileExpansionPan
 
 export default (props) => {
   const { categories } = props;
-  console.log(categories);
+  //console.log(categories);
   const panels = categories.map(skill => (
     <div>
       <ProfileExpansionPanel skill={skill} />

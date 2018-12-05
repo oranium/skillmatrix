@@ -101,16 +101,7 @@ class ProfileController extends Component {
         )}
         {view === 1 && (
           <TabContainer>
-            <ExpansionPanel>
-              <ExpansionPanelSummary>
-                {' '}
-                Python
-                {/*<SimpleCard skill={skills['0'].skillname} data={skills['0'].milestones} > */}
-              </ExpansionPanelSummary>
-              <ExpansionPanelDetails>
-                <SkillStatisticsGrid categories={skills} />
-              </ExpansionPanelDetails>
-            </ExpansionPanel>
+            <SkillStatisticsGrid categories={skills} />
           </TabContainer>
         )}
       </div>
