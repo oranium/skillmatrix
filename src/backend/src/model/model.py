@@ -6,6 +6,6 @@ class Model(metaclass=ABCMeta):
 
     """Prototypical model"""
     @abstractmethod
-    def to_json(self):
+    def jsonable(self):
         """Needs to be implemented by deriving classes, raises NotImplementedError otherwise."""
         raise NotImplementedError
