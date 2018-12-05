@@ -319,9 +319,9 @@ export const profile = (state = defaultProfilePageState, action) => {
       return Object.assign(state, { showDialog: action.dialogName });
     case 'ClOSEPROFILEDIALOG':
       return Object.assign(state, { showDialog: false });
-    case 'ADDPROFILE':
+    case 'ADDPROFILES':
       // return Object.assign(state, { profiles: [...state.profiles, action.profile] });
-      return { ...state, profiles: [...state.profiles, action.profile] };
+      return { ...state, profiles: [...state.profiles, ...action.profiles] };
     case 'SETOWNPROFILE':
       // changes the element on index 0 in array profiles
       return { ...state, profiles: [action.profile, ...state.profiles.slice(1)] };

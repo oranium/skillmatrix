@@ -12,7 +12,7 @@ import { setError, setSearchResults, showSearchResults, setSearchError } from 'a
 // Rest
 import RestPoints from 'rest/Init';
 import RestCom from 'rest/Rest';
-import { addProfile } from 'actions';
+import { addProfiles } from 'actions';
 
 class SearchController extends Component {
   // build query object for api request
@@ -27,13 +27,12 @@ class SearchController extends Component {
   };
 
   prozessSearchResults = data => {
+    console.log(data);
     const {query, results} = data;
     const {has_all, has_some} = results;
     const allProfiles = has_all.concat(has_some);
     // add all profiles to profile array 
-    allProfiles.forEach(profile => {
-      store.dispatch(addProfile(profile));
-    });
+    store.dispatch(addProfiles(allProfiles));
 
     // build map from skills that only match query
     const searchResults = {
@@ -63,8 +62,6 @@ class SearchController extends Component {
       profile.skills = searchSkills;
       searchResults.hasSome.push(profile);
     });
-
-    store.dispatch(setSearchResults(searchResults));
     return searchResults;
   }
 
@@ -85,7 +82,7 @@ class SearchController extends Component {
     // try to send data to api and 
     try {
       const { data } = await Rest.post();
-      this.prozessSearchResults(data);
+      store.dispatch(setSearchResults(this.prozessSearchResults(data)));
       // show results to user
       store.dispatch(showSearchResults);
     } catch (e) {
