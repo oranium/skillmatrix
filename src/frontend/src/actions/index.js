@@ -95,3 +95,7 @@ export const setSearchError = error => ({
   type: 'SETSEARCHERROR',
   error,
 });
+
+export const resetSearch = {
+  type: 'RESETSEARCH',
+};

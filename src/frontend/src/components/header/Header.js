@@ -13,6 +13,7 @@ import {
   setError,
   resetState,
   changeProfileOwner,
+  resetSearch,
 } from '../../actions';
 
 // Rest
@@ -37,9 +38,14 @@ class ButtonAppBar extends Component {
     store.dispatch(switchPage(page));
   }
 
-  switchToProfilePage() {
+  switchToProfilePage = () => {
     store.dispatch(changeProfileOwner(0));
     this.constructor.switchToPage('profile');
+  }
+
+  switchToSearchPage = () => {
+    store.dispatch(resetSearch);
+    this.constructor.switchToPage('search');
   }
 
   async handleLogout() {
@@ -71,7 +77,7 @@ class ButtonAppBar extends Component {
           <Toolbar>
             <IconButton
               className={classes.menuButton}
-              onClick={() => this.switchToProfilePage()}
+              onClick={this.switchToProfilePage}
               color="inherit"
               aria-label="Menu"
             >
@@ -82,7 +88,7 @@ class ButtonAppBar extends Component {
             </Typography>
             <IconButton
               className={classes.menuButton}
-              onClick={() => this.constructor.switchToPage('search')}
+              onClick={this.switchToSearchPage}
               color="inherit"
               aria-label="Menu"
             >

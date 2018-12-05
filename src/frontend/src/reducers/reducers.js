@@ -304,6 +304,9 @@ export const search = (state = defaultSearch, action) => {
       return Object.assign(state, { showResults: false });
     case 'SETSEARCHERROR':
       return { ...state, error: action.error };
+    case 'RESETSEARCH':
+    case 'RESETSTATE':
+      return defaultSearch;
     default:
       return state;
   }
@@ -325,6 +328,8 @@ export const profile = (state = defaultProfilePageState, action) => {
     case 'SETOWNPROFILE':
       // changes the element on index 0 in array profiles
       return { ...state, profiles: [action.profile, ...state.profiles.slice(1)] };
+    case 'RESETSTATE':
+      return defaultProfilePageState;
     default:
       return state;
   }
@@ -334,6 +339,8 @@ export const allSkills = (state = defaultSkillList, action) => {
   switch (action.type) {
     case 'SETALLSKILLS':
       return action.skills;
+    case 'RESETSTATE':
+      return defaultSkillList;
     default:
       return state;
   }
