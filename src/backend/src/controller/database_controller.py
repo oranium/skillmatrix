@@ -60,6 +60,10 @@ class DatabaseController:
         db.session.add(cdate)
         for skill, level in skills.items():
             new_skill = database_controller.get_skill(skill)
+            # if skill is not found in database, it will be added
+            if not new_skill:
+                new_skill = Skill(name=skill, category="Programming")
+                database_controller.add_skill_to_db(new_skill)
             assoc = Association(level=level)
             assoc.skill_assoc = new_skill
             assoc.date_assoc = cdate
@@ -72,7 +76,7 @@ class DatabaseController:
         mskill = database_controller.get_skill(skill)
         mdate = Date(date=date)
         db.session.add(mdate)
-        m = MilestoneAssociation(name=comment,level=level)
+        m = MilestoneAssociation(name=comment, level=level)
         m.skill_milestone_assoc = mskill
         m.date_milestone_assoc = mdate
         m.users_milestone_assoc = user
@@ -102,12 +106,12 @@ class DatabaseController:
         return Users.query.all()
 
     @staticmethod
-    def get_all_skills():
+    def get_all_skill_names():
         skills = Skill.query.all()
-        liste = []
+        skill_names = []
         for skill in skills:
-            liste.append(skill.name)
-        return liste
+            skill_names.append(skill.name)
+        return skill_names
 
     @staticmethod
     def get_skill_id(skillname):
@@ -128,6 +132,11 @@ class DatabaseController:
     @staticmethod
     def get_skill_from_id(skill_id):
         return Skill.query.filter_by(id=skill_id).first()
+
+    @staticmethod
+    def add_skill_to_db(skill_name):
+        db.session.add(skill_name)
+        db.session.commit()
 
     @staticmethod
     def get_max_level(level, skill_id, user_id):
