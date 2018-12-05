@@ -104,6 +104,3 @@ class AuthenticationController:
         """
 
         return tuple("forename", "surename")
-
-
-authentication_controller = AuthenticationController()
