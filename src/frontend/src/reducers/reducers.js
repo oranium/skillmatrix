@@ -151,15 +151,7 @@ const defaultProfilePageState = {
 const defaultSkillList = [
   'Python',
   'Java',
-  'Go',
-  'C++',
-  'C#',
-  'PHP',
-  'CSS',
-  'C',
-  'Pascal',
-  'Haskell',
-  'Prolog',
+  'JavaScript',
 ];
 
 // has all the data for the inputfields
