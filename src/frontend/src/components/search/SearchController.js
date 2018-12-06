@@ -115,8 +115,8 @@ class SearchController extends Component {
     const Rest = new RestCom(RestPoints.search, JSON.stringify(search));
     // try to send data to api and
     try {
-      // const { data } = await Rest.post();
-      const data = exSearchResult;
+      const { data } = await Rest.post();
+      // const data = exSearchResult;
       store.dispatch(setSearchResults(this.prozessSearchResults(data)));
       // show results to user
       store.dispatch(showSearchResults);
