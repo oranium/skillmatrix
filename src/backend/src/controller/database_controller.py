@@ -1,10 +1,8 @@
-import parentdir
-import sys
-
-from model.profile_model import ProfileModel
-from model.skill_model import SkillModel
+import set_root_backend
+from src.model.profile_model import ProfileModel
+from src.model.skill_model import SkillModel
 from src.controller.database import db
-from src.model.database_model import Association, MilestoneAssociation, Skill, Time, Users
+from src.model.database_model import Association, MilestoneAssociation, Skill, Date, Users
 
 
 class DatabaseController:
@@ -56,37 +54,41 @@ class DatabaseController:
         return dict(has_all=has_all, has_some=has_some)
 
     @staticmethod
-    def set_skill(username, skills):
-        ctime = Time()
+    def set_skills(username, skills):
+        cdate = Date()
         user = database_controller.get_username(username)
-        db.session.add(ctime)
+        db.session.add(cdate)
         for skill, level in skills.items():
             new_skill = database_controller.get_skill(skill)
+            # if skill is not found in database, it will be added
+            if not new_skill:
+                new_skill = Skill(name=skill, category="Programming")
+                database_controller.create_skill(new_skill)
             assoc = Association(level=level)
             assoc.skill_assoc = new_skill
-            assoc.time_assoc = ctime
+            assoc.date_assoc = cdate
             assoc.users_assoc = user
         db.session.commit()
 
     @staticmethod
-    def add_milestone(username, skill, date, name):
+    def add_milestone(username, skill, date, comment, level):
         user = database_controller.get_user(username)
         mskill = database_controller.get_skill(skill)
-        mdate = Time(time=date)
+        mdate = Date(date=date)
         db.session.add(mdate)
-        m = MilestoneAssociation(name=name)
+        m = MilestoneAssociation(name=comment, level=level)
         m.skill_milestone_assoc = mskill
-        m.time_milestone_assoc = mdate
+        m.date_milestone_assoc = mdate
         m.users_milestone_assoc = user
         db.session.commit()
 
     @staticmethod
-    def get_all_users():
-        return Users.query.all()
-
-    @staticmethod
-    def get_skill_id(skillname):
-        return Skill.query.filter_by(name=skillname).first().id
+    def get_milestones(username, skillname):
+        muser = database_controller.get_user_id(username)
+        mskillid = database_controller.get_skill_id(skillname)
+        milestonelist = MilestoneAssociation.query.filter(MilestoneAssociation.milestone_users_id == muser,
+                                                          MilestoneAssociation.milestone_skill_id == mskillid).all()
+        return milestonelist
 
     # TODO: un-hardcode this
     @staticmethod
@@ -100,8 +102,28 @@ class DatabaseController:
         return assoc
 
     @staticmethod
+    def get_all_users():
+        return Users.query.all()
+
+    @staticmethod
+    def get_all_skill_names():
+        skills = Skill.query.all()
+        skill_names = []
+        for skill in skills:
+            skill_names.append(skill.name)
+        return skill_names
+
+    @staticmethod
+    def get_skill_id(skillname):
+        return Skill.query.filter_by(name=skillname).first().id
+
+    @staticmethod
     def get_skill(skillname):
         return Skill.query.filter_by(name=skillname).first()
+
+    @staticmethod
+    def get_user_id(username):
+        return Users.query.filter_by(username=username).first().id
 
     @staticmethod
     def get_user(username):
@@ -110,6 +132,38 @@ class DatabaseController:
     @staticmethod
     def get_skill_from_id(skill_id):
         return Skill.query.filter_by(id=skill_id).first()
+
+    @staticmethod
+    def create_skill(skill):
+        """Create a skill in the database.
+           Args:
+                skill (Skill): The skill to add.
+        """
+        db.session.add(skill)
+        db.session.commit()
+
+    @staticmethod
+    def exists(username):
+        """Check if a user exists in the database.
+           Args:
+               username (str): the username to check
+            Returns:
+                bool: True if user exists, false otherwise.
+        """
+        if Users.query.filter_by(username=username):
+            return True
+        return False
+
+    @staticmethod
+    def create_user(username, forename, surname):
+        """Create a user in the database.
+           Args:
+               username (str): the username of the user to add - should be identical to the Active Directory username.
+               forename (str): The forename of the user to add.
+               surname (str): The surname of the user to add.
+        """
+        db.session.add(Users(username=username, forename=forename, surname=surname))
+        db.session.commit()
 
     @staticmethod
     def get_max_level(level, skill_id, user_id):
