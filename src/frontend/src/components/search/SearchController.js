@@ -61,7 +61,6 @@ class SearchController extends Component {
   };
 
   prozessSearchResults = data => {
-    console.log(data);
     const { query, results } = data;
     const { has_all, has_some } = results;
     const allProfiles = has_all.concat(has_some);

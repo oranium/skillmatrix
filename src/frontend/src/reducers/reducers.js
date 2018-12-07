@@ -252,7 +252,7 @@ export const profile = (state = defaultProfilePageState, action) => {
     case 'CHANGEVIEW':
       return Object.assign(state, { view: action.view });
     case 'CHANGEPROFILEOWNER':
-      return Object.assign(state, { person: action.person });
+      return Object.assign(state, { person: action.person, isEditable: action.person === 0 });
     case 'OPENPROFILEDIALOG':
       return Object.assign(state, { showDialog: action.dialogName });
     case 'ClOSEPROFILEDIALOG':
