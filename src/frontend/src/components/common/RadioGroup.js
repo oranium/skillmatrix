@@ -7,6 +7,8 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
+import store from 'Store';
+import { updateSkills } from 'actions';
 
 const styles = theme => ({
   root: {
@@ -25,12 +27,16 @@ const styles = theme => ({
 
 class RadioButtonsGroup extends React.Component {
   //Alle Changes RadioButtons müssen noch in State gespeichert werden
+
   state = {
     value: String(this.props.level),
   };
 
   handleChange = event => {
+    this.props.levelChange(this.props.skill, parseInt(event.target.value));
     this.setState({ value: event.target.value });
+    const skillUpdate = { skill: this.props.skill, level: event.target.value };
+    store.dispatch(updateSkills(skillUpdate));
   };
 
   render() {

@@ -80,10 +80,13 @@ export const setAllSkills = skills => ({
   type: 'SETALLSKILLS',
   skills,
 });
-
 export const addProfiles = profiles => ({
   type: 'ADDPROFILES',
   profiles,
+});
+export const updateSkills = skillUpdates => ({
+  type: 'UPDATESKILLS',
+  skillUpdates,
 });
 
 export const setOwnProfile = profile => ({

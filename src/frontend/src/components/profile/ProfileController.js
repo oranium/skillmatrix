@@ -31,6 +31,28 @@ const styles = theme => ({
 });
 
 class ProfileController extends Component {
+  localUpdate = [];
+
+  applyLevelUpdates = skills => {
+    const { state } = this.props;
+    const { person, isEditable } = state.profile;
+    const { username } = state.profile.profiles[person];
+    var lattestChanges = { username, skills };
+    Object.keys(skills).map(index => {
+      Object.keys(this.localUpdate).map(idx => {
+        if (skills[index].skillname === this.localUpdate[idx][0].skill) {
+          lattestChanges.skills[index].level = this.localUpdate[idx][0].level;
+        }
+      });
+    });
+    console.log(lattestChanges);
+  };
+
+  handleLevelChange = (skill, level) => {
+    this.localUpdate.push([{ skill, level }]);
+    console.log(this.localUpdate);
+  };
+
   getOwnerArticle() {
     const { state } = this.props;
     const { person, isEditable } = state.profile;
@@ -76,7 +98,7 @@ class ProfileController extends Component {
         </AppBar>
         {view === 0 && (
           <TabContainer>
-            <SkillProfileList categories={skills} />
+            <SkillProfileList categories={skills} levelChange={this.handleLevelChange} />
 
             {isEditable && (
               <div>
@@ -93,6 +115,14 @@ class ProfileController extends Component {
                     onClick={this.handleNewSkill}
                   >
                     New Skill
+                  </Button>
+                  <Button
+                    name="bla"
+                    variant="contained"
+                    color="primary"
+                    onClick={this.applyLevelUpdates.bind(this, skills)}
+                  >
+                    Apply Changes
                   </Button>
                 </div>
               </div>

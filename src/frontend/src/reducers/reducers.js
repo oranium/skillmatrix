@@ -45,9 +45,9 @@ const defaultSearch = {
 };
 
 const defaultMilestone = {
-  datum: '',
-  level: 0,
-  comment: '',
+  datum: '2000-01-01',
+  level: 1,
+  comment: '-',
 };
 
 const exSkill = {
@@ -137,7 +137,7 @@ const exSkill3 = {
 
 const exProfile = {
   username: 'Valdemar',
-  skills: [exSkill, exSkill2, exSkill3], //alle skills übergeben
+  skills: [exSkill, exSkill2, exSkill3], // alle skills übergeben
 };
 
 const defaultProfilePageState = {
@@ -146,13 +146,10 @@ const defaultProfilePageState = {
   view: 0,
   showDialog: false,
   profiles: [exProfile, exProfile],
+  skillUpdates: [{}],
 };
 
-const defaultSkillList = [
-  'Python',
-  'Java',
-  'JavaScript',
-];
+const defaultSkillList = ['Python', 'Java', 'JavaScript'];
 
 // has all the data for the inputfields
 export const formState = (state = defaultFormState, action) => {
@@ -266,6 +263,16 @@ export const profile = (state = defaultProfilePageState, action) => {
     case 'SETOWNPROFILE':
       // changes the element on index 0 in array profiles
       return { ...state, profiles: [action.profile, ...state.profiles.slice(1)] };
+    case 'UPDATESKILLS':
+      // changes the element on index 0 in array profiles //////////////////////////////////////////////////reducer/////skill datenstruktur muss einzeln upgedated werden
+      return {
+        ...state,
+        skillUpdates: [
+          { skill: { ...state.skillUpdates.skill }, level: { ...state.skillUpdates.level } },
+          action.skillUpdates,
+          ...state.skillUpdates.slice(1),
+        ],
+      };
     case 'RESETSTATE':
       return defaultProfilePageState;
     default:
