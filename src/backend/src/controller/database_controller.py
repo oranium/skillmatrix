@@ -154,6 +154,25 @@ class DatabaseController:
         return False
 
     @staticmethod
+    def get_skills(username):
+        """Get all skills of a user and return them as a `list` of `SkillModel`s
+            Args:
+                username (`str`): whose skills to return
+            Returns:
+                `[SkillModel]`  
+        """
+        if database_controller.exists(username):
+            user_id = Users.query.filter_by(username=username).first().id
+            assocs = Association.query.filter_by(users_id=user_id)
+            skill_models = []
+            for assoc in assocs:
+                skill = database_controller.get_skill_from_id(assoc.skill_id)
+                skill_models.append(SkillModel(skill.name,assoc.level))
+            return skill_models
+        return None
+
+
+    @staticmethod
     def create_user(username, forename, surname):
         """Create a user in the database.
            Args:

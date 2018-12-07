@@ -13,9 +13,10 @@ class Login(Resource):
         parser.add_argument("password", type=str)
         args = parser.parse_args()
         try:
-            message = json.dumps(controller.login(self, args["username"], args["password"]))
+            message = json.dumps(controller.login(args["username"], args["password"]))
             return Response(message, status=200, mimetype="application/json")
-        except AttributeError:
+        except AttributeError as e:
+            print(e,file=sys.stderr)
             return Response(status=400)
         except TimeoutError:
             return Response(status=504)

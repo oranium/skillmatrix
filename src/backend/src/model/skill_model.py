@@ -1,5 +1,4 @@
 """Contains model for Skills"""
-import set_root_backend
 from model.model import Model
 
 
