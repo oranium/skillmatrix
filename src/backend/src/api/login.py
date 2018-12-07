@@ -1,9 +1,8 @@
-import json
-import set_root_backend
-from src.controller.controller import controller
 import sys
 from flask import Response
 from flask_restful import Resource, reqparse
+import json
+from controller.controller import controller
 
 
 class Login(Resource):
