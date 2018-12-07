@@ -1,7 +1,5 @@
 """Contains model for Profiles"""
-import set_root_backend
-from src.model.model import Model
-import json
+from model.model import Model
 
 
 class ProfileModel(Model):
@@ -12,10 +10,9 @@ class ProfileModel(Model):
         self.username = username
         self.skills = skills
 
-    def to_json(self):
-        json_skills = list()
+    def jsonable(self):
+        jsonable_skills = list()
         if self.skills:
             for skill in self.skills:
-                json_skills.append(skill.to_json())
-        model = dict(username=self.username, skills=json_skills)
-        return json.dumps(model)
+                jsonable_skills.append(skill.jsonable())
+        return dict(username=self.username, skills=jsonable_skills)

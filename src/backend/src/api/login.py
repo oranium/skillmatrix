@@ -1,8 +1,8 @@
-import set_root_backend
-from src.controller.controller import controller
 import sys
 from flask import Response
 from flask_restful import Resource, reqparse
+import json
+from controller.controller import controller
 
 
 class Login(Resource):
@@ -13,7 +13,7 @@ class Login(Resource):
         parser.add_argument("password", type=str)
         args = parser.parse_args()
         try:
-            message = controller.login(self, args["username"], args["password"]).replace("\\", "")
+            message = json.dumps(controller.login(self, args["username"], args["password"]))
             return Response(message, status=200, mimetype="application/json")
         except AttributeError:
             return Response(status=400)

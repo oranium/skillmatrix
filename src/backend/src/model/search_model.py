@@ -1,7 +1,5 @@
 """Contains model for Search"""
-import set_root_backend
-from src.model.model import Model
-import json
+from model.model import Model
 
 
 class SearchModel(Model):
@@ -13,12 +11,11 @@ class SearchModel(Model):
         self.has_all = results['has_all']
         self.has_some = results['has_some']
 
-    def to_json(self):
-        has_all_json = []
+    def jsonable(self):
+        has_all_jsonable = []
         for profile in self.has_all:
-            has_all_json.append(profile.to_json())
-        has_some_json = []
+            has_all_jsonable.append(profile.jsonable())
+        has_some_jsonable = []
         for profile in self.has_some:
-            has_some_json.append(profile.to_json())
-        model = dict(query=self.query, has_all=has_all_json, has_some=has_some_json)
-        return json.dumps(model)
+            has_some_jsonable.append(profile.jsonable())
+        return dict(query=self.query, results=dict(has_all=has_all_jsonable, has_some=has_some_jsonable))

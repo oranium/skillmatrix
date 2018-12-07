@@ -1,11 +1,10 @@
 """Contains the backend controller"""
-import set_root_backend
-from src.model.logout_model import LogoutModel
-from src.model.profile_model import ProfileModel
-from src.model.search_model import SearchModel
-from src.controller.authentication_controller import authentication_controller
-from src.controller.database_controller import database_controller
 import datetime
+from model.logout_model import LogoutModel
+from model.profile_model import ProfileModel
+from model.search_model import SearchModel
+from controller.authentication_controller import authentication_controller
+from controller.database_controller import database_controller
 
 
 class Controller:
@@ -19,7 +18,7 @@ class Controller:
         if not database_controller.exists(username):
             name = authentication_controller.get_name(username)
             database_controller.create_user(username, name[0], name[1])
-        return dict(user=ProfileModel(username, user_skills).to_json(), allSkills=database_controller.get_all_skills())
+        return dict(user=ProfileModel(username, user_skills).jsonable(), allSkills=database_controller.get_all_skills())
 
     @staticmethod
     def logout(username):
@@ -30,7 +29,7 @@ class Controller:
     def search(query):
         print(query)
         results = database_controller.search(query)
-        return SearchModel(query, results).to_json()
+        return SearchModel(query, results).jsonable()
 
     @staticmethod
     def set_skills(username, skills):

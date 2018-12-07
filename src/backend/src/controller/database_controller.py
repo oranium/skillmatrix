@@ -1,8 +1,7 @@
-import set_root_backend
-from src.model.profile_model import ProfileModel
-from src.model.skill_model import SkillModel
-from src.controller.database import db
-from src.model.database_model import Association, MilestoneAssociation, Skill, Date, Users
+from model.profile_model import ProfileModel
+from model.skill_model import SkillModel
+from controller.database import db
+from model.database_model import Association, MilestoneAssociation, Skill, Date, Users
 
 
 class DatabaseController:

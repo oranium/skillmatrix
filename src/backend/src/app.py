@@ -1,9 +1,10 @@
 """Configures and sets up the app connecting frontend to backend via RESTful APIs"""
-import set_root_backend
-from src.controller import database
-from src.controller import authentication_controller
 import sys
 from flask import Flask
+from flask_restful import Api
+from flask_restful.utils import cors
+from controller import database
+from controller import authentication_controller
 
 
 def configure_app(capp, arg):
@@ -33,13 +34,11 @@ database.set_db(app)
 
 # pylint: disable=wrong-import-position
 
-from src.api.login import Login
-from src.api.logout import Logout
-from src.api.search import Search
-from src.api.milestone import Milestone
-from src.api.set_skill import SetSkill
-from flask_restful import Api
-from flask_restful.utils import cors
+from api.login import Login
+from api.logout import Logout
+from api.search import Search
+from api.milestone import Milestone
+from api.set_skill import SetSkill
 
 # pylint: enable=wrong-import-position
 
