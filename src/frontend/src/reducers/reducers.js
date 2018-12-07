@@ -137,7 +137,7 @@ const exSkill3 = {
 
 const exProfile = {
   username: 'Valdemar',
-  skills: [exSkill, exSkill2, exSkill3], //alle skills übergeben
+  skills: [exSkill, exSkill2, exSkill3], // alle skills übergeben
 };
 
 const defaultProfilePageState = {
@@ -148,11 +148,7 @@ const defaultProfilePageState = {
   profiles: [exProfile, exProfile],
 };
 
-const defaultSkillList = [
-  'Python',
-  'Java',
-  'JavaScript',
-];
+const defaultSkillList = ['Python', 'Java', 'JavaScript'];
 
 // has all the data for the inputfields
 export const formState = (state = defaultFormState, action) => {
@@ -255,7 +251,7 @@ export const profile = (state = defaultProfilePageState, action) => {
     case 'CHANGEVIEW':
       return Object.assign(state, { view: action.view });
     case 'CHANGEPROFILEOWNER':
-      return Object.assign(state, { person: action.person });
+      return Object.assign(state, { person: action.person, isEditable: action.person === 0 });
     case 'OPENPROFILEDIALOG':
       return Object.assign(state, { showDialog: action.dialogName });
     case 'ClOSEPROFILEDIALOG':
