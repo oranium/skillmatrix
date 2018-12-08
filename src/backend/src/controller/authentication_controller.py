@@ -102,4 +102,4 @@ class AuthenticationController:
             tuple (str,str): Contains the forename at index 0, surname at index 1
         """
 
-        return tuple("forename", "surename")
+        return "i am name"
