@@ -1,6 +1,5 @@
 import datetime
-import set_root_backend
-from src.controller.database import db
+from controller.database import db
 
 
 class Association(db.Model):

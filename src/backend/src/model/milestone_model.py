@@ -1,6 +1,5 @@
 """Contains model for a Milestone"""
-import set_root_backend
-from src.model.model import Model
+from model.model import Model
 
 
 class MilestoneModel(Model):
