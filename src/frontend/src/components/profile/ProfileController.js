@@ -19,9 +19,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Button from '@material-ui/core/Button';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 
 const styles = theme => ({
   root: {
@@ -35,22 +32,34 @@ class ProfileController extends Component {
 
   applyLevelUpdates = skills => {
     const { state } = this.props;
-    const { person, isEditable } = state.profile;
+    const { person } = state.profile;
     const { username } = state.profile.profiles[person];
-    var lattestChanges = { username, skills };
+    var latestChanges = { username, skills: [{ skill: '', level: 0 }] };
+    var alreadyUpdated = [];
+
     Object.keys(skills).map(index => {
       Object.keys(this.localUpdate).map(idx => {
-        if (skills[index].skillname === this.localUpdate[idx][0].skill) {
-          lattestChanges.skills[index].level = this.localUpdate[idx][0].level;
+        if (
+          skills[index].skillname === this.localUpdate[idx][0].skill &&
+          skills[index].level !== this.localUpdate[idx][0].level
+        ) {
+          alreadyUpdated.push(this.localUpdate[idx][0].skill);
+          latestChanges.skills.push({
+            skill: this.localUpdate[idx][0].skill,
+            level: this.localUpdate[idx][0].level,
+          });
         }
       });
     });
-    console.log(lattestChanges);
+    latestChanges.skills.shift();
+    console.log(latestChanges);
+
+    delete this.localUpdate[{}];
+    delete latestChanges[skills];
   };
 
   handleLevelChange = (skill, level) => {
     this.localUpdate.push([{ skill, level }]);
-    console.log(this.localUpdate);
   };
 
   getOwnerArticle() {
@@ -86,6 +95,7 @@ class ProfileController extends Component {
     // person: array index in profiles
     const { person, profiles, view, showDialog, isEditable } = state.profile;
     const skills = profiles[person].skills;
+    const copy = skills.slice();
     const ownerArticle = this.getOwnerArticle();
 
     return (
@@ -120,7 +130,7 @@ class ProfileController extends Component {
                     name="bla"
                     variant="contained"
                     color="primary"
-                    onClick={this.applyLevelUpdates.bind(this, skills)}
+                    onClick={this.applyLevelUpdates.bind(this, copy)}
                   >
                     Apply Changes
                   </Button>

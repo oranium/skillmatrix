@@ -35,8 +35,8 @@ class RadioButtonsGroup extends React.Component {
   handleChange = event => {
     this.props.levelChange(this.props.skill, parseInt(event.target.value));
     this.setState({ value: event.target.value });
-    const skillUpdate = { skill: this.props.skill, level: event.target.value };
-    store.dispatch(updateSkills(skillUpdate));
+    // const skillUpdate = { skill: this.props.skill, level: event.target.value };
+    // store.dispatch(updateSkills(skillUpdate));
   };
 
   render() {
@@ -44,7 +44,7 @@ class RadioButtonsGroup extends React.Component {
     const numbers = ['1', '2', '3', '4', '5'];
     const rdBtns = numbers.map(num =>
       num < this.props.level ? (
-        <FormControlLabel value={num} control={<Radio />} label={num} disabled />
+        <FormControlLabel value={num} control={<Radio />} label={num} /> //add disabled to the props to disable
       ) : (
         <FormControlLabel value={num} control={<Radio />} label={num} />
       ),
