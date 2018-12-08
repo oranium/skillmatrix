@@ -36,13 +36,10 @@ class ProfileController extends Component {
     const { username } = state.profile.profiles[person];
     var latestChanges = { username, skills: [{ skill: '', level: 0 }] };
     var alreadyUpdated = [];
-
+    console.log(this.localUpdate);
     Object.keys(skills).map(index => {
       Object.keys(this.localUpdate).map(idx => {
-        if (
-          skills[index].skillname === this.localUpdate[idx][0].skill &&
-          skills[index].level !== this.localUpdate[idx][0].level
-        ) {
+        if (skills[index].skillname === this.localUpdate[idx][0].skill) {
           alreadyUpdated.push(this.localUpdate[idx][0].skill);
           latestChanges.skills.push({
             skill: this.localUpdate[idx][0].skill,
@@ -54,7 +51,7 @@ class ProfileController extends Component {
     latestChanges.skills.shift();
     console.log(latestChanges);
 
-    delete this.localUpdate[{}];
+    this.localUpdate = [];
     delete latestChanges[skills];
   };
 
