@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
@@ -9,8 +8,8 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 const styles = theme => ({
   root: {
-    width: '500px',
-    margin: '2em auto',
+    width: '400px',
+    margin: '10px, auto',
   },
   heading: {
     fontSize: theme.typography.pxToRem(15),
@@ -24,36 +23,23 @@ const styles = theme => ({
 });
 
 function Panel(props) {
-  const {
-    classes, onChange, id, isExpanded, username, level,
-  } = props;
+  const { classes, skill } = props;
+  const { skillname, level, milestones } = skill;
 
-  console.log(props);
   return (
-    <ExpansionPanel
-      expanded={isExpanded}
-      onChange={(expanded) => {
-        onChange(id);
-        console.log(id);
-        console.log(`exp ${expanded}`);
-      }}
-    >
+    <ExpansionPanel className={classes.root}>
       <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-        <Typography className={classes.heading}>{username}</Typography>
+        <Typography className={classes.heading}>{skillname}</Typography>
         <Typography className={classes.secondaryHeading}>{`Level: ${level}`}</Typography>
       </ExpansionPanelSummary>
       <ExpansionPanelDetails>
         <Typography>
-          Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus
-          est, id dignissim quam.
+          {'Latest Milestone: '}
+          {milestones.lenght > 0 ? milestones[0] : '-'}
         </Typography>
       </ExpansionPanelDetails>
     </ExpansionPanel>
   );
 }
-
-Panel.propTypes = {
-  classes: PropTypes.instanceOf(styles).isRequired,
-};
 
 export default withStyles(styles)(Panel);
