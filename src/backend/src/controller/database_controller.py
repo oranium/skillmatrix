@@ -219,7 +219,8 @@ class DatabaseController:
                 max_level = database_controller.get_max_level(association.level, skill.id, user.id)
                 # a user can have up to 5 associations for the same skill - this prevents duplicates
                 if skill.name not in found_skills:
-                    skill_models.append(SkillModel(skill.name, max_level))
+                    milestone_models = database_controller.get_milestones(user.username, skill.name)
+                    skill_models.append(SkillModel(skill.name, max_level, milestone_models))
                     found_skills.append(skill.name)
             # creates ProfileModel from username and list of SkillModel
             profile_models.append(ProfileModel(user.username, skill_models))
