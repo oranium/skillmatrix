@@ -182,7 +182,7 @@ class DatabaseController:
             for assoc in assocs:
                 skill = database_controller.get_skill_from_id(assoc.skill_id)
                 if skill not in found_skills:
-                    milestones = database_controller.get_milestones(username,skill)
+                    milestones = database_controller.get_milestones(username,skill.name)
                     level = database_controller.get_max_level(assoc.level, skill.id, user_id)
                     skill_models.append(SkillModel(skill.name, level, milestones=milestones))
                     found_skills.append(skill)
