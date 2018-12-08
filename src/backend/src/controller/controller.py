@@ -46,5 +46,17 @@ class Controller:
         name = authentication_controller.get_name(username)
         return ProfileModel(username, name, user_skills)
 
+    @staticmethod
+    def is_connected(username):
+        """Checks if the current user is in the dict of open connections.
+            Args:
+                username (`str`): the username of the current user
+            Returns:
+                `boolean`: `True` if username is a key in connections of `AuthenticationController`, `False` otherwise.
+        """
+        if username in authentication_controller.connections.items()[0]:
+            return True   
+        return False
+
 
 controller = Controller()
