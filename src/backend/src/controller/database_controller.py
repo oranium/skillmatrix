@@ -1,8 +1,8 @@
+from controller.database import db
 from model.profile_model import ProfileModel
 from model.skill_model import SkillModel
-from controller.database import db
+from model.milestone_model import MilestoneModel
 from model.database_model import Association, MilestoneAssociation, Skill, Date, Users
-
 
 class DatabaseController:
     """Class to handle everything about table-manipulation"""
@@ -87,7 +87,14 @@ class DatabaseController:
         mskillid = database_controller.get_skill_id(skillname)
         milestonelist = MilestoneAssociation.query.filter(MilestoneAssociation.milestone_users_id == muser,
                                                           MilestoneAssociation.milestone_skill_id == mskillid).all()
-        return milestonelist
+        milestone_models = []
+        for milestone in milestonelist:
+            date = database_controller.get_date_from_id(milestone.milestone_date_id).date
+            name = database_controller.get_user_from_id(milestone.milestone_users_id).username
+            level = milestone.level
+            milestone_models.append(MilestoneModel(date, name, level))
+
+        return milestone_models
 
     # TODO: un-hardcode this
     @staticmethod
@@ -129,6 +136,14 @@ class DatabaseController:
         return Users.query.filter_by(username=username).first()
 
     @staticmethod
+    def get_date_from_id(date_id):
+        return Date.query.filter_by(id=date_id).first()
+
+    @staticmethod
+    def get_user_from_id(user_id):
+        return Users.query.filter_by(id=user_id).first()
+
+    @staticmethod
     def get_skill_from_id(skill_id):
         return Skill.query.filter_by(id=skill_id).first()
 
@@ -167,7 +182,8 @@ class DatabaseController:
             skill_models = []
             for assoc in assocs:
                 skill = database_controller.get_skill_from_id(assoc.skill_id)
-                skill_models.append(SkillModel(skill.name,assoc.level))
+                milestones = database_controller.get_milestones(username,skill)
+                skill_models.append(SkillModel(skill.name,assoc.level, milestones=milestones))
             return skill_models
         return None
 
