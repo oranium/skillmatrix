@@ -1,4 +1,11 @@
-import React from 'react';
+// react
+import React, { Component } from 'react';
+
+// components
+import { DateInput, TextArea, LevelPicker } from 'components/common/InputFields';
+import SingleSelect from 'components/common/SingleSelect';
+
+// material-ui
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -6,30 +13,36 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { DateInput, TextArea, LevelPicker } from 'components/common/InputFields';
-
-import SingleSelect from 'components/common/SingleSelect';
 
 // redux
 import store from 'Store';
-import { changeView, openProfileDialog, closeProfileDialog, updateInput, resetForm } from 'actions';
+import { closeProfileDialog, updateInput, resetForm, setOwnProfile, setError } from 'actions';
 
-export default class FormDialog extends React.Component {
-  handleClickOpen = () => {
-    this.setState({ open: true });
-  };
+// Rest
+import RestPoints from 'rest/Init';
+import RestCom from 'rest/Rest';
 
+export default class FormDialog extends Component {
   handleClose = () => {
     store.dispatch(resetForm);
     store.dispatch(closeProfileDialog);
   };
 
-  handleSubmit = skill => {
+  async handleSubmit(skill) {
     console.log(skill);
-    //skill objekt an api übergenen
+    //todo api /skill
 
+    const Rest = new RestCom(RestPoints.skill, JSON.stringify(skill));
+
+    try {
+      const { data } = await Rest.post();
+      store.dispatch(setOwnProfile(data.user));
+    } catch (e) {
+      store.dispatch(setError(e.message));
+    }
+    //todo change to new api result and remove JSON stringify
     this.handleClose();
-  };
+  }
 
   handleChange(id, value) {
     store.dispatch(updateInput(id, value));
@@ -38,6 +51,7 @@ export default class FormDialog extends React.Component {
   render() {
     const state = store.getState();
 
+    const { allSkills } = state;
     const { showDialog } = state.profile;
     var { datefield, textarea, levelfield, singleselect } = state.formState;
 
@@ -55,18 +69,18 @@ export default class FormDialog extends React.Component {
       username: profile.username,
       skills: { skillname: singleselect.value, level: levelfield.value, milestones: aktMilestone },
     };
-    const allSkillsOfUser = [];
-    Object.keys(profile.skills).map(element => {
-      allSkillsOfUser[element] = profile.skills[element].skillname;
-    });
+    const allSkillsOfUser = Object.keys(profile.skills).map(
+      element => profile.skills[element].skillname,
+    );
 
     const availableNewSkills = [];
-
-    Object.keys(state.allSkills).map(index => {
-      if (!allSkillsOfUser.includes(state.allSkills[index])) {
-        availableNewSkills.push(state.allSkills[index]);
+    for (var key in Object.keys(allSkills)) {
+      if (allSkills.hasOwnProperty(key)) {
+        if (!allSkillsOfUser.includes(allSkills[key])) {
+          availableNewSkills.push(allSkills[key]);
+        }
       }
-    });
+    }
 
     return (
       <div>
