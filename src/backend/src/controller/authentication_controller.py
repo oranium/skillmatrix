@@ -70,7 +70,7 @@ class AuthenticationController:
             print("adding connection", file=sys.stderr)
             # successful login
             authentication_controller.connections[username] = new_connection
-            return username
+            return authentication_controller.get_name(username)
         # catch empty input
         except (LDAPUnknownAuthenticationMethodError, LDAPInvalidCredentialsResult):
             print("empty", file=sys.stderr)
