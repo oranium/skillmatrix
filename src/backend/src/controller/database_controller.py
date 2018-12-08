@@ -162,7 +162,7 @@ class DatabaseController:
             Returns:
                 bool: True if user exists, false otherwise.
         """
-        if Users.query.filter_by(username=username):
+        if Users.query.filter_by(username=username).first():
             return True
         return False
 
@@ -216,7 +216,7 @@ class DatabaseController:
             # gets the SkillModels of the user
             skill_models = database_controller.get_skills(user.username)
             # creates ProfileModel from username and list of SkillModel
-            profile_models.append(ProfileModel(user.username, skill_models))
+            profile_models.append(ProfileModel(user.username, user.username, skill_models))
         return profile_models
 
     @staticmethod
