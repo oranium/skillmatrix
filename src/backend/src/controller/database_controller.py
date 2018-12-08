@@ -55,7 +55,7 @@ class DatabaseController:
     @staticmethod
     def set_skills(username, skills):
         cdate = Date()
-        user = database_controller.get_username(username)
+        user = database_controller.get_user(username)
         db.session.add(cdate)
         for skill, level in skills.items():
             new_skill = database_controller.get_skill(skill)
@@ -75,7 +75,7 @@ class DatabaseController:
         mskill = database_controller.get_skill(skill)
         mdate = Date(date=date)
         db.session.add(mdate)
-        m = MilestoneAssociation(name=comment, level=level)
+        m = MilestoneAssociation(comment=comment, level=level)
         m.skill_milestone_assoc = mskill
         m.date_milestone_assoc = mdate
         m.users_milestone_assoc = user
