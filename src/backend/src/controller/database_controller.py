@@ -178,10 +178,14 @@ class DatabaseController:
             user_id = Users.query.filter_by(username=username).first().id
             assocs = Association.query.filter_by(users_id=user_id).all()
             skill_models = []
+            found_skills = []
             for assoc in assocs:
                 skill = database_controller.get_skill_from_id(assoc.skill_id)
-                milestones = database_controller.get_milestones(username,skill)
-                skill_models.append(SkillModel(skill.name,assoc.level, milestones=milestones))
+                if skill not in found_skills:
+                    milestones = database_controller.get_milestones(username,skill)
+                    level = database_controller.get_max_level(assoc.level, skill.id, user_id)
+                    skill_models.append(SkillModel(skill.name, level, milestones=milestones))
+                    found_skills.append(skill)
             return skill_models
         return None
 
