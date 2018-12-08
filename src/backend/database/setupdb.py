@@ -64,12 +64,11 @@ class Date(db.Model):
 
 
 class Users(db.Model):
-    """SQL-Alchemy object users. Has an autoincremented id, an username, a surname, a forename"""
+    """SQL-Alchemy object users. Has an autoincremented id, an username, a name"""
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(45), nullable=False)
-    surname = db.Column(db.String(45), nullable=False)
-    forename = db.Column(db.String(45), nullable=False)
+    name = db.Column(db.String(80), nullable= False)
     users_association = db.relationship("Association", back_populates="users_assoc")
     users_milestone_association = db.relationship("MilestoneAssociation", back_populates="users_milestone_assoc")
 
@@ -80,9 +79,9 @@ class Users(db.Model):
         return '<id = {0} und username = {1}>'.format(self.id, self.username)
 
 def dummy_entries():
-    valdemar = Users(username='Valdemar-Forsberg', surname="Forsberg", forename="Valdemar")
-    karl = Users(username='Karl-Kalagin', surname='Kalagin', forename="Karl")
-    isaac = Users(username='Isaac-Hunt', surname="Hunt", forename="Isaac")
+    valdemar = Users(username='Valdemar-Forsberg',name="Valdemar Forsberg")
+    karl = Users(username='Karl-Kalagin', name="Karl Kalagin")
+    isaac = Users(username='Isaac-Hunt', name="Isaac Hunt")
 
     db.session.add(valdemar)
     db.session.add(karl)
