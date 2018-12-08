@@ -1,10 +1,9 @@
 """authentication contains the Authentication class."""
-import set_root_backend
-from src import config
 from ldap3 import Server, Connection, ALL, NTLM
 from ldap3.core.exceptions import LDAPUnknownAuthenticationMethodError, LDAPSocketOpenError, \
     LDAPInvalidCredentialsResult
 import sys
+import config
 # if info about the server is required:
 # get info about server
 # print(mock_server.info)
@@ -45,7 +44,7 @@ class AuthenticationController:
         self.login_prefix = prefix
 
     @staticmethod
-    def login(self, username, password):
+    def login(username, password):
         """
         Creates a new connection to the AD.
         Returns JSON with user object on successful login,
@@ -54,9 +53,9 @@ class AuthenticationController:
         try:
             print(username, file=sys.stderr)
             print(password, file=sys.stderr)
-            login_name = self.login_prefix+username
+            login_name = authentication_controller.login_prefix+username
             print(login_name, file=sys.stderr)
-            new_connection = Connection(self.server,
+            new_connection = Connection(authentication_controller.server,
                                         login_name,
                                         password,
                                         authentication=NTLM,
@@ -70,7 +69,7 @@ class AuthenticationController:
             new_connection.bind()
             print("adding connection", file=sys.stderr)
             # successful login
-            self.connections[username] = new_connection
+            authentication_controller.connections[username] = new_connection
             return username
         # catch empty input
         except (LDAPUnknownAuthenticationMethodError, LDAPInvalidCredentialsResult):
@@ -81,12 +80,12 @@ class AuthenticationController:
             raise TimeoutError
     
     @staticmethod
-    def logout(self, username):
+    def logout( username):
         """
         Logs out the user and returns True if no error, False if error
         """
         try:
-            del_connection = self.connections.pop(username)
+            del_connection = authentication_controller.connections.pop(username)
             del_connection.unbind()
             return True
         except KeyError:
