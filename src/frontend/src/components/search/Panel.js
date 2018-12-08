@@ -45,7 +45,6 @@ class Panel extends Component {
 
   render() {
     const { classes, isExpanded, username, skills } = this.props;
-    console.table(skills);
 
     const levelList = skills.map(
       (skill, i) => `${skill.skillname}: level ${skill.level} ${skills[i + 1] ? ', ' : ''}`,
@@ -70,7 +69,6 @@ class Panel extends Component {
     skillsTest.forEach(skill => {
       milestones.push(...skill.milestones);
     });
-    console.table(milestones);
     return (
       <ExpansionPanel expanded={isExpanded}>
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
