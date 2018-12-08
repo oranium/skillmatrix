@@ -90,10 +90,8 @@ class DatabaseController:
         milestone_models = []
         for milestone in milestonelist:
             date = database_controller.get_date_from_id(milestone.milestone_date_id).date
-            name = database_controller.get_user_from_id(milestone.milestone_users_id).username
             level = milestone.level
-            milestone_models.append(MilestoneModel(date, name, level))
-
+            milestone_models.append(MilestoneModel(date, milestone.comment, level))
         return milestone_models
 
     # TODO: un-hardcode this
@@ -178,7 +176,7 @@ class DatabaseController:
         """
         if database_controller.exists(username):
             user_id = Users.query.filter_by(username=username).first().id
-            assocs = Association.query.filter_by(users_id=user_id)
+            assocs = Association.query.filter_by(users_id=user_id).all()
             skill_models = []
             for assoc in assocs:
                 skill = database_controller.get_skill_from_id(assoc.skill_id)
