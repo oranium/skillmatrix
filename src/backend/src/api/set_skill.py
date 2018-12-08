@@ -14,6 +14,8 @@ class SetSkill(Resource):
         parser.add_argument("skills", type=dict)
         args = parser.parse_args()
         try:
+            if not controller.is_connected(args["username"]):
+                return Response(status=401)
             message = json.dumps(controller.set_skills(self, args["username"], args["skills"]))
             return Response(message, status=200, mimetype="application/json")
         except TimeoutError:
