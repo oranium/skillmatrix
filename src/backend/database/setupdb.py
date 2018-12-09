@@ -3,6 +3,8 @@ from flask_sqlalchemy import SQLAlchemy
 import datetime
 
 app = Flask(__name__)
+
+#app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite://"
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Momomomo2@localhost/sm1'
 db = SQLAlchemy(app)
 
