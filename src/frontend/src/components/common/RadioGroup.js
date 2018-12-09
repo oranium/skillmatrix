@@ -1,14 +1,14 @@
+// react
 import React from 'react';
+
+// material-ui
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
-import store from 'Store';
-import { updateSkills } from 'actions';
 
 const styles = theme => ({
   root: {
@@ -42,11 +42,11 @@ class RadioButtonsGroup extends React.Component {
   render() {
     const { classes } = this.props;
     const numbers = ['1', '2', '3', '4', '5'];
-    const rdBtns = numbers.map(num =>
+    const rdBtns = numbers.map( (num, index) =>
       num < this.props.level ? (
-        <FormControlLabel value={num} control={<Radio />} label={num} /> //add disabled to the props to disable
+        <FormControlLabel key={index} value={num} control={<Radio />} label={num} /> //add disabled to the props to disable
       ) : (
-        <FormControlLabel value={num} control={<Radio />} label={num} />
+        <FormControlLabel key={index} value={num} control={<Radio />} label={num} />
       ),
     );
     return (

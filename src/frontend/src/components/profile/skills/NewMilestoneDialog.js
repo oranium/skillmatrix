@@ -1,32 +1,46 @@
+// react
 import React from 'react';
+
+// components
+import { DateInput, TextArea } from 'components/common/InputFields';
+import SingleSelect from 'components/common/SingleSelect';
+
+// material-ui
+import { Typography } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { DateInput, TextArea, LevelPicker } from 'components/common/InputFields';
-import SingleSelect from 'components/common/SingleSelect';
 
 // redux
 import store from 'Store';
-import { closeProfileDialog, updateInput, resetForm } from 'actions';
-import { Typography } from '@material-ui/core';
+import { closeProfileDialog, updateInput, resetForm, setOwnProfile, setError } from 'actions';
+
+// Rest
+import RestPoints from 'rest/Init';
+import RestCom from 'rest/Rest';
 
 export default class FormDialog extends React.Component {
-  handleClickOpen = () => {
-    this.setState({ open: true });
-  };
-
   handleClose = () => {
     store.dispatch(resetForm);
     store.dispatch(closeProfileDialog);
   };
 
-  handleSubmit(milestone) {
+  async handleSubmit(milestone) {
     console.log(milestone);
+
+    const Rest = new RestCom(RestPoints.skill, JSON.stringify(milestone));
+    try {
+      const { data } = await Rest.post();
+      store.dispatch(setOwnProfile(data.user));
+    }
+    catch (e) {
+      store.dispatch(setError(e.message));
+    }
     this.handleClose();
+    //todo change to new api result and remove JSON stringify
   }
 
   handleChange(id, value) {
@@ -35,22 +49,23 @@ export default class FormDialog extends React.Component {
 
   render() {
     const state = store.getState();
-    const { showDialog } = state.profile;
+    const { showDialog, person, profiles } = state.profile;
     const { datefield, textarea, singleselect } = state.formState;
-    var profile = state.profile.profiles[state.profile.person];
+    var currentProfile = profiles[person];
 
     const aktSkill = singleselect.value;
 
     var aktLevel = 'choose a Skill';
 
     //holt das aktuelle Level des im Select ausgewählten Skill aus dem State
-    Object.keys(profile.skills).map(index => {
-      if (profile.skills[index].skillname == aktSkill) {
-        aktLevel = profile.skills[index].level;
+    Object.keys(currentProfile.skills).map(index => {
+      if (currentProfile.skills[index].skillname === aktSkill) {
+        aktLevel = currentProfile.skills[index].level;
       }
     });
+    // todo change map function
     const aktMilestone = {
-      username: profile.username,
+      username: currentProfile.username,
       skill: aktSkill,
       datum: datefield.value,
       level: aktLevel,
@@ -59,8 +74,8 @@ export default class FormDialog extends React.Component {
 
     const allSkillsOfUser = [];
     //holt alle skills, die der User besitzt aus dem State
-    Object.keys(profile.skills).map(element => {
-      allSkillsOfUser[element] = profile.skills[element].skillname;
+    Object.keys(currentProfile.skills).map(element => {
+      allSkillsOfUser[element] = currentProfile.skills[element].skillname;
     });
     return (
       <div>

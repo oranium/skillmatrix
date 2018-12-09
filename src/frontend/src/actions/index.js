@@ -36,7 +36,7 @@ export const resetState = {
 };
 
 export const setSearchResults = results => ({
-  type: 'SETRESULTS',
+  type: 'SETSEARCHRESULTS',
   results,
 });
 

@@ -230,7 +230,7 @@ export const search = (state = defaultSearch, action) => {
   switch (action.type) {
     case 'SETQUERY':
       return Object.assign(state, { searchValues: action.values });
-    case 'SETRESULTS':
+    case 'SETSEARCHRESULTS':
       return Object.assign(state, { results: action.results });
     case 'SHOWRESULTS':
       return Object.assign(state, { showResults: true });
@@ -257,8 +257,7 @@ export const profile = (state = defaultProfilePageState, action) => {
     case 'ClOSEPROFILEDIALOG':
       return Object.assign(state, { showDialog: false });
     case 'ADDPROFILES':
-      // return Object.assign(state, { profiles: [...state.profiles, action.profile] });
-      return { ...state, profiles: [...state.profiles, ...action.profiles] };
+      return { ...state, profiles: [state.profiles[0], ...action.profiles] };
     case 'SETOWNPROFILE':
       // changes the element on index 0 in array profiles
       return { ...state, profiles: [action.profile, ...state.profiles.slice(1)] };
