@@ -1,7 +1,6 @@
 #it was so nice i build it twice
 import os
 import sys
-#import sqlalchemy.types.Date
 import datetime
 from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
@@ -81,31 +80,13 @@ class Users(Base):
 
     def __repr__(self):
         return '<id = {0} und username = {1}>'.format(self.id, self.username)
- 
-# Create an engine that stores data in the local directory's
-# sqlalchemy_example.db file.
-engine = create_engine('mysql+pymysql://root:Momomomo2@localhost/sm1')
-# Create all tables in the engine. This is equivalent to "Create Table"
-# statements in raw SQL.
-'''users.drop(engine)
-association.drop(engine)
-milestoneAssociation.drop(engine)
-skill.drop(engine)
-date.drop(engine)
 
-users.create(engine)
-association.create(engine)
-milestoneAssociation.create(engine)
-skill.create(engine)
-date.create(engine)'''
-#sqlalchemy.drop_all()
-#sqlalchemy.create_all()
+engine = create_engine('mysql+pymysql://root:Momomomo2@localhost/sm1')
+
 Base.metadata.drop_all(bind=engine)
 Base.metadata.create_all(engine)
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
-#for tbl in reversed(meta.sorted_tables):
-#    engine.execute(tbl.delete())
 
 def create_skill(level, skill, date, username):
     a = Association(level=level)

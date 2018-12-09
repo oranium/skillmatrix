@@ -36,12 +36,14 @@ class ControlledExpansionPanels extends React.Component {
   };
 
   render() {
-    const { classes, skill, isEditable } = this.props;
+    const { classes, skill } = this.props;
     const { skillname, level, milestones } = skill;
     const { expanded } = this.state;
-    if (milestones.length < 1) {
-      milestones.push({ date: '2000-01-01', level: 1, comment: '-' });
-    }
+    const latestElement = milestones.length - 1;
+    const latestMilestone =
+      milestones.length < 1
+        ? ': -'
+        : ` (${milestones[latestElement].date}): ${milestones[latestElement].comment}`;
     return (
       <div className={classes.root}>
         <ExpansionPanel
@@ -60,8 +62,7 @@ class ControlledExpansionPanels extends React.Component {
                 levelChange={this.props.levelChange}
                 disabled={this.props.isEditable}
               />
-              Latest Milestone ({milestones[milestones.length - 1].x}):{' '}
-              {milestones[milestones.length - 1].comment}
+              {'Latest Milestone' + latestMilestone}
             </Typography>
           </ExpansionPanelDetails>
         </ExpansionPanel>
