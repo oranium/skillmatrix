@@ -7,7 +7,7 @@ class LogoutModel(Model):
     """This class converts the logged out user to a JSON to hand over to the frontend"""
 
     def __init__(self, username):
-        self.user = username
+        self.username = username
 
     def jsonable(self):
         return dict(user=self.username)

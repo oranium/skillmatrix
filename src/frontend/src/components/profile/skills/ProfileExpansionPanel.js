@@ -39,9 +39,11 @@ class ControlledExpansionPanels extends React.Component {
     const { classes, skill } = this.props;
     const { skillname, level, milestones } = skill;
     const { expanded } = this.state;
-    if (milestones.length < 1) {
-      milestones.push({ x: '2000-01-01', y: 1, comment: '-' });
-    }
+    const latestElement = milestones.length - 1;
+    const latestMilestone =
+      milestones.length < 1
+        ? ': -'
+        : ` (${milestones[latestElement].date}): ${milestones[latestElement].comment}`;
     return (
       <div className={classes.root}>
         <ExpansionPanel
@@ -53,11 +55,13 @@ class ControlledExpansionPanels extends React.Component {
             <Typography className={classes.secondaryHeading}> </Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
-            <Typography>
-              <RadioGroup level={level} skill={skillname} levelChange={this.props.levelChange} />
-              Latest Milestone ({milestones[milestones.length - 1].x}):{' '}
-              {milestones[milestones.length - 1].comment}
-            </Typography>
+            <RadioGroup
+              level={level}
+              skill={skillname}
+              levelChange={this.props.levelChange}
+              disabled={this.props.isEditable}
+            />
+            <Typography>{'Latest Milestone' + latestMilestone}</Typography>
           </ExpansionPanelDetails>
         </ExpansionPanel>
       </div>

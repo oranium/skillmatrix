@@ -24,7 +24,7 @@ class Controller:
     def logout(username):
         if controller.is_connected(username):
             authentication_controller.logout(username)
-            return LogoutModel(username)
+            return LogoutModel(username).jsonable()
         raise PermissionError
 
     @staticmethod
@@ -50,7 +50,7 @@ class Controller:
             database_controller.add_milestone(username, skill, date, comment, level)
             user_skills = database_controller.get_skills(username)
             name = authentication_controller.get_name(username)
-            return ProfileModel(username, name, user_skills)
+            return ProfileModel(username, name, user_skills).jsonable()
         raise PermissionError   
 
     @staticmethod

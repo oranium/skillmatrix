@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 
 // redux
 import store from 'Store';
-import { changeView, openProfileDialog, switchPage } from 'actions';
+import { changeView, openProfileDialog, switchPage, setOwnProfile, setError } from 'actions';
 
 // react components
 import TabContainer from 'components/profile/TabContainer';
@@ -22,6 +22,10 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import { ArrowLeft, Search } from '@material-ui/icons';
 
+// Rest
+import RestPoints from 'rest/Init';
+import RestCom from 'rest/Rest';
+
 const styles = theme => ({
   root: {
     flexGrow: 1,
@@ -31,36 +35,43 @@ const styles = theme => ({
     position: 'static',
     display: 'block',
     margin: '10px',
-  }
+  },
 });
 
 class ProfileController extends Component {
   localUpdate = [];
 
-  applyLevelUpdates = skills => {
+  async applyLevelUpdates(skills) {
     const { state } = this.props;
     const { person } = state.profile;
     const { username } = state.profile.profiles[person];
-    var latestChanges = { username, skills: [{ skill: '', level: 0 }] };
+    var latestChanges = { username, skills: {} };
     var alreadyUpdated = [];
     console.log(this.localUpdate);
     Object.keys(skills).map(index => {
       Object.keys(this.localUpdate).map(idx => {
         if (skills[index].skillname === this.localUpdate[idx][0].skill) {
           alreadyUpdated.push(this.localUpdate[idx][0].skill);
-          latestChanges.skills.push({
-            skill: this.localUpdate[idx][0].skill,
-            level: this.localUpdate[idx][0].level,
-          });
+          latestChanges.skills[this.localUpdate[idx][0].skill] = this.localUpdate[idx][0].level;
         }
       });
     });
-    latestChanges.skills.shift();
+
+    // send skill
+    let Rest = new RestCom(RestPoints.skill, JSON.stringify(latestChanges));
+    //todo remove JSON.stringify
+    try {
+      const { data } = await Rest.post();
+      store.dispatch(setOwnProfile(data));
+    } catch (e) {
+      store.dispatch(setError(e.message));
+    }
+
     console.log(latestChanges);
 
     this.localUpdate = [];
     delete latestChanges[skills];
-  };
+  }
 
   handleLevelChange = (skill, level) => {
     this.localUpdate.push([{ skill, level }]);
@@ -96,7 +107,7 @@ class ProfileController extends Component {
 
   switchToSearchPage = () => {
     store.dispatch(switchPage('search'));
-  }
+  };
 
   render() {
     const { state, classes } = this.props;
@@ -105,7 +116,6 @@ class ProfileController extends Component {
     const skills = profiles[person].skills;
     const copy = skills.slice();
     const ownerArticle = this.getOwnerArticle();
-
     return (
       <div className={classes.root}>
         <AppBar position="static">
@@ -114,54 +124,64 @@ class ProfileController extends Component {
             <Tab label={ownerArticle + 'Statistics'} />
           </Tabs>
         </AppBar>
-        {!isEditable && (<IconButton
-          className={classes.goBackButton}
-          onClick={this.switchToSearchPage}
-          color="inherit"
-          aria-label="Go Back"
-        >
-          <ArrowLeft/>
-          <Search/>
-        </IconButton>)}
+        {!isEditable && (
+          <IconButton
+            className={classes.goBackButton}
+            onClick={this.switchToSearchPage}
+            color="inherit"
+            aria-label="Go Back"
+          >
+            <ArrowLeft />
+            <Search />
+          </IconButton>
+        )}
         <div>
-        {view === 0 && (
-          <TabContainer>
-            <SkillProfileList categories={skills} levelChange={this.handleLevelChange} />
+          {view === 0 && (
+            <TabContainer>
+              <SkillProfileList
+                categories={skills}
+                levelChange={this.handleLevelChange}
+                isEditable={isEditable}
+              />
 
-            {isEditable && (
-              <div>
-                <NewMilestoneDialog open={showDialog === 'milestone'} />
-                <NewSkillDialog />
-                <div className="button-container">
-                  <Button variant="contained" color="primary" onClick={this.openNewMilestoneDialog}>
-                    New Milestone
-                  </Button>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    name="submit"
-                    onClick={this.handleNewSkill}
-                  >
-                    New Skill
-                  </Button>
-                  <Button
-                    name="bla"
-                    variant="contained"
-                    color="primary"
-                    onClick={this.applyLevelUpdates.bind(this, copy)}
-                  >
-                    Apply Changes
-                  </Button>
+              {isEditable && (
+                <div>
+                  <NewMilestoneDialog open={showDialog === 'milestone'} />
+                  <NewSkillDialog />
+                  <div className="button-container">
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={this.openNewMilestoneDialog}
+                    >
+                      New Milestone
+                    </Button>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      name="submit"
+                      onClick={this.handleNewSkill}
+                    >
+                      New Skill
+                    </Button>
+                    <Button
+                      name="bla"
+                      variant="contained"
+                      color="primary"
+                      onClick={this.applyLevelUpdates.bind(this, copy)}
+                    >
+                      Apply Changes
+                    </Button>
+                  </div>
                 </div>
-              </div>
-            )}
-          </TabContainer>
-        )}
-        {view === 1 && (
-          <TabContainer>
-            <SkillStatisticsGrid categories={skills} />
-          </TabContainer>
-        )}
+              )}
+            </TabContainer>
+          )}
+          {view === 1 && (
+            <TabContainer>
+              <SkillStatisticsGrid categories={skills} />
+            </TabContainer>
+          )}
         </div>
       </div>
     );

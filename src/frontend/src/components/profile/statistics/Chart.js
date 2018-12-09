@@ -1,16 +1,22 @@
 import React, { Component } from 'react';
 import { Line } from 'react-chartjs-2';
-import * as zoom from 'chartjs-plugin-zoom';
 
 // example for "Skill" in json format
 
 class Chart extends Component {
   render() {
-    const data = {
+    const {
+      skill, witdh, height, display, enabledZoom,
+    } = this.props;
+
+    const datastructure = [];
+    Object.keys(this.props.data).map(idx => datastructure.push({ x: this.props.data[idx].date, y: this.props.data[idx].level }));
+
+    const dataSet = {
       datasets: [
         {
-          label: this.props.skill,
-          data: this.props.data,
+          label: skill,
+          data: datastructure,
           pointBorderColor: 'rgba(75,192,192,1)',
           borderColor: 'rgba(75,192,192,1)',
           pointHoverBackgroundColor: 'rgba(75,192,192,1)',
@@ -21,19 +27,20 @@ class Chart extends Component {
         },
       ],
     };
+
     return (
       <div className="Chart">
         <Line
-          data={data}
-          width={this.props.width}
-          height={this.props.height}
+          data={dataSet}
+          width={witdh}
+          height={height}
           options={{
             scales: {
               xAxes: [
                 {
                   type: 'time',
                   position: 'bottom',
-                  ticks: { display: this.props.display },
+                  ticks: { display },
                   time: {
                     displayFormats: { month: 'MM/YY' },
                     tooltipFormat: 'll',
@@ -44,7 +51,7 @@ class Chart extends Component {
               yAxes: [
                 {
                   ticks: {
-                    display: this.props.display,
+                    display,
                     beginAtZero: true,
                     steps: 0.5,
                     stepValue: 1,
@@ -54,11 +61,11 @@ class Chart extends Component {
               ],
             },
             pan: {
-              enabled: this.props.enabledZoom,
+              enabled: enabledZoom,
               mode: 'x',
             },
             zoom: {
-              enabled: this.props.enabledZoom,
+              enabled: enabledZoom,
               mode: 'xy',
             },
             startAtZero: true,

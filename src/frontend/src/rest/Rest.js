@@ -1,5 +1,8 @@
 import axios from 'axios';
 
+import { switchPage } from 'actions';
+import store from 'Store';
+
 const config = require('../config.json');
 
 const { APISERVER } = config;
@@ -9,6 +12,7 @@ const errorCodesToErrorMsg = (errorCode) => {
     case 400:
       return 'Wrong login credentials.';
     case 401:
+      store.dispatch(switchPage('login'));
       return 'You need to be logged in to view this page.';
     case 404:
       return 'Couldnt connect to Server. Please try again.';

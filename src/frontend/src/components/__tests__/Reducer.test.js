@@ -56,6 +56,13 @@ const exampleFormState = {
   page: 'form',
   user: 'Valdemar',
 };
+
+const defaultSearch = {
+  searchValues: {},
+  results: {},
+  showResults: false,
+};
+
 const defaultProfilePageState = {
   person: 0,
   isEditable: true,
@@ -73,11 +80,37 @@ const exProfile = {
   username: 'Valdemar',
   skills: [exSkill], // alle skills übergeben
 };
+
+const defaultSkillList = [];
+const exampleSkillList = ['Python', 'Java', 'JavaScript'];
+
+// ###################################################  formstate reducers  ###################################################
+
 describe('reducer tests', () => {
   // test default case
   it('reducer should return the same state again (switch(default)', () => {
     const actState = reducer(exampleFormState, 'default');
     expect(actState.formState).toEqual(exampleFormState.formState);
+  });
+
+  it('should update the actual state after Event "UPDATEINPUT"', () => {
+    // test for empty input redundant bc its done by material-ui component <Input/>
+
+    const actState = reducer(exampleFormState, {
+      type: 'UPDATEINPUT',
+      id: 'email',
+      input: '123@gmx.de',
+    });
+    expect(actState.formState.email).toEqual({ value: '123@gmx.de' });
+  });
+
+  it('should update the actual state after Event "SETINPUTERROR"', () => {
+    const actState = reducer(exampleFormState, {
+      type: 'SETINPUTERROR',
+      id: 'error',
+      error: 'wrong input ',
+    });
+    expect(actState.formState.error).toEqual({ error: 'wrong input ' });
   });
 
   // test reset
@@ -89,7 +122,7 @@ describe('reducer tests', () => {
     expect(actState.formState).toEqual(defaultFormState);
   });
 
-  // test error state
+  // ###################################################  Error reducers  ###################################################
   it('should return the Errorpage state after Event "SETERROR"', () => {
     const errorState = reducer(exampleFormState, {
       type: 'SETERROR',
@@ -99,19 +132,15 @@ describe('reducer tests', () => {
     expect(errorState.error).toEqual({ hasError: true, message: 'server timeout' });
   });
 
-  it('should update the actual state after Event "UPDATEINPUT"', () => {
-    // test for empty input redundant bc its done by material-ui component <Input/>
-
-    const actState = reducer(exampleFormState, {
-      type: 'UPDATEINPUT',
-      id: 'email',
-      input: '123@gmx.de',
+  it('should return the Errorpage state after Event "HIDEERRORDIALOG"', () => {
+    const errorState = reducer(exampleFormState, {
+      type: 'HIDEERRORDIALOG',
     });
 
-    expect(actState.formState.email).toEqual({ value: '123@gmx.de' });
+    expect(errorState.error).toEqual({ hasError: false, message: '' });
   });
 
-  // changes the state --> update page
+  // ###################################################  Switch page reducer  ###################################################
   it('should update the actual state after Event "SWITCHPAGE"', () => {
     const actState = reducer(exampleFormState, {
       type: 'SWITCHPAGE',
@@ -119,7 +148,8 @@ describe('reducer tests', () => {
     });
     expect(actState.page).toEqual('login');
   });
-  // update username
+
+  // ###################################################  Username reducer  ###################################################
   it('should update the actual state after Event "SETUSERNAME"', () => {
     const actState = reducer(exampleFormState, {
       type: 'SETUSERNAME',
@@ -128,19 +158,20 @@ describe('reducer tests', () => {
     expect(actState.user).toEqual('Vladimir');
   });
 
-  it('should update the actual state after Event "SETINPUTERROR"', () => {
-    const actState = reducer(exampleFormState, {
-      type: 'SETINPUTERROR',
-      id: 'error',
-      error: 'wrong input ',
+  // ###################################################  Search page reducers  ###################################################
+
+  it('should update the actual state after Event "SETQUERY"', () => {
+    const actState = reducer(defaultSearch, {
+      type: 'SETQUERY',
+      values: ['Python', 'Valdemar'],
     });
 
-    expect(actState.formState.error).toEqual({ error: 'wrong input ' });
+    expect(actState.search.searchValues).toEqual(['Python', 'Valdemar']);
   });
 
   it('should update the actual state after Event "SETRESULTS"', () => {
-    const actState = reducer(exampleFormState, {
-      type: 'SETRESULTS',
+    const actState = reducer(defaultSearch, {
+      type: 'SETSEARCHRESULTS',
       results: 'Python',
     });
 
@@ -148,7 +179,7 @@ describe('reducer tests', () => {
   });
 
   it('should update the actual state after Event "SHOWRESULTS"', () => {
-    const actState = reducer(exampleFormState, {
+    const actState = reducer(defaultSearch, {
       type: 'SHOWRESULTS',
     });
 
@@ -156,13 +187,30 @@ describe('reducer tests', () => {
   });
 
   it('should update the actual state after Event "HIDERESULTS"', () => {
-    const actState = reducer(exampleFormState, {
+    const actState = reducer(defaultSearch, {
       type: 'HIDERESULTS',
     });
 
     expect(actState.search.showResults).toBe(false);
   });
+  it('should update the actual state after Event "SETSEARCHERROR"', () => {
+    const actState = reducer(defaultSearch, {
+      type: 'SETSEARCHERROR',
+      error: 'Server timeout',
+    });
 
+    expect(actState.search.error).toBe('Server timeout');
+  });
+
+  // it('should update the actual state after Event "RESETSTATE"', () => {
+  //   const actState = reducer(defaultSearch, {
+  //     type: 'RESETSTATE',
+  //   });
+
+  //   expect(actState.search).toBe(false);
+  // });
+
+  // ###################################################  Profile page reducers  ###################################################
   it('should update the actual state after Event "CHANGEVIEW"', () => {
     const actState = reducer(defaultProfilePageState, {
       type: 'CHANGEVIEW',
@@ -201,4 +249,35 @@ describe('reducer tests', () => {
     });
     expect(actState.profile.profiles[actState.profile.profiles.length - 1]).toBe(exProfile);
   });
+
+  it('should update the actual state after Event "SETOWNPROFILE"', () => {
+    const actState = reducer(defaultProfilePageState, {
+      type: 'SETOWNPROFILE',
+      profile: exProfile,
+    });
+    expect(actState.profile.profiles[0]).toBe(exProfile);
+  });
+
+  //   it('should update the actual state after Event "RESETSTATE" on Profile', () => {
+  //     const actState = reducer(defaultProfilePageState, {
+  //       type: 'RESETSTATE',
+  //     });
+  //     expect(actState).toBe(defaultProfilePageState);
+  //   });
+
+  // ###################################################  all Skills reducers  ###################################################
+  it('should update the actual state after Event "SETALLSKILLS"', () => {
+    const actState = reducer(defaultSkillList, {
+      type: 'SETALLSKILLS',
+      skills: exampleSkillList,
+    });
+    expect(actState.allSkills).toBe(exampleSkillList);
+  });
+
+  // it('should update the actual state after Event "RESETSTATE" on allSkills', () => {
+  //   const actState = reducer(defaultSkillList, {
+  //     type: 'RESETSTATE',
+  //   });
+  //   expect(actState.allSkills).toBe(defaultSkillList);
+  // });
 });

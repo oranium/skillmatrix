@@ -22,7 +22,7 @@ export const resetForm = {
 };
 
 export const setUser = user => ({
-  type: 'SETUSERE',
+  type: 'SETUSER',
   user,
 });
 
