@@ -21,9 +21,9 @@ export const resetForm = {
   type: 'RESETFORM',
 };
 
-export const setUsername = username => ({
-  type: 'SETUSERNAME',
-  username,
+export const setUser = user => ({
+  type: 'SETUSERE',
+  user,
 });
 
 export const setError = errorMsg => ({
