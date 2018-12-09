@@ -32,6 +32,19 @@ export default class FormDialog extends Component {
     //todo api /skill
 
     // send skill
+    if (
+      //skill.skills.contains() ||
+      skill.skills[''] != undefined ||
+      skill.skills[0] === ''
+      //||
+      // milestone.datum === '' ||
+      //milestone.comment === ''||
+      //milestone[0].skill === '' ||
+      //milestone[0].level === ''
+    ) {
+      milestone = false;
+    }
+    console.log(skill, milestone);
     let Rest = new RestCom(RestPoints.skill, JSON.stringify(skill));
 
     try {
@@ -78,7 +91,7 @@ export default class FormDialog extends Component {
 
     const aktSkill = {
       username: profile.username,
-      skills: { [singleselect.value]: levelfield.value},
+      skills: { [singleselect.value]: levelfield.value },
     };
 
     const allSkillsOfUser = Object.keys(profile.skills).map(
@@ -106,6 +119,7 @@ export default class FormDialog extends Component {
             <DialogContentText>
               To add a new Skill please fill in all inputfields.
             </DialogContentText>
+
             <SingleSelect allSkills={availableNewSkills} />
             <TextField
               id="standard-with-placeholder"
@@ -116,9 +130,15 @@ export default class FormDialog extends Component {
             />
 
             <Button onClick={() => (singleselect.value = newSkill)}>+</Button>
-            <LevelPicker data={levelfield} onChange={(id, value) => this.handleChange(id, value)} />
-            <DateInput data={datefield} onChange={(id, value) => this.handleChange(id, value)} />
-            <TextArea data={textarea} onChange={(id, value) => this.handleChange(id, value)} />
+            <LevelPicker
+              data={levelfield}
+              required={true}
+              onChange={(id, value) => this.handleChange(id, value)}
+            />
+            {
+              // <DateInput data={datefield} onChange={(id, value) => this.handleChange(id, value)} />
+              // <TextArea data={textarea} onChange={(id, value) => this.handleChange(id, value)} />
+            }
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
