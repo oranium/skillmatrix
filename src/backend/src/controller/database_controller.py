@@ -63,6 +63,7 @@ class DatabaseController:
             if not new_skill:
                 new_skill = Skill(name=skill, category="Programming")
                 database_controller.create_skill(new_skill)
+            database_controller.add_milestone(username, skill, cdate, "Level {0}".format(level), level)
             assoc = Association(level=level)
             assoc.skill_assoc = new_skill
             assoc.date_assoc = cdate
