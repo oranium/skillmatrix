@@ -35,7 +35,7 @@ const styles = theme => ({
     position: 'static',
     display: 'block',
     margin: '10px',
-  }
+  },
 });
 
 class ProfileController extends Component {
@@ -71,7 +71,7 @@ class ProfileController extends Component {
 
     this.localUpdate = [];
     delete latestChanges[skills];
-  };
+  }
 
   handleLevelChange = (skill, level) => {
     this.localUpdate.push([{ skill, level }]);
@@ -107,7 +107,7 @@ class ProfileController extends Component {
 
   switchToSearchPage = () => {
     store.dispatch(switchPage('search'));
-  }
+  };
 
   render() {
     const { state, classes } = this.props;
@@ -116,7 +116,7 @@ class ProfileController extends Component {
     const skills = profiles[person].skills;
     const copy = skills.slice();
     const ownerArticle = this.getOwnerArticle();
-
+    console.log(isEditable);
     return (
       <div className={classes.root}>
         <AppBar position="static">
@@ -125,54 +125,64 @@ class ProfileController extends Component {
             <Tab label={ownerArticle + 'Statistics'} />
           </Tabs>
         </AppBar>
-        {!isEditable && (<IconButton
-          className={classes.goBackButton}
-          onClick={this.switchToSearchPage}
-          color="inherit"
-          aria-label="Go Back"
-        >
-          <ArrowLeft/>
-          <Search/>
-        </IconButton>)}
+        {!isEditable && (
+          <IconButton
+            className={classes.goBackButton}
+            onClick={this.switchToSearchPage}
+            color="inherit"
+            aria-label="Go Back"
+          >
+            <ArrowLeft />
+            <Search />
+          </IconButton>
+        )}
         <div>
-        {view === 0 && (
-          <TabContainer>
-            <SkillProfileList categories={skills} levelChange={this.handleLevelChange} />
+          {view === 0 && (
+            <TabContainer>
+              <SkillProfileList
+                categories={skills}
+                levelChange={this.handleLevelChange}
+                isEditable={isEditable}
+              />
 
-            {isEditable && (
-              <div>
-                <NewMilestoneDialog open={showDialog === 'milestone'} />
-                <NewSkillDialog />
-                <div className="button-container">
-                  <Button variant="contained" color="primary" onClick={this.openNewMilestoneDialog}>
-                    New Milestone
-                  </Button>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    name="submit"
-                    onClick={this.handleNewSkill}
-                  >
-                    New Skill
-                  </Button>
-                  <Button
-                    name="bla"
-                    variant="contained"
-                    color="primary"
-                    onClick={this.applyLevelUpdates.bind(this, copy)}
-                  >
-                    Apply Changes
-                  </Button>
+              {isEditable && (
+                <div>
+                  <NewMilestoneDialog open={showDialog === 'milestone'} />
+                  <NewSkillDialog />
+                  <div className="button-container">
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={this.openNewMilestoneDialog}
+                    >
+                      New Milestone
+                    </Button>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      name="submit"
+                      onClick={this.handleNewSkill}
+                    >
+                      New Skill
+                    </Button>
+                    <Button
+                      name="bla"
+                      variant="contained"
+                      color="primary"
+                      onClick={this.applyLevelUpdates.bind(this, copy)}
+                    >
+                      Apply Changes
+                    </Button>
+                  </div>
                 </div>
-              </div>
-            )}
-          </TabContainer>
-        )}
-        {view === 1 && (
-          <TabContainer>
-            <SkillStatisticsGrid categories={skills} />
-          </TabContainer>
-        )}
+              )}
+            </TabContainer>
+          )}
+          {view === 1 && (
+            <TabContainer>
+              <SkillStatisticsGrid categories={skills} />
+            </TabContainer>
+          )}
         </div>
       </div>
     );
