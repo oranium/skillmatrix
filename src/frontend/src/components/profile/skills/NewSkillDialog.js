@@ -70,8 +70,10 @@ export default class FormDialog extends Component {
     var newSkill = '';
     const aktMilestone = [
       {
-        datum: datefield.value,
+        username: profile.username,
+        date: datefield.value,
         level: levelfield.value,
+        skill: singleselect.value,
         comment: textarea.value,
       },
     ];
