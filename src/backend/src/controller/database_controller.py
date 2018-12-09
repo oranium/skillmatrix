@@ -191,14 +191,14 @@ class DatabaseController:
 
 
     @staticmethod
-    def create_user(username, forename, surname):
+    def create_user(username, name):
         """Create a user in the database.
            Args:
                username (str): the username of the user to add - should be identical to the Active Directory username.
                forename (str): The forename of the user to add.
                surname (str): The surname of the user to add.
         """
-        db.session.add(Users(username=username, forename=forename, surname=surname))
+        db.session.add(Users(username=username, name=name))
         db.session.commit()
 
     @staticmethod
