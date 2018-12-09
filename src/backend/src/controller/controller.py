@@ -24,7 +24,7 @@ class Controller:
     def logout(username):
         if controller.is_connected(username):
             authentication_controller.logout(username)
-            return LogoutModel(username)
+            return LogoutModel(username).jsonable()
         raise PermissionError
 
     @staticmethod
