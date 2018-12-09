@@ -32,13 +32,14 @@ export default class FormDialog extends React.Component {
     if (milestone.datum === '' || milestone.comment === '' || milestone.skill === '') {
       milestone = false;
     }
-    console.log(milestone);
-    const Rest = new RestCom(RestPoints.milestone, JSON.stringify(milestone));
-    try {
-      const { data } = await Rest.post();
-      store.dispatch(setOwnProfile(data));
-    } catch (e) {
-      store.dispatch(setError(e.message));
+    if (milestone){
+      const Rest = new RestCom(RestPoints.milestone, JSON.stringify(milestone));
+      try {
+        const { data } = await Rest.post();
+        store.dispatch(setOwnProfile(data));
+      } catch (e) {
+        store.dispatch(setError(e.message));
+      }
     }
     this.handleClose();
     //todo change to new api result and remove JSON stringify
