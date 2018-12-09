@@ -67,7 +67,7 @@ export default class FormDialog extends React.Component {
     const aktMilestone = {
       username: currentProfile.username,
       skill: aktSkill,
-      datum: datefield.value,
+      date: datefield.value,
       level: aktLevel,
       comment: textarea.value,
     };
