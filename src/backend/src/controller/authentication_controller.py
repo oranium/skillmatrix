@@ -70,7 +70,7 @@ class AuthenticationController:
             print("adding connection", file=sys.stderr)
             # successful login
             authentication_controller.connections[username] = new_connection
-            return username
+            return authentication_controller.get_name(username)
         # catch empty input
         except (LDAPUnknownAuthenticationMethodError, LDAPInvalidCredentialsResult):
             print("empty", file=sys.stderr)
@@ -102,4 +102,4 @@ class AuthenticationController:
             tuple (str,str): Contains the forename at index 0, surname at index 1
         """
 
-        return tuple("forename", "surename")
+        return "i am name"

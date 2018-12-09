@@ -13,12 +13,12 @@ class Controller:
     """
     @staticmethod
     def login(username, password):
-        authentication_controller.login(username, password)
-        user_skills = database_controller.get_skills(username)        
+        name = authentication_controller.login(username, password)
+        user_skills = database_controller.get_skills(username)
         if not database_controller.exists(username):
-            name = authentication_controller.get_name(username)
-            database_controller.create_user(username, name[0], name[1])
-        return dict(user=ProfileModel(username, user_skills).jsonable(), allSkills=database_controller.get_all_skill_names())
+            database_controller.create_user(username, name)
+        return dict(user=ProfileModel(username, name, user_skills).jsonable(),
+                    allSkills=database_controller.get_all_skill_names())
 
     @staticmethod
     def logout(username):
@@ -35,14 +35,16 @@ class Controller:
     def set_skills(username, skills):
         database_controller.set_skills(username, skills)
         user_skills = database_controller.get_skills(username)
-        return ProfileModel(username, user_skills)
+        name = authentication_controller.get_name(username)
+        return ProfileModel(username, name, user_skills).jsonable()
 
     @staticmethod
     def add_milestone(username, skill, date, comment, level):
         date = datetime.datetime.strptime(date, "%Y-%m-%d").date()
         database_controller.add_milestone(username, skill, date, comment, level)
         user_skills = database_controller.get_skills(username)
-        return ProfileModel(username, user_skills)
+        name = authentication_controller.get_name(username)
+        return ProfileModel(username, name, user_skills).jsonable()
 
 
 controller = Controller()
