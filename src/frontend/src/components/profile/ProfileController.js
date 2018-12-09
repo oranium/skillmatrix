@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 
 // redux
 import store from 'Store';
-import { changeView, openProfileDialog, switchPage } from 'actions';
+import { changeView, openProfileDialog, switchPage, setOwnProfile, setError } from 'actions';
 
 // react components
 import TabContainer from 'components/profile/TabContainer';
@@ -22,6 +22,10 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import { ArrowLeft, Search } from '@material-ui/icons';
 
+// Rest
+import RestPoints from 'rest/Init';
+import RestCom from 'rest/Rest';
+
 const styles = theme => ({
   root: {
     flexGrow: 1,
@@ -37,7 +41,7 @@ const styles = theme => ({
 class ProfileController extends Component {
   localUpdate = [];
 
-  applyLevelUpdates = skills => {
+  async applyLevelUpdates(skills) {
     const { state } = this.props;
     const { person } = state.profile;
     const { username } = state.profile.profiles[person];
@@ -49,13 +53,23 @@ class ProfileController extends Component {
         if (skills[index].skillname === this.localUpdate[idx][0].skill) {
           alreadyUpdated.push(this.localUpdate[idx][0].skill);
           latestChanges.skills.push({
-            skill: this.localUpdate[idx][0].skill,
-            level: this.localUpdate[idx][0].level,
+            [this.localUpdate[idx][0].skill]: this.localUpdate[idx][0].level,
           });
         }
       });
     });
     latestChanges.skills.shift();
+
+    // send skill
+    let Rest = new RestCom(RestPoints.skill, JSON.stringify(latestChanges));
+    //todo remove JSON.stringify
+    try {
+      const { data } = await Rest.post();
+      store.dispatch(setOwnProfile(data));
+    } catch (e) {
+      store.dispatch(setError(e.message));
+    }
+
     console.log(latestChanges);
 
     this.localUpdate = [];
