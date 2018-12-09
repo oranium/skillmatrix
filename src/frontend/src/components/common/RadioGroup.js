@@ -42,8 +42,6 @@ class RadioButtonsGroup extends React.Component {
   render() {
     const { classes } = this.props;
     const numbers = ['1', '2', '3', '4', '5'];
-    console.log(this.props.disabled);
-
     const rdBtns = numbers.map((num, index) =>
       num < this.props.level || num > this.props.level ? (
         <FormControlLabel

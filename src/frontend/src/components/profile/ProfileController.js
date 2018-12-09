@@ -116,7 +116,6 @@ class ProfileController extends Component {
     const skills = profiles[person].skills;
     const copy = skills.slice();
     const ownerArticle = this.getOwnerArticle();
-    console.log(isEditable);
     return (
       <div className={classes.root}>
         <AppBar position="static">
