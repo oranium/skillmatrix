@@ -4,21 +4,24 @@ import LoginForm from '../LoginForm';
 import Form from '../Form';
 import Header from '../Header';
 import App from '../App';
+import Panel from '../Panel'
+import ControlledExpansionPanels from '../ControlledExpansionPanels'
 import {
-  SkillNameInput, DateInput, TextArea, LevelPicker,
+  SkillNameInput, DateInput, TextArea, LevelPicker, SearchInput
 } from '../InputFields';
-const username = "Valdemar Forsberg"
-const password = "password"
+
+const username = 'Valdemar Forsberg';
+const password = 'password';
 
 describe('test Login Components', () => {
-  const wrapper = shallow(<LoginForm errorMsg = {''}  login={(username, password) => App.handleLogin(username, password)}/>);
+  const wrapper = shallow(<LoginForm errorMsg="" login={(username, password) => App.handleLogin(username, password)} />);
   it('render Login component', () => {
     expect(wrapper).toMatchSnapshot();
   });
 });
 
 describe('test Form component', () => {
-  const wrapper = shallow(<Form inputs="" page="login" name="test" onChange = { '' }  onSubmit = { '' } onClick = { '' } />);
+  const wrapper = shallow(<Form inputs="" page="login" name="test" onChange="" onSubmit="" onClick="" />);
   it('contains important components as children', () => {
     expect(wrapper.contains([<SkillNameInput />, <DateInput />, <TextArea />, <LevelPicker />]));
   });
@@ -52,6 +55,35 @@ describe('test components from InputFields', () => {
 
   it('render TextArea from InputFields', () => {
     const wrapper = shallow(<TextArea />);
+    expect(wrapper).toMatchSnapshot();
+  });
+  it('render SearchInput from InputFields', () => {
+    const wrapper = shallow(<SearchInput />)
+    expect(wrapper).toMatchSnapshot();
+  });
+});
+
+
+describe('test Panels right', () => {
+  const wrapper = shallow(<Panel
+    key={1}
+    id={1}
+    username={username} 
+    level={2}
+    onChange={() => console.log('test')}
+/>);
+  it('render Panel component', () => {
+    const wrapper = shallow(<Panel
+      key={1}
+      id={1}
+      username={username} 
+      level={2}
+      onChange={() => console.log('test')}
+/>);
+    expect(wrapper).toMatchSnapshot();
+  });
+  it('render ControlledExpansionPanels component', () => {
+    const wrapper = shallow(<ControlledExpansionPanels />);
     expect(wrapper).toMatchSnapshot();
   });
 });

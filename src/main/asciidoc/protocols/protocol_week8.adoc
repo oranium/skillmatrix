@@ -1,0 +1,88 @@
+= Protokoll Gruppe 01
+
+Treffen am 27.11.2018
+
+Ort:      APB 2101 +
+Beginn:   13:00 Uhr +
+Ende:     14:15 Uhr
+
+__Schriftführer:__ +
+Bruno Reinhold +
+*Nächstes Treffen:* +
+
+4.12.2018, 13:00 Uhr,  Ort des nächsten Treffens: *APB*
+
+__Teilnehmer:__ +
+//Tabellarisch oder Aufzählung, Kennzeichnung von Teilnehmern mit besonderer Rolle (z.B. Kunde)
+Paul Hoffmann (product owner) +
+Aron Gaden (scrum master, scrum team) +
+Willy Pertsch (scrum team) +
+Maximilian Schaller (scrum team) +
+Cornell Ziepel (scrum team) +
+Bruno Reinhold (Schriftführer, scrum team) +
+
+== Bemerkungen
+Verwarnungen, besondere Vorfälle, Organisatorisches, wichtige getroffene Entscheidungen +
+
+-> Entwurfsklassendiagramm (Backend) überarbeiten + 
+-> Model-View-Controller Pattern prüfen +
+
+== Retrospektive des letzten Sprints
+*Issue referenziert die Issue ID von GitHub*
+// Wie ist der Status der im letzten Sprint erstellten Issues/verteilten Aufgaben?
+
+// See http://asciidoctor.org/docs/user-manual/=tables
+[option="headers"]
+|===
+|#13| Authentication: mocking active directory | closed | -
+|#14| Login: test rest connection in Login method |closed | - 
+|#15| Authentication: Create functional mock AD | closed| -
+|#17| Login: write logout method | closed| -
+|#18| Login: test logout rest connection | closed| - 
+|#20| feature/backend: Database-REST |closed| -
+|#36| feature/Login test states |closed| -
+|#39|  Problems with login| closed |- 
+
+|===
+
+
+== Aktueller Stand +
+-> Login +
+-> Grundfunktion der Suche +
+-> Implementierung der Unit-Tests + 
+
+
+
+== Planung des nächsten Sprints + 
+*bis 25.11.2018:* 
+*Implementierung und Tests (OOP)* +
+-> Implementierung weiterer Unit-Tests + 
+-> fortlaufende Ergänzung der Entwicklerdokumentation + 
+-> Fokus auf Implementierung des Profils und der statistischen Auswertung +
+
+
+
+*Erinnerung* +
+*bis 09.12.2018 müssen die Muss-Kriterien stehen* +
+-> Anmeldung/Login +
+-> Fähigkeiten bewerten +
+-> Fähigkeiten suchen + 
+-> Fähigkeiten bearbeiten +
+-> Mitarbeiter Entwicklung +
+
+
+*Issue referenziert die Issue ID von GitHub*
+
+// See http://asciidoctor.org/docs/user-manual/=tables
+[option="headers"]
+|===
+|Issue |Titel |Beschreibung |Verantwortlicher |Status
+
+|#16 |improve integration of redux store |new connection between react components and redux store with connect() |Cornell |WIP
+|#21 | database: Testen und mocken |-| Willy, Bruno |WIP
+|#26 | database: many to many relations |Connect user and skill |Willy |WIP
+|#32|  feature/search_frontend implement search with rest connection |implement search with rest connection| Cornell | WIP
+|#33 | feature/backend: test search API | test search API | Aron | WIP
+|#34 | feature/backend: test search implementation in database_manager |test search implementation in database_manager| Aron | WIP
+|#45 | feature/backend time tracking for skill level updates |time tracking for skill level updates |Aron, Willy, Bruno | WIP
+|===
