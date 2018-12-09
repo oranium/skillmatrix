@@ -43,7 +43,7 @@ export default class FormDialog extends Component {
 
     //send milestone
     console.log(milestone);
-    Rest = new RestCom(RestPoints.skill, JSON.stringify(milestone));
+    Rest = new RestCom(RestPoints.milestone, JSON.stringify(milestone));
     try {
       const { data } = await Rest.post();
       store.dispatch(setOwnProfile(data));
