@@ -1,0 +1,172 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test Form component renders single component correctly 1`] = `
+<div
+  className="form"
+>
+  <div
+    className="button-container"
+  >
+    <WithStyles(Button)
+      color="primary"
+      name="submit"
+      onClick={[Function]}
+      variant="contained"
+    >
+      Edit skill
+    </WithStyles(Button)>
+  </div>
+</div>
+`;
+
+exports[`test Header component render Header component 1`] = `
+<ButtonAppBar
+  classes={
+    Object {
+      "grow": "ButtonAppBar-grow-7",
+      "menuButton": "ButtonAppBar-menuButton-8",
+      "root": "ButtonAppBar-root-6",
+    }
+  }
+  logout="handleLogout"
+  username="Valdemar"
+/>
+`;
+
+exports[`test Login Components render Login component 1`] = `
+<SignIn
+  classes={
+    Object {
+      "avatar": "SignIn-avatar-3",
+      "form": "SignIn-form-4",
+      "main": "SignIn-main-1",
+      "paper": "SignIn-paper-2",
+      "submit": "SignIn-submit-5",
+    }
+  }
+  errorMsg=""
+  login={[Function]}
+/>
+`;
+
+exports[`test Panel component render Header component 1`] = `
+<Panel
+  classes={
+    Object {
+      "heading": "Panel-heading-10",
+      "root": "Panel-root-9",
+      "secondaryHeading": "Panel-secondaryHeading-11",
+    }
+  }
+  id={1}
+  level={2}
+  onChange={[Function]}
+  username="Valdemar Forsberg"
+/>
+`;
+
+exports[`test Panel component render Panel component 1`] = `
+<Panel
+  classes={
+    Object {
+      "heading": "Panel-heading-10",
+      "root": "Panel-root-9",
+      "secondaryHeading": "Panel-secondaryHeading-11",
+    }
+  }
+  id={1}
+  level={2}
+  onChange={[Function]}
+  username="Valdemar Forsberg"
+/>
+`;
+
+exports[`test Panels right render ControlledExpansionPanels component 1`] = `
+<ControlledExpansionPanels
+  classes={
+    Object {
+      "heading": "ControlledExpansionPanels-heading-28",
+      "root": "ControlledExpansionPanels-root-27",
+      "secondaryHeading": "ControlledExpansionPanels-secondaryHeading-29",
+    }
+  }
+/>
+`;
+
+exports[`test Panels right render Panel component 1`] = `
+<Panel
+  classes={
+    Object {
+      "heading": "Panel-heading-10",
+      "root": "Panel-root-9",
+      "secondaryHeading": "Panel-secondaryHeading-11",
+    }
+  }
+  id={1}
+  level={2}
+  onChange={[Function]}
+  username="Valdemar Forsberg"
+/>
+`;
+
+exports[`test components from InputFields render DateInput from InputFields 1`] = `
+<Component
+  classes={
+    Object {
+      "container": "Component-container-15",
+      "error": "Component-error-17",
+      "textField": "Component-textField-16",
+    }
+  }
+/>
+`;
+
+exports[`test components from InputFields render LevelPicker from InputFields 1`] = `
+<Component
+  classes={
+    Object {
+      "container": "Component-container-18",
+      "error": "Component-error-20",
+      "textField": "Component-textField-19",
+    }
+  }
+/>
+`;
+
+exports[`test components from InputFields render SearchInput from InputFields 1`] = `
+<Component
+  classes={
+    Object {
+      "container": "Component-container-24",
+      "error": "Component-error-26",
+      "textField": "Component-textField-25",
+    }
+  }
+/>
+`;
+
+exports[`test components from InputFields render SkillNameInput from InputFields component 1`] = `
+<Component
+  classes={
+    Object {
+      "container": "Component-container-12",
+      "error": "Component-error-14",
+      "textField": "Component-textField-13",
+    }
+  }
+  data="skill"
+  value="python"
+/>
+`;
+
+exports[`test components from InputFields render TextArea from InputFields 1`] = `
+<Component
+  classes={
+    Object {
+      "container": "Component-container-21",
+      "error": "Component-error-23",
+      "textField": "Component-textField-22",
+    }
+  }
+/>
+`;

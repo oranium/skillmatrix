@@ -1,3 +1,6 @@
+#build directory
+build/
+
 # Maven
 target/
 
@@ -24,7 +27,17 @@ Desktop.ini
 *.mv.db
 *.h2.db
 
-src/frontend/prototyp_react/
+#npm packages
+node_modules/
 
-#vscode
-.vscode
+#vscode settings
+.vscode/
+
+#python virtual environments
+venv/
+
+#python cache
+__pycache__/
+
+#config file
+config.py
