@@ -32,24 +32,22 @@ export default class FormDialog extends Component {
     //todo api /skill
 
     // send skill
-    if (
-      //skill.skills.contains() ||
-      skill.skills[''] != undefined ||
-      skill.skills[0] === '' ||
-      milestone.datum === '' ||
-      milestone.comment === '' ||
-      milestone[0].skill === '' ||
-      milestone[0].level === ''
-    ) {
-      //#########################################################
-      //hier dein code reinhauen, schau dir mal die consolen outputs an da wird skill und milestone geprintet
-      //milestone ist ja an sich ein object und nur wenn ein feld leer ist wird es auf false gesetzt deswegen funktioniert die
-      // if abfrage vlt  nicht ? vllt mal mit anderer variavle propieren ?
-      milestone = false;
-    }
-    console.log(skill, milestone);
+    // if (
+    //   //skill.skills.contains() ||
+    //   skill.skills[''] != undefined ||
+    //   skill.skills[0] === '' ||
+    //   milestone.datum === '' ||
+    //   milestone.comment === '' ||
+    //   milestone[0].skill === '' ||
+    //   milestone[0].level === ''
+    // ) {
+    //   //#########################################################
+    //   //hier dein code reinhauen, schau dir mal die consolen outputs an da wird skill und milestone geprintet
+    //   //milestone ist ja an sich ein object und nur wenn ein feld leer ist wird es auf false gesetzt deswegen funktioniert die
+    //   // if abfrage vlt  nicht ? vllt mal mit anderer variavle propieren ?
+    //   milestone = false;
+    // }
     let Rest = new RestCom(RestPoints.skill, JSON.stringify(skill));
-
     try {
       const { data } = await Rest.post();
       store.dispatch(setOwnProfile(data));
@@ -57,17 +55,17 @@ export default class FormDialog extends Component {
       store.dispatch(setError(e.message));
     }
 
-    //send milestone
-    console.log(milestone);
-    if (milestone) {
-      Rest = new RestCom(RestPoints.milestone, JSON.stringify(milestone));
-      try {
-        const { data } = await Rest.post();
-        store.dispatch(setOwnProfile(data));
-      } catch (e) {
-        store.dispatch(setError(e.message));
-      }
-    }
+    // //send milestone
+    // console.log(milestone);
+    // if (milestone) {
+    //   Rest = new RestCom(RestPoints.milestone, JSON.stringify(milestone));
+    //   try {
+    //     const { data } = await Rest.post();
+    //     store.dispatch(setOwnProfile(data));
+    //   } catch (e) {
+    //     store.dispatch(setError(e.message));
+    //   }
+    // }
 
     //todo change to new api result and remove JSON stringify
     this.handleClose();
@@ -143,14 +141,14 @@ export default class FormDialog extends Component {
               onChange={(id, value) => this.handleChange(id, value)}
             />
 
-            <DateInput data={datefield} onChange={(id, value) => this.handleChange(id, value)} />
-            <TextArea data={textarea} onChange={(id, value) => this.handleChange(id, value)} />
+            {/* <DateInput data={datefield} onChange={(id, value) => this.handleChange(id, value)} />
+            <TextArea data={textarea} onChange={(id, value) => this.handleChange(id, value)} /> */}
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
               Cancel
             </Button>
-            <Button onClick={() => this.handleSubmit(aktSkill, aktMilestone)} color="primary">
+            <Button onClick={() => this.handleSubmit(aktSkill, false)} color="primary">
               Submit
             </Button>
           </DialogActions>
