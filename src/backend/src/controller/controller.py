@@ -22,29 +22,36 @@ class Controller:
 
     @staticmethod
     def logout(username):
-        authentication_controller.logout(username)
-        return LogoutModel(username)
+        if controller.is_connected(username):
+            authentication_controller.logout(username)
+            return LogoutModel(username)
+        raise PermissionError
 
     @staticmethod
-    def search(query):
-        print(query)
-        results = database_controller.search(query)
-        return SearchModel(query, results).jsonable()
+    def search(username, query):
+        if controller.is_connected(username):
+            results = database_controller.search(query)
+            return SearchModel(query, results).jsonable()
+        raise PermissionError
 
     @staticmethod
     def set_skills(username, skills):
-        database_controller.set_skills(username, skills)
-        user_skills = database_controller.get_skills(username)
-        name = authentication_controller.get_name(username)
-        return ProfileModel(username, name, user_skills)
+        if controller.is_connected(username):
+            database_controller.set_skills(username, skills)
+            user_skills = database_controller.get_skills(username)
+            name = authentication_controller.get_name(username)
+            return ProfileModel(username, name, user_skills)
+        raise PermissionError
 
     @staticmethod
     def add_milestone(username, skill, date, comment, level):
-        date = datetime.datetime.strptime(date, "%Y-%m-%d").date()
-        database_controller.add_milestone(username, skill, date, comment, level)
-        user_skills = database_controller.get_skills(username)
-        name = authentication_controller.get_name(username)
-        return ProfileModel(username, name, user_skills)
+        if controller.is_connected(username):
+            date = datetime.datetime.strptime(date, "%Y-%m-%d").date()
+            database_controller.add_milestone(username, skill, date, comment, level)
+            user_skills = database_controller.get_skills(username)
+            name = authentication_controller.get_name(username)
+            return ProfileModel(username, name, user_skills)
+        raise PermissionError
 
     @staticmethod
     def is_connected(username):
