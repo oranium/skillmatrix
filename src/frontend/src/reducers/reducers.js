@@ -31,8 +31,12 @@ const defaultFormState = {
   },
 };
 
-const defaultUsername = 'Undefined';
-const defaultPage = 'search';
+const defaultUser = {
+  username: undefined,
+  name: undefined,
+};
+
+const defaultPage = 'login';
 const defaultError = {
   hasError: false,
   message: '',
@@ -42,7 +46,10 @@ const defaultSearch = {
   searchValues: {},
   results: {},
   showResults: false,
+  error: false,
 };
+
+Object.freeze(defaultSearch);
 
 const defaultMilestone = {
   datum: '2000-01-01',
@@ -146,7 +153,6 @@ const defaultProfilePageState = {
   view: 0,
   showDialog: false,
   profiles: [exProfile, exProfile],
-  skillUpdates: [{}],
 };
 
 const defaultSkillList = ['Python', 'Java', 'JavaScript'];
@@ -185,12 +191,12 @@ export const formState = (state = defaultFormState, action) => {
 };
 
 // at the moment this only saves the username
-export const user = (state = defaultUsername, action) => {
+export const user = (state = defaultUser, action) => {
   switch (action.type) {
-    case 'SETUSERNAME':
-      return action.username;
+    case 'SETUSER':
+      return action.user;
     case 'RESETSTATE':
-      return defaultUsername;
+      return defaultUser;
     default:
       return state;
   }
@@ -230,16 +236,17 @@ export const error = (state = defaultError, action) => {
 export const search = (state = defaultSearch, action) => {
   switch (action.type) {
     case 'SETQUERY':
-      return Object.assign(state, { searchValues: action.values });
-    case 'SETRESULTS':
-      return Object.assign(state, { results: action.results });
+      return { ...state, searchValues: action.values };
+    case 'SETSEARCHRESULTS':
+      return { ...state, results: action.results };
     case 'SHOWRESULTS':
-      return Object.assign(state, { showResults: true });
+      return { ...state, showResults: true };
     case 'HIDERESULTS':
-      return Object.assign(state, { showResults: false });
+      return { ...state, showResults: false };
     case 'SETSEARCHERROR':
       return { ...state, error: action.error };
     case 'RESETSEARCH':
+      return defaultSearch;
     case 'RESETSTATE':
       return defaultSearch;
     default:
@@ -250,29 +257,18 @@ export const search = (state = defaultSearch, action) => {
 export const profile = (state = defaultProfilePageState, action) => {
   switch (action.type) {
     case 'CHANGEVIEW':
-      return Object.assign(state, { view: action.view });
+      return { ...state, view: action.view };
     case 'CHANGEPROFILEOWNER':
-      return Object.assign(state, { person: action.person, isEditable: action.person === 0 });
+      return { ...state, person: action.person, isEditable: action.person === 0 };
     case 'OPENPROFILEDIALOG':
-      return Object.assign(state, { showDialog: action.dialogName });
+      return { ...state, showDialog: action.dialogName };
     case 'ClOSEPROFILEDIALOG':
-      return Object.assign(state, { showDialog: false });
+      return { ...state, showDialog: false };
     case 'ADDPROFILES':
-      // return Object.assign(state, { profiles: [...state.profiles, action.profile] });
-      return { ...state, profiles: [...state.profiles, ...action.profiles] };
+      return { ...state, profiles: [state.profiles[0], ...action.profiles] };
     case 'SETOWNPROFILE':
       // changes the element on index 0 in array profiles
       return { ...state, profiles: [action.profile, ...state.profiles.slice(1)] };
-    case 'UPDATESKILLS':
-      // changes the element on index 0 in array profiles //////////////////////////////////////////////////reducer/////skill datenstruktur muss einzeln upgedated werden
-      return {
-        ...state,
-        skillUpdates: [
-          { skill: { ...state.skillUpdates.skill }, level: { ...state.skillUpdates.level } },
-          action.skillUpdates,
-          ...state.skillUpdates.slice(1),
-        ],
-      };
     case 'RESETSTATE':
       return defaultProfilePageState;
     default:
