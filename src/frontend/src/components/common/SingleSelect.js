@@ -101,7 +101,7 @@ function Option(props) {
 function Placeholder(props) {
   return (
     <Typography
-      color="textSplaceholderecondary"
+      color="textSecondary"
       className={props.selectProps.classes.placeholder}
       {...props.innerProps}
     >

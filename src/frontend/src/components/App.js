@@ -45,7 +45,7 @@ class App extends Component {
       store.dispatch(switchPage('search'));
     } catch (e) {
       store.dispatch(setError(e.message));
-      store.dispatch(switchPage('login'));
+      store.dispatch(switchPage('profile'));
     }
   }
 

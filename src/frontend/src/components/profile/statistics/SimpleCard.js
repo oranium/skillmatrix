@@ -49,7 +49,7 @@ export class ClickableChart extends React.Component {
     const { classes } = this.props;
 
     const milestones = Object.keys(classes.data).map(key => (
-      <Typography>
+      <Typography key={key}>
         Datum: {classes.data[key].date}, Level update auf: {classes.data[key].level} Beschreibung:{' '}
         {classes.data[key].comment}
       </Typography>
@@ -59,16 +59,14 @@ export class ClickableChart extends React.Component {
         <Card className={classes.card}>
           <ButtonBase className={this.props.classes.cardAction} onClick={this.handleClickOpen}>
             <CardContent>
-              <Typography variant="h5" component="h2">
-                <Chart //render small chart at the Card
-                  height={200}
-                  width={300}
-                  display={false}
-                  skill={this.props.skill}
-                  data={classes.data}
-                  enabledZoom={false}
-                />
-              </Typography>
+              <Chart //render small chart at the Card
+                height={200}
+                width={300}
+                display={false}
+                skill={this.props.skill}
+                data={classes.data}
+                enabledZoom={false}
+              />
             </CardContent>
           </ButtonBase>
         </Card>
@@ -86,7 +84,7 @@ export class ClickableChart extends React.Component {
                     enabledZoom={true}
                   />
                 </Typography>
-                <Typography>Milestones: {milestones} </Typography>
+                Milestones: {milestones}
               </CardContent>
             </Card>
           </Typography>
