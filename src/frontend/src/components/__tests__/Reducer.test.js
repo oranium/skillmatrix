@@ -26,6 +26,9 @@ const defaultFormState = {
     value: '',
     error: false,
   },
+  singleselect: {
+    value: '',
+  },
 };
 const exampleFormState = {
   formState: {
@@ -53,7 +56,23 @@ const exampleFormState = {
   page: 'form',
   user: 'Valdemar',
 };
+const defaultProfilePageState = {
+  person: 0,
+  isEditable: true,
+  view: 0,
+  showDialog: false,
+  profiles: [],
+};
 
+const exSkill = {
+  skillname: 'Haskell',
+  level: 4,
+  milestones: [],
+};
+const exProfile = {
+  username: 'Valdemar',
+  skills: [exSkill], // alle skills übergeben
+};
 describe('reducer tests', () => {
   // test default case
   it('reducer should return the same state again (switch(default)', () => {
@@ -77,7 +96,7 @@ describe('reducer tests', () => {
       errorMsg: 'server timeout',
     });
 
-    expect(errorState.error).toEqual({"hasError": true, "message": "server timeout"});
+    expect(errorState.error).toEqual({ hasError: true, message: 'server timeout' });
   });
 
   it('should update the actual state after Event "UPDATEINPUT"', () => {
@@ -112,20 +131,20 @@ describe('reducer tests', () => {
   it('should update the actual state after Event "SETINPUTERROR"', () => {
     const actState = reducer(exampleFormState, {
       type: 'SETINPUTERROR',
-      id : "error",
+      id: 'error',
       error: 'wrong input ',
     });
 
-    expect(actState.formState.error).toEqual({"error": "wrong input "});
+    expect(actState.formState.error).toEqual({ error: 'wrong input ' });
   });
-  
+
   it('should update the actual state after Event "SETRESULTS"', () => {
     const actState = reducer(exampleFormState, {
       type: 'SETRESULTS',
-      results: 'Python'
+      results: 'Python',
     });
 
-    expect(actState.searchResults.results).toEqual('Python');
+    expect(actState.search.results).toEqual('Python');
   });
 
   it('should update the actual state after Event "SHOWRESULTS"', () => {
@@ -133,7 +152,7 @@ describe('reducer tests', () => {
       type: 'SHOWRESULTS',
     });
 
-    expect(actState.searchResults.showResults).toBe(true);
+    expect(actState.search.showResults).toBe(true);
   });
 
   it('should update the actual state after Event "HIDERESULTS"', () => {
@@ -141,6 +160,45 @@ describe('reducer tests', () => {
       type: 'HIDERESULTS',
     });
 
-    expect(actState.searchResults.showResults).toBe(false);
+    expect(actState.search.showResults).toBe(false);
+  });
+
+  it('should update the actual state after Event "CHANGEVIEW"', () => {
+    const actState = reducer(defaultProfilePageState, {
+      type: 'CHANGEVIEW',
+      view: 1,
+    });
+    expect(actState.profile.view).toBe(1);
+  });
+
+  it('should update the actual state after Event "CHANGEPROFILEOWNER"', () => {
+    const actState = reducer(defaultProfilePageState, {
+      type: 'CHANGEPROFILEOWNER',
+      person: 1,
+    });
+    expect(actState.profile.person).toBe(1);
+  });
+
+  it('should update the actual state after Event "OPENPROFILEDIALOG"', () => {
+    const actState = reducer(defaultProfilePageState, {
+      type: 'OPENPROFILEDIALOG',
+      dialogName: 'newdialog',
+    });
+    expect(actState.profile.showDialog).toBe('newdialog');
+  });
+
+  it('should update the actual state after Event "ClOSEPROFILEDIALOG"', () => {
+    const actState = reducer(defaultProfilePageState, {
+      type: 'ClOSEPROFILEDIALOG',
+    });
+    expect(actState.profile.showDialog).toBe(false);
+  });
+
+  it('should update the actual state after Event "ADDPROFILES"', () => {
+    const actState = reducer(defaultProfilePageState, {
+      type: 'ADDPROFILES',
+      profiles: [exProfile],
+    });
+    expect(actState.profile.profiles[actState.profile.profiles.length - 1]).toBe(exProfile);
   });
 });
