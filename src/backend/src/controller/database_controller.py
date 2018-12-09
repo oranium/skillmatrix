@@ -57,13 +57,14 @@ class DatabaseController:
         cdate = Date()
         user = database_controller.get_user(username)
         db.session.add(cdate)
+        db.session.commit()
         for skill, level in skills.items():
             new_skill = database_controller.get_skill(skill)
             # if skill is not found in database, it will be added
             if not new_skill:
                 new_skill = Skill(name=skill, category="Programming")
                 database_controller.create_skill(new_skill)
-            database_controller.add_milestone(username, skill, cdate, "Level {0}".format(level), level)
+            database_controller.add_milestone(username, skill, cdate.date, "Level {0}".format(level), level)
             assoc = Association(level=level)
             assoc.skill_assoc = new_skill
             assoc.date_assoc = cdate
