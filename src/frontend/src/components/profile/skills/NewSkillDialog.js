@@ -35,13 +35,16 @@ export default class FormDialog extends Component {
     if (
       //skill.skills.contains() ||
       skill.skills[''] != undefined ||
-      skill.skills[0] === ''
-      //||
-      // milestone.datum === '' ||
-      //milestone.comment === ''||
-      //milestone[0].skill === '' ||
-      //milestone[0].level === ''
+      skill.skills[0] === '' ||
+      milestone.datum === '' ||
+      milestone.comment === '' ||
+      milestone[0].skill === '' ||
+      milestone[0].level === ''
     ) {
+      //#########################################################
+      //hier dein code reinhauen, schau dir mal die consolen outputs an da wird skill und milestone geprintet
+      //milestone ist ja an sich ein object und nur wenn ein feld leer ist wird es auf false gesetzt deswegen funktioniert die
+      // if abfrage vlt  nicht ? vllt mal mit anderer variavle propieren ?
       milestone = false;
     }
     console.log(skill, milestone);
@@ -56,7 +59,7 @@ export default class FormDialog extends Component {
 
     //send milestone
     console.log(milestone);
-    if (milestone){
+    if (milestone) {
       Rest = new RestCom(RestPoints.milestone, JSON.stringify(milestone));
       try {
         const { data } = await Rest.post();
@@ -65,7 +68,6 @@ export default class FormDialog extends Component {
         store.dispatch(setError(e.message));
       }
     }
-
 
     //todo change to new api result and remove JSON stringify
     this.handleClose();
@@ -140,10 +142,9 @@ export default class FormDialog extends Component {
               required={true}
               onChange={(id, value) => this.handleChange(id, value)}
             />
-            {
-              // <DateInput data={datefield} onChange={(id, value) => this.handleChange(id, value)} />
-              // <TextArea data={textarea} onChange={(id, value) => this.handleChange(id, value)} />
-            }
+
+            <DateInput data={datefield} onChange={(id, value) => this.handleChange(id, value)} />
+            <TextArea data={textarea} onChange={(id, value) => this.handleChange(id, value)} />
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
