@@ -28,18 +28,29 @@ export default class FormDialog extends Component {
     store.dispatch(closeProfileDialog);
   };
 
-  async handleSubmit(skill) {
-    console.log(skill);
+  async handleSubmit(skill, milestone) {
     //todo api /skill
 
-    const Rest = new RestCom(RestPoints.skill, JSON.stringify(skill));
+    // send skill
+    let Rest = new RestCom(RestPoints.skill, JSON.stringify(skill));
 
     try {
       const { data } = await Rest.post();
-      store.dispatch(setOwnProfile(data.user));
+      store.dispatch(setOwnProfile(data));
     } catch (e) {
       store.dispatch(setError(e.message));
     }
+
+    //send milestone
+    console.log(milestone);
+    Rest = new RestCom(RestPoints.milestone, JSON.stringify(milestone));
+    try {
+      const { data } = await Rest.post();
+      store.dispatch(setOwnProfile(data));
+    } catch (e) {
+      store.dispatch(setError(e.message));
+    }
+
     //todo change to new api result and remove JSON stringify
     this.handleClose();
   }
@@ -67,8 +78,9 @@ export default class FormDialog extends Component {
 
     const aktSkill = {
       username: profile.username,
-      skills: { skillname: singleselect.value, level: levelfield.value, milestones: aktMilestone },
+      skills: { [singleselect.value]: levelfield.value},
     };
+
     const allSkillsOfUser = Object.keys(profile.skills).map(
       element => profile.skills[element].skillname,
     );
@@ -112,7 +124,7 @@ export default class FormDialog extends Component {
             <Button onClick={this.handleClose} color="primary">
               Cancel
             </Button>
-            <Button onClick={() => this.handleSubmit(aktSkill)} color="primary">
+            <Button onClick={() => this.handleSubmit(aktSkill, aktMilestone)} color="primary">
               Submit
             </Button>
           </DialogActions>

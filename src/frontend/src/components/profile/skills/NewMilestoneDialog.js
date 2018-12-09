@@ -31,10 +31,10 @@ export default class FormDialog extends React.Component {
   async handleSubmit(milestone) {
     console.log(milestone);
 
-    const Rest = new RestCom(RestPoints.skill, JSON.stringify(milestone));
+    const Rest = new RestCom(RestPoints.milestone, JSON.stringify(milestone));
     try {
       const { data } = await Rest.post();
-      store.dispatch(setOwnProfile(data.user));
+      store.dispatch(setOwnProfile(data));
     }
     catch (e) {
       store.dispatch(setError(e.message));
@@ -67,7 +67,7 @@ export default class FormDialog extends React.Component {
     const aktMilestone = {
       username: currentProfile.username,
       skill: aktSkill,
-      datum: datefield.value,
+      date: datefield.value,
       level: aktLevel,
       comment: textarea.value,
     };
