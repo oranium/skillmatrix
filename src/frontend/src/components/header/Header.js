@@ -14,7 +14,7 @@ import {
   resetState,
   changeProfileOwner,
   resetSearch,
-} from '../../actions';
+} from 'actions';
 
 // Rest
 import RestPoints from '../../rest/Init';
@@ -51,7 +51,7 @@ class ButtonAppBar extends Component {
   async handleLogout() {
     const { state } = this.props;
     const user = {
-      username: state.user,
+      username: state.user.username,
     };
     const Rest = new RestCom(RestPoints.logout, JSON.stringify(user));
     try {
@@ -69,7 +69,7 @@ class ButtonAppBar extends Component {
   }
 
   render() {
-    const { classes, username } = this.props;
+    const { classes, user } = this.props;
 
     return (
       <div className={classes.root}>
@@ -84,7 +84,7 @@ class ButtonAppBar extends Component {
               <AccountCircle />
             </IconButton>
             <Typography variant="h6" color="inherit" className={classes.grow}>
-              {username}
+              {user.name}
             </Typography>
             <IconButton
               className={classes.menuButton}
