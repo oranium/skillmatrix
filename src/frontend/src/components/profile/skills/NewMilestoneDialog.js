@@ -29,14 +29,15 @@ export default class FormDialog extends React.Component {
   };
 
   async handleSubmit(milestone) {
+    if (milestone.datum === '' || milestone.comment === '' || milestone.skill === '') {
+      milestone = false;
+    }
     console.log(milestone);
-
     const Rest = new RestCom(RestPoints.milestone, JSON.stringify(milestone));
     try {
       const { data } = await Rest.post();
       store.dispatch(setOwnProfile(data));
-    }
-    catch (e) {
+    } catch (e) {
       store.dispatch(setError(e.message));
     }
     this.handleClose();
@@ -55,7 +56,7 @@ export default class FormDialog extends React.Component {
 
     const aktSkill = singleselect.value;
 
-    var aktLevel = 'choose a Skill';
+    var aktLevel = 'Choose a Skill!';
 
     //holt das aktuelle Level des im Select ausgewählten Skill aus dem State
     Object.keys(currentProfile.skills).map(index => {

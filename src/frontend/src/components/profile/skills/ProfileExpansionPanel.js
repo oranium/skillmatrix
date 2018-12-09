@@ -41,7 +41,9 @@ class ControlledExpansionPanels extends React.Component {
     const { expanded } = this.state;
     const latestElement = milestones.length - 1;
     const latestMilestone =
-      milestones.length < 1 ? ': -' : ` (${milestones[latestElement].date}): ${milestones[latestElement].comment}`;
+      milestones.length < 1
+        ? ': -'
+        : ` (${milestones[latestElement].date}): ${milestones[latestElement].comment}`;
     return (
       <div className={classes.root}>
         <ExpansionPanel
