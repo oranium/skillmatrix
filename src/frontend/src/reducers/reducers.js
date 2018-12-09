@@ -153,7 +153,6 @@ const defaultProfilePageState = {
   view: 0,
   showDialog: false,
   profiles: [exProfile, exProfile],
-  skillUpdates: [{}],
 };
 
 const defaultSkillList = ['Python', 'Java', 'JavaScript'];
@@ -270,17 +269,6 @@ export const profile = (state = defaultProfilePageState, action) => {
     case 'SETOWNPROFILE':
       // changes the element on index 0 in array profiles
       return { ...state, profiles: [action.profile, ...state.profiles.slice(1)] };
-    case 'UPDATESKILLS':
-      // changes the element on index 0 in array profiles reducer
-      // /skill datenstruktur muss einzeln upgedated werden
-      return {
-        ...state,
-        skillUpdates: [
-          { skill: { ...state.skillUpdates.skill }, level: { ...state.skillUpdates.level } },
-          action.skillUpdates,
-          ...state.skillUpdates.slice(1),
-        ],
-      };
     case 'RESETSTATE':
       return defaultProfilePageState;
     default:
