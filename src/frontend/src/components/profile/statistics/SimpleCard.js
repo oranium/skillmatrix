@@ -50,7 +50,7 @@ export class ClickableChart extends React.Component {
 
     const milestones = Object.keys(classes.data).map(key => (
       <Typography>
-        Datum: {classes.data[key].x}, Level update auf: {classes.data[key].y} Beschreibung:{' '}
+        Datum: {classes.data[key].date}, Level update auf: {classes.data[key].level} Beschreibung:{' '}
         {classes.data[key].comment}
       </Typography>
     ));

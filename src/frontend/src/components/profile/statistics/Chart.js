@@ -5,12 +5,18 @@ import { Line } from 'react-chartjs-2';
 
 class Chart extends Component {
   render() {
-    const { skill, data, witdh, height, display, enabledZoom } = this.props;
+    const {
+      skill, witdh, height, display, enabledZoom,
+    } = this.props;
+
+    const datastructure = [];
+    Object.keys(this.props.data).map(idx => datastructure.push({ x: this.props.data[idx].date, y: this.props.data[idx].level }));
+
     const dataSet = {
       datasets: [
         {
           label: skill,
-          data: data,
+          data: datastructure,
           pointBorderColor: 'rgba(75,192,192,1)',
           borderColor: 'rgba(75,192,192,1)',
           pointHoverBackgroundColor: 'rgba(75,192,192,1)',
@@ -22,7 +28,6 @@ class Chart extends Component {
       ],
     };
 
-    console.log(dataSet);
     return (
       <div className="Chart">
         <Line

@@ -40,7 +40,7 @@ class ControlledExpansionPanels extends React.Component {
     const { skillname, level, milestones } = skill;
     const { expanded } = this.state;
     if (milestones.length < 1) {
-      milestones.push({ x: '2000-01-01', y: 1, comment: '-' });
+      milestones.push({ date: '2000-01-01', level: 1, comment: '-' });
     }
     return (
       <div className={classes.root}>
