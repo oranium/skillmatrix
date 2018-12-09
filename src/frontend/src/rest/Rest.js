@@ -8,6 +8,8 @@ const errorCodesToErrorMsg = (errorCode) => {
   switch (errorCode) {
     case 400:
       return 'Wrong login credentials.';
+    case 401:
+      return 'You need to be logged in to view this page.';
     case 404:
       return 'Couldnt connect to Server. Please try again.';
     case 504:

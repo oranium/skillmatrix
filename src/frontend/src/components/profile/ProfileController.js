@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 
 // redux
 import store from 'Store';
-import { changeView, openProfileDialog } from 'actions';
+import { changeView, openProfileDialog, switchPage } from 'actions';
 
 // react components
 import TabContainer from 'components/profile/TabContainer';
@@ -19,12 +19,19 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import { ArrowLeft, Search } from '@material-ui/icons';
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
   },
+  goBackButton: {
+    position: 'static',
+    display: 'block',
+    margin: '10px',
+  }
 });
 
 class ProfileController extends Component {
@@ -87,6 +94,10 @@ class ProfileController extends Component {
     store.dispatch(openProfileDialog('milestone'));
   };
 
+  switchToSearchPage = () => {
+    store.dispatch(switchPage('search'));
+  }
+
   render() {
     const { state, classes } = this.props;
     // person: array index in profiles
@@ -103,6 +114,16 @@ class ProfileController extends Component {
             <Tab label={ownerArticle + 'Statistics'} />
           </Tabs>
         </AppBar>
+        {!isEditable && (<IconButton
+          className={classes.goBackButton}
+          onClick={this.switchToSearchPage}
+          color="inherit"
+          aria-label="Go Back"
+        >
+          <ArrowLeft/>
+          <Search/>
+        </IconButton>)}
+        <div>
         {view === 0 && (
           <TabContainer>
             <SkillProfileList categories={skills} levelChange={this.handleLevelChange} />
@@ -141,6 +162,7 @@ class ProfileController extends Component {
             <SkillStatisticsGrid categories={skills} />
           </TabContainer>
         )}
+        </div>
       </div>
     );
   }

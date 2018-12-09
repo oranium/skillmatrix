@@ -72,6 +72,8 @@ class SearchController extends Component {
   async handleSearch(e) {
     e.preventDefault();
     const { state } = this.props;
+    const { username } = state.user;
+    console.log(username);
     const { searchValues } = state.search;
     if (!Object.keys(searchValues).length) {
       // search field is empty
@@ -79,6 +81,7 @@ class SearchController extends Component {
       return;
     }
     const search = {
+      username,
       query: this.getSearchQuery(searchValues),
     };
     const Rest = new RestCom(RestPoints.search, JSON.stringify(search));

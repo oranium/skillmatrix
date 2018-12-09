@@ -16,16 +16,18 @@ class Milestone(Resource):
         parser.add_argument("date", type=str)
         parser.add_argument("comment", type=str)
         args = parser.parse_args()
-        message = json.dumps(controller.add_milestone(self,
-                                                      args["username"],
-                                                      args["skill"],
-                                                      args["date"],
-                                                      args["comment"],
-                                                      args["level"]))
         try:
+            message = json.dumps(controller.add_milestone(self,
+                                                          args["username"],
+                                                          args["skill"],
+                                                          args["date"],
+                                                          args["comment"],
+                                                          args["level"]))
             return Response(message, status=200, mimetype="application/json")
         except TimeoutError:
             return Response(status=504)
+        except PermissionError:
+            return Response(status=401)
 
     def options(self):
         pass

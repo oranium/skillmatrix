@@ -11,8 +11,10 @@ class Logout(Resource):
         parser.add_argument("username", type=str)
         args = parser.parse_args()
         try:
-            json.dumps(controller.logout(self, args["username"]))
+            json.dumps(controller.logout(args["username"]))
             return Response(status=200)
+        except PermissionError:
+            return Response(status=401)
         except Exception:
             return Response(status=520)
 

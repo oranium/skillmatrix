@@ -51,26 +51,12 @@ class Panel extends Component {
     const levelList = skills.map(
       (skill, i) => `${skill.skillname}: level ${skill.level} ${skills[i + 1] ? ', ' : ''}`,
     );
-    const skillsTest = [
-      {
-        skillname: 'skillname',
-        milestones: [
-          { comment: 'sdfdsf', date: '05.12.18' },
-          { comment: 'sdfdsf', date: '05.12.18' },
-        ],
-      },
-      {
-        skillname: 'skillname',
-        milestones: [
-          { comment: 'sdfdsf', date: '05.12.18' },
-          { comment: 'sdfdsf', date: '05.12.18' },
-        ],
-      },
-    ];
+
     const milestones = [];
-    skillsTest.forEach(skill => {
+    skills.forEach(skill => {
       milestones.push(...skill.milestones);
     });
+
     return (
       <ExpansionPanel expanded={isExpanded}>
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>

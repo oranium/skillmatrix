@@ -13,36 +13,57 @@ class Controller:
     """
     @staticmethod
     def login(username, password):
-        authentication_controller.login(username, password)
-        user_skills = database_controller.get_skills(username)        
+        name = authentication_controller.login(username, password)
+        user_skills = database_controller.get_skills(username)
         if not database_controller.exists(username):
-            name = authentication_controller.get_name(username)
-            database_controller.create_user(username, name[0], name[1])
-        return dict(user=ProfileModel(username, user_skills).jsonable(), allSkills=database_controller.get_all_skill_names())
+            database_controller.create_user(username, name)
+        return dict(user=ProfileModel(username, name, user_skills).jsonable(),
+                    allSkills=database_controller.get_all_skill_names())
 
     @staticmethod
     def logout(username):
-        authentication_controller.logout(username)
-        return LogoutModel(username)
+        if controller.is_connected(username):
+            authentication_controller.logout(username)
+            return LogoutModel(username)
+        raise PermissionError
 
     @staticmethod
-    def search(query):
-        print(query)
-        results = database_controller.search(query)
-        return SearchModel(query, results).jsonable()
+    def search(username, query):
+        if controller.is_connected(username):
+            results = database_controller.search(query)
+            return SearchModel(query, results).jsonable()
+        raise PermissionError
 
     @staticmethod
     def set_skills(username, skills):
-        database_controller.set_skills(username, skills)
-        user_skills = database_controller.get_skills(username)
-        return ProfileModel(username, user_skills)
+        if controller.is_connected(username):
+            database_controller.set_skills(username, skills)
+            user_skills = database_controller.get_skills(username)
+            name = authentication_controller.get_name(username)
+            return ProfileModel(username, name, user_skills).jsonable()
+        raise PermissionError
 
     @staticmethod
     def add_milestone(username, skill, date, comment, level):
-        date = datetime.datetime.strptime(date, "%Y-%m-%d").date()
-        database_controller.add_milestone(username, skill, date, comment, level)
-        user_skills = database_controller.get_skills(username)
-        return ProfileModel(username, user_skills)
+        if controller.is_connected(username):
+            date = datetime.datetime.strptime(date, "%Y-%m-%d").date()
+            database_controller.add_milestone(username, skill, date, comment, level)
+            user_skills = database_controller.get_skills(username)
+            name = authentication_controller.get_name(username)
+            return ProfileModel(username, name, user_skills)
+        raise PermissionError
 
+    @staticmethod
+    def is_connected(username):
+        """Checks if the current user is in the dict of open connections.
+            Args:
+                username (`str`): the username of the current user
+            Returns:
+                `boolean`: `True` if username is a key in connections of `AuthenticationController`, `False` otherwise.
+        """
+        if username in authentication_controller.connections.items()[0]:
+            return True   
+        return False
 
+      
 controller = Controller()
