@@ -13,6 +13,8 @@ class Logout(Resource):
         try:
             json.dumps(controller.logout(args["username"]))
             return Response(status=200)
+        except PermissionError:
+            return Response(status=401)
         except Exception:
             return Response(status=520)
 
