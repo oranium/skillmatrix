@@ -45,20 +45,17 @@ class ProfileController extends Component {
     const { state } = this.props;
     const { person } = state.profile;
     const { username } = state.profile.profiles[person];
-    var latestChanges = { username, skills: [{ skill: '', level: 0 }] };
+    var latestChanges = { username, skills: {} };
     var alreadyUpdated = [];
     console.log(this.localUpdate);
     Object.keys(skills).map(index => {
       Object.keys(this.localUpdate).map(idx => {
         if (skills[index].skillname === this.localUpdate[idx][0].skill) {
           alreadyUpdated.push(this.localUpdate[idx][0].skill);
-          latestChanges.skills.push({
-            [this.localUpdate[idx][0].skill]: this.localUpdate[idx][0].level,
-          });
+          latestChanges.skills[this.localUpdate[idx][0].skill] = this.localUpdate[idx][0].level;
         }
       });
     });
-    latestChanges.skills.shift();
 
     // send skill
     let Rest = new RestCom(RestPoints.skill, JSON.stringify(latestChanges));
