@@ -5,3 +5,28 @@ include::src/frontend/readme.adoc[]
 '''
 
 include::src/backend/readme.adoc[]
+
+
+
+
+== Login Credentials:
+
+*Test-User: Valdemar Forsberg* +
+User: AzureAD.SWT.com\Valdemar.Forsberg +
+PW: @testuser1 +
+
+*Test-User: Karl Kalagin* +
+User: AzureAD.SWT.com\Karl.Kalagin +
+PW: @testuser2 +
+
+*Test-User: Isaac Hunt* +
+User: AzureAD.SWT.com\Isaac.Hunt +
+PW: @testuser3 +
+
+*Test-User: Ozoemena Somayina* +
+User: AzureAD.SWT.com\OzoemenaSomayina +
+PW: @testuser4 +
+
+*Test-User: Yvonne Thompsome* +
+User: AzureAD.SWT.com\Yvonne.Thompsome +
+PW: @testuser5 +

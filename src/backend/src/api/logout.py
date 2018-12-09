@@ -11,9 +11,7 @@ class Logout(Resource):
         parser.add_argument("username", type=str)
         args = parser.parse_args()
         try:
-            if not controller.is_connected(args["username"]):
-                return Response(status=401)
-            json.dumps(controller.logout(self, args["username"]))
+            json.dumps(controller.logout(args["username"]))
             return Response(status=200)
         except PermissionError:
             return Response(status=401)

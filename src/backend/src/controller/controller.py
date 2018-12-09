@@ -40,7 +40,7 @@ class Controller:
             database_controller.set_skills(username, skills)
             user_skills = database_controller.get_skills(username)
             name = authentication_controller.get_name(username)
-            return ProfileModel(username, name, user_skills)
+            return ProfileModel(username, name, user_skills).jsonable()
         raise PermissionError
 
     @staticmethod
@@ -65,5 +65,5 @@ class Controller:
             return True   
         return False
 
-
+      
 controller = Controller()

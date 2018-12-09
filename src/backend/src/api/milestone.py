@@ -17,8 +17,6 @@ class Milestone(Resource):
         parser.add_argument("comment", type=str)
         args = parser.parse_args()
         try:
-            if not controller.is_connected(args["username"]):
-                return Response(status=401)
             message = json.dumps(controller.add_milestone(self,
                                                           args["username"],
                                                           args["skill"],

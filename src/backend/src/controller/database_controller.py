@@ -55,7 +55,7 @@ class DatabaseController:
     @staticmethod
     def set_skills(username, skills):
         cdate = Date()
-        user = database_controller.get_username(username)
+        user = database_controller.get_user(username)
         db.session.add(cdate)
         for skill, level in skills.items():
             new_skill = database_controller.get_skill(skill)
@@ -75,7 +75,7 @@ class DatabaseController:
         mskill = database_controller.get_skill(skill)
         mdate = Date(date=date)
         db.session.add(mdate)
-        m = MilestoneAssociation(name=comment, level=level)
+        m = MilestoneAssociation(comment=comment, level=level)
         m.skill_milestone_assoc = mskill
         m.date_milestone_assoc = mdate
         m.users_milestone_assoc = user
@@ -162,7 +162,7 @@ class DatabaseController:
             Returns:
                 bool: True if user exists, false otherwise.
         """
-        if Users.query.filter_by(username=username):
+        if Users.query.filter_by(username=username).first():
             return True
         return False
 
@@ -182,7 +182,7 @@ class DatabaseController:
             for assoc in assocs:
                 skill = database_controller.get_skill_from_id(assoc.skill_id)
                 if skill not in found_skills:
-                    milestones = database_controller.get_milestones(username,skill)
+                    milestones = database_controller.get_milestones(username,skill.name)
                     level = database_controller.get_max_level(assoc.level, skill.id, user_id)
                     skill_models.append(SkillModel(skill.name, level, milestones=milestones))
                     found_skills.append(skill)
@@ -216,7 +216,7 @@ class DatabaseController:
             # gets the SkillModels of the user
             skill_models = database_controller.get_skills(user.username)
             # creates ProfileModel from username and list of SkillModel
-            profile_models.append(ProfileModel(user.username, skill_models))
+            profile_models.append(ProfileModel(user.username, user.username, skill_models))
         return profile_models
 
     @staticmethod
