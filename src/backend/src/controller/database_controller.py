@@ -184,8 +184,8 @@ class DatabaseController:
             for assoc in assocs:
                 skill = database_controller.get_skill_from_id(assoc.skill_id)
                 if skill not in found_skills:
-                    milestones = database_controller.get_milestones(username,skill.name)
-                    level = database_controller.get_max_level(assoc.level, skill.id, user_id)
+                    milestones = database_controller.get_milestones(username, skill.name)
+                    level = database_controller.get_recent_level(skill.id, user_id)
                     skill_models.append(SkillModel(skill.name, level, milestones=milestones))
                     found_skills.append(skill)
             return skill_models
@@ -204,9 +204,8 @@ class DatabaseController:
         db.session.commit()
 
     @staticmethod
-    def get_max_level(level, skill_id, user_id):
-        return Association.query.filter(Association.level >= level,
-                                        Association.skill_id == skill_id,
+    def get_recent_level(skill_id, user_id):
+        return Association.query.filter(Association.skill_id == skill_id,
                                         Association.users_id == user_id).all()[-1].level
 
     @staticmethod

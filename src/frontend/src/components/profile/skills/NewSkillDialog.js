@@ -56,13 +56,16 @@ export default class FormDialog extends Component {
 
     //send milestone
     console.log(milestone);
-    Rest = new RestCom(RestPoints.milestone, JSON.stringify(milestone));
-    try {
-      const { data } = await Rest.post();
-      store.dispatch(setOwnProfile(data));
-    } catch (e) {
-      store.dispatch(setError(e.message));
+    if (milestone){
+      Rest = new RestCom(RestPoints.milestone, JSON.stringify(milestone));
+      try {
+        const { data } = await Rest.post();
+        store.dispatch(setOwnProfile(data));
+      } catch (e) {
+        store.dispatch(setError(e.message));
+      }
     }
+
 
     //todo change to new api result and remove JSON stringify
     this.handleClose();
@@ -83,8 +86,10 @@ export default class FormDialog extends Component {
     var newSkill = '';
     const aktMilestone = [
       {
-        datum: datefield.value,
+        username: profile.username,
+        date: datefield.value,
         level: levelfield.value,
+        skill: singleselect.value,
         comment: textarea.value,
       },
     ];
