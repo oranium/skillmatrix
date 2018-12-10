@@ -29,6 +29,7 @@ export default class FormDialog extends Component {
   };
 
   async handleSubmit(skill, milestone) {
+    console.log(skill);
     //todo api /skill
 
     // send skill
@@ -83,7 +84,11 @@ export default class FormDialog extends Component {
     var { datefield, textarea, levelfield, singleselect } = state.formState;
 
     var profile = state.profile.profiles[state.profile.person];
-    var newSkill = '';
+
+    function handleNewSkill(skill) {
+      singleselect.value = skill;
+    }
+
     const aktMilestone = [
       {
         username: profile.username,
@@ -128,13 +133,12 @@ export default class FormDialog extends Component {
             <SingleSelect allSkills={availableNewSkills} />
             <TextField
               id="standard-with-placeholder"
-              label="With placeholder"
-              placeholder="Placeholder"
+              label="add new skill to database"
+              placeholder="new skill"
               margin="normal"
-              onChange={event => (newSkill = event.target.value)}
+              onChange={event => handleNewSkill(event.target.value)}
             />
 
-            <Button onClick={() => (singleselect.value = newSkill)}>+</Button>
             <LevelPicker
               data={levelfield}
               required={true}
