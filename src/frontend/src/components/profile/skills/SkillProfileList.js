@@ -4,9 +4,15 @@ import ProfileExpansionPanel from 'components/profile/skills/ProfileExpansionPan
 export default (props) => {
   const { categories } = props;
   // console.log(categories);
+  let index = 0;
   const panels = categories.map(skill => (
     <div>
-      <ProfileExpansionPanel skill={skill} levelChange={props.levelChange} />
+      <ProfileExpansionPanel
+        skill={skill}
+        key={(index += 1)}
+        levelChange={props.levelChange}
+        isEditable={props.isEditable}
+      />
     </div>
   ));
   return panels;

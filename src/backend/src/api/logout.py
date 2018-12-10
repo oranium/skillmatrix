@@ -1,3 +1,4 @@
+import sys
 import json
 from flask import Response
 from flask_restful import Resource, reqparse
@@ -11,11 +12,13 @@ class Logout(Resource):
         parser.add_argument("username", type=str)
         args = parser.parse_args()
         try:
+            # this is not used
             json.dumps(controller.logout(args["username"]))
             return Response(status=200)
         except PermissionError:
             return Response(status=401)
-        except Exception:
+        except Exception as e:
+            print(e, file=sys.stderr)
             return Response(status=520)
 
     def options(self):

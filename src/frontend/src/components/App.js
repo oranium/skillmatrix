@@ -39,13 +39,13 @@ class App extends Component {
     try {
       const { data } = await Rest.post();
       const { user, allSkills } = data;
-      store.dispatch(setUser(user));
+      store.dispatch(setUser({ username: user.username, name: user.name }));
       store.dispatch(setAllSkills(allSkills));
       store.dispatch(setOwnProfile(user));
       store.dispatch(switchPage('search'));
     } catch (e) {
       store.dispatch(setError(e.message));
-      store.dispatch(switchPage('login'));
+      store.dispatch(switchPage('profile'));
     }
   }
 

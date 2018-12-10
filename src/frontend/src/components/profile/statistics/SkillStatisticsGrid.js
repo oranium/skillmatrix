@@ -10,7 +10,7 @@ const SkillStatisticsPage = (props) => {
   //   "subcategories"
   // ]["PythonFlask"]["milestones"]
   // Loop over # of skills given from Profile and render # of cards --> in SimpleCard is also the Chart rendered
-  const index = 0;
+  var index = 0;
   // const skillItems = Object.keys(categories).map(category => Object.keys(categories[category]).map(
   //   skill => (
   //     (index = 0),
@@ -46,7 +46,7 @@ const SkillStatisticsPage = (props) => {
   //   ),
   // ));
   const skillItems = categories.map(skill => (
-    <Grid key={index} item>
+    <Grid key={index=index+1} item>
       <SimpleCard
         skill={skill.skillname}
         data={skill.milestones}

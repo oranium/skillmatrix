@@ -51,7 +51,7 @@ class ButtonAppBar extends Component {
   async handleLogout() {
     const { state } = this.props;
     const user = {
-      username: state.user,
+      username: state.user.username,
     };
     const Rest = new RestCom(RestPoints.logout, JSON.stringify(user));
     try {
