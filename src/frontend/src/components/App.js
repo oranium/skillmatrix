@@ -9,7 +9,7 @@ import {
   setInputError,
   setError,
   resetForm,
-  setUsername,
+  setUser,
   setAllSkills,
   setOwnProfile,
 } from 'actions';
@@ -39,7 +39,7 @@ class App extends Component {
     try {
       const { data } = await Rest.post();
       const { user, allSkills } = data;
-      store.dispatch(setUsername(user.username));
+      store.dispatch(setUser(user));
       store.dispatch(setAllSkills(allSkills));
       store.dispatch(setOwnProfile(user));
       store.dispatch(switchPage('search'));
@@ -123,7 +123,7 @@ class App extends Component {
       <div>
         <Header
           state={state}
-          username={user}
+          user={user}
         />
         <main>
           {main}
