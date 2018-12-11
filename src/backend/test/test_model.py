@@ -13,7 +13,7 @@ import datetime
 class TestModel(unittest.TestCase):
 
     def test_model_raise_not_implemented_error(self):
-        self.assertRaises(NotImplementedError, Model.to_json, self)
+        self.assertRaises(NotImplementedError, Model.jsonable, self)
 
 
 class TestSkillModel(unittest.TestCase):
@@ -22,7 +22,7 @@ class TestSkillModel(unittest.TestCase):
         self.SKILL_JSON = json.dumps(dict(skillname="Java", level=3, milestones=list()))
 
     def test_to_json(self):
-        self.assertEqual(self.SKILL_JSON, self.TEST_SKILL_MODEL.to_json())
+        self.assertEqual(self.SKILL_JSON, self.TEST_SKILL_MODEL.jsonable())
 
 
 class TestMilestoneModel(unittest.TestCase):
@@ -32,7 +32,7 @@ class TestMilestoneModel(unittest.TestCase):
                                               comment="Created humongous Python backend"))
 
     def test_to_json(self):
-        self.assertEqual(self.MILESTONE_JSON, self.TEST_MILESTONE_MODEL.to_json())
+        self.assertEqual(self.MILESTONE_JSON, self.TEST_MILESTONE_MODEL.jsonable())
 
 
 class TestProfileModel(unittest.TestCase):
@@ -42,11 +42,11 @@ class TestProfileModel(unittest.TestCase):
         test_milestone2 = MilestoneModel(datetime.datetime(2014, 1, 22), "other comment")
         test_skill = SkillModel("Java", 3, [test_milestone2, test_milestone1])
         self.TEST_PROFILE_MODEL = ProfileModel("Aron", [test_skill])
-        self.PROFILE_JSON = json.dumps(dict(username="Aron", skills=[test_skill.to_json()]))
+        self.PROFILE_JSON = json.dumps(dict(username="Aron", skills=[test_skill.jsonable()]))
 
     # TODO
     def test_to_json(self):
-        self.assertEqual(self.PROFILE_JSON, self.TEST_PROFILE_MODEL.to_json())
+        self.assertEqual(self.PROFILE_JSON, self.TEST_PROFILE_MODEL.jsonable())
 
 
 class TestSearchModel(unittest.TestCase):
@@ -60,15 +60,15 @@ class TestSearchModel(unittest.TestCase):
                                       (query=search_query,
                                        has_all=[ProfileModel
                                                 ("Peter", [SkillModel("Java", 4), SkillModel("Python", 5)])
-                                                .to_json()],
+                                       .jsonable()],
                                        has_some=[ProfileModel
                                                  ("Aron", [SkillModel("Java", 3)])
-                                                 .to_json()]
+                                       .jsonable()]
                                        )
                                       )
 
     def test_to_json(self):
-        self.assertEqual(self.SEARCH_JSON, self.TEST_SEARCH.to_json())
+        self.assertEqual(self.SEARCH_JSON, self.TEST_SEARCH.jsonable())
 
 
 class TestLogoutModel(unittest.TestCase):
@@ -77,4 +77,4 @@ class TestLogoutModel(unittest.TestCase):
         self.LOGOUT_JSON = json.dumps(dict(user="some_name"))
 
     def test_to_json(self):
-        self.assertEqual(self.LOGOUT_JSON, self.TEST_LOGOUT_MODEL.to_json())
+        self.assertEqual(self.LOGOUT_JSON, self.TEST_LOGOUT_MODEL.jsonable())

@@ -1,9 +1,8 @@
-import set_root_backend
-from src.controller.controller import controller
 import sys
 import json
 from flask import Response
 from flask_restful import Resource, reqparse
+from controller.controller import controller
 
 
 class Search(Resource):
@@ -11,16 +10,18 @@ class Search(Resource):
     Takes id of the searching user and an array of skills (currently only one term)"""
     def post(self):
             parser = reqparse.RequestParser()
+            parser.add_argument("username", type=str)
             parser.add_argument("query", type=dict)
             args = parser.parse_args()
             print(args, file=sys.stderr)
             try:
-                message = controller.search(args["query"]).replace("\\", "")
+                message = json.dumps(controller.search(args["username"], args["query"]))
                 print(message, file=sys.stderr)
                 return Response(message, status=200, mimetype="application/json")
             except ValueError:
-                print(json.dumps(list()))
                 return json.dumps(list())
+            except PermissionError:
+                return Response(status=401)
 
     def options(self):
         pass

@@ -1,9 +1,8 @@
-import set_root_backend
-from src.model.profile_model import ProfileModel
-from src.model.skill_model import SkillModel
-from src.controller.database import db
-from src.model.database_model import Association, MilestoneAssociation, Skill, Date, Users
-
+from controller.database import db
+from model.profile_model import ProfileModel
+from model.skill_model import SkillModel
+from model.milestone_model import MilestoneModel
+from model.database_model import Association, MilestoneAssociation, Skill, Date, Users
 
 class DatabaseController:
     """Class to handle everything about table-manipulation"""
@@ -56,14 +55,16 @@ class DatabaseController:
     @staticmethod
     def set_skills(username, skills):
         cdate = Date()
-        user = database_controller.get_username(username)
+        user = database_controller.get_user(username)
         db.session.add(cdate)
+        db.session.commit()
         for skill, level in skills.items():
             new_skill = database_controller.get_skill(skill)
             # if skill is not found in database, it will be added
             if not new_skill:
                 new_skill = Skill(name=skill, category="Programming")
                 database_controller.create_skill(new_skill)
+            database_controller.add_milestone(username, skill, cdate.date, "Level {0}".format(level), level)
             assoc = Association(level=level)
             assoc.skill_assoc = new_skill
             assoc.date_assoc = cdate
@@ -76,7 +77,7 @@ class DatabaseController:
         mskill = database_controller.get_skill(skill)
         mdate = Date(date=date)
         db.session.add(mdate)
-        m = MilestoneAssociation(name=comment, level=level)
+        m = MilestoneAssociation(comment=comment, level=level)
         m.skill_milestone_assoc = mskill
         m.date_milestone_assoc = mdate
         m.users_milestone_assoc = user
@@ -88,7 +89,12 @@ class DatabaseController:
         mskillid = database_controller.get_skill_id(skillname)
         milestonelist = MilestoneAssociation.query.filter(MilestoneAssociation.milestone_users_id == muser,
                                                           MilestoneAssociation.milestone_skill_id == mskillid).all()
-        return milestonelist
+        milestone_models = []
+        for milestone in milestonelist:
+            date = database_controller.get_date_from_id(milestone.milestone_date_id).date
+            level = milestone.level
+            milestone_models.append(MilestoneModel(date, milestone.comment, level))
+        return milestone_models
 
     # TODO: un-hardcode this
     @staticmethod
@@ -130,6 +136,14 @@ class DatabaseController:
         return Users.query.filter_by(username=username).first()
 
     @staticmethod
+    def get_date_from_id(date_id):
+        return Date.query.filter_by(id=date_id).first()
+
+    @staticmethod
+    def get_user_from_id(user_id):
+        return Users.query.filter_by(id=user_id).first()
+
+    @staticmethod
     def get_skill_from_id(skill_id):
         return Skill.query.filter_by(id=skill_id).first()
 
@@ -150,25 +164,48 @@ class DatabaseController:
             Returns:
                 bool: True if user exists, false otherwise.
         """
-        if Users.query.filter_by(username=username):
+        if Users.query.filter_by(username=username).first():
             return True
         return False
 
     @staticmethod
-    def create_user(username, forename, surname):
+    def get_skills(username):
+        """Get all skills of a user and return them as a `list` of `SkillModel`s
+            Args:
+                username (`str`): whose skills to return
+            Returns:
+                `[SkillModel]`  
+        """
+        if database_controller.exists(username):
+            user_id = Users.query.filter_by(username=username).first().id
+            assocs = Association.query.filter_by(users_id=user_id).all()
+            skill_models = []
+            found_skills = []
+            for assoc in assocs:
+                skill = database_controller.get_skill_from_id(assoc.skill_id)
+                if skill not in found_skills:
+                    milestones = database_controller.get_milestones(username, skill.name)
+                    level = database_controller.get_recent_level(skill.id, user_id)
+                    skill_models.append(SkillModel(skill.name, level, milestones=milestones))
+                    found_skills.append(skill)
+            return skill_models
+        return None
+
+
+    @staticmethod
+    def create_user(username, name):
         """Create a user in the database.
            Args:
                username (str): the username of the user to add - should be identical to the Active Directory username.
                forename (str): The forename of the user to add.
                surname (str): The surname of the user to add.
         """
-        db.session.add(Users(username=username, forename=forename, surname=surname))
+        db.session.add(Users(username=username, name=name))
         db.session.commit()
 
     @staticmethod
-    def get_max_level(level, skill_id, user_id):
-        return Association.query.filter(Association.level >= level,
-                                        Association.skill_id == skill_id,
+    def get_recent_level(skill_id, user_id):
+        return Association.query.filter(Association.skill_id == skill_id,
                                         Association.users_id == user_id).all()[-1].level
 
     @staticmethod
@@ -177,20 +214,10 @@ class DatabaseController:
         profile_models = []
         # iterate over the users
         for user in users:
-            skill_models = []
-            found_skills = []
-            # finds all associations for the current user
-            associations = database_controller.get_assocs(users_id=user.id, type="all")
-            # searches for the highest level of each skill in associations and adds the resulting SkillModel to a list
-            for association in associations:
-                skill = database_controller.get_skill_from_id(association.skill_id)
-                max_level = database_controller.get_max_level(association.level, skill.id, user.id)
-                # a user can have up to 5 associations for the same skill - this prevents duplicates
-                if skill.name not in found_skills:
-                    skill_models.append(SkillModel(skill.name, max_level))
-                    found_skills.append(skill.name)
+            # gets the SkillModels of the user
+            skill_models = database_controller.get_skills(user.username)
             # creates ProfileModel from username and list of SkillModel
-            profile_models.append(ProfileModel(user.username, skill_models))
+            profile_models.append(ProfileModel(user.username, user.username, skill_models))
         return profile_models
 
     @staticmethod

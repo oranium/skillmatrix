@@ -1,6 +1,5 @@
 import datetime
-import set_root_backend
-from src.controller.database import db
+from controller.database import db
 
 
 class Association(db.Model):
@@ -63,8 +62,7 @@ class Users(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(45), nullable=False)
-    surname = db.Column(db.String(45), nullable=False)
-    forename = db.Column(db.String(45), nullable=False)
+    name = db.Column(db.String(80), nullable=False)
     users_association = db.relationship("Association", back_populates="users_assoc")
     users_milestone_association = db.relationship("MilestoneAssociation", back_populates="users_milestone_assoc")
 

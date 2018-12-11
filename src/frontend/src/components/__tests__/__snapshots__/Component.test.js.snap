@@ -49,19 +49,67 @@ exports[`test Login Components render Login component 1`] = `
 />
 `;
 
-exports[`test components from InputFields render DateInput from InputFields 1`] = `
-<Component
+exports[`test Panel component render Header component 1`] = `
+<Panel
   classes={
     Object {
-      "container": "Component-container-12",
-      "error": "Component-error-14",
-      "textField": "Component-textField-13",
+      "heading": "Panel-heading-10",
+      "root": "Panel-root-9",
+      "secondaryHeading": "Panel-secondaryHeading-11",
+    }
+  }
+  id={1}
+  level={2}
+  onChange={[Function]}
+  username="Valdemar Forsberg"
+/>
+`;
+
+exports[`test Panel component render Panel component 1`] = `
+<Panel
+  classes={
+    Object {
+      "heading": "Panel-heading-10",
+      "root": "Panel-root-9",
+      "secondaryHeading": "Panel-secondaryHeading-11",
+    }
+  }
+  id={1}
+  level={2}
+  onChange={[Function]}
+  username="Valdemar Forsberg"
+/>
+`;
+
+exports[`test Panels right render ControlledExpansionPanels component 1`] = `
+<ControlledExpansionPanels
+  classes={
+    Object {
+      "heading": "ControlledExpansionPanels-heading-28",
+      "root": "ControlledExpansionPanels-root-27",
+      "secondaryHeading": "ControlledExpansionPanels-secondaryHeading-29",
     }
   }
 />
 `;
 
-exports[`test components from InputFields render LevelPicker from InputFields 1`] = `
+exports[`test Panels right render Panel component 1`] = `
+<Panel
+  classes={
+    Object {
+      "heading": "Panel-heading-10",
+      "root": "Panel-root-9",
+      "secondaryHeading": "Panel-secondaryHeading-11",
+    }
+  }
+  id={1}
+  level={2}
+  onChange={[Function]}
+  username="Valdemar Forsberg"
+/>
+`;
+
+exports[`test components from InputFields render DateInput from InputFields 1`] = `
 <Component
   classes={
     Object {
@@ -73,13 +121,37 @@ exports[`test components from InputFields render LevelPicker from InputFields 1`
 />
 `;
 
+exports[`test components from InputFields render LevelPicker from InputFields 1`] = `
+<Component
+  classes={
+    Object {
+      "container": "Component-container-18",
+      "error": "Component-error-20",
+      "textField": "Component-textField-19",
+    }
+  }
+/>
+`;
+
+exports[`test components from InputFields render SearchInput from InputFields 1`] = `
+<Component
+  classes={
+    Object {
+      "container": "Component-container-24",
+      "error": "Component-error-26",
+      "textField": "Component-textField-25",
+    }
+  }
+/>
+`;
+
 exports[`test components from InputFields render SkillNameInput from InputFields component 1`] = `
 <Component
   classes={
     Object {
-      "container": "Component-container-9",
-      "error": "Component-error-11",
-      "textField": "Component-textField-10",
+      "container": "Component-container-12",
+      "error": "Component-error-14",
+      "textField": "Component-textField-13",
     }
   }
   data="skill"
@@ -91,9 +163,9 @@ exports[`test components from InputFields render TextArea from InputFields 1`] =
 <Component
   classes={
     Object {
-      "container": "Component-container-18",
-      "error": "Component-error-20",
-      "textField": "Component-textField-19",
+      "container": "Component-container-21",
+      "error": "Component-error-23",
+      "textField": "Component-textField-22",
     }
   }
 />

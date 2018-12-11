@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
-import LabelField from './Label';
-
 import {
   SkillNameInput, DateInput, TextArea, LevelPicker,
-} from './InputFields';
+} from 'components/common/InputFields';
+import LabelField from './Label';
+
 
 export default class Form extends Component {
   renderLabels() {

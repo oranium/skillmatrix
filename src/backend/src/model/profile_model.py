@@ -1,21 +1,19 @@
 """Contains model for Profiles"""
-import set_root_backend
-from src.model.model import Model
-import json
+from model.model import Model
 
 
 class ProfileModel(Model):
 
     """This class converts a user to a JSON to hand over to the frontend"""
 
-    def __init__(self, username, skills=None):
+    def __init__(self, username, name, skills=None):
         self.username = username
         self.skills = skills
-
-    def to_json(self):
-        json_skills = list()
+        self.name = name
+        
+    def jsonable(self):
+        jsonable_skills = list()
         if self.skills:
             for skill in self.skills:
-                json_skills.append(skill.to_json())
-        model = dict(username=self.username, skills=json_skills)
-        return json.dumps(model)
+                jsonable_skills.append(skill.jsonable())
+        return dict(username=self.username, name=self.name, skills=jsonable_skills)

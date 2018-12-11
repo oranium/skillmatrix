@@ -11,6 +11,8 @@ include::src/backend/readme.adoc[]
 
 == Login Credentials:
 
+The AzureAD.SWT.com\-prefix is not needed for the login input fields and is added automatically for testing and debugging modes of the application. 
+
 *Test-User: Valdemar Forsberg* +
 User: AzureAD.SWT.com\Valdemar-Forsberg +
 PW: @testuser1 +

@@ -1,7 +1,8 @@
-import set_root_backend
-from src.controller.controller import controller
+import sys
+import json
 from flask import Response
 from flask_restful import Resource, reqparse
+from controller.controller import controller
 
 
 class Logout(Resource):
@@ -11,9 +12,13 @@ class Logout(Resource):
         parser.add_argument("username", type=str)
         args = parser.parse_args()
         try:
-            controller.logout(self, args["username"]).replace("\\", "")
+            # this is not used
+            json.dumps(controller.logout(args["username"]))
             return Response(status=200)
-        except Exception:
+        except PermissionError:
+            return Response(status=401)
+        except Exception as e:
+            print(e, file=sys.stderr)
             return Response(status=520)
 
     def options(self):

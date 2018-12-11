@@ -107,7 +107,8 @@ Die Benutzeroberfläche wird mit React und Komponenten von Material-UI erstellt.
 *Profile hat folgende Form:*
 ....
 {
-"username": String
+"username": String,
+"name": String,
 "skills": [Skill]
 }
 ....
@@ -143,6 +144,7 @@ Die Benutzeroberfläche wird mit React und Komponenten von Material-UI erstellt.
 * Form der POST-Anfrage (json): 
 ....
 {
+"username": String,
 "query": {
          String: Integer,
          String: Integer,
@@ -185,7 +187,7 @@ _Anmerkung: Die Erklärung zu Profile ist unter dem Punkt /login zu finden_
 * Form der Antwort (json):
 ....
 {
-"user": Profile
+Profile
 }
 ....
 _Anmerkung: Die Erklärung zu Profile ist unter dem Punkt /login zu finden_
@@ -206,10 +208,10 @@ _Anmerkung: Die Erklärung zu Profile ist unter dem Punkt /login zu finden_
 * Form der Antwort:
 ....
 {
-"user": Profile
+Profile
 }
 ....
-
+_Anmerkung: Die Erklärung zu Profile ist unter dem Punkt /login zu finden_
 [appendix]
 == Glossar
 

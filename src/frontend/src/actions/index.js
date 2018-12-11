@@ -21,9 +21,9 @@ export const resetForm = {
   type: 'RESETFORM',
 };
 
-export const setUsername = username => ({
-  type: 'SETUSERNAME',
-  username,
+export const setUser = user => ({
+  type: 'SETUSER',
+  user,
 });
 
 export const setError = errorMsg => ({
@@ -36,7 +36,7 @@ export const resetState = {
 };
 
 export const setSearchResults = results => ({
-  type: 'SETRESULTS',
+  type: 'SETSEARCHRESULTS',
   results,
 });
 
@@ -46,4 +46,59 @@ export const showSearchResults = {
 
 export const hideSearchResults = {
   type: 'HIDERESULTS',
+};
+
+export const changeView = view => ({
+  type: 'CHANGEVIEW',
+  view,
+});
+
+export const changeProfileOwner = person => ({
+  type: 'CHANGEPROFILEOWNER',
+  person,
+});
+
+export const hideErrorDialog = {
+  type: 'HIDEERRORDIALOG',
+};
+
+export const openProfileDialog = dialogName => ({
+  type: 'OPENPROFILEDIALOG',
+  dialogName,
+});
+
+export const closeProfileDialog = {
+  type: 'ClOSEPROFILEDIALOG',
+};
+
+export const setQuery = values => ({
+  type: 'SETQUERY',
+  values,
+});
+
+export const setAllSkills = skills => ({
+  type: 'SETALLSKILLS',
+  skills,
+});
+export const addProfiles = profiles => ({
+  type: 'ADDPROFILES',
+  profiles,
+});
+export const updateSkills = skillUpdates => ({
+  type: 'UPDATESKILLS',
+  skillUpdates,
+});
+
+export const setOwnProfile = profile => ({
+  type: 'SETOWNPROFILE',
+  profile,
+});
+
+export const setSearchError = error => ({
+  type: 'SETSEARCHERROR',
+  error,
+});
+
+export const resetSearch = {
+  type: 'RESETSEARCH',
 };

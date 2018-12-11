@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Panel from './Panel';
+
+import Panel from 'components/search/Panel';
 
 const styles = theme => ({
   root: {
@@ -20,19 +21,18 @@ const styles = theme => ({
 });
 
 function ControlledExpansionPanels(props) {
-  const { classes, results } = props;
+  const { classes, results, heading } = props;
 
-  const panels = Object.keys(results).map((username, i) => (
-    <Panel
-      key={i}
-      id={i}
-      username={username}
-      level={results[username]}
-      onChange={() => console.log('test')}
-    />
+  const panels = results.map((user, i) => (
+    <Panel key={i} id={i} username={user.username} skills={user.skills} />
   ));
 
-  return <div className={classes.root}>{panels}</div>;
+  return (
+    <div className={classes.root}>
+      <h2>{heading}</h2>
+      {panels}
+    </div>
+  );
 }
 
 ControlledExpansionPanels.propTypes = {

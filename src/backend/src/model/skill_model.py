@@ -1,7 +1,5 @@
 """Contains model for Skills"""
-import set_root_backend
-from src.model.model import Model
-import json
+from model.model import Model
 
 
 class SkillModel(Model):
@@ -13,10 +11,9 @@ class SkillModel(Model):
         self.level = level
         self.milestones = milestones
 
-    def to_json(self):
-        json_milestones = list()
+    def jsonable(self):
+        jsonable_milestones = list()
         if self.milestones:
             for milestone in self.milestones:
-                json_milestones.append(milestone.to_json())
-        model = dict(skillname=self.skill_name, level=self.level, milestones=json_milestones)
-        return json.dumps(model)
+                jsonable_milestones.append(milestone.jsonable())
+        return dict(skillname=self.skill_name, level=self.level, milestones=jsonable_milestones)

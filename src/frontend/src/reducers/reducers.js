@@ -1,5 +1,9 @@
 // default map for clean input fields
 const defaultFormState = {
+  singleselect: {
+    value: '',
+  },
+
   textfield: {
     name: 'Skill',
     value: '',
@@ -27,17 +31,131 @@ const defaultFormState = {
   },
 };
 
-const defaultUsername = 'Undefined';
+const defaultUser = {
+  username: undefined,
+  name: undefined,
+};
+
 const defaultPage = 'login';
 const defaultError = {
   hasError: false,
   message: '',
 };
 
-const defaultSearchResults = {
+const defaultSearch = {
+  searchValues: {},
   results: {},
-  showResults: true,
+  showResults: false,
+  error: false,
 };
+
+Object.freeze(defaultSearch);
+
+const defaultMilestone = {
+  datum: '2000-01-01',
+  level: 1,
+  comment: '-',
+};
+
+const exSkill = {
+  skillname: 'Python',
+  level: 4,
+  milestones: [
+    {
+      date: '2015-05-01',
+      level: 0,
+      comment: 'init',
+    },
+    {
+      date: '2016-05-01',
+      level: 1,
+      comment: 'reversed engineering buch unters kopfkissen gelegt',
+    },
+    {
+      date: '2016-08-03',
+      level: 1,
+      comment: 'Buch Hacking with Python gelesen',
+    },
+    {
+      date: '2019-07-06',
+      level: 4,
+      comment: '72h Python workshop',
+    },
+  ],
+};
+const exSkill2 = {
+  skillname: 'Java',
+  level: 5,
+  milestones: [
+    {
+      date: '2015-09-11',
+      level: 0,
+      comment: 'init',
+    },
+    {
+      date: '2016-11-23',
+      level: 1,
+      comment: 'reversed engineering buch unters kopfkissen gelegt',
+    },
+    {
+      date: '2017-01-20',
+      level: 1,
+      comment: 'Buch Hacking with Java gelesen',
+    },
+    {
+      date: '2018-02-06',
+      level: 4,
+      comment: '36h Java workshop',
+    },
+    {
+      date: '2020-11-23',
+      level: 5,
+      comment: 'Java Hackaton gewonnen',
+    },
+  ],
+};
+
+const exSkill3 = {
+  skillname: 'C++',
+  level: 3,
+  milestones: [
+    {
+      date: '2011-09-11',
+      level: 0,
+      comment: 'init',
+    },
+    {
+      date: '2017-01-20',
+      level: 1,
+      comment: 'C++ Workshop',
+    },
+    {
+      date: '2018-02-06',
+      level: 2,
+      comment: 'C++ Lehrgang',
+    },
+    {
+      date: '2021-11-23',
+      level: 3,
+      comment: 'C++ 3 jähriges Projekt fertig gestellt, mit 100000 Zeilen c++ Code',
+    },
+  ],
+};
+
+const exProfile = {
+  username: 'Valdemar',
+  skills: [exSkill, exSkill2, exSkill3], // alle skills übergeben
+};
+
+const defaultProfilePageState = {
+  person: 0,
+  isEditable: true,
+  view: 0,
+  showDialog: false,
+  profiles: [exProfile, exProfile],
+};
+
+const defaultSkillList = ['Python', 'Java', 'JavaScript'];
 
 // has all the data for the inputfields
 export const formState = (state = defaultFormState, action) => {
@@ -73,12 +191,12 @@ export const formState = (state = defaultFormState, action) => {
 };
 
 // at the moment this only saves the username
-export const user = (state = defaultUsername, action) => {
+export const user = (state = defaultUser, action) => {
   switch (action.type) {
-    case 'SETUSERNAME':
-      return action.username;
+    case 'SETUSER':
+      return action.user;
     case 'RESETSTATE':
-      return defaultUsername;
+      return defaultUser;
     default:
       return state;
   }
@@ -103,6 +221,11 @@ export const error = (state = defaultError, action) => {
         hasError: true,
         message: action.errorMsg,
       };
+    case 'HIDEERRORDIALOG':
+      return {
+        hasError: false,
+        message: '',
+      };
     case 'RESETSTATE':
       return defaultError;
     default:
@@ -110,14 +233,55 @@ export const error = (state = defaultError, action) => {
   }
 };
 
-export const searchResults = (state = defaultSearchResults, action) => {
+export const search = (state = defaultSearch, action) => {
   switch (action.type) {
-    case 'SETRESULTS':
-      return Object.assign(state, { results: action.results });
+    case 'SETQUERY':
+      return { ...state, searchValues: action.values };
+    case 'SETSEARCHRESULTS':
+      return { ...state, results: action.results };
     case 'SHOWRESULTS':
-      return Object.assign(state, { showResults: true });
+      return { ...state, showResults: true };
     case 'HIDERESULTS':
-      return Object.assign(state, { showResults: false });
+      return { ...state, showResults: false };
+    case 'SETSEARCHERROR':
+      return { ...state, error: action.error };
+    case 'RESETSEARCH':
+      return defaultSearch;
+    case 'RESETSTATE':
+      return defaultSearch;
+    default:
+      return state;
+  }
+};
+
+export const profile = (state = defaultProfilePageState, action) => {
+  switch (action.type) {
+    case 'CHANGEVIEW':
+      return { ...state, view: action.view };
+    case 'CHANGEPROFILEOWNER':
+      return { ...state, person: action.person, isEditable: action.person === 0 };
+    case 'OPENPROFILEDIALOG':
+      return { ...state, showDialog: action.dialogName };
+    case 'ClOSEPROFILEDIALOG':
+      return { ...state, showDialog: false };
+    case 'ADDPROFILES':
+      return { ...state, profiles: [state.profiles[0], ...action.profiles] };
+    case 'SETOWNPROFILE':
+      // changes the element on index 0 in array profiles
+      return { ...state, profiles: [action.profile, ...state.profiles.slice(1)] };
+    case 'RESETSTATE':
+      return defaultProfilePageState;
+    default:
+      return state;
+  }
+};
+
+export const allSkills = (state = defaultSkillList, action) => {
+  switch (action.type) {
+    case 'SETALLSKILLS':
+      return action.skills;
+    case 'RESETSTATE':
+      return defaultSkillList;
     default:
       return state;
   }
