@@ -66,6 +66,13 @@ class Chart extends Component {
             zoom: {
               enabled: enabledZoom,
               mode: 'xy',
+
+              rangeMin: {
+                y: -10,
+              },
+              rangeMax: {
+                y: 30,
+              },
             },
             startAtZero: true,
             maintainAspectRatio: false,
