@@ -12,7 +12,7 @@ import FormLabel from '@material-ui/core/FormLabel';
 
 const styles = theme => ({
   root: {
-    display: 'flex',
+    flex: 1,
     flexDirection: 'row',
   },
   formControl: {

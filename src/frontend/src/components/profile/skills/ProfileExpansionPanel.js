@@ -21,6 +21,7 @@ const styles = theme => ({
     flexShrink: 0,
   },
   secondaryHeading: {
+    flex: 1,
     color: theme.palette.text.secondary,
   },
 });
@@ -44,6 +45,7 @@ class ControlledExpansionPanels extends React.Component {
       milestones.length < 1
         ? ': -'
         : ` (${milestones[latestElement].date}): ${milestones[latestElement].comment}`;
+    console.log(classes);
     return (
       <div className={classes.root}>
         <ExpansionPanel
@@ -52,19 +54,21 @@ class ControlledExpansionPanels extends React.Component {
         >
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
             <Typography className={classes.Heading}>{skillname}</Typography>
-            <Typography className={classes.secondaryHeading} style={{ flex: 1 }}>
+            <Typography className={classes.secondaryHeading}>
               {' '}
               <p>{'Latest Milestone' + latestMilestone} </p>
             </Typography>
           </ExpansionPanelSummary>
-          <ExpansionPanelDetails className={classes.details}>
-            <RadioGroup
-              level={level}
-              skill={skillname}
-              levelChange={this.props.levelChange}
-              disabled={this.props.isEditable}
-            />
-          </ExpansionPanelDetails>
+          <Typography>
+            <Typography>
+              <RadioGroup
+                level={level}
+                skill={skillname}
+                levelChange={this.props.levelChange}
+                disabled={this.props.isEditable}
+              />
+            </Typography>
+          </Typography>
         </ExpansionPanel>
       </div>
     );
