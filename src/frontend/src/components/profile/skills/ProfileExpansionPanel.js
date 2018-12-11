@@ -52,16 +52,18 @@ class ControlledExpansionPanels extends React.Component {
         >
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
             <Typography className={classes.Heading}>{skillname}</Typography>
-            <Typography className={classes.secondaryHeading}> </Typography>
+            <Typography className={classes.secondaryHeading} style={{ flex: 1 }}>
+              {' '}
+              <p>{'Latest Milestone' + latestMilestone} </p>
+            </Typography>
           </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
+          <ExpansionPanelDetails className={classes.details}>
             <RadioGroup
               level={level}
               skill={skillname}
               levelChange={this.props.levelChange}
               disabled={this.props.isEditable}
             />
-            <Typography>{'Latest Milestone' + latestMilestone}</Typography>
           </ExpansionPanelDetails>
         </ExpansionPanel>
       </div>
