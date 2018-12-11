@@ -76,14 +76,21 @@ export default class FormDialog extends Component {
     store.dispatch(updateInput(id, value));
   }
 
+  getPerson = state => {
+    return state.profile.person;
+  };
+
+  getProfile = state => {
+    return state.profile.profiles[this.getPerson(state)];
+  };
+
   render() {
     const state = store.getState();
 
     const { allSkills } = state;
     const { showDialog } = state.profile;
     var { datefield, textarea, levelfield, singleselect } = state.formState;
-
-    var profile = state.profile.profiles[state.profile.person];
+    var profile = this.getProfile(state);
 
     function handleNewSkill(skill) {
       singleselect.value = skill;
