@@ -187,7 +187,7 @@ _Anmerkung: Die Erklärung zu Profile ist unter dem Punkt /login zu finden_
 * Form der Antwort (json):
 ....
 {
-"user": Profile
+Profile
 }
 ....
 _Anmerkung: Die Erklärung zu Profile ist unter dem Punkt /login zu finden_
@@ -208,10 +208,10 @@ _Anmerkung: Die Erklärung zu Profile ist unter dem Punkt /login zu finden_
 * Form der Antwort:
 ....
 {
-"user": Profile
+Profile
 }
 ....
-
+_Anmerkung: Die Erklärung zu Profile ist unter dem Punkt /login zu finden_
 [appendix]
 == Glossar
 

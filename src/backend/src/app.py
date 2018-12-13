@@ -44,7 +44,7 @@ from api.set_skill import SetSkill
 
 
 api = Api(app)
-api.decorators = [cors.crossdomain(origin='http://localhost:3000',
+api.decorators = [cors.crossdomain(origin='*',
                                    headers=['accept', 'Content-Type', 'access-control-allow-origin'])]
 api.add_resource(Login, "/login")
 api.add_resource(Logout, "/logout")
