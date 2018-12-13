@@ -6,6 +6,11 @@ import './index.css';
 
 // ========================================
 
+// window.onbeforeunload = (event) => {
+//   event.preventDefault();
+//   console.log('test');
+// };
+
 const render = () => {
   ReactDOM.render(<App state={store.getState()} />, document.getElementById('root'));
 };
