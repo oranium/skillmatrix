@@ -34,7 +34,6 @@ class RestCom {
   async post() {
     const headers = {
       headers: {
-        'Access-Control-Allow-Origin': '*',
         'Content-Type': 'application/json',
       },
     };
