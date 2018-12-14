@@ -7,12 +7,14 @@ import {
   updateInput,
   switchPage,
   setInputError,
-  setError,
+  setLoginError,
   resetForm,
   setUser,
   setAllSkills,
   setOwnProfile,
+  resetState,
 } from 'actions';
+import { errorDisplayType } from 'reducers/reducers';
 
 // import page parts
 import SearchController from 'components/search/SearchController';
@@ -44,8 +46,8 @@ class App extends Component {
       store.dispatch(setOwnProfile(user));
       store.dispatch(switchPage('search'));
     } catch (e) {
-      store.dispatch(setError(e.message));
-      store.dispatch(switchPage('profile'));
+      store.dispatch(resetState);
+      store.dispatch(setLoginError(e.message));
     }
   }
 
@@ -90,18 +92,17 @@ class App extends Component {
 
   render() {
     const { state } = this.props;
-    const {
-      page, error, user,
-    } = state;
-    const { hasError } = error;
+    const { page, error, user } = state;
+    const { hasError, displayType, message } = error;
 
     let main;
 
     switch (page) {
       case 'login':
+        console.log(hasError && displayType === errorDisplayType.login);
         return (
           <LoginForm
-            errorMsg={error.message}
+            errorMsg={(hasError && displayType === errorDisplayType.login) ? message : ''}
             login={(username, password) => App.handleLogin(username, password)}
           />
         );
@@ -121,13 +122,10 @@ class App extends Component {
 
     return (
       <div>
-        <Header
-          state={state}
-          user={user}
-        />
+        <Header state={state} user={user} />
         <main>
           {main}
-          {hasError && <ErrorDialog state={state} />}
+          {hasError && displayType === errorDisplayType.window && <ErrorDialog state={state} />}
         </main>
       </div>
     );

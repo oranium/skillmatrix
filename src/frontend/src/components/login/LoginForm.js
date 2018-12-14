@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -42,44 +43,82 @@ const styles = theme => ({
   },
 });
 
-function SignIn(props) {
-  const { classes, errorMsg } = props;
-  let password = '';
-  let username = '';
+class SignIn extends Component {
+  componentDidMount() {
+    // Get the components DOM node
+    const elem = ReactDOM.findDOMNode(this);
+    console.log(elem);
+    // Set the opacity of the element to 0
+    elem.style.opacity = 0;
+    window.requestAnimationFrame(() => {
+      // Now set a transition on the opacity
+      elem.style.transition = 'opacity 250ms';
+      // and set the opacity to 1
+      elem.style.opacity = 1;
+    });
+  }
 
-  return (
-    <main className={classes.main}>
-      <CssBaseline />
-      <Paper className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockIcon />
-        </Avatar>
-        <Typography component="h1" variant="h4">
-          Skill Matrix
-        </Typography>
-        <p>{errorMsg}</p>
-        <form onSubmit={(evt) => { props.login(username, password); evt.preventDefault(); }} className={classes.form}>
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="email">Email Address</InputLabel>
-            <Input id="email" name="email" autoComplete="email" onChange={(evt) => { username = evt.target.value; }} autoFocus />
-          </FormControl>
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="password">Password</InputLabel>
-            <Input name="password" type="password" id="password" onChange={(evt) => { password = evt.target.value; }} autoComplete="current-password" />
-          </FormControl>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
+  render() {
+    const { classes, errorMsg, login } = this.props;
+    let password = '';
+    let username = '';
+
+    return (
+      <main className={classes.main}>
+        <CssBaseline />
+        <Paper className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockIcon />
+          </Avatar>
+          <Typography component="h1" variant="h4">
+            Skill Matrix
+          </Typography>
+          <p className="error">{errorMsg}</p>
+          <form
+            onSubmit={(evt) => {
+              login(username, password);
+              evt.preventDefault();
+            }}
+            className={classes.form}
           >
-            Sign in
-          </Button>
-        </form>
-      </Paper>
-    </main>
-  );
+            <FormControl margin="normal" required fullWidth>
+              <InputLabel htmlFor="email">Email Address</InputLabel>
+              <Input
+                id="email"
+                name="email"
+                autoComplete="email"
+                onChange={(evt) => {
+                  username = evt.target.value;
+                }}
+                autoFocus
+              />
+            </FormControl>
+            <FormControl margin="normal" required fullWidth>
+              <InputLabel htmlFor="password">Password</InputLabel>
+              <Input
+                name="password"
+                type="password"
+                id="password"
+                onChange={(evt) => {
+                  password = evt.target.value;
+                }}
+                autoComplete="current-password"
+              />
+            </FormControl>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Sign in
+            </Button>
+          </form>
+        </Paper>
+      </main>
+    );
+  }
 }
 
 export default withStyles(styles)(SignIn);

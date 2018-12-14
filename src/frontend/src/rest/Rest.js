@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { switchPage } from 'actions';
+import { resetState, setLoginError } from 'actions';
 import store from 'Store';
 
 const config = require('../config.json');
@@ -12,7 +12,6 @@ const errorCodesToErrorMsg = (errorCode) => {
     case 400:
       return 'Wrong login credentials.';
     case 401:
-      store.dispatch(switchPage('login'));
       return 'You need to be logged in to view this page.';
     case 404:
       return 'Couldnt connect to Server. Please try again.';
@@ -34,7 +33,6 @@ class RestCom {
   async post() {
     const headers = {
       headers: {
-        'Access-Control-Allow-Origin': '*',
         'Content-Type': 'application/json',
       },
     };
@@ -45,7 +43,14 @@ class RestCom {
         if (error.response) {
           // The request was made and the server responded with a status code
           // that falls out of the range of 2xx
-          throw new Error(errorCodesToErrorMsg(error.response.status));
+          const errorMsg = errorCodesToErrorMsg(error.response.status);
+          if (error.response.status === 401) {
+            // user is not logged in and has no permission to do the request
+            store.dispatch(resetState);
+            store.dispatch(setLoginError(errorMsg));
+          } else {
+            throw new Error(errorMsg);
+          }
         } else if (error.request) {
           // The request was made but no response was received
           // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
