@@ -12,16 +12,11 @@ import FormLabel from '@material-ui/core/FormLabel';
 
 const styles = theme => ({
   root: {
-    flex: 1,
-    flexDirection: 'row',
+    width: '500%',
   },
-  formControl: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-  },
+
   group: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
   },
 });
 
@@ -58,7 +53,6 @@ class RadioButtonsGroup extends React.Component {
     return (
       <div className={classes.root}>
         <FormControl component="fieldset" className={classes.formControl}>
-          <FormLabel component="legend">Level: </FormLabel>
           <RadioGroup
             aria-label="Level"
             name="level"

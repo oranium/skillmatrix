@@ -10,15 +10,12 @@ import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import RadioGroup from '../../common/RadioGroup';
+import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
-  root: {
-    width: '100%',
-  },
   heading: {
+    flexDirection: 'row',
     fontSize: theme.typography.pxToRem(15),
-    flexBasis: '33.33%',
-    flexShrink: 0,
   },
   secondaryHeading: {
     flex: 1,
@@ -45,7 +42,7 @@ class ControlledExpansionPanels extends React.Component {
       milestones.length < 1
         ? ': -'
         : ` (${milestones[latestElement].date}): ${milestones[latestElement].comment}`;
-    console.log(classes);
+
     return (
       <div className={classes.root}>
         <ExpansionPanel
@@ -53,22 +50,26 @@ class ControlledExpansionPanels extends React.Component {
           onChange={this.handleChange(this.props.skill)}
         >
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography className={classes.Heading}>{skillname}</Typography>
-            <Typography className={classes.secondaryHeading}>
-              {' '}
-              <p>{'Latest Milestone' + latestMilestone} </p>
+            <Typography className={classes.Heading}>
+              <Button
+                variant="outlined"
+                color="primary"
+                fullWidth
+                style={{ textTransform: 'none' }}
+              >
+                {skillname}
+              </Button>
+              <div onClick={event => event.stopPropagation()}>
+                <RadioGroup
+                  level={level}
+                  skill={skillname}
+                  levelChange={this.props.levelChange}
+                  disabled={this.props.isEditable}
+                />
+              </div>
             </Typography>
           </ExpansionPanelSummary>
-          <Typography>
-            <Typography>
-              <RadioGroup
-                level={level}
-                skill={skillname}
-                levelChange={this.props.levelChange}
-                disabled={this.props.isEditable}
-              />
-            </Typography>
-          </Typography>
+          <Typography>{'Latest Milestone' + latestMilestone}</Typography>
         </ExpansionPanel>
       </div>
     );
