@@ -55,16 +55,21 @@ class DatabaseController:
 
     @staticmethod
     def set_skills(username, skills):
+        """ Set a number of skills to given level for given user.
+            Args:
+                username (str): username to set skill for.
+                skills (dict(str=int)): The skill names and levels to add.
+            Raises:
+                NameError: if skill name is not in the database.
+        """
         cdate = Date()
         user = database_controller.get_user(username)
         db.session.add(cdate)
         db.session.commit()
         for skill, level in skills.items():
             new_skill = database_controller.get_skill(skill)
-            # if skill is not found in database, it will be added
             if not new_skill:
-                new_skill = Skill(name=skill, category="Programming")
-                database_controller.create_skill(new_skill)
+                raise NameError('The Skill {0} does not exist in the database!'.format(skill))
             database_controller.add_milestone(username, skill, cdate.date, "Level {0}".format(level), level)
             assoc = Association(level=level)
             assoc.skill_assoc = new_skill
@@ -149,11 +154,13 @@ class DatabaseController:
         return Skill.query.filter_by(id=skill_id).first()
 
     @staticmethod
-    def create_skill(skill):
+    def create_skill(skillname, category):
         """Create a skill in the database.
            Args:
-                skill (Skill): The skill to add.
+                skillname (str): Name of the skill to add.
+                category (str, None): Category that the skill belongs to. Root level category if None
         """
+        skill = Skill(name=skillname, category=category)
         db.session.add(skill)
         db.session.commit()
 
