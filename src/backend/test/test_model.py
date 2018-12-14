@@ -6,7 +6,6 @@ from src.model.logout_model import LogoutModel
 from src.model.milestone_model import MilestoneModel
 from src.model.profile_model import ProfileModel
 import unittest
-import json
 import datetime
 
 
@@ -20,7 +19,7 @@ class TestProfileModel(unittest.TestCase):
 
     def setUp(self):
         self.TEST_MILESTONE_MODEL = MilestoneModel(datetime.date(2018, 11, 30), "Created humongous Python backend", 3)
-        self.TEST_SKILL_MODEL = SkillModel("Java", 3, [self.TEST_MILESTONE_MODEL])
+        self.TEST_SKILL_MODEL = SkillModel("Java", 3, category="Programming", milestones=[self.TEST_MILESTONE_MODEL])
         self.TEST_PROFILE_MODEL = ProfileModel("Aron", "Aron", [self.TEST_SKILL_MODEL])
         self.MILESTONE_JSONABLE = dict(date="2018-11-30", comment="Created humongous Python backend", level=3)
         self.SKILL_JSONABLE = dict(skillname="Java", level=3, milestones=[self.TEST_MILESTONE_MODEL.jsonable()])
@@ -49,10 +48,10 @@ class TestSearchModel(unittest.TestCase):
                                         has_all=
                                         [ProfileModel("Peter", "Peter",
                                                       [SkillModel("Java", 4), SkillModel("Python", 5)])
-                                             .jsonable()],
+                                         .jsonable()],
                                         has_some=
                                         [ProfileModel("Aron", "Aron", [SkillModel("Java", 3)])
-                                             .jsonable()]
+                                         .jsonable()]
                                     ))
 
     def test_jsonable(self):
