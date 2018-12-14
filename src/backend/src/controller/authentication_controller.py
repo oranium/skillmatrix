@@ -2,32 +2,14 @@
 from ldap3 import Server, Connection, ALL, NTLM, SUBTREE
 from ldap3.core.exceptions import LDAPUnknownAuthenticationMethodError, LDAPSocketOpenError, \
     LDAPInvalidCredentialsResult
+from os import environ
 import sys
-import config
 import re
 # if info about the server is required:
 # get info about server
 # print(mock_server.info)
 # get info about connection
 # print(mock_connection)
-
-authentication_controller = None
-
-
-def set_controller(arg):
-    global authentication_controller
-    if arg == "0":
-        print("AD PRODUCTION MODE")
-        authentication_controller = AuthenticationController(config.PRODUCTION_AD_CONFIG["SERVER_URL"],
-                                                             config.PRODUCTION_AD_CONFIG["SERVER_PREFIX"])
-    if arg == "1":
-        print("AD TESTING MODE")
-        authentication_controller = AuthenticationController(config.TEST_AD_CONFIG["SERVER_URL"],
-                                                             config.TEST_AD_CONFIG["SERVER_PREFIX"])
-    if arg == "2":
-        print("AD DEBUGGING MODE")
-        authentication_controller = AuthenticationController(config.DEBUGGING_AD_CONFIG["SERVER_URL"],
-                                                             config.DEBUGGING_AD_CONFIG["SERVER_PREFIX"])
 
 
 class AuthenticationController:
@@ -105,11 +87,12 @@ class AuthenticationController:
         regex_principal_name = re.search('([^\\\\]+$)', username)
         user_principal_name = regex_principal_name.group(0)
         
-        connection.search(search_base = 'CN=Users,DC=AzureAD,DC=SWT,DC=com',
-                    search_filter='(&(objectCategory=person)(sAMAccountName='+user_principal_name+'))', search_scope=SUBTREE,
-                    attributes = ['cn']) 
+        connection.search(search_base='CN=Users,DC=AzureAD,DC=SWT,DC=com',
+                          search_filter='(&(objectCategory=person)(sAMAccountName='+user_principal_name+'))', search_scope=SUBTREE,
+                          attributes=['cn'])
         displayname = connection.response[0]['attributes']['cn']
         return displayname
-        
 
-         
+
+authentication_controller = AuthenticationController(environ.get('SERVER_URL'),
+                                                     environ.get('SERVER_PREFIX'))
