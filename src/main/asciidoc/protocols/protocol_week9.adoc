@@ -24,7 +24,7 @@ Bruno Reinhold (Schriftführer, scrum team) +
 == Bemerkungen
 Verwarnungen, besondere Vorfälle, Organisatorisches, wichtige getroffene Entscheidungen +
 
-07.11.2018  Absprachen: Containerisierung der App mittels Docker  +
+07.12.2018  Absprachen: Containerisierung der App mittels Docker  +
 
 
 == Retrospektive des letzten Sprints
@@ -97,10 +97,10 @@ Verwarnungen, besondere Vorfälle, Organisatorisches, wichtige getroffene Entsch
 [option="headers"]
 |===
 |Issue |Titel |Beschreibung |Verantwortlicher |Status
-|#33 | feature/backend: test search API | test search API | Aron | WIP
-|#34 | feature/backend: test search implementation in database_manager |test search implementation in database_manager| Aron | WIP
-|#45 | feature/backend time tracking for skill level updates |time tracking for skill level updates |Aron, Willy, Bruno | WIP
-|#55 |feature/backend: write or rewrite tests for APIs|test|Aron|WIP
+|#33|feature/backend: test search API | test search API | Aron | WIP
+|#34|feature/backend: test search implementation in database_manager |test search implementation in database_manager| Aron | WIP
+|#45|feature/backend time tracking for skill level updates |time tracking for skill level updates |Aron, Willy, Bruno | WIP
+|#55|feature/backend: write or rewrite tests for APIs|test|Aron|WIP
 |#66|feature/profil: implement skill structure shown to the user|implement skill structure shown to the user|Max, Cornell|WIP
 |#71|feature/backend database_controller get_milestone|feature|Willy,Aron|WIP
 |#72|feature/profil: update rest connection to new standart|update rest connection to new standart|Cornell|WIP
