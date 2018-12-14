@@ -1,6 +1,6 @@
 import set_root_backend
 # test modules
-from test import test_model  # , test_controller, test_authentication_controller, test_db_model
+from test import test_model  #, test_controller, test_authentication_controller, test_db_model, test_database_controller
 import unittest
 
 # initialize the test suite
