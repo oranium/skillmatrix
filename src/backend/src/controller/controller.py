@@ -68,5 +68,9 @@ class Controller:
         except IndexError:
             return False
 
-      
+    @staticmethod
+    def get_all_skill_names():
+        return dict(allSkills=database_controller.get_all_skill_names())
+
+
 controller = Controller()
