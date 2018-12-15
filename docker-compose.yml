@@ -1,6 +1,12 @@
 version: "3"
 services:
   backend:
+    environment:
+      - ENV_TESTING=False
+      - ENV_DEBUG=True
+      - ENV_DATABASE_URI=mysql+pymysql://root:Momomomo2@localhost/sm1
+      - SERVER_URL=ldap://vm01-azure-ad.westeurope.cloudapp.azure.com:389
+      - SERVER_PREFIX=AzureAD.SWT.com\
     build: src/backend
     depends_on:
       - db

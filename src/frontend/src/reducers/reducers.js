@@ -36,10 +36,17 @@ const defaultUser = {
   name: undefined,
 };
 
+export const errorDisplayType = {
+  login: 0,
+  window: 1,
+  input: 2,
+};
+
 const defaultPage = 'login';
 const defaultError = {
   hasError: false,
   message: '',
+  displayType: errorDisplayType.window,
 };
 
 const defaultSearch = {
@@ -220,9 +227,17 @@ export const error = (state = defaultError, action) => {
       return {
         hasError: true,
         message: action.errorMsg,
+        displayType: errorDisplayType.window,
+      };
+    case 'SETLOGINERROR':
+      return {
+        hasError: true,
+        message: action.errorMsg,
+        displayType: errorDisplayType.login,
       };
     case 'HIDEERRORDIALOG':
       return {
+        ...state,
         hasError: false,
         message: '',
       };
