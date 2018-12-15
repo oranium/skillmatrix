@@ -15,6 +15,10 @@ services:
       - "80:5000"
   db:
     image: mysql:latest
+    volumes:
+      - ./src/backend/database/dockerdata:/var/lib/mysql
     environment:
       MYSQL_DATABASE: sm1
       MYSQL_ROOT_PASSWORD: "Momomomo2"
+      MYSQL_USER: 'root'
+      MYSQL_PASSWORD: 'Momomomo2'
