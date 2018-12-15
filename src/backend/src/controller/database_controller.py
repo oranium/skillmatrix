@@ -194,7 +194,7 @@ class DatabaseController:
                 if skill not in found_skills:
                     milestones = database_controller.get_milestones(username, skill.name)
                     level = database_controller.get_recent_level(skill.id, user_id)
-                    skill_models.append(SkillModel(skill.name, level, milestones=milestones))
+                    skill_models.append(SkillModel(skill.name, level, category=skill.category, milestones=milestones))
                     found_skills.append(skill)
             return skill_models
         return None
