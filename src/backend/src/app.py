@@ -5,11 +5,6 @@ from flask_restful.utils import cors
 from os import environ
 import sys
 from controller import database
-from api.login import Login
-from api.logout import Logout
-from api.search import Search
-from api.milestone import Milestone
-from api.set_skill import SetSkill
 
 
 print(environ.keys(), file=sys.stderr)
@@ -19,6 +14,15 @@ app.config['DEBUG'] = environ.get('ENV_DEBUG')
 app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('ENV_DATABASE_URI')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 database.set_db(app)
+
+
+from api.login import Login
+from api.logout import Logout
+from api.search import Search
+from api.milestone import Milestone
+from api.set_skill import SetSkill
+
+
 api = Api(app)
 api.decorators = [cors.crossdomain(origin='*',
                                    headers=['accept', 'Content-Type', 'Access-Control-Allow-Origin'])]
