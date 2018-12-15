@@ -7,9 +7,10 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy import create_engine, Date, Text
 from sqlalchemy.orm import sessionmaker
+from os import environ
 
 def checkdb(): 
-    engine = create_engine('mysql+pymysql://root:Momomomo2@localhost/sm1')
+    engine = create_engine(environ.get('ENV_DATABASE_URI'))
 
     if not engine.dialect.has_table(engine, 'association'):
         Base = declarative_base()
