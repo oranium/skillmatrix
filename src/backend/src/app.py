@@ -16,7 +16,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('ENV_DATABASE_URI')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 connected = None
-while not result:
+while not connected:
     try:
         setupdb.checkdb()
         connected = True
