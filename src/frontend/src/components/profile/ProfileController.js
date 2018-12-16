@@ -36,6 +36,10 @@ const styles = theme => ({
     display: 'block',
     margin: '10px',
   },
+  buttonContainer: {
+    position: 'absolut',
+    left: 0,
+  },
 });
 
 class ProfileController extends Component {
@@ -47,7 +51,6 @@ class ProfileController extends Component {
     const { username } = state.profile.profiles[person];
     var latestChanges = { username, skills: {} };
     var alreadyUpdated = [];
-    console.log(this.localUpdate);
     Object.keys(skills).map(index => {
       Object.keys(this.localUpdate).map(idx => {
         if (skills[index].skillname === this.localUpdate[idx][0].skill) {
@@ -148,7 +151,7 @@ class ProfileController extends Component {
                 <div>
                   <NewMilestoneDialog open={showDialog === 'milestone'} />
                   <NewSkillDialog />
-                  <div className="button-container">
+                  <div className={classes.buttonConatiner}>
                     <Button
                       variant="contained"
                       color="primary"
@@ -165,7 +168,7 @@ class ProfileController extends Component {
                       New Skill
                     </Button>
                     <Button
-                      name="bla"
+                      className="applyButton"
                       variant="contained"
                       color="primary"
                       onClick={this.applyLevelUpdates.bind(this, copy)}
