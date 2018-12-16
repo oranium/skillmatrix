@@ -15,14 +15,13 @@ app.config['DEBUG'] = environ.get('ENV_DEBUG')
 app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('ENV_DATABASE_URI')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-fail = True
-while (fail):
+connected = None
+while not result:
     try:
         setupdb.checkdb()
-        fail = False
+        connected = True
     except Exception as e:
-        print(str(e))
-        fail = True
+        pass
 database.set_db(app)
 
 
