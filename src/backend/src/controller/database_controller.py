@@ -4,6 +4,7 @@ from model.skill_model import SkillModel
 from model.milestone_model import MilestoneModel
 from model.database_model import Association, MilestoneAssociation, Skill, Date, Users
 
+
 class DatabaseController:
     """Class to handle everything about table-manipulation"""
 
@@ -191,14 +192,12 @@ class DatabaseController:
             return skill_models
         return None
 
-
     @staticmethod
     def create_user(username, name):
         """Create a user in the database.
            Args:
                username (str): the username of the user to add - should be identical to the Active Directory username.
-               forename (str): The forename of the user to add.
-               surname (str): The surname of the user to add.
+               name (str): The full name of the user to add.
         """
         db.session.add(Users(username=username, name=name))
         db.session.commit()
