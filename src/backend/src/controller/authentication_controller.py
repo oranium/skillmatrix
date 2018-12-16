@@ -52,7 +52,7 @@ class AuthenticationController:
                                             raise_exceptions=True)
 
             else:
-                login_name = 'uid='+username+authentication_controller.base_dn
+                login_name = 'uid='+username+','+authentication_controller.base_dn
                 print(login_name)
                 new_connection = Connection(authentication_controller.server,
                                             login_name,
