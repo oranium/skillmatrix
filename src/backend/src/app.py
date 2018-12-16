@@ -3,7 +3,7 @@ from flask import Flask
 from flask_restful import Api
 from flask_restful.utils import cors
 from os import environ
-from database import  setupdb
+import setupdb
 import sys
 from controller import database
 
