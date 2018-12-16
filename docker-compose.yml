@@ -7,6 +7,10 @@ services:
       - ENV_DATABASE_URI=mysql+pymysql://root:Momomomo2@db/sm1
       - SERVER_URL=ldap://vm01-azure-ad.westeurope.cloudapp.azure.com:389
       - SERVER_PREFIX=AzureAD.SWT.com\
+      - BASE_DN=OU=Users,DC=AzureAD,DC=SWT,DC=com
+      #current LDAP-Test-Server does not support ssl
+      - USE_SSL=False
+      - AUTHENTICATION=NTLM
     build: src/backend
     depends_on:
       - db
