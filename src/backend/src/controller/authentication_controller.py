@@ -42,7 +42,7 @@ class AuthenticationController:
         try:
             print(username, file=sys.stderr)
             print(password, file=sys.stderr)
-            if authentication_controller.authentication == NTLM:
+            if authentication_controller.authentication == "NTLM":
                 login_name = authentication_controller.login_prefix+username
                 print(login_name, file=sys.stderr)
                 new_connection = Connection(authentication_controller.server,
