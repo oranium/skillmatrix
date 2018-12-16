@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 // import redux parts
 import store from 'Store';
 import {
-  updateInput, switchPage, setInputError, resetForm,
+  updateInput, switchPage, setInputError, resetForm, setAllSkills, setError,
 } from 'actions';
 import { errorDisplayType } from 'reducers/reducers';
 
@@ -15,10 +15,33 @@ import LoginForm from 'components/login/LoginForm';
 import Header from 'components/header/Header';
 import ErrorDialog from 'components/error/ErrorDialog';
 
+// Rest
+import RestPoints from 'rest/Init';
+import RestCom from 'rest/Rest';
+
 class App extends Component {
   // user wants to reset all input fields
   static handleResetForm() {
     store.dispatch(resetForm);
+  }
+
+  async componentWillMount() {
+    await this.componentDidMount();
+  }
+
+  async componentDidMount() {
+    const Rest = new RestCom(RestPoints.getSkills);
+    const { state } = this.props;
+    const { allSkills } = state;
+    try {
+      const response = await Rest.get();
+      const { allNewSkills } = response.data;
+      if (allNewSkills.length !== allSkills.length) {
+        store.dispatch(setAllSkills(allSkills));
+      }
+    } catch (e) {
+      console.log(e.message);
+    }
   }
 
   // user inputs something into an input field
