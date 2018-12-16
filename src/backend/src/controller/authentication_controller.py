@@ -83,15 +83,24 @@ class AuthenticationController:
         Returns:
             displayname (str): the Active Directory CN (Common Name) 
         """
-        connection = authentication_controller.connections[username]
-        regex_principal_name = re.search('([^\\\\]+$)', username)
-        user_principal_name = regex_principal_name.group(0)
-        
-        connection.search(search_base='CN=Users,DC=AzureAD,DC=SWT,DC=com',
-                          search_filter='(&(objectCategory=person)(sAMAccountName='+user_principal_name+'))', search_scope=SUBTREE,
-                          attributes=['cn'])
-        displayname = connection.response[0]['attributes']['cn']
-        return displayname
+        try:
+            connection = authentication_controller.connections[username]
+            regex_principal_name = re.search('([^\\\\]+$)', username)
+            user_principal_name = regex_principal_name.group(0)
+
+            connection.search(search_base='CN=Users,DC=AzureAD,DC=SWT,DC=com',
+                              search_filter='(&(objectCategory=person)(sAMAccountName='+user_principal_name+'))', search_scope=SUBTREE,
+                              attributes=['cn'])
+            displayname = connection.response[0]['attributes']['cn']
+            return displayname
+        except LDAPSocketOpenError:
+            raise TimeoutError
+        except IndexError:
+            print("The response of connection-search was empty")
+        except Exception:
+            print("Unexpected error: ", sys.exc_info()[0])
+            raise
+
 
 
 authentication_controller = AuthenticationController(environ.get('SERVER_URL'),
