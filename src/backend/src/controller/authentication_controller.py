@@ -24,7 +24,7 @@ class AuthenticationController:
 
         self.connections = {}
         self.ssl = ssl
-        if ssl:
+        if ssl == "True":
             self.server = Server(server_url, use_ssl=True, get_info=ALL)
         else:
             self.server = Server(server_url, get_info=ALL)
@@ -67,7 +67,7 @@ class AuthenticationController:
             print("binding connection", file=sys.stderr)
             new_connection.bind()
             print("adding connection", file=sys.stderr)
-            if authentication_controller.ssl:
+            if authentication_controller.ssl == "True":
                 new_connection.start_tls()
             # successful login
             authentication_controller.connections[username] = new_connection
