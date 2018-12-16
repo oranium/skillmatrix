@@ -5,7 +5,8 @@ import datetime
 from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
-from sqlalchemy import create_engine, Date, Text
+from sqlalchemy import create_engine, Text
+from sqlalchemy import Date as DateType
 from sqlalchemy.orm import sessionmaker
 from os import environ
 
@@ -55,7 +56,7 @@ def checkdb():
             """SQL-Alchemy object date."""
             __tablename__ = 'date'
             id = Column(Integer, primary_key=True)
-            date = Column(Date, nullable=False, default=datetime.date.today())
+            date = Column(DateType, nullable=False, default=datetime.date.today())
             # z.B. '9999-12-12'
             date_association = relationship("Association", back_populates="date_assoc")
             date_milestone_association = relationship("MilestoneAssociation", back_populates="date_milestone_assoc")

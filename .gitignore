@@ -2,6 +2,9 @@
 build/
 static/
 
+#dockerdata for database
+dockerdata/
+
 # Maven
 target/
 
