@@ -24,22 +24,22 @@ class AuthenticationController:
 
         self.connections = {}
         self.ssl = ssl
-        if(ssl):
+        if ssl:
             self.server = Server(server_url, use_ssl=True, get_info=ALL)
         else:
             self.server = Server(server_url, get_info=ALL)
         self.login_prefix = prefix
         self.base_dn = base_dn
         self.authentication = authentication
+
     @staticmethod
-    def login( username, password):
+    def login(username, password):
         """
         Creates a new connection to the AD.
         Returns JSON with user object on successful login,
         AttributeError for wrong credentials, TimeoutError if the AD doesn't respond.
         """
         try:
-
             print(username, file=sys.stderr)
             print(password, file=sys.stderr)
             if authentication_controller.authentication == NTLM:
@@ -79,6 +79,7 @@ class AuthenticationController:
         # catch
         except LDAPStartTLSError:
             print("TLS failed")
+            raise Exception
 
         # catch timeout while calling AD
         except LDAPSocketOpenError:
@@ -122,7 +123,6 @@ class AuthenticationController:
         except Exception:
             print("Unexpected error: ", sys.exc_info()[0])
             raise
-
 
 
 authentication_controller = AuthenticationController(environ.get('SERVER_URL'),
