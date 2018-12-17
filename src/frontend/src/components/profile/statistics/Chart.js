@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Line } from 'react-chartjs-2';
-
-// example for "Skill" in json format
+import { zoom, pan } from 'chartjs-plugin-zoom'; // muss bleiben!! sonst funktioniert zoom nicht
 
 class Chart extends Component {
   render() {
@@ -67,6 +66,13 @@ class Chart extends Component {
             zoom: {
               enabled: enabledZoom,
               mode: 'xy',
+
+              rangeMin: {
+                y: -10,
+              },
+              rangeMax: {
+                y: 30,
+              },
             },
             startAtZero: true,
             maintainAspectRatio: false,

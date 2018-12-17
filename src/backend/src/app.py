@@ -3,14 +3,9 @@ from flask import Flask
 from flask_restful import Api
 from flask_restful.utils import cors
 from os import environ
+import setupdb
 import sys
 from controller import database
-from api.login import Login
-from api.logout import Logout
-from api.search import Search
-from api.milestone import Milestone
-from api.set_skills import SetSkills
-from api.get_skills import GetSkills
 
 
 print(environ.keys(), file=sys.stderr)
@@ -19,7 +14,26 @@ app.config['TESTING'] = environ.get('ENV_TESTING')
 app.config['DEBUG'] = environ.get('ENV_DEBUG')
 app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('ENV_DATABASE_URI')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+connected = None
+while not connected:
+    try:
+        setupdb.checkdb()
+        connected = True
+    except Exception as e:
+        pass
 database.set_db(app)
+
+
+from api.login import Login
+from api.logout import Logout
+from api.search import Search
+from api.milestone import Milestone
+from api.set_skills import SetSkills
+from api.get_skills import GetSkills
+from api.create_skill import CreateSkill
+
+
 api = Api(app)
 api.decorators = [cors.crossdomain(origin='*',
                                    headers=['accept', 'Content-Type', 'Access-Control-Allow-Origin'])]
