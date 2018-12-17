@@ -3,6 +3,7 @@ from flask import Flask
 from flask_restful import Api
 from flask_restful.utils import cors
 from os import environ
+import setupdb
 import sys
 from controller import database
 
@@ -13,6 +14,14 @@ app.config['TESTING'] = environ.get('ENV_TESTING')
 app.config['DEBUG'] = environ.get('ENV_DEBUG')
 app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('ENV_DATABASE_URI')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+connected = None
+while not connected:
+    try:
+        setupdb.checkdb()
+        connected = True
+    except Exception as e:
+        pass
 database.set_db(app)
 
 
