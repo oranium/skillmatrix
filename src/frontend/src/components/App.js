@@ -4,10 +4,7 @@ import React, { Component } from 'react';
 // import redux parts
 import store from 'Store';
 import {
-  updateInput,
-  switchPage,
-  setInputError,
-  resetForm,
+  updateInput, switchPage, setInputError, resetForm,
 } from 'actions';
 import { errorDisplayType } from 'reducers/reducers';
 
@@ -19,8 +16,6 @@ import Header from 'components/header/Header';
 import ErrorDialog from 'components/error/ErrorDialog';
 
 class App extends Component {
-
-
   // user wants to reset all input fields
   static handleResetForm() {
     store.dispatch(resetForm);
@@ -72,7 +67,7 @@ class App extends Component {
         console.log(hasError && displayType === errorDisplayType.login);
         return (
           <LoginForm
-            errorMsg={(hasError && displayType === errorDisplayType.login) ? message : ''}
+            errorMsg={hasError && displayType === errorDisplayType.login ? message : ''}
             login={(username, password) => App.handleLogin(username, password)}
           />
         );

@@ -74,9 +74,12 @@ image:Statistics.jpg[Statistik]
 
 image:DatenbankController.jpg[DatenbankController]
 
-* Entwurfsklassendiagramm +
-
+* Entwurfsklassendiagramme +
+*Übersicht*
 image:entwurfsdiagramm.JPG[Entwurfsdiagramm]
+
+*Backend*
+ image:backend_class_diag.jpg[Entwurfsdiagramm Backend]
  
 == Entwurfsentscheidungen
 //* Architektur
