@@ -55,8 +55,10 @@ class AuthenticationController:
             authentication_controller.connections[username] = new_connection
             return authentication_controller.get_name(username)
         # catch empty input
-        except (LDAPUnknownAuthenticationMethodError, LDAPInvalidCredentialsResult):
+        except (LDAPUnknownAuthenticationMethodError, LDAPInvalidCredentialsResult) as e:
             print("empty", file=sys.stderr)
+            print(e.__name__, file=sys.stderr)
+
             raise AttributeError
         # catch timeout while calling AD
         except LDAPSocketOpenError:
