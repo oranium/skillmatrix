@@ -19,7 +19,25 @@ import Header from 'components/header/Header';
 import ErrorDialog from 'components/error/ErrorDialog';
 
 class App extends Component {
+  static async handleLogin(username, password) {
+    const loginCredentials = {
+      username,
+      password,
+    };
+    const Rest = new RestCom(RestPoints.login, JSON.stringify(loginCredentials));
 
+    try {
+      const { data } = await Rest.post();
+      const { user, allSkills } = data;
+      store.dispatch(setUser({ username: user.username, name: user.name }));
+      store.dispatch(setAllSkills(allSkills));
+      store.dispatch(setOwnProfile(user));
+      store.dispatch(switchPage('search'));
+    } catch (e) {
+      store.dispatch(setError(e.message));
+      store.dispatch(switchPage('login'));
+    }
+  }
 
   // user wants to reset all input fields
   static handleResetForm() {

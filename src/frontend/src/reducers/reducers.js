@@ -151,7 +151,7 @@ const exSkill3 = {
 
 const exProfile = {
   username: 'Valdemar',
-  skills: [exSkill, exSkill2, exSkill3], // alle skills übergeben
+  skills: [exSkill, exSkill2, exSkill3, exSkill3, exSkill2, exSkill], // alle skills übergeben
 };
 
 const defaultProfilePageState = {
