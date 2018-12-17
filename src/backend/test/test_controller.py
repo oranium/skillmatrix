@@ -4,25 +4,19 @@ import unittest
 from unittest.mock import patch
 
 
-class TestDatabaseController(unittest.TestCase):
+class TestController(unittest.TestCase):
     """unittests for database controller"""
 
-    def test_get_all(self, level):
+    def test_login_success(self):
         pass
 
-    def test_set_skill(self, level, date):
+    def test_login_new_user(self):
         pass
 
-    def test_get_profile(self, user):
+    def test_logout(self):
         pass
 
-    def test_add_user(self, user):
-        pass
-
-    def test_delete_user(self, user):
-        pass
-
-    def test_add_skill(self, user):
+    def test_logout_no_permission(self):
         pass
 
     def test_search_success(self):
@@ -35,3 +29,26 @@ class TestDatabaseController(unittest.TestCase):
         with patch.object(controller, "search") as mock_search:
             mock_search.return_value = None
             self.assertRaises(ValueError, controller.search, self, "bad request that yields no results")
+
+    def test_search_no_permission(self):
+        pass
+
+    def test_set_skill(self):
+        pass
+
+    def test_set_skill_no_permission(self):
+        pass
+
+    def test_add_milestone(self):
+        pass
+
+    def test_add_milestone_no_permission(self):
+        pass
+
+    def test_is_connected(self):
+        pass
+
+    def test_is_connected_no_connections(self):
+        pass
+
+    
