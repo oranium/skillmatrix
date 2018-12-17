@@ -36,7 +36,7 @@ Genauere Informationen können dem Pflichtenheft entnommen werden.
 Es wird ein Server als Host für die Anwendung benötigt. 
 
 * Software-Vorgaben +
-React, Redux, ChartJS, Material-UI , Python/Flask,LDAP3 yaml und MySQL werden genutzt. 
+Docker, React, Redux, ChartJS, Material-UI , Python/Flask,LDAP3 yaml und MySQL werden genutzt. 
 
 * Vorgaben zum Betrieb der Software +
 Server: Webserver, um Dateien an die Clienten auszuliefern. +
@@ -74,9 +74,12 @@ image:Statistics.jpg[Statistik]
 
 image:DatenbankController.jpg[DatenbankController]
 
-* Entwurfsklassendiagramm +
-
+* Entwurfsklassendiagramme +
+*Übersicht*
 image:entwurfsdiagramm.JPG[Entwurfsdiagramm]
+
+*Backend*
+ image:backend_class_diag.jpg[Entwurfsdiagramm Backend]
  
 == Entwurfsentscheidungen
 //* Architektur
@@ -100,7 +103,6 @@ Die Benutzeroberfläche wird mit React und Komponenten von Material-UI erstellt.
 ....
 {
 "user": Profile,
-"allSkills": [String]
 }
 ....
 
@@ -115,6 +117,7 @@ Die Benutzeroberfläche wird mit React und Komponenten von Material-UI erstellt.
 *Skill hat folgende Form:*
 ....
 {
+"category": String
 "skillname": String,
 "level": Integer,
 "milestones":[Milestone]
@@ -170,7 +173,17 @@ _Anmerkung: Keys entsprechen dem Namen des Skills, Integers dem gewünschten Min
 ....
 _Anmerkung: Die Erklärung zu Profile ist unter dem Punkt /login zu finden_
 
-=== /skill
+=== /getskills
+* erlaubte Anfragen: GET, OPTIONS
+* Form der Antwort:
+....
+{
+"allSkills": [String]
+}
+....
+
+
+=== /setskills
 * erlaubte Anfragen: POST, OPTIONS
 * Form der POST-Anfrage (json): 
 ....
@@ -181,6 +194,26 @@ _Anmerkung: Die Erklärung zu Profile ist unter dem Punkt /login zu finden_
           String: Integer,
           ...
           }
+}
+....
+
+* Form der Antwort (json):
+....
+{
+Profile
+}
+....
+_Anmerkung: Die Erklärung zu Profile ist unter dem Punkt /login zu finden_
+
+=== /createskill
+* erlaubte Anfragen: POST, OPTIONS
+* Form der POST-Anfrage (json): 
+....
+{
+"username": String,
+"skillname": String,
+"level" : Integer,
+"category": String
 }
 ....
 
@@ -212,6 +245,7 @@ Profile
 }
 ....
 _Anmerkung: Die Erklärung zu Profile ist unter dem Punkt /login zu finden_
+
 [appendix]
 == Glossar
 

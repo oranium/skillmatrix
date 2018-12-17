@@ -1,0 +1,438 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test Profile Components render ProfileController component 1`] = `
+<ProfileController
+  classes={
+    Object {
+      "buttonContainer": "ProfileController-buttonContainer-11",
+      "goBackButton": "ProfileController-goBackButton-10",
+      "root": "ProfileController-root-9",
+    }
+  }
+  data={Array []}
+  skill="Javascript"
+/>
+`;
+
+exports[`test Profile Components render TabContainer component 1`] = `
+<TabContainer
+  classes={
+    Object {
+      "root": "TabContainer-root-12",
+    }
+  }
+  skill="Javascript"
+/>
+`;
+
+exports[`test Profile/skills Components render Label component 1`] = `
+<Label
+  classes={
+    Object {
+      "root": "Label-root-1",
+    }
+  }
+  value="Javascript"
+/>
+`;
+
+exports[`test Profile/skills Components render NewMilestoneDialog component 1`] = `
+<div>
+  <WithStyles(Dialog)
+    aria-labelledby="form-dialog-title"
+    onClose={[Function]}
+    open={false}
+  >
+    <WithStyles(DialogTitle)
+      id="form-dialog-title"
+    >
+      New milestone
+    </WithStyles(DialogTitle)>
+    <WithStyles(DialogContent)>
+      <WithStyles(DialogContentText)>
+        To add a new milestone please fill in all inputfields.
+      </WithStyles(DialogContentText)>
+      <WithStyles(IntegrationReactSelect)
+        allSkills={
+          Array [
+            "Python",
+            "Java",
+            "C++",
+            "C++",
+            "Java",
+            "Python",
+          ]
+        }
+      />
+      <WithStyles(RadioButtonsGroup)
+        level="Choose a Skill!"
+      />
+      <WithStyles(Component)
+        data={
+          Object {
+            "error": false,
+            "name": "Date",
+            "value": "",
+          }
+        }
+        onChange={[Function]}
+      />
+      <WithStyles(Component)
+        data={
+          Object {
+            "error": false,
+            "name": "Note",
+            "value": "",
+          }
+        }
+        onChange={[Function]}
+      />
+    </WithStyles(DialogContent)>
+    <WithStyles(DialogActions)>
+      <WithStyles(Button)
+        color="primary"
+        onClick={[Function]}
+      >
+        Cancel
+      </WithStyles(Button)>
+      <WithStyles(Button)
+        color="primary"
+        onClick={[Function]}
+      >
+        Submit
+      </WithStyles(Button)>
+    </WithStyles(DialogActions)>
+  </WithStyles(Dialog)>
+</div>
+`;
+
+exports[`test Profile/skills Components render NewSkillDialog component 1`] = `
+<div>
+  <WithStyles(Dialog)
+    aria-labelledby="form-dialog-title"
+    onClose={[Function]}
+    open={false}
+  >
+    <WithStyles(DialogTitle)
+      id="form-dialog-title"
+    >
+      New skill
+    </WithStyles(DialogTitle)>
+    <WithStyles(DialogContent)>
+      <WithStyles(DialogContentText)>
+        To add a new Skill please fill in all inputfields.
+      </WithStyles(DialogContentText)>
+      <WithStyles(IntegrationReactSelect)
+        allSkills={
+          Array [
+            "JavaScript",
+          ]
+        }
+      />
+      <TextField
+        id="standard-with-placeholder"
+        label="add new skill to database"
+        margin="normal"
+        onChange={[Function]}
+        placeholder="new skill"
+        required={false}
+        select={false}
+        variant="standard"
+      />
+      <WithStyles(Component)
+        data={
+          Object {
+            "error": false,
+            "name": "Level",
+            "value": "",
+          }
+        }
+        onChange={[Function]}
+        required={true}
+      />
+    </WithStyles(DialogContent)>
+    <WithStyles(DialogActions)>
+      <WithStyles(Button)
+        color="primary"
+        onClick={[Function]}
+      >
+        Cancel
+      </WithStyles(Button)>
+      <WithStyles(Button)
+        color="primary"
+        onClick={[Function]}
+      >
+        Submit
+      </WithStyles(Button)>
+    </WithStyles(DialogActions)>
+  </WithStyles(Dialog)>
+</div>
+`;
+
+exports[`test Profile/skills Components render ProfileExpensionPanel component 1`] = `
+<ControlledExpansionPanels
+  classes={
+    Object {
+      "heading": "ControlledExpansionPanels-heading-2",
+      "secondaryHeading": "ControlledExpansionPanels-secondaryHeading-3",
+    }
+  }
+  isEditable={true}
+  skill="Javascript"
+/>
+`;
+
+exports[`test Profile/skills Components render ProfileExpensionPanel component 2`] = `
+<ControlledExpansionPanels
+  classes={
+    Object {
+      "heading": "ControlledExpansionPanels-heading-2",
+      "secondaryHeading": "ControlledExpansionPanels-secondaryHeading-3",
+    }
+  }
+  isEditable={false}
+  skill="Javascript"
+/>
+`;
+
+exports[`test Profile/skills Components render SkillProfileList component 1`] = `
+Array [
+  <div>
+    <WithStyles(ControlledExpansionPanels)
+      isEditable={true}
+      key="1"
+      skill={
+        Object {
+          "skillname": "Java",
+        }
+      }
+    />
+  </div>,
+  <div>
+    <WithStyles(ControlledExpansionPanels)
+      isEditable={true}
+      key="2"
+      skill={
+        Object {
+          "skillname": "Python",
+        }
+      }
+    />
+  </div>,
+  <div>
+    <WithStyles(ControlledExpansionPanels)
+      isEditable={true}
+      key="3"
+      skill={
+        Object {
+          "skillname": "Haskell",
+        }
+      }
+    />
+  </div>,
+]
+`;
+
+exports[`test Profile/skills Components render SkillProfileList component 2`] = `
+Array [
+  <div>
+    <WithStyles(ControlledExpansionPanels)
+      isEditable={false}
+      key="1"
+      skill={
+        Object {
+          "skillname": "Java",
+        }
+      }
+    />
+  </div>,
+  <div>
+    <WithStyles(ControlledExpansionPanels)
+      isEditable={false}
+      key="2"
+      skill={
+        Object {
+          "skillname": "Python",
+        }
+      }
+    />
+  </div>,
+  <div>
+    <WithStyles(ControlledExpansionPanels)
+      isEditable={false}
+      key="3"
+      skill={
+        Object {
+          "skillname": "Haskell",
+        }
+      }
+    />
+  </div>,
+]
+`;
+
+exports[`test Profile/stats Components render Chart component 1`] = `
+<div
+  className="Chart"
+>
+  <Line
+    data={
+      Object {
+        "datasets": Array [
+          Object {
+            "backgroundColor": "rgba(75,192,192,1)",
+            "borderColor": "rgba(75,192,192,1)",
+            "data": Array [],
+            "fill": false,
+            "label": "Javascript",
+            "pointBorderColor": "rgba(75,192,192,1)",
+            "pointBorderWidth": "rgba(75,192,192,1)",
+            "pointHoverBackgroundColor": "rgba(75,192,192,1)",
+            "pointHoverBorderColor": "rgba(75,192,192,1)",
+          },
+        ],
+      }
+    }
+    options={
+      Object {
+        "maintainAspectRatio": false,
+        "pan": Object {
+          "enabled": undefined,
+          "mode": "x",
+        },
+        "scales": Object {
+          "xAxes": Array [
+            Object {
+              "position": "bottom",
+              "ticks": Object {
+                "display": undefined,
+              },
+              "time": Object {
+                "displayFormats": Object {
+                  "month": "MM/YY",
+                },
+                "tooltipFormat": "ll",
+                "unit": "month",
+              },
+              "type": "time",
+            },
+          ],
+          "yAxes": Array [
+            Object {
+              "ticks": Object {
+                "beginAtZero": true,
+                "display": undefined,
+                "max": 7,
+                "stepValue": 1,
+                "steps": 0.5,
+              },
+            },
+          ],
+        },
+        "startAtZero": true,
+        "zoom": Object {
+          "enabled": undefined,
+          "mode": "xy",
+          "rangeMax": Object {
+            "y": 30,
+          },
+          "rangeMin": Object {
+            "y": -10,
+          },
+        },
+      }
+    }
+  />
+</div>
+`;
+
+exports[`test Profile/stats Components render SimpleCard component 1`] = `
+<SimpleCard
+  classes={
+    Object {
+      "appBar": "SimpleCard-appBar-5",
+      "card": "SimpleCard-card-8",
+      "container": "SimpleCard-container-7",
+      "flex": "SimpleCard-flex-6",
+      "root": "SimpleCard-root-4",
+    }
+  }
+  data={Array []}
+  skill="Javascript"
+/>
+`;
+
+exports[`test Profile/stats Components render SkillStatisticsGrid component 1`] = `
+<div
+  className="Chart"
+>
+  <Line
+    data={
+      Object {
+        "datasets": Array [
+          Object {
+            "backgroundColor": "rgba(75,192,192,1)",
+            "borderColor": "rgba(75,192,192,1)",
+            "data": Array [],
+            "fill": false,
+            "label": "Javascript",
+            "pointBorderColor": "rgba(75,192,192,1)",
+            "pointBorderWidth": "rgba(75,192,192,1)",
+            "pointHoverBackgroundColor": "rgba(75,192,192,1)",
+            "pointHoverBorderColor": "rgba(75,192,192,1)",
+          },
+        ],
+      }
+    }
+    options={
+      Object {
+        "maintainAspectRatio": false,
+        "pan": Object {
+          "enabled": undefined,
+          "mode": "x",
+        },
+        "scales": Object {
+          "xAxes": Array [
+            Object {
+              "position": "bottom",
+              "ticks": Object {
+                "display": undefined,
+              },
+              "time": Object {
+                "displayFormats": Object {
+                  "month": "MM/YY",
+                },
+                "tooltipFormat": "ll",
+                "unit": "month",
+              },
+              "type": "time",
+            },
+          ],
+          "yAxes": Array [
+            Object {
+              "ticks": Object {
+                "beginAtZero": true,
+                "display": undefined,
+                "max": 7,
+                "stepValue": 1,
+                "steps": 0.5,
+              },
+            },
+          ],
+        },
+        "startAtZero": true,
+        "zoom": Object {
+          "enabled": undefined,
+          "mode": "xy",
+          "rangeMax": Object {
+            "y": 30,
+          },
+          "rangeMin": Object {
+            "y": -10,
+          },
+        },
+      }
+    }
+  />
+</div>
+`;

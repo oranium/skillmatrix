@@ -61,6 +61,12 @@ const defaultSearch = {
   searchValues: {},
   results: {},
   showResults: false,
+  error: false,
+};
+
+const defaultUser = {
+  username: undefined,
+  name: undefined,
 };
 
 const defaultProfilePageState = {
@@ -149,13 +155,15 @@ describe('reducer tests', () => {
     expect(actState.page).toEqual('login');
   });
 
-  // ###################################################  Username reducer  ###################################################
-  it('should update the actual state after Event "SETUSERNAME"', () => {
-    const actState = reducer(exampleFormState, {
-      type: 'SETUSERNAME',
-      username: 'Vladimir',
+  // ###################################################  user reducer  ###################################################
+
+  it('should update the actual state after Event "SETUSER"', () => {
+    const actState = reducer(defaultUser, {
+      type: 'SETUSER',
+      user: { username: 'Vladi69', name: 'Valdemar Forsberg' },
     });
-    expect(actState.user).toEqual('Vladimir');
+    expect(actState.user.username).toEqual('Vladi69');
+    expect(actState.user.name).toEqual('Valdemar Forsberg');
   });
 
   // ###################################################  Search page reducers  ###################################################
@@ -202,13 +210,13 @@ describe('reducer tests', () => {
     expect(actState.search.error).toBe('Server timeout');
   });
 
-  // it('should update the actual state after Event "RESETSTATE"', () => {
-  //   const actState = reducer(defaultSearch, {
-  //     type: 'RESETSTATE',
-  //   });
+  it('should update the actual state after Event "RESETSTATE"', () => {
+    const actState = reducer(defaultSearch, {
+      type: 'RESETSTATE',
+    });
 
-  //   expect(actState.search).toBe(false);
-  // });
+    expect(actState.search).toEqual(defaultSearch);
+  });
 
   // ###################################################  Profile page reducers  ###################################################
   it('should update the actual state after Event "CHANGEVIEW"', () => {
