@@ -13,14 +13,12 @@ import RadioGroup from '../../common/RadioGroup';
 import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
-  heading: {
-    flexDirection: 'row',
-    fontSize: theme.typography.pxToRem(15),
-  },
+  heading: { display: 'flex', flexDirection: 'row' },
   secondaryHeading: {
     flex: 1,
     color: theme.palette.text.secondary,
   },
+  row: { width: '320%' },
 });
 
 class ControlledExpansionPanels extends React.Component {
@@ -51,21 +49,25 @@ class ControlledExpansionPanels extends React.Component {
         >
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
             <Typography className={classes.Heading}>
-              <Button
-                variant="outlined"
-                color="primary"
-                fullWidth
-                style={{ textTransform: 'none' }}
-              >
-                {skillname}
-              </Button>
-              <div onClick={event => event.stopPropagation()}>
-                <RadioGroup
-                  level={level}
-                  skill={skillname}
-                  levelChange={this.props.levelChange}
-                  disabled={this.props.isEditable}
-                />
+              <div>
+                <div>
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    style={{ textTransform: 'none' }}
+                    fullWidth
+                  >
+                    {skillname}
+                  </Button>
+                </div>
+                <div className={classes.row} onClick={event => event.stopPropagation()}>
+                  <RadioGroup
+                    level={level}
+                    skill={skillname}
+                    levelChange={this.props.levelChange}
+                    disabled={this.props.isEditable}
+                  />
+                </div>
               </div>
             </Typography>
           </ExpansionPanelSummary>
