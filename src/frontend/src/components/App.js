@@ -87,7 +87,6 @@ class App extends Component {
 
     switch (page) {
       case 'login':
-        console.log(hasError && displayType === errorDisplayType.login);
         return (
           <LoginForm
             errorMsg={hasError && displayType === errorDisplayType.login ? message : ''}
