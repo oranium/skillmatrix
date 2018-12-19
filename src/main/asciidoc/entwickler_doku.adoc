@@ -175,15 +175,30 @@ _Anmerkung: Keys entsprechen dem Namen des Skills, Integers dem gewünschten Min
 _Anmerkung: Die Erklärung zu Profile ist unter dem Punkt /login zu finden_
 
 === /getskills
-* erlaubte Anfragen: GET, OPTIONS
-* Form der Antwort:
+* erlaubte Anfragen: GET, POST, OPTIONS
+
+* Form der POST-Anfrage (json):
+....
+{
+"username": String
+}
+....
+
+* Form der Antwort (POST, json):
+....
+{
+"username": String,
+"allSkills": [String]
+}
+....
+
+* Form der Antwort (GET, json):
 ....
 {
 "allSkills": [String]
 "categories":[String]
 }
 ....
-
 
 === /setskills
 * erlaubte Anfragen: POST, OPTIONS
