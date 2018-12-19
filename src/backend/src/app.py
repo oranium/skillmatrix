@@ -31,7 +31,7 @@ from api.search import Search
 from api.milestone import Milestone
 from api.set_skills import SetSkills
 from api.get_skills import GetSkills
-from api.create_skills import CreateSkill
+from api.create_skill import CreateSkill
 
 
 api = Api(app)
