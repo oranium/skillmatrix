@@ -44,6 +44,9 @@ const styles = theme => ({
 });
 
 class ProfileController extends Component {
+  state = {
+    changes: false,
+  };
   localUpdate = [];
 
   async applyLevelUpdates(skills) {
@@ -72,11 +75,13 @@ class ProfileController extends Component {
     }
 
     this.localUpdate = [];
+    this.setState({ changes: false });
     delete latestChanges[skills];
   }
 
   handleLevelChange = (skill, level) => {
     this.localUpdate.push([{ skill, level }]);
+    this.setState({ changes: true });
   };
 
   getOwnerArticle() {
@@ -167,14 +172,16 @@ class ProfileController extends Component {
                     >
                       New Skill
                     </Button>
-                    <Button
-                      className="applyButton"
-                      variant="contained"
-                      color="primary"
-                      onClick={this.applyLevelUpdates.bind(this, copy)}
-                    >
-                      Apply Changes
-                    </Button>
+                    {this.state.changes && (
+                      <Button
+                        className="applyButton"
+                        variant="contained"
+                        color="primary"
+                        onClick={this.applyLevelUpdates.bind(this, copy)}
+                      >
+                        Apply Changes
+                      </Button>
+                    )}
                   </div>
                 </div>
               )}
