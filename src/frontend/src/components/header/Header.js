@@ -4,7 +4,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import { AccountCircle, PowerSettingsNew, Search } from '@material-ui/icons';
+import { AccountCircle, PowerSettingsNew, Search, Add } from '@material-ui/icons';
 
 // import redux parts
 import store from '../../Store';
@@ -34,6 +34,10 @@ const styles = {
 };
 
 class ButtonAppBar extends Component {
+  static openNewSkillDialog(){
+    // open dialog to add completly new skill to database
+
+  }
   static switchToPage(page) {
     store.dispatch(switchPage(page));
   }
@@ -79,7 +83,8 @@ class ButtonAppBar extends Component {
               className={classes.menuButton}
               onClick={this.switchToProfilePage}
               color="inherit"
-              aria-label="Menu"
+              aria-label="own profile"
+              title="show own profile"
             >
               <AccountCircle />
             </IconButton>
@@ -88,9 +93,19 @@ class ButtonAppBar extends Component {
             </Typography>
             <IconButton
               className={classes.menuButton}
+              onClick={this.constructor.openNewSkillDialog}
+              color="inherit"
+              aria-label="add new skill"
+              title="new skill"
+            >
+              <Add />
+            </IconButton>
+            <IconButton
+              className={classes.menuButton}
               onClick={this.switchToSearchPage}
               color="inherit"
-              aria-label="Menu"
+              aria-label="open search"
+              title="search"
             >
               <Search />
             </IconButton>
@@ -98,7 +113,8 @@ class ButtonAppBar extends Component {
               className={classes.menuButton}
               onClick={() => this.handleLogout()}
               color="inherit"
-              aria-label="Menu"
+              aria-label="logout"
+              title="logout"
             >
               <PowerSettingsNew />
             </IconButton>
