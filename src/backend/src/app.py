@@ -6,12 +6,6 @@ from os import environ
 import setupdb
 import sys
 from controller import database
-from api.login import Login
-from api.logout import Logout
-from api.search import Search
-from api.milestone import Milestone
-from api.set_skills import SetSkills
-from api.get_skills import GetSkills
 
 
 print(environ.keys(), file=sys.stderr)
@@ -35,7 +29,9 @@ from api.login import Login
 from api.logout import Logout
 from api.search import Search
 from api.milestone import Milestone
-from api.set_skill import SetSkill
+from api.set_skills import SetSkills
+from api.get_skills import GetSkills
+from api.create_skill import CreateSkill
 
 
 api = Api(app)
