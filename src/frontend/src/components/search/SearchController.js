@@ -112,11 +112,11 @@ class SearchController extends Component {
         {showResults && (
           <div>
             <ControlledExpansionPanels
-              heading={'Matches all search therms'}
+              heading={'Matches all search terms'}
               results={results.hasAll}
             />
             <ControlledExpansionPanels
-              heading={'Matches some search therms'}
+              heading={'Matches some search terms'}
               results={results.hasSome}
             />
           </div>

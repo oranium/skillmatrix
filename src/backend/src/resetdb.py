@@ -1,4 +1,3 @@
-#it was so nice i build it twice
 import os
 import sys
 import datetime
@@ -126,5 +125,3 @@ create_skill(2, js1, date1, valdemar)
 create_skill(3, python1, date1, isaac)
 create_skill(1, java1, date1, karl)
 session.commit()
-
-
