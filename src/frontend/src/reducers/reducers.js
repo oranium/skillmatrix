@@ -91,7 +91,6 @@ const exSkill = {
   ],
 };
 
-
 const exSkill3 = {
   skillname: 'C++',
   level: 3,
@@ -117,7 +116,7 @@ const exSkill3 = {
       comment: 'C++ 3 jähriges Projekt fertig gestellt, mit 100000 Zeilen c++ Code',
     },
   ],
-  subcategories: [exSkill]
+  subcategories: [exSkill, exSkill, exSkill, exSkill],
 };
 const exSkill2 = {
   skillname: 'Java',
@@ -149,19 +148,19 @@ const exSkill2 = {
       comment: 'Java Hackaton gewonnen',
     },
   ],
-  subcategories: [exSkill3]
+  subcategories: [exSkill3, exSkill, exSkill3],
 };
 
 const exCat = {
   skillname: 'Programming',
   level: 4,
-  milestones: [
-  ],
-  subcategories: [exSkill,exSkill2 ]}
+  milestones: [],
+  subcategories: [exSkill, exSkill2],
+};
 
-  const exProfile = {
+const exProfile = {
   username: 'Valdemar',
-  skills: [exCat], // alle skills übergeben
+  skills: [exCat, exSkill3], // alle skills übergeben
 };
 
 const defaultProfilePageState = {
