@@ -22,9 +22,9 @@ class Controller:
     @staticmethod
     def logout(username):
         if controller.is_connected(username):
-            authentication_controller.logout(username)
-            return LogoutModel(username).jsonable()
-        raise PermissionError
+            raise PermissionError
+        authentication_controller.logout(username)
+        return LogoutModel(username).jsonable()
 
     @staticmethod
     def get_all_skill_names(username=None):
@@ -34,30 +34,38 @@ class Controller:
         return database_controller.get_all_skill_names(username)
 
     @staticmethod
+    def create_skill(username, skillname, level, category):
+        if not controller.is_connected(username):
+            raise PermissionError
+        database_controller.create_skill(username, skillname, level, category)
+        user_skills = database_controller.get_skills(username)
+        return ProfileModel(username, name=authentication_controller.get_name(username), skills=user_skills)
+
+    @staticmethod
     def search(username, query):
         if controller.is_connected(username):
-            results = database_controller.search(query)
-            return SearchModel(query, results).jsonable()
-        raise PermissionError
+            raise PermissionError
+        results = database_controller.search(query)
+        return SearchModel(query, results).jsonable()
 
     @staticmethod
     def set_skills(username, skills):
-        if controller.is_connected(username):
-            database_controller.set_skills(username, skills)
-            user_skills = database_controller.get_skills(username)
-            name = authentication_controller.get_name(username)
-            return ProfileModel(username, name, user_skills).jsonable()
-        raise PermissionError
+        if not controller.is_connected(username):
+            raise PermissionError
+        database_controller.set_skills(username, skills)
+        user_skills = database_controller.get_skills(username)
+        name = authentication_controller.get_name(username)
+        return ProfileModel(username, name, user_skills).jsonable()
 
     @staticmethod
     def add_milestone(username, skill, date, comment, level):
-        if controller.is_connected(username):
-            date = datetime.datetime.strptime(date, "%Y-%m-%d").date()
-            database_controller.add_milestone(username, skill, date, comment, level)
-            user_skills = database_controller.get_skills(username)
-            name = authentication_controller.get_name(username)
-            return ProfileModel(username, name, user_skills).jsonable()
-        raise PermissionError   
+        if not controller.is_connected(username):
+            raise PermissionError
+        date = datetime.datetime.strptime(date, "%Y-%m-%d").date()
+        database_controller.add_milestone(username, skill, date, comment, level)
+        user_skills = database_controller.get_skills(username)
+        name = authentication_controller.get_name(username)
+        return ProfileModel(username, name, user_skills).jsonable()
 
     @staticmethod
     def is_connected(username):

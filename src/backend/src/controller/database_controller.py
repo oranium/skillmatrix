@@ -158,13 +158,17 @@ class DatabaseController:
         return Skill.query.filter_by(id=skill_id).first()
 
     @staticmethod
-    def create_skill(skill):
+    def create_skill(username, skillname, level, category):
         """Create a skill in the database.
            Args:
                 skill (Skill): The skill to add.
         """
+        skill = Skill()
+        skill.name = skillname
+        skill.category = category
         db.session.add(skill)
         db.session.commit()
+        database_controller.set_skills(username, {skillname: level})
 
     @staticmethod
     def exists(username):
