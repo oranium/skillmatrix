@@ -31,7 +31,10 @@ class Controller:
         # if username is not None, a POST request was sent -> requires login
         if username and not controller.is_connected(username):
             raise PermissionError
-        return database_controller.get_all_skill_names(username)
+        all_skill_names = database_controller.get_all_skill_names(username)
+        if username:
+            return dict(username=username, allSkills=all_skill_names[0])
+        return dict(allSkills=all_skill_names[0], categories=all_skill_names[1])
 
     @staticmethod
     def create_skill(username, skillname, level, category):

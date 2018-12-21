@@ -115,19 +115,23 @@ class DatabaseController:
     @staticmethod
     def get_all_skill_names(username):
         skills = Skill.query.all()
-        skill_names = []
+        # the first list contains all skills (that are not root), the second list contains all categories (if username)
+        skill_list = [[], []]
         # get skill names of specific user
         if username:
             for skill in skills:
                 # check if user has the skill
                 if Association.query.filter_by(user_id=database_controller.get_user_id(username),
                                                skill_id=skill.id).first():
-                    skill_names.append(skill.name)
+                    skill_list[0].append(skill.name)
         # get every skill
         else:
             for skill in skills:
-                skill_names.append(skill.name)
-            return skill_names
+                if skill.root:
+                    skill_list[1].append(skill.name)
+                else:
+                    skill_list[0].append(skill.name)
+            return skill_list
 
     @staticmethod
     def get_skill_id(skillname):
