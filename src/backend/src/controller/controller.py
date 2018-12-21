@@ -17,8 +17,7 @@ class Controller:
         user_skills = database_controller.get_skills(username)
         if not database_controller.exists(username):
             database_controller.create_user(username, name)
-        return dict(user=ProfileModel(username, name, user_skills).jsonable(),
-                    allSkills=database_controller.get_all_skill_names())
+        return dict(user=ProfileModel(username, name, user_skills).jsonable())
 
     @staticmethod
     def logout(username):
@@ -26,6 +25,13 @@ class Controller:
             authentication_controller.logout(username)
             return LogoutModel(username).jsonable()
         raise PermissionError
+
+    @staticmethod
+    def get_all_skill_names(username=None):
+        # if username is not None, a POST request was sent -> requires login
+        if username and not controller.is_connected(username):
+            raise PermissionError
+        return database_controller.get_all_skill_names(username)
 
     @staticmethod
     def search(username, query):

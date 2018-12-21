@@ -113,12 +113,21 @@ class DatabaseController:
         return Users.query.all()
 
     @staticmethod
-    def get_all_skill_names():
+    def get_all_skill_names(username):
         skills = Skill.query.all()
         skill_names = []
-        for skill in skills:
-            skill_names.append(skill.name)
-        return skill_names
+        # get skill names of specific user
+        if username:
+            for skill in skills:
+                # check if user has the skill
+                if Association.query.filter_by(user_id=database_controller.get_user_id(username),
+                                               skill_id=skill.id).first():
+                    skill_names.append(skill.name)
+        # get every skill
+        else:
+            for skill in skills:
+                skill_names.append(skill.name)
+            return skill_names
 
     @staticmethod
     def get_skill_id(skillname):
