@@ -13,7 +13,7 @@ from os import environ
 def checkdb(): 
     engine = create_engine(environ.get('ENV_DATABASE_URI'))
 
-    if not engine.dialect.has_table(engine, 'association'):
+    if not engine.dialect.has_table(engine, 'hierachy'):
         Base = declarative_base()
 
         class Hierachy(Base):

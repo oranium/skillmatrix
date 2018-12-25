@@ -97,6 +97,13 @@ Base.metadata.create_all(engine)
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
+def create_hiestory(parent, child):
+    x = Hierachy()
+    x.parent_skill_assoc= parent
+    x.child_skill_assoc= child
+    session.add(x)
+    session.commit()
+
 def create_skill(level, skill, date, username):
     a = Association(level=level)
     a.skill_assoc = skill
@@ -134,4 +141,9 @@ create_skill(2, java1, date1, isaac)
 create_skill(2, js1, date1, valdemar)
 create_skill(3, python1, date1, isaac)
 create_skill(1, java1, date1, karl)
+x = Hierachy()
+x.parent_skill_assoc= java1
+x.child_skill_assoc= js1
+session.add(x)
+create_hiestory(python1,js1)
 session.commit()

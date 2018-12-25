@@ -118,6 +118,11 @@ class DatabaseController:
         return Users.query.all()
 
     @staticmethod
+    def create_hiestory(parent,child):
+    #parent and child are skillnames
+        parentobject= database_controller.get_skill()
+
+    @staticmethod
     def get_all_skill_names():
         skills = Skill.query.all()
         skill_names = []
