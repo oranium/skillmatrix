@@ -18,6 +18,8 @@ def checkdb():
 
         class Hierachy(Base):
             __tablename__ = 'hierachy'
+            parent_skill_id = Column(Integer, ForeignKey('skill.id'), primary_key=True)
+            child_skill_id = Column(Integer, ForeignKey('skill.id'), primary_key=True)
             parent_skill_assoc = relationship("Skill", back_populates="skill_parent_skill")
             child_skill_assoc = relationship("Skill", back_populates="skill_child_skill")
 
