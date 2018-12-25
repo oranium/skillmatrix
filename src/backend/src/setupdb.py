@@ -15,6 +15,13 @@ def checkdb():
 
     if not engine.dialect.has_table(engine, 'association'):
         Base = declarative_base()
+
+        class Hierachy(Base):
+            __tablename__ = 'hierachy'
+            parent_skill_assoc = relationship("Skill", back_populates="skill_parent_skill")
+            child_skill_assoc = relationship("Skill", back_populates="skill_child_skill")
+
+            
         class Association(Base):
             __tablename__ = 'association'
             users_id = Column(Integer, ForeignKey('users.id'), primary_key=True)
@@ -44,6 +51,8 @@ def checkdb():
             category = Column(String(127), nullable=False)
             skill_association = relationship("Association", back_populates="skill_assoc")
             skill_milestone_association = relationship("MilestoneAssociation", back_populates="skill_milestone_assoc")
+            skill_parent_skill = relationship("Hierachy", back_populates="parent_skill_assoc")
+            skill_child_skill = relationship("Hierachy", back_populates="child_skill_assoc")
 
             def give_name(self):
                 return self.name
