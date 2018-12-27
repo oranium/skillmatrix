@@ -118,7 +118,7 @@ class DatabaseController:
         return Users.query.all()
 
     @staticmethod
-    def get_sub_hierachy(parent):
+    def get_sub_categorys(parent):
     #parent is a skillname
         childlist= Hierachy.query.filter_by().all()
 
