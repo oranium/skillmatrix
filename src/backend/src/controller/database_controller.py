@@ -120,8 +120,15 @@ class DatabaseController:
     @staticmethod
     def get_sub_categorys(parent):
     #parent is a skillname
-        childlist= Hierachy.query.filter_by().all()
-
+    #returns list of childskillnames
+        parentid = database_controller.get_skill_id(parent)
+        childlist= Hierachy.query.filter_by(parent_skill_id=parentid).all()
+        list= []
+        for object1 in childlist:
+            if __name__ == '__main__':
+                skillobject =database_controller.get_skill_from_id(object1.child_skill_id)
+                list.append(skillobject.name)
+        return list
 
     @staticmethod
     def create_hierachy(parent,child):
