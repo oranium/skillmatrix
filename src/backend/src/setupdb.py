@@ -5,7 +5,7 @@ import datetime
 from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
-from sqlalchemy import create_engine, Text
+from sqlalchemy import create_engine, Text, Boolean
 from sqlalchemy import Date as DateType
 from sqlalchemy.orm import sessionmaker
 from os import environ

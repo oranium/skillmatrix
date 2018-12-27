@@ -4,7 +4,7 @@ import datetime
 from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
-from sqlalchemy import create_engine, Date, Text
+from sqlalchemy import create_engine, Date, Text, Boolean
 from sqlalchemy.orm import sessionmaker
  
 Base = declarative_base()
@@ -115,11 +115,13 @@ isaac = Users(username='Isaac-Hunt', name="Isaac Hunt")
 session.add(valdemar)
 session.add(karl)
 session.add(isaac)
-java1 = Skill(name='Java', category="Programming")
-python1 = Skill(name='Python', category="Programming")
-js1 = Skill(name='JavaScript', category="Programming")
+prog = Skill(name='Programming', root = True)
+java1 = Skill(name='Java')
+python1 = Skill(name='Python')
+js1 = Skill(name='JavaScript')
 session.add(java1)
 session.add(python1)
+session.add(prog)
 session.add(js1)
 date1 = Date()
 session.add(date1)
