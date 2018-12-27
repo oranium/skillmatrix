@@ -49,12 +49,11 @@ def checkdb():
             __tablename__ = 'skill'
             id = Column(Integer, primary_key=True)
             name = Column(String(127), nullable=False)
-            description = Column(Text, nullable=True)
-            category = Column(String(127), nullable=False)
+            root = Column(Boolean, unique=False, default=False)
             skill_association = relationship("Association", back_populates="skill_assoc")
             skill_milestone_association = relationship("MilestoneAssociation", back_populates="skill_milestone_assoc")
-            skill_parent_skill = relationship("Hierachy", back_populates="parent_skill_assoc")
-            skill_child_skill = relationship("Hierachy", back_populates="child_skill_assoc")
+            #skill_parent_skill = relationship("Hierachy", back_populates="parent_skill_assoc")
+            #skill_child_skill = relationship("Hierachy", back_populates="child_skill_assoc")
 
             def give_name(self):
                 return self.name

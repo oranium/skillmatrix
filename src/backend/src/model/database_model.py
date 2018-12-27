@@ -35,12 +35,11 @@ class Skill(db.Model):
     __tablename__ = 'skill'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(127), nullable=False)
-    description = db.Column(db.Text, nullable=True)
-    category = db.Column(db.String(127), nullable=False)
+    root = db.Column(db.Boolean, unique=False, default=False)
     skill_association = db.relationship("Association", back_populates="skill_assoc")
     skill_milestone_association = db.relationship("MilestoneAssociation", back_populates="skill_milestone_assoc")
-    skill_parent_skill = db.relationship("Hierachy", back_populates="parent_skill_assoc")
-    skill_child_skill = db.relationship("Hierachy", back_populates="child_skill_assoc")
+    #skill_parent_skill = db.relationship("Hierachy", back_populates="parent_skill_assoc")
+    #skill_child_skill = db.relationship("Hierachy", back_populates="child_skill_assoc")
 
     def give_name(self):
         return self.name
