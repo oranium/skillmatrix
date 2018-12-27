@@ -3,62 +3,82 @@ import React from 'react';
 
 import Grid from '@material-ui/core/Grid';
 import SimpleCard from 'components/profile/statistics/SimpleCard';
+import ProfileExpansionPanel from 'components/profile/skills/ProfileExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 
-const SkillStatisticsPage = (props) => {
-  const { categories } = props;
-  // this.props.state.categories["Programming"]["Python"][
-  //   "subcategories"
-  // ]["PythonFlask"]["milestones"]
-  // Loop over # of skills given from Profile and render # of cards --> in SimpleCard is also the Chart rendered
-  var index = 0;
-  // const skillItems = Object.keys(categories).map(category => Object.keys(categories[category]).map(
-  //   skill => (
-  //     (index = 0),
-  //     Object.keys(categories[category][skill].subcategories).map((
-  //       subcategory, // render subcategories
-  //     ) => {
-  //       index += 1;
-  //       return index === 1 ? (
-  //         <Grid key={index} item>
-  //           <SimpleCard
-  //             skill={skill}
-  //             data={categories[category][skill].milestones}
-  //           />
-  //           <SimpleCard
-  //             skill={subcategory}
-  //             data={
-  //                 categories[category][skill].subcategories[subcategory].milestones
-  //               }
-  //           />
-  //         </Grid>
-  //       ) : (
-  //         <Grid key={index} item>
-  //           <SimpleCard
-  //             skill={subcategory}
-  //             data={
-  //                 categories[category][skill].subcategories[subcategory].milestones
-  //               }
-  //           />
-  //           {' '}
-  //         </Grid>
-  //       );
-  //     })
-  //   ),
-  // ));
-  const skillItems = categories.map(skill => (
-    <Grid key={index=index+1} item>
-      <SimpleCard
-        skill={skill.skillname}
-        data={skill.milestones}
-      />
-    </Grid>
-  ));
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 
-  return (
-    <Grid container justify="center" spacing={16}>
-      {skillItems}
-    </Grid>
-  );
+const styles = theme => ({
+  panels: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'left',
+    alignItems: 'stretch',
+    flexBasis: '99%',
+  },
+});
+
+class SkillStatisticsPage extends React.Component {
+  state = {
+    expanded: null,
+  };
+  handleChange = panel => (event, expanded) => {
+    this.setState({
+      expanded: expanded ? panel : false,
+    });
+  };
+
+  renderDatastructureRecursive(subcategories, index) {
+    const { expanded } = this.state;
+    if (subcategories === undefined) return <div />;
+
+    const subs = subcategories.map(skill =>
+      index < 5 ? (
+        <ExpansionPanel expanded={expanded} onChange={this.handleChange(this.props.skill)}>
+          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+            <SimpleCard skill={skill.skillname} data={skill.milestones} />
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails className={this.props.classes.panels}>
+            {this.renderDatastructureRecursive(skill.subcategories, index + 1)}
+          </ExpansionPanelDetails>
+        </ExpansionPanel>
+      ) : (
+        <Grid style={{ display: 'flex', flexDirection: 'row-reverse' }}>
+          <SimpleCard skill={skill.skillname} data={skill.milestones} />
+          {this.renderDatastructureRecursive(skill.subcategories, index)}
+        </Grid>
+      ),
+    );
+
+    return subs;
+  }
+
+  render() {
+    const { expanded } = this.state;
+
+    const { categories } = this.props;
+    const skillItems = categories.map(skill => (
+      <ExpansionPanel expanded={expanded} onChange={this.handleChange(this.props.skill)}>
+        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+          {' '}
+          {skill.skillname}{' '}
+        </ExpansionPanelSummary>
+        <ExpansionPanelDetails className={this.props.classes.panels}>
+          {this.renderDatastructureRecursive(skill.subcategories, 0)}
+        </ExpansionPanelDetails>
+      </ExpansionPanel>
+    ));
+
+    return <div>{skillItems}</div>;
+  }
+}
+
+SkillStatisticsPage.propTypes = {
+  classes: PropTypes.object.isRequired,
 };
-
-export default SkillStatisticsPage;
+export default withStyles(styles)(SkillStatisticsPage);

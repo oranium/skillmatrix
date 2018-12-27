@@ -18,16 +18,18 @@ class AuthenticationController:
     to the Active Directory server via ldap3 library
     """
 
-    def __init__(self, server_url, prefix, base_dn, ssl, authentication):
+    def __init__(self, server_url, port, prefix, base_dn, ssl, authentication):
         # The server url should look like this: <'''ldap://my-ldapserver.example.com:389>
         # Uni-Azure: server 'ldap://vm01-azure-ad.westeurope.cloudapp.azure.com:389'
 
         self.connections = {}
+        self.port = int(port)
         self.ssl = ssl
         if ssl == "True":
-            self.server = Server(server_url, use_ssl=True, get_info=ALL)
+            self.server = Server(server_url, port=self.port, use_ssl=True, get_info=ALL)
         else:
-            self.server = Server(server_url, get_info=ALL)
+            self.server = Server(server_url, port=self.port, get_info=ALL)
+        print(self.server)
         self.login_prefix = prefix
         self.base_dn = base_dn
         self.authentication = authentication
@@ -55,19 +57,19 @@ class AuthenticationController:
                 login_name = 'uid='+username+','+authentication_controller.base_dn
                 print(login_name)
                 new_connection = Connection(authentication_controller.server,
-                                            login_name,
-                                            password,
-                                            raise_exceptions=True)
+                                login_name,
+                                password)
 
-            print("created connection!", file=sys.stderr)            
+            print("created connection!", file=sys.stderr)
             # wrong credentials
+            print(new_connection)
             if new_connection is None:
                 print("wrong cred", file=sys.stderr)
                 raise AttributeError
             print("binding connection", file=sys.stderr)
             new_connection.bind()
             print("adding connection", file=sys.stderr)
-            if authentication_controller.ssl == "True":
+            if authentication_controller.ssl == "False":
                 new_connection.start_tls()
             # successful login
             authentication_controller.connections[username] = new_connection
@@ -82,11 +84,10 @@ class AuthenticationController:
         except LDAPStartTLSError:
             print("TLS failed")
             raise Exception
-
         # catch timeout while calling AD
         except LDAPSocketOpenError:
             raise TimeoutError
-    
+
     @staticmethod
     def logout(username):
         """
@@ -105,14 +106,14 @@ class AuthenticationController:
         Args:
             username (str): the Active Directory username.
         Returns:
-            displayname (str): the Active Directory CN (Common Name) 
+            displayname (str): the Active Directory CN (Common Name)
         """
         try:
             connection = authentication_controller.connections[username]
             regex_principal_name = re.search('([^\\\\]+$)', username)
             user_principal_name = regex_principal_name.group(0)
 
-            connection.search(search_base='CN=Users,DC=AzureAD,DC=SWT,DC=com',
+            connection.search(search_base=environ.get('ENV_BASE_DN'),
                               search_filter='(&(objectCategory=person)(sAMAccountName='+user_principal_name+'))',
                               search_scope=SUBTREE,
                               attributes=['cn'])
@@ -127,8 +128,11 @@ class AuthenticationController:
             raise
 
 
-authentication_controller = AuthenticationController(environ.get('SERVER_URL'),
-                                                     environ.get('SERVER_PREFIX'),
-                                                     environ.get('BASE_DN'),
-                                                     environ.get('USE_SSL'),
-                                                     environ.get('AUTHENTICATION'))
+authentication_controller = AuthenticationController(environ.get('ENV_LDAP_SERVER_URL'),
+                                                     environ.get('ENV_LDAP_SERVER_PORT'),
+                                                     environ.get('ENV_LDAP_SERVER_PREFIX'),
+                                                     environ.get('ENV_BASE_DN'),
+                                                     environ.get('ENV_LDAP_USE_SSL'),
+                                                     environ.get('ENV_LDAP_AUTHENTICATION'))
+
+
