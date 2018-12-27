@@ -2,7 +2,7 @@ from controller.database import db
 from model.profile_model import ProfileModel
 from model.skill_model import SkillModel
 from model.milestone_model import MilestoneModel
-from model.database_model import Association, MilestoneAssociation, Skill, Date, Users
+from model.database_model import Association, MilestoneAssociation, Skill, Date, Users, Hierachy
 
 
 class DatabaseController:
@@ -118,9 +118,23 @@ class DatabaseController:
         return Users.query.all()
 
     @staticmethod
-    def create_hiestory(parent,child):
+    def get_sub_hierachy(parent):
+    #parent is a skillname
+        childlist= Hierachy.query.filter_by().all()
+
+
+    @staticmethod
+    def create_hierachy(parent,child):
     #parent and child are skillnames
-        parentobject= database_controller.get_skill()
+        parentobject= database_controller.get_skill(parent)
+        childobject= database_controller.get_skill(child)
+        x = Hierachy()
+        x.parent_skill_assoc = parentobject
+        x.child_skill_assoc = childobject
+        db.session.add(x)
+        db.session.commit()
+
+
 
     @staticmethod
     def get_all_skill_names():
