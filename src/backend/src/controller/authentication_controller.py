@@ -113,7 +113,7 @@ class AuthenticationController:
             regex_principal_name = re.search('([^\\\\]+$)', username)
             user_principal_name = regex_principal_name.group(0)
 
-            connection.search(search_base='CN=Users,DC=AzureAD,DC=SWT,DC=com',
+            connection.search(search_base=environ.get('ENV_BASE_DN'),
                               search_filter='(&(objectCategory=person)(sAMAccountName='+user_principal_name+'))',
                               search_scope=SUBTREE,
                               attributes=['cn'])

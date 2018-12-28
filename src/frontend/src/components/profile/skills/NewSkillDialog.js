@@ -29,7 +29,7 @@ export default class FormDialog extends Component {
   };
 
   async handleSubmit(skill, milestone) {
-    console.log(skill);
+    // console.log(skill);
     //todo api /skill
 
     // send skill

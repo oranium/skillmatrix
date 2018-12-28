@@ -92,6 +92,7 @@ class App extends Component {
             errorMsg={hasError && displayType === errorDisplayType.login ? message : ''}
             login={(username, password) => App.handleLogin(username, password)}
           />
+          // <ProfileController state={state} />
         );
       case 'search':
         main = (

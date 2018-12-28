@@ -11,9 +11,7 @@ import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 
 const styles = theme => ({
-  root: {
-    width: '500%',
-  },
+  root: { left: 100 },
 
   group: {
     flexDirection: 'row',
