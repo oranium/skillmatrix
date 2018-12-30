@@ -121,11 +121,13 @@ class AuthenticationController:
             return displayname
         except LDAPSocketOpenError:
             raise TimeoutError
+            return username
         except IndexError:
             print("The response of connection-search was empty")
+            return username
         except Exception:
             print("Unexpected error: ", sys.exc_info()[0])
-            raise
+            return username
 
 
 authentication_controller = AuthenticationController(environ.get('ENV_LDAP_SERVER_URL'),

@@ -5,7 +5,7 @@ import datetime
 from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
-from sqlalchemy import create_engine, Text
+from sqlalchemy import create_engine, Text, Boolean
 from sqlalchemy import Date as DateType
 from sqlalchemy.orm import sessionmaker
 from os import environ
@@ -13,8 +13,17 @@ from os import environ
 def checkdb(): 
     engine = create_engine(environ.get('ENV_DATABASE_URI'))
 
-    if not engine.dialect.has_table(engine, 'association'):
+    if not engine.dialect.has_table(engine, 'hierachy'):
         Base = declarative_base()
+
+        class Hierachy(Base):
+            __tablename__ = 'hierachy'
+            parent_skill_id = Column(Integer, ForeignKey('skill.id'), primary_key=True)
+            child_skill_id = Column(Integer, ForeignKey('skill.id'), primary_key=True)
+            parent_skill_assoc = relationship("Skill", foreign_keys=[parent_skill_id])
+            child_skill_assoc = relationship("Skill", foreign_keys=[child_skill_id])
+
+            
         class Association(Base):
             __tablename__ = 'association'
             users_id = Column(Integer, ForeignKey('users.id'), primary_key=True)
@@ -40,10 +49,11 @@ def checkdb():
             __tablename__ = 'skill'
             id = Column(Integer, primary_key=True)
             name = Column(String(127), nullable=False)
-            description = Column(Text, nullable=True)
-            category = Column(String(127), nullable=False)
+            root = Column(Boolean, unique=False, default=False)
             skill_association = relationship("Association", back_populates="skill_assoc")
             skill_milestone_association = relationship("MilestoneAssociation", back_populates="skill_milestone_assoc")
+            #skill_parent_skill = relationship("Hierachy", back_populates="parent_skill_assoc")
+            #skill_child_skill = relationship("Hierachy", back_populates="child_skill_assoc")
 
             def give_name(self):
                 return self.name
