@@ -1,18 +1,7 @@
+import unittest
 from src.app import app
 from src.controller.database_controller import database_controller
 from src.controller.database import db
-import json
-import datetime
-from sqlalchemy import Column, ForeignKey, Integer, String
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship
-from sqlalchemy import create_engine, Date, Text
-from sqlalchemy.orm import sessionmaker
-from os import environ
-from sqlalchemy import create_engine
-import unittest
-from src.backend.src.controller import database_controller
-from src.backend.src.controller import database
 from src.backend.src.model.database_model import Association, MilestoneAssociation, Skill, Date, Users
 
 def setUpModule():
@@ -43,7 +32,7 @@ class testDatabaseController(unittest.TestCase):
     def test_add_milestone(self):
         pass
 
-    def test_get_milstones(self):
+    def test_get_milestones(self):
         pass
 
 
