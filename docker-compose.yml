@@ -11,6 +11,7 @@ services:
       - ENV_BASE_DN=OU=Users,DC=AzureAD,DC=SWT,DC=com
       - ENV_LDAP_USE_SSL=False
       - ENV_LDAP_AUTHENTICATION=NTLM
+      - ENV_DATABASE_URI_TEST="sqlite:////tmp/:memory:"
     build: src/backend
     depends_on:
       - db
