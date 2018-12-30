@@ -15,7 +15,6 @@ from src.backend.src.controller import database_controller
 from src.backend.src.controller import database
 from src.backend.src.model.database_model import Association, MilestoneAssociation, Skill, Date, Users
 
-
 def setUpModule():
     app.testing = True
 
