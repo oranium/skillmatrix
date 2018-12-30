@@ -65,7 +65,7 @@ class ProfileController extends Component {
     });
 
     // send skill
-    let Rest = new RestCom(RestPoints.skill, JSON.stringify(latestChanges));
+    let Rest = new RestCom(RestPoints.setSkills, JSON.stringify(latestChanges));
     //todo remove JSON.stringify
     try {
       const { data } = await Rest.post();

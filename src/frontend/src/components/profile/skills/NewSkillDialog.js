@@ -48,7 +48,7 @@ export default class FormDialog extends Component {
     //   // if abfrage vlt  nicht ? vllt mal mit anderer variavle propieren ?
     //   milestone = false;
     // }
-    let Rest = new RestCom(RestPoints.skill, JSON.stringify(skill));
+    let Rest = new RestCom(RestPoints.setSkills, JSON.stringify(skill));
     try {
       const { data } = await Rest.post();
       store.dispatch(setOwnProfile(data));

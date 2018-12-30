@@ -6,6 +6,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy import create_engine, Date, Text
 from sqlalchemy.orm import sessionmaker
+from os import environ
  
 Base = declarative_base()
 
@@ -80,7 +81,7 @@ class Users(Base):
     def __repr__(self):
         return '<id = {0} und username = {1}>'.format(self.id, self.username)
 
-engine = create_engine('mysql+pymysql://root:Momomomo2@localhost/sm1')
+engine = create_engine(environ.get('ENV_DATABASE_URI_TEST'))
 
 Base.metadata.drop_all(bind=engine)
 Base.metadata.create_all(engine)
