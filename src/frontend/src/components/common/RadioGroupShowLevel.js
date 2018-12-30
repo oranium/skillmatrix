@@ -11,25 +11,24 @@ import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 
 const styles = theme => ({
-  root: { left: 100 },
-
+  root: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  formControl: {
+    margin: '10px',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
   group: {
     flexDirection: 'row',
+    justifyContent: 'space-around',
   },
 });
 
 class RadioButtonsGroup extends React.Component {
-  //Alle Changes RadioButtons müssen noch in State gespeichert werden
-
   state = {
     value: String(this.props.level),
-  };
-
-  handleChange = event => {
-    this.props.levelChange(this.props.skill, parseInt(event.target.value));
-    this.setState({ value: event.target.value });
-    // const skillUpdate = { skill: this.props.skill, level: event.target.value };
-    // store.dispatch(updateSkills(skillUpdate));
   };
 
   render() {
@@ -45,18 +44,19 @@ class RadioButtonsGroup extends React.Component {
           disabled={!this.props.disabled}
         /> //add disabled to the props to disable
       ) : (
-        <FormControlLabel key={index} value={num} control={<Radio />} label={num} />
+        <FormControlLabel key={index} value={num} control={<Radio checked />} label={num} />
       ),
     );
     return (
       <div className={classes.root}>
         <FormControl component="fieldset" className={classes.formControl}>
+          <FormLabel component="legend">Level: </FormLabel>
           <RadioGroup
             aria-label="Level"
             name="level"
+            margin="normal"
             className={classes.group}
-            value={this.state.value}
-            onChange={this.handleChange}
+            value={this.state.level}
           >
             {rdBtns}
           </RadioGroup>

@@ -2,7 +2,8 @@ from controller.database import db
 from model.profile_model import ProfileModel
 from model.skill_model import SkillModel
 from model.milestone_model import MilestoneModel
-from model.database_model import Association, MilestoneAssociation, Skill, Date, Users
+from model.database_model import Association, MilestoneAssociation, Skill, Date, Users, Hierachy
+
 
 class DatabaseController:
     """Class to handle everything about table-manipulation"""
@@ -54,16 +55,21 @@ class DatabaseController:
 
     @staticmethod
     def set_skills(username, skills):
+        """ Set a number of skills to given level for given user.
+            Args:
+                username (str): username to set skill for.
+                skills (dict(str=int)): The skill names and levels to add.
+            Raises:
+                NameError: if skill name is not in the database.
+        """
         cdate = Date()
         user = database_controller.get_user(username)
         db.session.add(cdate)
         db.session.commit()
         for skill, level in skills.items():
             new_skill = database_controller.get_skill(skill)
-            # if skill is not found in database, it will be added
             if not new_skill:
-                new_skill = Skill(name=skill, category="Programming")
-                database_controller.create_skill(new_skill)
+                raise NameError('The Skill {0} does not exist in the database!'.format(skill))
             database_controller.add_milestone(username, skill, cdate.date, "Level {0}".format(level), level)
             assoc = Association(level=level)
             assoc.skill_assoc = new_skill
@@ -112,6 +118,34 @@ class DatabaseController:
         return Users.query.all()
 
     @staticmethod
+    def get_sub_categories(username, parent_skillname):
+        # parent is a skillname
+        # returns list of childskillnames
+        parentid = database_controller.get_skill_id(parent_skillname)
+        childlist = Hierachy.query.filter_by(parent_skill_id=parentid).all()
+        skill_names = []
+        for hier in childlist:
+            skillobject = database_controller.get_skill_from_id(hier.child_skill_id)
+            if Association.query.filter(Association.users_id == database_controller.get_user_id(username),
+                                        Association.skill_id == database_controller.get_skill_id(parent_skillname)
+                                        ).first():
+                skill_names.append(skillobject.name)
+        return skill_names
+
+    @staticmethod
+    def create_hierachy(parent, child):
+        # parent and child are skillnames
+        parentobject= database_controller.get_skill(parent)
+        childobject= database_controller.get_skill(child)
+        x = Hierachy()
+        x.parent_skill_assoc = parentobject
+        x.child_skill_assoc = childobject
+        db.session.add(x)
+        db.session.commit()
+
+
+
+    @staticmethod
     def get_all_skill_names():
         skills = Skill.query.all()
         skill_names = []
@@ -148,13 +182,18 @@ class DatabaseController:
         return Skill.query.filter_by(id=skill_id).first()
 
     @staticmethod
-    def create_skill(skill):
+    def create_skill(skillname, category):
         """Create a skill in the database.
            Args:
-                skill (Skill): The skill to add.
+                skillname (str): Name of the skill to add.
+                category (str, None): Category that the skill belongs to. Root level category if None
         """
-        db.session.add(skill)
+        new_skill = Skill(name=skillname)
+        if not category:
+            new_skill.root = True
+        db.session.add(new_skill)
         db.session.commit()
+        database_controller.create_hierachy(category, skillname)
 
     @staticmethod
     def exists(username):
@@ -168,43 +207,57 @@ class DatabaseController:
             return True
         return False
 
+#   replaced by build_subcategories
+#    @staticmethod
+#    def get_skills(username):
+#        """Get all skills of a user and return them as a `list` of `SkillModel`s
+#            Args:
+#                username (`str`): whose skills to return
+#            Returns:
+#                `[SkillModel]`
+#        """
+#        if database_controller.exists(username):
+#            user_id = Users.query.filter_by(username=username).first().id
+#            assocs = Association.query.filter_by(users_id=user_id).all()
+#            skill_models = []
+#            found_skills = []
+#            for assoc in assocs:
+#                skill = database_controller.get_skill_from_id(assoc.skill_id)
+#                if skill not in found_skills:
+#                    milestones = database_controller.get_milestones(username, skill.name)
+#                    level = database_controller.get_recent_level(user_id, skill.id)
+#                    skill_models.append(SkillModel(skill.name, level, category=skill.category, milestones=milestones))
+#                    found_skills.append(skill)
+#            return skill_models
+#        return None
     @staticmethod
     def get_skills(username):
         """Get all skills of a user and return them as a `list` of `SkillModel`s
-            Args:
-                username (`str`): whose skills to return
-            Returns:
-                `[SkillModel]`  
+        Args:
+            username (`str`): whose skills to return
+        Returns:
+            `[SkillModel]`
         """
-        if database_controller.exists(username):
-            user_id = Users.query.filter_by(username=username).first().id
-            assocs = Association.query.filter_by(users_id=user_id).all()
-            skill_models = []
-            found_skills = []
-            for assoc in assocs:
-                skill = database_controller.get_skill_from_id(assoc.skill_id)
-                if skill not in found_skills:
-                    milestones = database_controller.get_milestones(username, skill.name)
-                    level = database_controller.get_recent_level(skill.id, user_id)
-                    skill_models.append(SkillModel(skill.name, level, milestones=milestones))
-                    found_skills.append(skill)
-            return skill_models
-        return None
-
+        root_categories = Skill.query.filter_by(root=True).all()
+        skills = []
+        for root in root_categories:
+            skills.append(database_controller.build_subcategories(username, root.name))
+        for skillmodel in skills:
+            print(skillmodel.jsonable())
+        return skills
 
     @staticmethod
     def create_user(username, name):
         """Create a user in the database.
            Args:
                username (str): the username of the user to add - should be identical to the Active Directory username.
-               forename (str): The forename of the user to add.
-               surname (str): The surname of the user to add.
+               name (str): The full name of the user to add.
         """
         db.session.add(Users(username=username, name=name))
         db.session.commit()
 
     @staticmethod
-    def get_recent_level(skill_id, user_id):
+    def get_recent_level(user_id, skill_id):
         return Association.query.filter(Association.skill_id == skill_id,
                                         Association.users_id == user_id).all()[-1].level
 
@@ -234,6 +287,52 @@ class DatabaseController:
                     rel_sum += skill_model.level
         print("returning {0} for {1}".format(rel_sum, profile.username))
         return rel_sum
+
+    @staticmethod
+    def build_subcategories(username, skillname):
+        """str, str -> SkillModel
+            Takes a username and skillname, recursively builds skill hierarchy for given user.
+            Args:
+                username (str): the username as a string.
+                skillname (str): the skill name as a string.
+
+            Returns:
+                Exactly one SkillModel that contains all Skills that are below it in the hierarchy that the user has    .
+
+        """
+        subcategories_string = database_controller.get_sub_categories(username, skillname)
+        subcategories_model = []
+        # case 1: category is a root element
+        if Skill.query.filter_by(name=skillname).first().root:
+            for category in subcategories_string:
+                subcategories_model.append(database_controller.build_subcategories(category, username))
+
+            level = database_controller.get_recent_level(database_controller.get_user_id(username),
+                                                         database_controller.get_skill_id(skillname)
+                                                         )
+            return SkillModel(skillname,
+                              level,
+                              subcategories=subcategories_model,
+                              milestones=database_controller.get_milestones(username, skillname)
+                              )
+        # case 2: category is a node
+        if subcategories_string:
+            for category in subcategories_string:
+                subcategories_model.append(database_controller.build_subcategories(category, username))
+
+                level = database_controller.get_recent_level(database_controller.get_user_id(username),
+                                                             database_controller.get_skill_id(skillname)
+                                                             )
+            return SkillModel(skillname,
+                              level,
+                              subcategories=subcategories_model,
+                              milestones=database_controller.get_milestones(username, skillname)
+                              )
+        # case 3: category is a leaf
+        level = database_controller.get_recent_level(database_controller.get_user_id(username),
+                                                     database_controller.get_skill_id(skillname)
+                                                     )
+        return SkillModel(skillname, level, milestones=database_controller.get_milestones(username, skillname))
 
 
 database_controller = DatabaseController()

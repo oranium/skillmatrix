@@ -19,6 +19,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Button from '@material-ui/core/Button';
+import ButtonBase from '@material-ui/core/ButtonBase';
 import IconButton from '@material-ui/core/IconButton';
 import { ArrowLeft, Search } from '@material-ui/icons';
 
@@ -31,14 +32,21 @@ const styles = theme => ({
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
   },
-  goBackButton: {
-    position: 'static',
-    display: 'block',
-    margin: '10px',
+
+  buttons: {
+    margin: 0,
+    top: 'auto',
+    right: 75,
+    bottom: 50,
+    left: 'auto',
+    position: 'fixed',
   },
 });
 
 class ProfileController extends Component {
+  state = {
+    changes: false,
+  };
   localUpdate = [];
 
   async applyLevelUpdates(skills) {
@@ -47,7 +55,6 @@ class ProfileController extends Component {
     const { username } = state.profile.profiles[person];
     var latestChanges = { username, skills: {} };
     var alreadyUpdated = [];
-    console.log(this.localUpdate);
     Object.keys(skills).map(index => {
       Object.keys(this.localUpdate).map(idx => {
         if (skills[index].skillname === this.localUpdate[idx][0].skill) {
@@ -58,7 +65,7 @@ class ProfileController extends Component {
     });
 
     // send skill
-    let Rest = new RestCom(RestPoints.skill, JSON.stringify(latestChanges));
+    let Rest = new RestCom(RestPoints.setSkills, JSON.stringify(latestChanges));
     //todo remove JSON.stringify
     try {
       const { data } = await Rest.post();
@@ -67,14 +74,14 @@ class ProfileController extends Component {
       store.dispatch(setError(e.message));
     }
 
-    console.log(latestChanges);
-
     this.localUpdate = [];
+    this.setState({ changes: false });
     delete latestChanges[skills];
   }
 
   handleLevelChange = (skill, level) => {
     this.localUpdate.push([{ skill, level }]);
+    this.setState({ changes: true });
   };
 
   getOwnerArticle() {
@@ -92,7 +99,7 @@ class ProfileController extends Component {
   handleChange = (evt, value) => {
     store.dispatch(changeView(value));
   };
-
+  Button;
   handleNewSkill = () => {
     store.dispatch(openProfileDialog('skill'));
   };
@@ -148,7 +155,8 @@ class ProfileController extends Component {
                 <div>
                   <NewMilestoneDialog open={showDialog === 'milestone'} />
                   <NewSkillDialog />
-                  <div className="button-container">
+
+                  <div className={classes.buttons}>
                     <Button
                       variant="contained"
                       color="primary"
@@ -164,14 +172,16 @@ class ProfileController extends Component {
                     >
                       New Skill
                     </Button>
-                    <Button
-                      name="bla"
-                      variant="contained"
-                      color="primary"
-                      onClick={this.applyLevelUpdates.bind(this, copy)}
-                    >
-                      Apply Changes
-                    </Button>
+                    {this.state.changes && (
+                      <Button
+                        className="applyButton"
+                        variant="contained"
+                        color="primary"
+                        onClick={this.applyLevelUpdates.bind(this, copy)}
+                      >
+                        Apply Changes
+                      </Button>
+                    )}
                   </div>
                 </div>
               )}

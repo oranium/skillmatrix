@@ -31,6 +31,11 @@ export const setError = errorMsg => ({
   errorMsg,
 });
 
+export const setLoginError = errorMsg => ({
+  type: 'SETLOGINERROR',
+  errorMsg,
+});
+
 export const resetState = {
   type: 'RESETSTATE',
 };

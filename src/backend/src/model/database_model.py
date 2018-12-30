@@ -1,6 +1,12 @@
 import datetime
 from controller.database import db
 
+class Hierachy(db.Model):
+    __tablename__ = 'hierachy'
+    parent_skill_id = db.Column(db.Integer, db.ForeignKey('skill.id'), primary_key=True)
+    child_skill_id = db.Column(db.Integer, db.ForeignKey('skill.id'), primary_key=True)
+    parent_skill_assoc =db.relationship("Skill", foreign_keys=[parent_skill_id])
+    child_skill_assoc =db.relationship("Skill", foreign_keys=[child_skill_id])
 
 class Association(db.Model):
     __tablename__ = 'association'
@@ -29,10 +35,11 @@ class Skill(db.Model):
     __tablename__ = 'skill'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(127), nullable=False)
-    description = db.Column(db.Text, nullable=True)
-    category = db.Column(db.String(127), nullable=False)
+    root = db.Column(db.Boolean, unique=False, default=False)
     skill_association = db.relationship("Association", back_populates="skill_assoc")
     skill_milestone_association = db.relationship("MilestoneAssociation", back_populates="skill_milestone_assoc")
+    #skill_parent_skill = db.relationship("Hierachy", back_populates="parent_skill_assoc")
+    #skill_child_skill = db.relationship("Hierachy", back_populates="child_skill_assoc")
 
     def give_name(self):
         return self.name

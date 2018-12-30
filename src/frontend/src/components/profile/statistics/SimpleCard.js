@@ -10,8 +10,10 @@ import Dialog from '@material-ui/core/Dialog';
 import Slide from '@material-ui/core/Slide';
 import DialogActions from '@material-ui/core/DialogActions';
 import Button from '@material-ui/core/Button';
+import List from '@material-ui/core/List';
 
 import Chart from './Chart';
+import MilestoneList from '../../common/MilestoneList';
 
 const styles = theme => ({
   root: {
@@ -25,10 +27,6 @@ const styles = theme => ({
   },
   container: {
     display: 'flex',
-  },
-
-  card: {
-    minWidth: 150,
   },
 });
 
@@ -49,14 +47,15 @@ export class ClickableChart extends React.Component {
     const { classes } = this.props;
 
     const milestones = Object.keys(classes.data).map(key => (
-      <Typography key={key}>
-        Datum: {classes.data[key].date}, Level update auf: {classes.data[key].level} Beschreibung:{' '}
-        {classes.data[key].comment}
-      </Typography>
+      <MilestoneList
+        datum={classes.data[key].date}
+        level={classes.data[key].level}
+        comment={classes.data[key].comment}
+      />
     ));
     return (
       <div>
-        <Card className={classes.card}>
+        <Card>
           <ButtonBase className={this.props.classes.cardAction} onClick={this.handleClickOpen}>
             <CardContent>
               <Chart //render small chart at the Card
@@ -70,7 +69,12 @@ export class ClickableChart extends React.Component {
             </CardContent>
           </ButtonBase>
         </Card>
-        <Dialog open={this.state.open} onClose={this.handleClose} TransitionComponent={Transition}>
+        <Dialog
+          className={classes.card}
+          open={this.state.open}
+          onClose={this.handleClose}
+          TransitionComponent={Transition}
+        >
           <Typography variant="h5" component="h2">
             <Card>
               <CardContent>
@@ -84,7 +88,7 @@ export class ClickableChart extends React.Component {
                     enabledZoom={true}
                   />
                 </Typography>
-                Milestones: {milestones}
+                <List>{milestones}</List>
               </CardContent>
             </Card>
           </Typography>

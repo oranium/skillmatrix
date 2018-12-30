@@ -29,6 +29,7 @@ export default class FormDialog extends Component {
   };
 
   async handleSubmit(skill, milestone) {
+    // console.log(skill);
     //todo api /skill
 
     // send skill
@@ -47,7 +48,7 @@ export default class FormDialog extends Component {
     //   // if abfrage vlt  nicht ? vllt mal mit anderer variavle propieren ?
     //   milestone = false;
     // }
-    let Rest = new RestCom(RestPoints.skill, JSON.stringify(skill));
+    let Rest = new RestCom(RestPoints.setSkills, JSON.stringify(skill));
     try {
       const { data } = await Rest.post();
       store.dispatch(setOwnProfile(data));
@@ -75,15 +76,26 @@ export default class FormDialog extends Component {
     store.dispatch(updateInput(id, value));
   }
 
+  getPerson = state => {
+    return state.profile.person;
+  };
+
+  getProfile = state => {
+    return state.profile.profiles[this.getPerson(state)];
+  };
+
   render() {
     const state = store.getState();
 
     const { allSkills } = state;
     const { showDialog } = state.profile;
     var { datefield, textarea, levelfield, singleselect } = state.formState;
+    var profile = this.getProfile(state);
 
-    var profile = state.profile.profiles[state.profile.person];
-    var newSkill = '';
+    function handleNewSkill(skill) {
+      singleselect.value = skill;
+    }
+
     const aktMilestone = [
       {
         username: profile.username,
@@ -128,13 +140,12 @@ export default class FormDialog extends Component {
             <SingleSelect allSkills={availableNewSkills} />
             <TextField
               id="standard-with-placeholder"
-              label="With placeholder"
-              placeholder="Placeholder"
+              label="add new skill to database"
+              placeholder="new skill"
               margin="normal"
-              onChange={event => (newSkill = event.target.value)}
+              onChange={event => handleNewSkill(event.target.value)}
             />
 
-            <Button onClick={() => (singleselect.value = newSkill)}>+</Button>
             <LevelPicker
               data={levelfield}
               required={true}
