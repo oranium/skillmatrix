@@ -188,9 +188,12 @@ class DatabaseController:
                 skillname (str): Name of the skill to add.
                 category (str, None): Category that the skill belongs to. Root level category if None
         """
-        skill = Skill(name=skillname, category=category)
-        db.session.add(skill)
+        new_skill = Skill(name=skillname)
+        if not category:
+            new_skill.root = True
+        db.session.add(new_skill)
         db.session.commit()
+        database_controller.create_hierachy(category, skillname)
 
     @staticmethod
     def exists(username):
@@ -204,28 +207,44 @@ class DatabaseController:
             return True
         return False
 
+#   replaced by build_subcategories
+#    @staticmethod
+#    def get_skills(username):
+#        """Get all skills of a user and return them as a `list` of `SkillModel`s
+#            Args:
+#                username (`str`): whose skills to return
+#            Returns:
+#                `[SkillModel]`
+#        """
+#        if database_controller.exists(username):
+#            user_id = Users.query.filter_by(username=username).first().id
+#            assocs = Association.query.filter_by(users_id=user_id).all()
+#            skill_models = []
+#            found_skills = []
+#            for assoc in assocs:
+#                skill = database_controller.get_skill_from_id(assoc.skill_id)
+#                if skill not in found_skills:
+#                    milestones = database_controller.get_milestones(username, skill.name)
+#                    level = database_controller.get_recent_level(user_id, skill.id)
+#                    skill_models.append(SkillModel(skill.name, level, category=skill.category, milestones=milestones))
+#                    found_skills.append(skill)
+#            return skill_models
+#        return None
     @staticmethod
     def get_skills(username):
         """Get all skills of a user and return them as a `list` of `SkillModel`s
-            Args:
-                username (`str`): whose skills to return
-            Returns:
-                `[SkillModel]`  
+        Args:
+            username (`str`): whose skills to return
+        Returns:
+            `[SkillModel]`
         """
-        if database_controller.exists(username):
-            user_id = Users.query.filter_by(username=username).first().id
-            assocs = Association.query.filter_by(users_id=user_id).all()
-            skill_models = []
-            found_skills = []
-            for assoc in assocs:
-                skill = database_controller.get_skill_from_id(assoc.skill_id)
-                if skill not in found_skills:
-                    milestones = database_controller.get_milestones(username, skill.name)
-                    level = database_controller.get_recent_level(user_id, skill.id)
-                    skill_models.append(SkillModel(skill.name, level, category=skill.category, milestones=milestones))
-                    found_skills.append(skill)
-            return skill_models
-        return None
+        root_categories = Skill.query.filter_by(root=True).all()
+        skills = []
+        for root in root_categories:
+            skills.append(database_controller.build_subcategories(username, root.name))
+        for skillmodel in skills:
+            print(skillmodel.jsonable())
+        return skills
 
     @staticmethod
     def create_user(username, name):
