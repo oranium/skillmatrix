@@ -8,61 +8,60 @@ from sqlalchemy.orm import sessionmaker
 from os import environ
 
 def checkdb():
-    engine = create_engine(environ.get('ENV_DATABASE_URI_TEST'))
+    engine = create_engine("sqlite:////tmp/:memory:")
 
-    if not engine.dialect.has_table(engine, 'association'):
-        Base = declarative_base()
-        class Association(Base):
-            __tablename__ = 'association'
-            users_id = Column(Integer, ForeignKey('users.id'), primary_key=True)
-            skill_id = Column(Integer, ForeignKey('skill.id'), primary_key=True)
-            date_id = Column(Integer, ForeignKey('date.id'), primary_key=True)
-            level = Column(Integer, primary_key=True)
-            users_assoc = relationship("Users", back_populates="users_association")
-            skill_assoc = relationship("Skill", back_populates="skill_association")
-            date_assoc = relationship("Date", back_populates="date_association")
+    Base = declarative_base()
+    class Association(Base):
+        __tablename__ = 'association'
+        users_id = Column(Integer, ForeignKey('users.id'), primary_key=True)
+        skill_id = Column(Integer, ForeignKey('skill.id'), primary_key=True)
+        date_id = Column(Integer, ForeignKey('date.id'), primary_key=True)
+        level = Column(Integer, primary_key=True)
+        users_assoc = relationship("Users", back_populates="users_association")
+        skill_assoc = relationship("Skill", back_populates="skill_association")
+        date_assoc = relationship("Date", back_populates="date_association")
 
-        class MilestoneAssociation(Base):
-            __tablename__ = 'milestoneassociation'
-            milestone_users_id = Column(Integer, ForeignKey('users.id'), primary_key=True)
-            milestone_skill_id = Column(Integer, ForeignKey('skill.id'), primary_key=True)
-            milestone_date_id = Column(Integer, ForeignKey('date.id'), primary_key=True)
-            comment = Column(String(85), primary_key=True)
-            level = Column(Integer, nullable = True)
-            users_milestone_assoc = relationship("Users", back_populates="users_milestone_association")
-            skill_milestone_assoc = relationship("Skill", back_populates="skill_milestone_association")
-            date_milestone_assoc = relationship("Date", back_populates="date_milestone_association")
+    class MilestoneAssociation(Base):
+        __tablename__ = 'milestoneassociation'
+        milestone_users_id = Column(Integer, ForeignKey('users.id'), primary_key=True)
+        milestone_skill_id = Column(Integer, ForeignKey('skill.id'), primary_key=True)
+        milestone_date_id = Column(Integer, ForeignKey('date.id'), primary_key=True)
+        comment = Column(String(85), primary_key=True)
+        level = Column(Integer, nullable = True)
+        users_milestone_assoc = relationship("Users", back_populates="users_milestone_association")
+        skill_milestone_assoc = relationship("Skill", back_populates="skill_milestone_association")
+        date_milestone_assoc = relationship("Date", back_populates="date_milestone_association")
 
-        class Skill(Base):
-            __tablename__ = 'skill'
-            id = Column(Integer, primary_key=True)
-            name = Column(String(127), nullable=False)
-            description = Column(Text, nullable=True)
-            category = Column(String(127), nullable=False)
-            skill_association = relationship("Association", back_populates="skill_assoc")
-            skill_milestone_association = relationship("MilestoneAssociation", back_populates="skill_milestone_assoc")
+    class Skill(Base):
+        __tablename__ = 'skill'
+        id = Column(Integer, primary_key=True)
+        name = Column(String(127), nullable=False)
+        description = Column(Text, nullable=True)
+        category = Column(String(127), nullable=False)
+        skill_association = relationship("Association", back_populates="skill_assoc")
+        skill_milestone_association = relationship("MilestoneAssociation", back_populates="skill_milestone_assoc")
 
-            def give_name(self):
-                return self.name
+        def give_name(self):
+            return self.name
 
-            def __repr__(self):
-                return '<name {0}>'.format(self.name)
+        def __repr__(self):
+            return '<name {0}>'.format(self.name)
 
 
-        class Date(Base):
-            """SQL-Alchemy object date."""
-            __tablename__ = 'date'
-            id = Column(Integer, primary_key=True)
-            date = Column(Date, nullable=False, default=datetime.date.today())
-            # z.B. '9999-12-12'
-            date_association = relationship("Association", back_populates="date_assoc")
-            date_milestone_association = relationship("MilestoneAssociation", back_populates="date_milestone_assoc")
+    class Date(Base):
+        """SQL-Alchemy object date."""
+        __tablename__ = 'date'
+        id = Column(Integer, primary_key=True)
+        date = Column(Date, nullable=False, default=datetime.date.today())
+        # z.B. '9999-12-12'
+        date_association = relationship("Association", back_populates="date_assoc")
+        date_milestone_association = relationship("MilestoneAssociation", back_populates="date_milestone_assoc")
 
-            def get_id(self):
-                return self.id
+        def get_id(self):
+            return self.id
 
-            def get_date(self):
-                return self.date
+        def get_date(self):
+            return self.date
 
 
 
