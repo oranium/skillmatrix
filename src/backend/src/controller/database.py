@@ -7,3 +7,4 @@ db = SQLAlchemy()
 
 def set_db(app):
     db.init_app(app)
+    app.app_context().push()
