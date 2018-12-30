@@ -53,7 +53,7 @@ class testDatabaseController(unittest.TestCase):
     def test_get_all_users(self):
         pass
 
-    def test_get_all_skill_names(selfs):
+    def test_get_all_skill_names(self):
         pass
 
     def test_get_skill_id(self):
