@@ -1,8 +1,6 @@
-import set_root_backend
-import json
 import unittest
 from unittest.mock import patch, ANY
-from src.controller import authentication_controller
+from controller import authentication_controller
 from ldap3 import Connection
 from ldap3.core.exceptions import LDAPSocketOpenError, LDAPUnknownAuthenticationMethodError
 

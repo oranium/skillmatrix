@@ -1,8 +1,7 @@
 import unittest
-from src.app import app
-from src.controller.database_controller import database_controller
-from src.controller.database import db
-from src.backend.src.model.database_model import Association, MilestoneAssociation, Skill, Date, Users
+from app import app
+from controller.database_controller import database_controller
+from controller.database import db
 
 def setUpModule():
     app.testing = True
@@ -108,8 +107,8 @@ class testDatabaseController(unittest.TestCase):
 
     def test_get_profile_models(self):
         result = self.database_controller.get_profile_models([Users("Valdemar-Forsberg","Valdemar Forsberg"), Users("Karl-Kalagin","Karl Kalagin")])
-        expected_result =
-        self.assertEqual(result, )
+        expected_result = None
+        self.assertEqual(result, 1)
 
 
     def test_sum_relevant_skills(self):
