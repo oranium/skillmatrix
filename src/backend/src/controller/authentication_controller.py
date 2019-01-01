@@ -111,7 +111,7 @@ class AuthenticationController:
             regex_principal_name = re.search('([^\\\\]+$)', username)
             user_principal_name = regex_principal_name.group(0)
 
-            connection.search(search_base=environ.get('ENV_BASE_DN'),
+            connection.search(search_base=environ.get('ENV_LDAP_SEARCH_BASE'),
                               search_filter='(&(objectCategory=person)(sAMAccountName='+user_principal_name+'))',
                               search_scope=SUBTREE,
                               attributes=['cn'])
