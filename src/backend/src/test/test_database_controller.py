@@ -149,11 +149,26 @@ class testDatabaseController(unittest.TestCase):
 
     def test_get_profile_models(self):
         result = database_controller.get_profile_models([self.valdemar])
-        expected_result = [dict(username='Valdemar-Forsberg', name='Valdemar Forsberg', skills=[[["Java", 3,[]]],["Python",4,[]],["JavaScript",2,[]]])]
+        expected_result = [dict(username='Valdemar-Forsberg',
+                                name='Valdemar Forsberg',
+                                skills=[[["Java", 3,[]]],
+                                        ["Python",4,[]],
+                                        ["JavaScript",2,[]]]
+                                )]
         self.assertEqual(result, expected_result)
 
     def test_sum_relevant_skills(self):
-        pass
+        result = database_controller.sum_relevant_skills(dict(username='Valdemar-Forsberg',
+                                                              name='Valdemar Forsberg',
+                                                              skills=[[["Java", 3,[]]],
+                                                                      ["Python",4,[]],
+                                                                      ["JavaScript",2,[]]]
+                                                              ),
+                                                              ["Java","JavaScript"])
+
+        expected_result = 5
+        self.assertEqual(result, expected_result)
+
 
     def test_build_subcategories(self):
         pass
