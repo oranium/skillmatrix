@@ -2,9 +2,14 @@ import unittest
 from app import app
 from controller.database_controller import database_controller
 from controller.database import db
-from resetdb import Setup, Date, Skill, Users, Association, MilestoneAssociation, Hierachy
+from model.skill_model import SkillModel
+from model.milestone_model import MilestoneModel
+from resetdb import Setup, Date, Skill, Users, Association, MilestoneAssociation, Hierarchy
+
+
 def setUpModule():
     app.testing = True
+
 
 class testDatabaseController(unittest.TestCase):
 
@@ -12,7 +17,6 @@ class testDatabaseController(unittest.TestCase):
         self.test_app = app.test_client()
 
         self.test_setup = Setup()
-
 
         self.valdemar = Users(username='Valdemar-Forsberg', name="Valdemar Forsberg")
         self.karl = Users(username='Karl-Kalagin', name="Karl Kalagin")
@@ -43,6 +47,7 @@ class testDatabaseController(unittest.TestCase):
         self.b.skill_milestone_assoc = self.js1
         self.b.date_milestone_assoc = self.date1
         self.b.users_milestone_assoc = self.isaac
+        self.b.level = self.a.level
 
         self.test_setup.create_skill(3, self.js1,self. date1, self.isaac)
         self.test_setup.create_skill(3, self.python1, self.date1, self.karl)
@@ -54,7 +59,7 @@ class testDatabaseController(unittest.TestCase):
         self.test_setup.create_skill(3, self.python1, self.date1, self.isaac)
         self.test_setup.create_skill(1, self.java1, self.date1, self.karl)
 
-        self.x = Hierachy()
+        self.x = Hierarchy()
         self.x.parent_skill_assoc = self.java1
         self.x.child_skill_assoc = self.js1
         self.test_setup.session.add(self.x)
@@ -62,32 +67,60 @@ class testDatabaseController(unittest.TestCase):
         self.test_setup.session.commit()
 
     def tearDown(self):
-
         pass
 
     def test_search_success(self):
-        pass
+        result = database_controller.search(dict(skill=["Java"],level=[1]))
+        expected_result = dict([self.valdemar, self.karl, self.isaac],[])
 
     def test_search_with_no_results(self):
-        pass
+        result = database_controller.search(dict(skill=["Haskell"],level=[1]))
+        expected_result = dict([],[])
+        self.assertEquals(result, expected_result)
 
     def test_set_skill(self):
-        pass
+        database_controller.set_skills("Valdemar-Forsberg", dict(name=["F#"], level=[2]))
+        skill_exists = Skill.query.filter_by(Skill.name == "F#").first()
+        self.assertIsNotNone(skill_exists)
 
     def test_add_milestone(self):
-        pass
+        database_controller.add_milestone("Karls-Kalagin", "Java", self.date1, "testmiltestone", 5)
+        association_exists = MilestoneAssociation.query.filter(MilestoneAssociation.milestone_date_id == self.date1.id,
+                                                               MilestoneAssociation.milestone_skill_id == self.java1.id,
+                                                               MilestoneAssociation.milestone_users_id == self.karl.id)
+        self.assertIsNotNone(association_exists)
 
     def test_get_milestones(self):
-        pass
+        result = database_controller.get_milestones("Karl-Kalagin", "JavaScript")
+        expected_result = [MilestoneModel(self.b.date_milestone_assoc, "bootcamp69", self.b.level)]
 
     def test_get_assocs(self):
-        pass
+        association_exists = database_controller.get_assocs(1,1,1,"first")
+        self.assertIsNotNone(association_exists)
 
     def test_get_all_users(self):
-        pass
+        result = database_controller.get_all_users()
+        expected_result = Users.query.all()
+        self.assertEquals(result, expected_result)
+
+    def test_get_subcategories(self):
+        result = database_controller.get_sub_categories("Valdemar-Forsberg", "Java")
+        expected_result = ["JavaScript", "Python"]
+        self.assertEqual(result, expected_result)
+
+    def test_create_hierachy(self):
+        self.flask = Skill(name='Flask')
+        self.test_setup.session.add(self.flask)
+        database_controller.create_hierachy('Python', 'Flask')
+        hierarchy_exists = Hierarchy.query.filter(Hierarchy.child_skill_assoc == self.flask,
+                                       Hierarchy.parent_skill_assoc == self.python1).first()
+        self.assertIsNotNone(hierarchy_exists)
+        Skill.query.filter_by(id=Skill.query.filter_by(name="Flask").first().id).delete()
 
     def test_get_all_skill_names(self):
-        pass
+        result = database_controller.get_all_skill_names()
+        expected_result = ["Java", "Python", "Programming", "JavaScript"]
+        self.assertEquals(result, expected_result)
 
     def test_get_skill_id(self):
         result = database_controller.get_skill_id("Java")
@@ -169,6 +202,7 @@ class testDatabaseController(unittest.TestCase):
         expected_result = 5
         self.assertEqual(result, expected_result)
 
-
     def test_build_subcategories(self):
-        pass
+        result = database_controller.build_subcategories('Valdemar-Forsberg', "Java")
+        expected_result = SkillModel("Java", 3, [SkillModel('JavaScript', 2)])
+        self.assertEquals(result, expected_result)

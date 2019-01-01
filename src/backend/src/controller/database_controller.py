@@ -2,7 +2,7 @@ from controller.database import db
 from model.profile_model import ProfileModel
 from model.skill_model import SkillModel
 from model.milestone_model import MilestoneModel
-from model.database_model import Association, MilestoneAssociation, Skill, Date, Users, Hierachy
+from model.database_model import Association, MilestoneAssociation, Skill, Date, Users, Hierarchy
 
 
 class DatabaseController:
@@ -110,7 +110,9 @@ class DatabaseController:
                                              Association.users_id == kwargs["users_id"],
                                              Association.skill_id == kwargs["skill_id"]).first()
         else:
-            assoc = Association.query.filter_by(users_id=kwargs["users_id"]).all()
+            assoc = Association.query.filter_by(users_id=kwargs["users_id"]).all(
+            )
+
         return assoc
 
     @staticmethod
@@ -122,7 +124,7 @@ class DatabaseController:
         # parent is a skillname
         # returns list of childskillnames
         parentid = database_controller.get_skill_id(parent_skillname)
-        childlist = Hierachy.query.filter_by(parent_skill_id=parentid).all()
+        childlist = Hierarchy.query.filter_by(parent_skill_id=parentid).all()
         skill_names = []
         for hier in childlist:
             skillobject = database_controller.get_skill_from_id(hier.child_skill_id)
@@ -130,6 +132,7 @@ class DatabaseController:
                                         Association.skill_id == database_controller.get_skill_id(parent_skillname)
                                         ).first():
                 skill_names.append(skillobject.name)
+
         return skill_names
 
     @staticmethod
@@ -137,7 +140,7 @@ class DatabaseController:
         # parent and child are skillnames
         parentobject= database_controller.get_skill(parent)
         childobject= database_controller.get_skill(child)
-        x = Hierachy()
+        x = Hierarchy()
         x.parent_skill_assoc = parentobject
         x.child_skill_assoc = childobject
         db.session.add(x)
@@ -297,7 +300,7 @@ class DatabaseController:
                 skillname (str): the skill name as a string.
 
             Returns:
-                Exactly one SkillModel that contains all Skills that are below it in the hierarchy that the user has    .
+                Exactly one SkillModel that contains all Skills that are below it in the hierarchy that the user has.
 
         """
         subcategories_string = database_controller.get_sub_categories(username, skillname)

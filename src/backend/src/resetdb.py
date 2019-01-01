@@ -9,7 +9,7 @@ from sqlalchemy.orm import sessionmaker
 from os import environ
  
 Base = declarative_base()
-class Hierachy(Base):
+class Hierarchy(Base):
     __tablename__ = 'hierachy'
     id = Column(Integer, primary_key=True)
     parent_skill_id = Column(Integer, ForeignKey('skill.id'), nullable=False)
@@ -48,8 +48,8 @@ class Skill(Base):
     root = Column(Boolean, unique=False, default=False)
     skill_association = relationship("Association", back_populates="skill_assoc")
     skill_milestone_association = relationship("MilestoneAssociation", back_populates="skill_milestone_assoc")
-    #skill_parent_skill = relationship("Hierachy", back_populates="parent_skill_assoc")
-    #skill_child_skill = relationship("Hierachy", back_populates="child_skill_assoc")
+    #skill_parent_skill = relationship("Hierarchy", back_populates="parent_skill_assoc")
+    #skill_child_skill = relationship("Hierarchy", back_populates="child_skill_assoc")
 
     def give_name(self):
         return self.name
@@ -101,7 +101,7 @@ class Setup():
 
 
     def create_hiestory(self, parent, child):
-        x = Hierachy()
+        x = Hierarchy()
         x.parent_skill_assoc= parent
         x.child_skill_assoc= child
         self.session.add(x)
@@ -150,7 +150,7 @@ create_skill(2, java1, date1, isaac)
 create_skill(2, js1, date1, valdemar)
 create_skill(3, python1, date1, isaac)
 create_skill(1, java1, date1, karl)
-x = Hierachy()
+x = Hierarchy()
 x.parent_skill_assoc= java1
 x.child_skill_assoc= js1
 session.add(x)
