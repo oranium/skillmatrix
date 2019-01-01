@@ -154,3 +154,6 @@ class testDatabaseController(unittest.TestCase):
 
     def test_sum_relevant_skills(self):
         pass
+
+    def test_build_subcategories(self):
+        pass
