@@ -2,8 +2,7 @@ import unittest
 from app import app
 from controller.database_controller import database_controller
 from controller.database import db
-from model.database_model import Date, Skill, Users
-
+from resetdb import Setup, Date, Skill, Users, Association, MilestoneAssociation, Hierachy
 def setUpModule():
     app.testing = True
 
@@ -11,6 +10,48 @@ class testDatabaseController(unittest.TestCase):
 
     def setUp(self):
         self.test_app = app.test_client()
+
+        test_setup = Setup()
+
+        valdemar = Users(username='Valdemar-Forsberg', name="Valdemar Forsberg")
+        karl = Users(username='Karl-Kalagin', name="Karl Kalagin")
+        isaac = Users(username='Isaac-Hunt', name="Isaac Hunt")
+        test_setup.session.add(valdemar)
+        test_setup.session.add(karl)
+        test_setup.session.add(isaac)
+        prog = Skill(name='Programming', root=True)
+        java1 = Skill(name='Java')
+        python1 = Skill(name='Python')
+        js1 = Skill(name='JavaScript')
+        test_setup.session.add(java1)
+        test_setup.session.add(python1)
+        test_setup.session.add(prog)
+        test_setup.session.add(js1)
+        date1 = Date()
+        test_setup.session.add(date1)
+        a = Association(level=4)
+        a.skill_assoc = js1
+        a.date_assoc = date1
+        a.users_assoc = isaac
+        b = MilestoneAssociation(comment='bootcamp69')
+        b.skill_milestone_assoc = js1
+        b.date_milestone_assoc = date1
+        b.users_milestone_assoc = isaac
+        test_setup.create_skill(3, js1, date1, isaac)
+        test_setup.create_skill(3, python1, date1, karl)
+        test_setup.create_skill(3, java1, date1, valdemar)
+        test_setup.create_skill(4, js1, date1, karl)
+        test_setup.create_skill(4, python1, date1, valdemar)
+        test_setup.create_skill(2, java1, date1, isaac)
+        test_setup.create_skill(2, js1, date1, valdemar)
+        test_setup.create_skill(3, python1, date1, isaac)
+        test_setup.create_skill(1, java1, date1, karl)
+        x = Hierachy()
+        x.parent_skill_assoc = java1
+        x.child_skill_assoc = js1
+        test_setup.session.add(x)
+        test_setup.create_hiestory(python1, js1)
+        test_setup.session.commit()
 
     def tearDown(self):
         pass
@@ -86,7 +127,7 @@ class testDatabaseController(unittest.TestCase):
         self.assertEqual(result, [[["Java", 3,[]]],["Python",4,[]],["JavaScript",2,[]]])
 
     def test_get_skills_inexistent(self):
-        result = self.database_controller.get_skills("Lisza-Zulu")
+        result = database_controller.get_skills("Lisza-Zulu")
         self.assertIsNone(result)
 
     def test_create_user(self):

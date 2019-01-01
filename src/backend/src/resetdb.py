@@ -90,30 +90,37 @@ class Users(Base):
     def __repr__(self):
         return '<id = {0} und username = {1}>'.format(self.id, self.username)
 
-engine = create_engine(environ.get('ENV_DATABASE_URI_TEST'))
+class Setup():
 
-Base.metadata.drop_all(bind=engine)
-Base.metadata.create_all(engine)
-DBSession = sessionmaker(bind=engine)
-session = DBSession()
+    engine = create_engine(environ.get('ENV_DATABASE_URI_TEST'))
 
-def create_hiestory(parent, child):
-    x = Hierachy()
-    x.parent_skill_assoc= parent
-    x.child_skill_assoc= child
-    session.add(x)
-    session.commit()
+    Base.metadata.drop_all(bind=engine)
+    Base.metadata.create_all(engine)
+    DBSession = sessionmaker(bind=engine)
+    session = DBSession()
 
-def create_skill(level, skill, date, username):
-    a = Association(level=level)
-    a.skill_assoc = skill
-    a.date_assoc = date
-    a.users_assoc = username
+
+    def create_hiestory(self, parent, child):
+        x = Hierachy()
+        x.parent_skill_assoc= parent
+        x.child_skill_assoc= child
+        self.session.add(x)
+        self.session.commit()
+
+
+    def create_skill(self, level, skill, date, username):
+        a = Association(level=level)
+        a.skill_assoc = skill
+        a.date_assoc = date
+        a.users_assoc = username
+
+testSetup = Setup()
+
 
 valdemar = Users(username='Valdemar-Forsberg',name="Valdemar Forsberg")
 karl = Users(username='Karl-Kalagin', name="Karl Kalagin")
 isaac = Users(username='Isaac-Hunt', name="Isaac Hunt")
-session.add(valdemar)
+testSetup.session.add(valdemar)
 session.add(karl)
 session.add(isaac)
 prog = Skill(name='Programming', root = True)
