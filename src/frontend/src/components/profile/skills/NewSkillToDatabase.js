@@ -69,7 +69,9 @@ class FormDialog extends Component {
 
   handleSubmit = Skill => {
     //todo API
+    var category = store.getState().formState.singleselect.value;
 
+    console.log(category);
     console.log(this.state);
   };
   render() {

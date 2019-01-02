@@ -29,6 +29,7 @@ export default class FormDialog extends Component {
   };
 
   async handleSubmit(skill, milestone) {
+    console.log(skill);
     let Rest = new RestCom(RestPoints.setSkills, JSON.stringify(skill));
     try {
       const { data } = await Rest.post();
