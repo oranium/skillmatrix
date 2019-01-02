@@ -26,6 +26,7 @@ import { ArrowLeft, Search } from '@material-ui/icons';
 // Rest
 import RestPoints from 'rest/Init';
 import RestCom from 'rest/Rest';
+import { updateAllSkills } from 'rest/handleCommonRequests';
 
 const styles = theme => ({
   root: {
@@ -100,17 +101,15 @@ class ProfileController extends Component {
     store.dispatch(changeView(value));
   };
 
-  handleNewSkill = () => {
+  async openNewSkillDialog() {
+    await updateAllSkills();
     store.dispatch(openProfileDialog('skill'));
-  };
+  }
 
-  handleNewMilestone = () => {
-    console.log('NewMilestone');
-  };
-
-  openNewMilestoneDialog = () => {
+  async openNewMilestoneDialog() {
+    await updateAllSkills();
     store.dispatch(openProfileDialog('milestone'));
-  };
+  }
 
   switchToSearchPage = () => {
     store.dispatch(switchPage('search'));
@@ -167,7 +166,7 @@ class ProfileController extends Component {
                       variant="contained"
                       color="primary"
                       name="submit"
-                      onClick={this.handleNewSkill}
+                      onClick={this.openNewSkillDialog}
                     >
                       New Skill
                     </Button>

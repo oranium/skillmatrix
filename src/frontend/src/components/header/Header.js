@@ -7,6 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import { AccountCircle, PowerSettingsNew, Search, Add } from '@material-ui/icons';
 import NewSkillToDatabase from '../profile/skills/NewSkillToDatabase';
 
+
 // import redux parts
 import store from '../../Store';
 import {
@@ -21,6 +22,7 @@ import {
 // Rest
 import RestPoints from '../../rest/Init';
 import RestCom from '../../rest/Rest';
+import { updateAllSkills } from 'rest/handleCommonRequests';
 
 const styles = {
   root: {
@@ -49,8 +51,9 @@ class ButtonAppBar extends Component {
     this.constructor.switchToPage('profile');
   };
 
-  switchToSearchPage = () => {
+  async switchToSearchPage() {
     store.dispatch(resetSearch);
+    await updateAllSkills();
     this.constructor.switchToPage('search');
   };
 
