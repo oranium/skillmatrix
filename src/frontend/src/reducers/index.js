@@ -1,7 +1,14 @@
 // reducers >> index.js
 import { combineReducers } from 'redux';
 import {
-  formState, user, page, error, search, profile, allSkills,
+  formState,
+  user,
+  page,
+  error,
+  search,
+  profile,
+  allSkills,
+  allCategories,
 } from './reducers';
 
 export default combineReducers({
@@ -12,4 +19,5 @@ export default combineReducers({
   search,
   profile,
   allSkills,
+  allCategories,
 });

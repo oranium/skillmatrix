@@ -172,6 +172,7 @@ const defaultProfilePageState = {
 };
 
 const defaultSkillList = ['Python', 'Java', 'JavaScript'];
+const defaultCategoryList = [];
 
 // has all the data for the inputfields
 export const formState = (state = defaultFormState, action) => {
@@ -306,6 +307,17 @@ export const allSkills = (state = defaultSkillList, action) => {
       return action.skills;
     case 'RESETSTATE':
       return defaultSkillList;
+    default:
+      return state;
+  }
+};
+
+export const allCategories = (state = defaultCategoryList, action) => {
+  switch (action.type) {
+    case 'SETALLCATEGORIES':
+      return action.categories;
+    case 'RESETSTATE':
+      return defaultCategoryList;
     default:
       return state;
   }

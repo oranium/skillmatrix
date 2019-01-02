@@ -7,7 +7,6 @@ import SingleSelect from 'components/common/SingleSelect';
 import RadioGroupShowLevel from 'components/common/RadioGroupShowLevel';
 
 // material-ui
-import { Typography } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';

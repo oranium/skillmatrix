@@ -85,6 +85,12 @@ export const setAllSkills = skills => ({
   type: 'SETALLSKILLS',
   skills,
 });
+
+export const setAllCategories = categories => ({
+  type: 'SETALLCATEGORIES',
+  categories,
+});
+
 export const addProfiles = profiles => ({
   type: 'ADDPROFILES',
   profiles,
