@@ -147,7 +147,7 @@ class DatabaseController:
         db.session.commit()
 
     @staticmethod
-    def get_all_skill_names(username):
+    def get_all_skill_names(username=None):
         skills = Skill.query.all()
         # the first list contains all skills (that are not root), the second list contains all categories (if username)
         skill_list = [[], []]
@@ -165,7 +165,7 @@ class DatabaseController:
                     skill_list[1].append(skill.name)
                 else:
                     skill_list[0].append(skill.name)
-            return skill_list
+        return skill_list
 
     @staticmethod
     def get_skill_id(skillname):
@@ -208,7 +208,6 @@ class DatabaseController:
         db.session.add(new_skill)
         db.session.commit()
         database_controller.create_hierachy(category, skillname)
-        skill = Skill()
         database_controller.set_skills(username, {skillname: level})
 
     @staticmethod
