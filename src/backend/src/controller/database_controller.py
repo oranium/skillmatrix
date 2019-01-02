@@ -319,7 +319,7 @@ class DatabaseController:
         # case 1: category is a root element
         if Skill.query.filter_by(name=skillname).first().root:
             for category in subcategories_string:
-                subcategories_model.append(database_controller.build_subcategories(category, username))
+                subcategories_model.append(database_controller.build_subcategories(username, category))
 
             level = database_controller.get_recent_level(database_controller.get_user_id(username),
                                                          database_controller.get_skill_id(skillname)
@@ -333,7 +333,7 @@ class DatabaseController:
         # case 2: category is a node
         if subcategories_string:
             for category in subcategories_string:
-                subcategories_model.append(database_controller.build_subcategories(category, username))
+                subcategories_model.append(database_controller.build_subcategories(username, category))
 
                 level = database_controller.get_recent_level(database_controller.get_user_id(username),
                                                              database_controller.get_skill_id(skillname)
