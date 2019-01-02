@@ -5,6 +5,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import { AccountCircle, PowerSettingsNew, Search, Add } from '@material-ui/icons';
+import NewSkillToDatabase from '../profile/skills/NewSkillToDatabase';
+
 // import redux parts
 import store from '../../Store';
 import {
@@ -120,6 +122,7 @@ class ButtonAppBar extends Component {
             </IconButton>
           </Toolbar>
         </AppBar>
+        <NewSkillToDatabase />
       </div>
     );
   }
