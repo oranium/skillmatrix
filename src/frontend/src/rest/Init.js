@@ -3,7 +3,7 @@ const RestPoints = {
   logout: '/logout',
   search: '/search',
   setSkills: '/setskills',
-  getSkills: '/skills',
+  getSkills: '/getskills',
   createSkill: '/createskill',
   milestone: '/milestone',
 
