@@ -28,7 +28,15 @@ import { closeProfileDialog, updateInput, resetForm, setOwnProfile, setError } f
 import RestPoints from 'rest/Init';
 import RestCom from 'rest/Rest';
 
-const styles = theme => ({});
+const styles = theme => ({
+  root: {
+    display: 'flex',
+    flex: 0,
+  },
+  dialogcontent: {
+    maxWidth: 'none',
+  },
+});
 
 class FormDialog extends Component {
   state = {
@@ -71,92 +79,100 @@ class FormDialog extends Component {
     const { classes } = this.props;
 
     return (
-      <div>
+      <div className={classes.root}>
         <Dialog
+          fullwidth
           open={showDialog === 'newSkill'}
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title">New skill</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              To add a new Skill please fill in all inputfields.
-            </DialogContentText>
+          <div className={classes.dialog}>
+            <DialogTitle id="form-dialog-title">New skill</DialogTitle>
+            <DialogContent>
+              <DialogContentText className={classes.dialogcontent}>
+                To add a new Skill please fill in all inputfields.
+              </DialogContentText>
 
-            <SingleSelect placeholder={'Choose the category of your skill'} allSkills={allSkills} />
+              <SingleSelect
+                placeholder={'Choose the category of your skill'}
+                allSkills={allSkills}
+                fullwidth
+              />
 
-            <TextField
-              id="outlined-with-placeholder"
-              label="Skill input"
-              placeholder="write the skill to add"
-              className={classes.textField}
-              margin="normal"
-              variant="outlined"
-              onChange={event => this.handleChange(event)}
-            />
+              <TextField
+                id="outlined-with-placeholder"
+                label="Skill input"
+                placeholder="write the skill to add"
+                className={classes.textField}
+                margin="normal"
+                variant="outlined"
+                onChange={event => this.handleChange(event)}
+              />
 
-            <List
-              component="nav"
-              subheader={
-                <ListSubheader component="div">(Optional) add guideline to the skill</ListSubheader>
-              }
-              className={classes.root}
-            >
-              <ListItem>
-                <TextField
-                  label="Level 1: "
-                  id="level1"
-                  className={classNames(classes.margin, classes.textField)}
-                  placeholder={this.state.guideline['1']}
-                  onChange={event => this.handleGuidelineChange('1', event)}
-                />
-              </ListItem>
-              <ListItem>
-                <TextField
-                  label="Level 2"
-                  id="level2"
-                  className={classNames(classes.margin, classes.textField)}
-                  placeholder={this.state.guideline['2']}
-                  onChange={event => this.handleGuidelineChange('2', event)}
-                />
-              </ListItem>
-              <ListItem>
-                <TextField
-                  label="Level 3: "
-                  id="simple-start-adornment"
-                  className={classNames(classes.margin, classes.textField)}
-                  placeholder={this.state.guideline['3']}
-                  onChange={event => this.handleGuidelineChange('3', event)}
-                />
-              </ListItem>
-              <ListItem>
-                <TextField
-                  label="Level 4: "
-                  id="simple-start-adornment"
-                  className={classNames(classes.margin, classes.textField)}
-                  placeholder={this.state.guideline['4']}
-                  onChange={event => this.handleGuidelineChange('4', event)}
-                />
-              </ListItem>
-              <ListItem>
-                <TextField
-                  label="Level 5: "
-                  id="simple-start-adornment"
-                  className={classNames(classes.margin, classes.textField)}
-                  placeholder={this.state.guideline['5']}
-                  onChange={event => this.handleGuidelineChange('5', event)}
-                />
-              </ListItem>
-            </List>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
-              Cancel
-            </Button>
-            <Button onClick={() => this.handleSubmit(true)} color="primary">
-              Submit
-            </Button>
-          </DialogActions>
+              <List
+                component="nav"
+                subheader={
+                  <ListSubheader component="div">
+                    (Optional) add guideline to the skill
+                  </ListSubheader>
+                }
+              >
+                <ListItem>
+                  <TextField
+                    label="Level 1: "
+                    id="level1"
+                    className={classNames(classes.margin, classes.textField)}
+                    placeholder={this.state.guideline['1']}
+                    onChange={event => this.handleGuidelineChange('1', event)}
+                  />
+                </ListItem>
+                <ListItem>
+                  <TextField
+                    label="Level 2"
+                    id="level2"
+                    className={classNames(classes.margin, classes.textField)}
+                    placeholder={this.state.guideline['2']}
+                    onChange={event => this.handleGuidelineChange('2', event)}
+                  />
+                </ListItem>
+                <ListItem>
+                  <TextField
+                    label="Level 3: "
+                    id="simple-start-adornment"
+                    className={classNames(classes.margin, classes.textField)}
+                    placeholder={this.state.guideline['3']}
+                    onChange={event => this.handleGuidelineChange('3', event)}
+                  />
+                </ListItem>
+                <ListItem>
+                  <TextField
+                    label="Level 4: "
+                    id="simple-start-adornment"
+                    className={classNames(classes.margin, classes.textField)}
+                    placeholder={this.state.guideline['4']}
+                    onChange={event => this.handleGuidelineChange('4', event)}
+                  />
+                </ListItem>
+                <ListItem>
+                  <TextField
+                    label="Level 5: "
+                    id="simple-start-adornment"
+                    className={classNames(classes.margin, classes.textField)}
+                    placeholder={this.state.guideline['5']}
+                    onChange={event => this.handleGuidelineChange('5', event)}
+                  />
+                </ListItem>
+              </List>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={this.handleClose} color="primary">
+                Cancel
+              </Button>
+              <Button onClick={() => this.handleSubmit(true)} color="primary">
+                Submit
+              </Button>
+            </DialogActions>
+          </div>
         </Dialog>
       </div>
     );

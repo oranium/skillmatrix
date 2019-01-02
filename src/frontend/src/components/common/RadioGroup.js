@@ -9,6 +9,7 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
+import Tooltip from '@material-ui/core/Tooltip';
 
 const styles = theme => ({
   root: { left: 100 },
@@ -43,23 +44,29 @@ class RadioButtonsGroup extends React.Component {
           control={<Radio />}
           label={num}
           disabled={!this.props.disabled}
-        /> //add disabled to the props to disable
+        />
       ) : (
+        //add disabled to the props to disable
         <FormControlLabel key={index} value={num} control={<Radio />} label={num} />
       ),
     );
     return (
       <div className={classes.root}>
         <FormControl component="fieldset" className={classes.formControl}>
-          <RadioGroup
-            aria-label="Level"
-            name="level"
-            className={classes.group}
-            value={this.state.value}
-            onChange={this.handleChange}
+          <Tooltip
+            title="1 - schlecht 2 - ausreichend 3 - befriedigend 4 - gut 5 - sehr gut"
+            placement="top"
           >
-            {rdBtns}
-          </RadioGroup>
+            <RadioGroup
+              aria-label="Level"
+              name="level"
+              className={classes.group}
+              value={this.state.value}
+              onChange={this.handleChange}
+            >
+              {rdBtns}
+            </RadioGroup>
+          </Tooltip>
         </FormControl>
       </div>
     );
