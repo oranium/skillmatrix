@@ -14,7 +14,6 @@ import RestPoints from 'rest/Init';
 import RestCom from 'rest/Rest';
 import { addProfiles } from 'actions';
 
-
 class SearchController extends Component {
   // build query object for api request
   getSearchQuery = searchValues => {
@@ -34,39 +33,57 @@ class SearchController extends Component {
     store.dispatch(addProfiles(allProfiles));
   };
 
+  searchTree = tree => {
+    var stack = [],
+      results = [],
+      node,
+      ii;
+    stack.push(tree);
+
+    while (stack.length > 0) {
+      node = stack.pop();
+      if (this.query.hasOwnProperty(node.skillname)) {
+        results.push(
+          {
+            skillname: node.skillname,
+            level: node.level,
+            milestones: node.milestones,
+          }
+        )
+      } else if (node.subcategories && node.subcategories.length) {
+        for (ii = 0; ii < node.subcategories.length; ii += 1) {
+          stack.push(node.subcategories[ii]);
+        }
+      }
+    }
+
+    return results;
+  };
+
   storeSearchResults = data => {
     const { query, results } = data;
     const { has_all, has_some } = results;
-    // add all profiles to profile array
+    var searchSkills;
+    
+    this.query = query;
 
     // build map from skills that only match query
     let searchResults = {
       hasAll: [],
       hasSome: [],
     };
+
     has_all.forEach(profile => {
-      const { skills } = profile;
-      const searchSkills = [];
-      skills.forEach(skill => {
-        if (query.hasOwnProperty(skill.skillname)) {
-          searchSkills.push(skill);
-        }
-      });
+      searchSkills = this.searchTree(profile.skills);
       searchResults.hasAll.push({ ...profile, skills: searchSkills });
     });
 
     has_some.forEach(profile => {
-      const { skills } = profile;
-      const searchSkills = [];
-      skills.forEach(skill => {
-        if (query.hasOwnProperty(skill.skillname)) {
-          searchSkills.push(skill);
-        }
-      });
+      searchSkills = this.searchTree(profile.skills);
       searchResults.hasSome.push({ ...profile, skills: searchSkills });
     });
     store.dispatch(setSearchResults(searchResults));
-  }
+  };
 
   // get results for query when user clicks on search button and store them into state
   async handleSearch(e) {

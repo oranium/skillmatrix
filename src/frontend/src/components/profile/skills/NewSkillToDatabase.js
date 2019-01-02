@@ -42,7 +42,7 @@ const styles = theme => ({
 
 class FormDialog extends Component {
   state = {
-    name: '',
+    skillname: '',
     guideline: {
       '1': 'mangelhaft',
       '2': 'ausreichend',
@@ -54,7 +54,7 @@ class FormDialog extends Component {
 
   handleChange = event => {
     this.setState({
-      name: event.target.value,
+      skillname: event.target.value,
     });
   };
 
@@ -67,12 +67,29 @@ class FormDialog extends Component {
     store.dispatch(closeProfileDialog);
   };
 
-  handleSubmit = Skill => {
+  async handleSubmit(Skill) {
     //todo API
     var category = store.getState().formState.singleselect.value;
+    const {user} = store.getState();
+    const {username} = user;
 
-    console.log(category);
-    console.log(this.state);
+    const request = {
+      username,
+      category,
+      ...this.state,
+    }
+    console.log(request);
+
+    const Rest = new RestCom(RestPoints.createSkill, JSON.stringify(request));
+
+    try {
+      await Rest.post();
+    } catch (e) {
+      // clear password input
+      store.dispatch(setError(e.message));
+    }
+
+  
   };
   render() {
     const state = store.getState();
