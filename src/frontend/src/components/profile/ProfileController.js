@@ -99,7 +99,7 @@ class ProfileController extends Component {
   handleChange = (evt, value) => {
     store.dispatch(changeView(value));
   };
-  Button;
+
   handleNewSkill = () => {
     store.dispatch(openProfileDialog('skill'));
   };
@@ -155,7 +155,6 @@ class ProfileController extends Component {
                 <div>
                   <NewMilestoneDialog open={showDialog === 'milestone'} />
                   <NewSkillDialog />
-
                   <div className={classes.buttons}>
                     <Button
                       variant="contained"

@@ -28,7 +28,7 @@ const MilestoneList = (props) => {
   const classes = { props };
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} onClick={event => event.stopPropagation()}>
       <ExpansionPanel>
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
           <Typography className={classes.heading}>{props.datum}</Typography>

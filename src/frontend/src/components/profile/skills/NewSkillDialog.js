@@ -29,25 +29,7 @@ export default class FormDialog extends Component {
   };
 
   async handleSubmit(skill, milestone) {
-    // console.log(skill);
-    //todo api /skill
-
-    // send skill
-    // if (
-    //   //skill.skills.contains() ||
-    //   skill.skills[''] != undefined ||
-    //   skill.skills[0] === '' ||
-    //   milestone.datum === '' ||
-    //   milestone.comment === '' ||
-    //   milestone[0].skill === '' ||
-    //   milestone[0].level === ''
-    // ) {
-    //   //#########################################################
-    //   //hier dein code reinhauen, schau dir mal die consolen outputs an da wird skill und milestone geprintet
-    //   //milestone ist ja an sich ein object und nur wenn ein feld leer ist wird es auf false gesetzt deswegen funktioniert die
-    //   // if abfrage vlt  nicht ? vllt mal mit anderer variavle propieren ?
-    //   milestone = false;
-    // }
+    console.log(skill);
     let Rest = new RestCom(RestPoints.setSkills, JSON.stringify(skill));
     try {
       const { data } = await Rest.post();
@@ -55,20 +37,6 @@ export default class FormDialog extends Component {
     } catch (e) {
       store.dispatch(setError(e.message));
     }
-
-    // //send milestone
-    // console.log(milestone);
-    // if (milestone) {
-    //   Rest = new RestCom(RestPoints.milestone, JSON.stringify(milestone));
-    //   try {
-    //     const { data } = await Rest.post();
-    //     store.dispatch(setOwnProfile(data));
-    //   } catch (e) {
-    //     store.dispatch(setError(e.message));
-    //   }
-    // }
-
-    //todo change to new api result and remove JSON stringify
     this.handleClose();
   }
 
@@ -95,16 +63,6 @@ export default class FormDialog extends Component {
     function handleNewSkill(skill) {
       singleselect.value = skill;
     }
-
-    const aktMilestone = [
-      {
-        username: profile.username,
-        date: datefield.value,
-        level: levelfield.value,
-        skill: singleselect.value,
-        comment: textarea.value,
-      },
-    ];
 
     const aktSkill = {
       username: profile.username,
@@ -137,15 +95,7 @@ export default class FormDialog extends Component {
               To add a new Skill please fill in all inputfields.
             </DialogContentText>
 
-            <SingleSelect allSkills={availableNewSkills} />
-            <TextField
-              id="standard-with-placeholder"
-              label="add new skill to database"
-              placeholder="new skill"
-              margin="normal"
-              onChange={event => handleNewSkill(event.target.value)}
-            />
-
+            <SingleSelect placeholder={'Select a skill to add'} allSkills={availableNewSkills} />
             <LevelPicker
               data={levelfield}
               required={true}

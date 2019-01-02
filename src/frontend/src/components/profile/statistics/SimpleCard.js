@@ -74,6 +74,7 @@ export class ClickableChart extends React.Component {
           open={this.state.open}
           onClose={this.handleClose}
           TransitionComponent={Transition}
+          fullWidth
         >
           <Typography variant="h5" component="h2">
             <Card>

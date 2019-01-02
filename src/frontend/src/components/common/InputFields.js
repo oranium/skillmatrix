@@ -68,14 +68,24 @@ export const SearchInput = withStyles(styles)((props) => {
 export const DateInput = withStyles(styles)((props) => {
   const { classes } = props;
   const id = 'datefield';
+  const heute = new Date();
+  var month = heute.getMonth() + 1
+  var day = heute.getDate()
 
+  if(day < 10 ) day = "0" + day;
+  if(month < 10 ) month = "0" + month
+  
+  const heuteString= heute.getFullYear() + "-" + month + "-" + day;
+  var value;
+  if(props.data.value.length === 0) value = heuteString
+  else value = props.data.value;
   return (
     <TextField
       required
       id="outlined-required"
       type="date"
       label={props.data.name}
-      value={props.data.value}
+      value={ value }
       className={`${classes.textField} ${props.data.name}`}
       error={props.data.error}
       margin="normal"

@@ -30,6 +30,7 @@ export default class FormDialog extends React.Component {
   };
 
   async handleSubmit(milestone) {
+    console.log(milestone);
     if (milestone.datum === '' || milestone.comment === '' || milestone.skill === '') {
       milestone = false;
     }

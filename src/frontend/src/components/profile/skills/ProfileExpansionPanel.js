@@ -17,6 +17,7 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'column',
   },
+
   secondaryHeading: {
     display: 'flex',
     flexDirection: 'column',
