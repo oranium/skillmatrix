@@ -11,6 +11,7 @@ import SkillProfileList from 'components/profile/skills/SkillProfileList';
 import SkillStatisticsGrid from 'components/profile/statistics/SkillStatisticsGrid';
 import NewMilestoneDialog from 'components/profile/skills/NewMilestoneDialog';
 import NewSkillDialog from 'components/profile/skills/NewSkillDialog';
+import NewSkillToDatabase from '../profile/skills/NewSkillToDatabase';
 
 // material-ui
 import PropTypes from 'prop-types';
@@ -154,8 +155,8 @@ class ProfileController extends Component {
               {isEditable && (
                 <div>
                   <NewMilestoneDialog open={showDialog === 'milestone'} />
+                  <NewSkillToDatabase />;
                   <NewSkillDialog />
-
                   <div className={classes.buttons}>
                     <Button
                       variant="contained"

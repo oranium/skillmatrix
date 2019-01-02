@@ -5,7 +5,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import { AccountCircle, PowerSettingsNew, Search, Add } from '@material-ui/icons';
-
 // import redux parts
 import store from '../../Store';
 import {
@@ -14,6 +13,7 @@ import {
   resetState,
   changeProfileOwner,
   resetSearch,
+  openProfileDialog,
 } from 'actions';
 
 // Rest
@@ -34,9 +34,9 @@ const styles = {
 };
 
 class ButtonAppBar extends Component {
-  static openNewSkillDialog(){
+  static openNewSkillDialog() {
     // open dialog to add completly new skill to database
-
+    store.dispatch(openProfileDialog('newSkill'));
   }
   static switchToPage(page) {
     store.dispatch(switchPage(page));
@@ -45,12 +45,12 @@ class ButtonAppBar extends Component {
   switchToProfilePage = () => {
     store.dispatch(changeProfileOwner(0));
     this.constructor.switchToPage('profile');
-  }
+  };
 
   switchToSearchPage = () => {
     store.dispatch(resetSearch);
     this.constructor.switchToPage('search');
-  }
+  };
 
   async handleLogout() {
     const { state } = this.props;
@@ -98,7 +98,7 @@ class ButtonAppBar extends Component {
               aria-label="add new skill"
               title="new skill"
             >
-              <Add />
+              <Add onClick={this.openNewSkillDialog} />
             </IconButton>
             <IconButton
               className={classes.menuButton}
