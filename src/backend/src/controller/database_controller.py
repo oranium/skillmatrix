@@ -1,3 +1,4 @@
+import sys
 from controller.database import db
 from model.profile_model import ProfileModel
 from model.skill_model import SkillModel
@@ -21,7 +22,6 @@ class DatabaseController:
         has_all = users.copy()
         # iterate through every user and look up their skills
         for user in users:
-            print("searching through skills of " + user.username)
             for skill, min_level in query.items():
                 # get the skill_id from the database
                 skill_id = database_controller.get_skill_id(skill)
@@ -132,7 +132,6 @@ class DatabaseController:
                                         Association.skill_id == database_controller.get_skill_id(parent_skillname)
                                         ).first():
                 skill_names.append(skillobject.name)
-
         return skill_names
 
     @staticmethod
@@ -149,6 +148,7 @@ class DatabaseController:
     @staticmethod
     def get_all_skill_names(username=None):
         skills = Skill.query.all()
+        print(skills, file=sys.stderr)
         # the first list contains all skills (that are not root), the second list contains all categories (if username)
         skill_list = [[], []]
         # get skill names of specific user
@@ -196,7 +196,7 @@ class DatabaseController:
         return Skill.query.filter_by(id=skill_id).first()
 
     @staticmethod
-    def create_skill(username, skillname, level, category):
+    def create_skill(skillname, category):
         """Create a skill in the database.
            Args:
                 skillname (str): Name of the skill to add.
@@ -208,7 +208,6 @@ class DatabaseController:
         db.session.add(new_skill)
         db.session.commit()
         database_controller.create_hierachy(category, skillname)
-        database_controller.set_skills(username, {skillname: level})
 
     @staticmethod
     def exists(username):
@@ -320,7 +319,7 @@ class DatabaseController:
         # case 1: category is a root element
         if Skill.query.filter_by(name=skillname).first().root:
             for category in subcategories_string:
-                subcategories_model.append(database_controller.build_subcategories(category, username))
+                subcategories_model.append(database_controller.build_subcategories(username, category))
 
             level = database_controller.get_recent_level(database_controller.get_user_id(username),
                                                          database_controller.get_skill_id(skillname)
@@ -328,12 +327,13 @@ class DatabaseController:
             return SkillModel(skillname,
                               level,
                               subcategories=subcategories_model,
-                              milestones=database_controller.get_milestones(username, skillname)
+                              milestones=database_controller.get_milestones(username, skillname),
+                              root=True
                               )
         # case 2: category is a node
         if subcategories_string:
             for category in subcategories_string:
-                subcategories_model.append(database_controller.build_subcategories(category, username))
+                subcategories_model.append(database_controller.build_subcategories(username, category))
 
                 level = database_controller.get_recent_level(database_controller.get_user_id(username),
                                                              database_controller.get_skill_id(skillname)
