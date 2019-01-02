@@ -17,8 +17,10 @@ import withStyles from '@material-ui/core/styles/withStyles';
 // import redux parts
 import store from 'Store';
 import {
-  switchPage, setLoginError, setUser, setAllSkills, setOwnProfile,
+  switchPage, setLoginError, setUser, setOwnProfile,
 } from 'actions';
+
+import { updateAllSkills } from 'rest/handleCommonRequests';
 
 // Rest
 import RestPoints from 'rest/Init';
@@ -78,9 +80,14 @@ class SignIn extends Component {
 
     try {
       const { data } = await Rest.post();
-      const { user, allSkills } = data;
-      store.dispatch(setUser({ username: user.username, name: user.name }));
-      store.dispatch(setAllSkills(allSkills));
+      const { user } = data;
+      //       {
+      // "username": String,
+      // "name": String,
+      // "skills": [Skill]
+      // }
+      const { username, name } = user;
+      store.dispatch(setUser({ username, name }));
       store.dispatch(setOwnProfile(user));
       store.dispatch(switchPage('search'));
     } catch (e) {
@@ -88,6 +95,8 @@ class SignIn extends Component {
       target.password.value = '';
       store.dispatch(setLoginError(e.message));
     }
+
+    await updateAllSkills();
   }
 
   componentDidMount() {

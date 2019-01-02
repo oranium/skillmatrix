@@ -25,24 +25,12 @@ class App extends Component {
     store.dispatch(resetForm);
   }
 
-  async componentWillMount() {
-    await this.componentDidMount();
-  }
+  // async componentWillMount() {
+  //   await this.componentDidMount();
+  // }
 
-  async componentDidMount() {
-    const Rest = new RestCom(RestPoints.getSkills);
-    const { state } = this.props;
-    const { allSkills } = state;
-    try {
-      const response = await Rest.get();
-      const { allNewSkills } = response.data;
-      if (allNewSkills.length !== allSkills.length) {
-        store.dispatch(setAllSkills(allSkills));
-      }
-    } catch (e) {
-      console.log(e.message);
-    }
-  }
+  // async componentDidMount() {
+  // }
 
   // user inputs something into an input field
   handleChange(id, value) {
