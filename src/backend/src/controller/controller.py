@@ -1,4 +1,6 @@
 """Contains the backend controller"""
+import sys
+
 import datetime
 from model.logout_model import LogoutModel
 from model.profile_model import ProfileModel
@@ -37,15 +39,14 @@ class Controller:
         return dict(allSkills=all_skill_names[0], categories=all_skill_names[1])
 
     @staticmethod
-    def create_skill(username, skillname, level, category):
+    def create_skill(username, skillname, category):
         if not controller.is_connected(username):
             raise PermissionError
-        database_controller.create_skill(username, skillname, level, category)
-        user_skills = database_controller.get_skills(username)
-        return ProfileModel(username, name=authentication_controller.get_name(username), skills=user_skills)
+        database_controller.create_skill(username, skillname, category)
 
     @staticmethod
     def search(username, query):
+        print("got to Controller.search", file=sys.stderr)
         if not controller.is_connected(username):
             raise PermissionError
         results = database_controller.search(query)
