@@ -70,16 +70,17 @@ class testDatabaseController(unittest.TestCase):
         pass
 
     def test_search_success(self):
-        result = database_controller.search(dict(skill=["Java"],level=[1]))
+        result = database_controller.search({"Java": 1})
         expected_result = dict([self.valdemar, self.karl, self.isaac],[])
+        self.assertEquals(result, expected_result)
 
     def test_search_with_no_results(self):
-        result = database_controller.search(dict(skill=["Haskell"],level=[1]))
+        result = database_controller.search({"Haskell": 1})
         expected_result = dict([],[])
         self.assertEquals(result, expected_result)
 
     def test_set_skill(self):
-        database_controller.set_skills("Valdemar-Forsberg", dict(name=["F#"], level=[2]))
+        database_controller.set_skills("Valdemar-Forsberg", {"F#": 2})
         skill_exists = Skill.query.filter_by(Skill.name == "F#").first()
         self.assertIsNotNone(skill_exists)
 
