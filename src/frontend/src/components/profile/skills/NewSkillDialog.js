@@ -28,8 +28,7 @@ export default class FormDialog extends Component {
     store.dispatch(closeProfileDialog);
   };
 
-  async handleSubmit(skill, milestone) {
-    console.log(skill);
+  async handleSubmit(skill) {
     let Rest = new RestCom(RestPoints.setSkills, JSON.stringify(skill));
     try {
       const { data } = await Rest.post();
@@ -57,7 +56,7 @@ export default class FormDialog extends Component {
 
     const { allSkills } = state;
     const { showDialog } = state.profile;
-    var { datefield, textarea, levelfield, singleselect } = state.formState;
+    var { levelfield, singleselect } = state.formState;
     var profile = this.getProfile(state);
 
     function handleNewSkill(skill) {
@@ -109,7 +108,7 @@ export default class FormDialog extends Component {
             <Button onClick={this.handleClose} color="primary">
               Cancel
             </Button>
-            <Button onClick={() => this.handleSubmit(aktSkill, false)} color="primary">
+            <Button onClick={() => this.handleSubmit(aktSkill)} color="primary">
               Submit
             </Button>
           </DialogActions>
