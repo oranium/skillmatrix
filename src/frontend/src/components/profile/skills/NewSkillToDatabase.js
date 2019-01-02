@@ -19,6 +19,7 @@ import classNames from 'classnames';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListSubheader from '@material-ui/core/ListSubheader';
+import Card from '@material-ui/core/Card';
 
 // redux
 import store from 'Store';
@@ -34,6 +35,7 @@ const styles = theme => ({
     flex: 0,
   },
   dialogcontent: {
+    fullWidth: true,
     maxWidth: 'none',
   },
 });
@@ -81,7 +83,7 @@ class FormDialog extends Component {
     return (
       <div className={classes.root}>
         <Dialog
-          fullwidth
+          fullWidth
           open={showDialog === 'newSkill'}
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
@@ -96,7 +98,7 @@ class FormDialog extends Component {
               <SingleSelect
                 placeholder={'Choose the category of your skill'}
                 allSkills={allSkills}
-                fullwidth
+                fullWidth
               />
 
               <TextField
@@ -107,62 +109,69 @@ class FormDialog extends Component {
                 margin="normal"
                 variant="outlined"
                 onChange={event => this.handleChange(event)}
+                fullWidth
               />
-
-              <List
-                component="nav"
-                subheader={
-                  <ListSubheader component="div">
-                    (Optional) add guideline to the skill
-                  </ListSubheader>
-                }
-              >
-                <ListItem>
-                  <TextField
-                    label="Level 1: "
-                    id="level1"
-                    className={classNames(classes.margin, classes.textField)}
-                    placeholder={this.state.guideline['1']}
-                    onChange={event => this.handleGuidelineChange('1', event)}
-                  />
-                </ListItem>
-                <ListItem>
-                  <TextField
-                    label="Level 2"
-                    id="level2"
-                    className={classNames(classes.margin, classes.textField)}
-                    placeholder={this.state.guideline['2']}
-                    onChange={event => this.handleGuidelineChange('2', event)}
-                  />
-                </ListItem>
-                <ListItem>
-                  <TextField
-                    label="Level 3: "
-                    id="simple-start-adornment"
-                    className={classNames(classes.margin, classes.textField)}
-                    placeholder={this.state.guideline['3']}
-                    onChange={event => this.handleGuidelineChange('3', event)}
-                  />
-                </ListItem>
-                <ListItem>
-                  <TextField
-                    label="Level 4: "
-                    id="simple-start-adornment"
-                    className={classNames(classes.margin, classes.textField)}
-                    placeholder={this.state.guideline['4']}
-                    onChange={event => this.handleGuidelineChange('4', event)}
-                  />
-                </ListItem>
-                <ListItem>
-                  <TextField
-                    label="Level 5: "
-                    id="simple-start-adornment"
-                    className={classNames(classes.margin, classes.textField)}
-                    placeholder={this.state.guideline['5']}
-                    onChange={event => this.handleGuidelineChange('5', event)}
-                  />
-                </ListItem>
-              </List>
+              <Card>
+                <List
+                  component="nav"
+                  subheader={
+                    <ListSubheader component="div">
+                      (Optional) add guideline to the skill
+                    </ListSubheader>
+                  }
+                >
+                  <ListItem>
+                    <TextField
+                      label="Level 1: "
+                      id="level1"
+                      className={classNames(classes.margin, classes.textField)}
+                      placeholder={this.state.guideline['1']}
+                      onChange={event => this.handleGuidelineChange('1', event)}
+                      fullWidth
+                    />
+                  </ListItem>
+                  <ListItem>
+                    <TextField
+                      label="Level 2"
+                      id="level2"
+                      className={classNames(classes.margin, classes.textField)}
+                      placeholder={this.state.guideline['2']}
+                      onChange={event => this.handleGuidelineChange('2', event)}
+                      fullWidth
+                    />
+                  </ListItem>
+                  <ListItem>
+                    <TextField
+                      label="Level 3: "
+                      id="simple-start-adornment"
+                      className={classNames(classes.margin, classes.textField)}
+                      placeholder={this.state.guideline['3']}
+                      onChange={event => this.handleGuidelineChange('3', event)}
+                      fullWidth
+                    />
+                  </ListItem>
+                  <ListItem>
+                    <TextField
+                      label="Level 4: "
+                      id="simple-start-adornment"
+                      className={classNames(classes.margin, classes.textField)}
+                      placeholder={this.state.guideline['4']}
+                      onChange={event => this.handleGuidelineChange('4', event)}
+                      fullWidth
+                    />
+                  </ListItem>
+                  <ListItem>
+                    <TextField
+                      label="Level 5: "
+                      id="simple-start-adornment"
+                      className={classNames(classes.margin, classes.textField)}
+                      placeholder={this.state.guideline['5']}
+                      onChange={event => this.handleGuidelineChange('5', event)}
+                      fullWidth
+                    />
+                  </ListItem>
+                </List>
+              </Card>
             </DialogContent>
             <DialogActions>
               <Button onClick={this.handleClose} color="primary">
