@@ -21,7 +21,7 @@ class Controller:
 
     @staticmethod
     def logout(username):
-        if controller.is_connected(username):
+        if not controller.is_connected(username):
             raise PermissionError
         authentication_controller.logout(username)
         return LogoutModel(username).jsonable()
@@ -46,7 +46,7 @@ class Controller:
 
     @staticmethod
     def search(username, query):
-        if controller.is_connected(username):
+        if not controller.is_connected(username):
             raise PermissionError
         results = database_controller.search(query)
         return SearchModel(query, results).jsonable()
@@ -54,7 +54,7 @@ class Controller:
     @staticmethod
     def create_skill(username, skillname, level, category):
         """Create a new skill in the database, called from CreateSkill-API"""
-        if controller.is_connected(username):
+        if not controller.is_connected(username):
             database_controller.create_skill(skillname, category)
             database_controller.set_skills(username, dict(skillname=level))
             user_skills = database_controller.get_skills(username)
