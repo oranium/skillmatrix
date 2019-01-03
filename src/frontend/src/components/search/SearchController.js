@@ -29,7 +29,6 @@ class SearchController extends Component {
   storeAllProfiles = results => {
     const { has_all, has_some } = results;
     const allProfiles = [...has_all, ...has_some];
-    console.log(allProfiles);
     store.dispatch(addProfiles(allProfiles));
   };
 
@@ -42,13 +41,9 @@ class SearchController extends Component {
     while (stack.length > 0) {
       node = stack.pop();
       if (this.query.hasOwnProperty(node.skillname)) {
-        results.push(
-          {
-            skillname: node.skillname,
-            level: node.level,
-            milestones: node.milestones,
-          }
-        )
+        //remove subcategories to flatten tree and reduce weight
+        const {['subcategories']: value, ...skill} = node;
+        results.push(skill);
       } else if (node.subcategories && node.subcategories.length) {
         for (ii = 0; ii < node.subcategories.length; ii += 1) {
           stack.push(node.subcategories[ii]);
@@ -89,7 +84,6 @@ class SearchController extends Component {
     e.preventDefault();
     const { state } = this.props;
     const { username } = state.user;
-    console.log(username);
     const { searchValues } = state.search;
     if (!Object.keys(searchValues).length) {
       // search field is empty
