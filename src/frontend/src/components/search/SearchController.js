@@ -34,11 +34,10 @@ class SearchController extends Component {
   };
 
   searchTree = tree => {
-    var stack = [],
+    var stack = [...tree],
       results = [],
       node,
       ii;
-    stack.push(tree);
 
     while (stack.length > 0) {
       node = stack.pop();
