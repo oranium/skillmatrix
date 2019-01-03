@@ -164,7 +164,8 @@ class DatabaseController:
             for skill in skills:
                 if skill.root:
                     skill_list[1].append(skill.name)
-                skill_list[0].append(skill.name)
+                else:
+                    skill_list[0].append(skill.name)
         return skill_list
 
     @staticmethod
