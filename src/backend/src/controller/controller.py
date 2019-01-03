@@ -47,7 +47,6 @@ class Controller:
 
     @staticmethod
     def search(username, query):
-        print("got to Controller.search", file=sys.stderr)
         if not controller.is_connected(username):
             raise PermissionError
         results = database_controller.search(query)
@@ -86,6 +85,36 @@ class Controller:
             return False
         except IndexError:
             return False
+
+    @staticmethod
+    def add_guidelines(username, skillname, guidelines):
+        """Adds guideline for each level of given skill.
+            Args:
+                  username (`str`): the username of the current user
+                  skillname(`str`): the name of the skill
+                  guidelines(`dict(int=level)`: each level gets assigned a guideline text
+        """
+        if not controller.is_connected(username):
+            raise PermissionError
+        database_controller.add_guidelines(skillname, guidelines)
+
+    @staticmethod
+    def remove_skill(username, skillname, from_db=False):
+        """Remove a skill either from the user's profile or the whole database.
+           Args:
+               username (`str`): the username of the current user
+               skillname(`str`): the name of the skill
+               from_db(`boolean`): deletes skill from database, if True, else only from user's profile
+        """
+        if not controller.is_connected(username):
+            raise PermissionError
+        if from_db:
+            database_controller.remove_skill_from_database(skillname)
+        else:
+            database_controller.remove_skill(username, skillname)
+        user_skills = database_controller.get_skills(username)
+        name = authentication_controller.get_name(username)
+        return ProfileModel(username, name, user_skills).jsonable()
 
 
 controller = Controller()

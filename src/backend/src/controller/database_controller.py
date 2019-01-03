@@ -120,23 +120,26 @@ class DatabaseController:
         return Users.query.all()
 
     @staticmethod
-    def get_sub_categories(username, parent_skillname):
-        # parent is a skillname
-        # returns list of childskillnames
-        print("The user is {0} and the parent_skillname is {1}".format(username, parent_skillname), file=sys.stderr)
+    def get_subcategories(parent_skillname, username=None):
+        """Takes a skillname and gets all subcategories. Only returns subcategories that user has, if given
+            Args:
+                  parent_skillname(`str`): find children of skill with given name
+                  username(`str`): username as a filter for subcategories
+            Returns:
+                [str]: list of all child skills
+        """
         parentid = database_controller.get_skill_id(parent_skillname)
         childlist = Hierarchy.query.filter_by(parent_skill_id=parentid).all()
-        print("the list of children is {0}".format(childlist), file=sys.stderr)
         skill_names = []
         for hier in childlist:
-            print("i am in hierarchy {0}".format(hier), file=sys.stderr)
-            skillobject = database_controller.get_skill_from_id(hier.child_skill_id)
-            print("the child skill is {0}".format(skillobject), file=sys.stderr)
-            if Association.query.filter(Association.users_id == database_controller.get_user_id(username),
-                                        Association.skill_id == database_controller.get_skill_id(skillobject.name)
-                                        ).first():
-                print("user has skill {0}".format(skillobject.name), file=sys.stderr)
-                skill_names.append(skillobject.name)
+            skill = database_controller.get_skill_from_id(hier.child_skill_id)
+            if not username or \
+                    (username and
+                     Association.query.filter(
+                         Association.users_id == database_controller.get_user_id(username),
+                         Association.skill_id == database_controller.get_skill_id(skill.name)
+                     ).first()):
+                skill_names.append(skill.name)
         return skill_names
 
     @staticmethod
@@ -226,29 +229,6 @@ class DatabaseController:
             return True
         return False
 
-    #   replaced by build_subcategories
-    #    @staticmethod
-    #    def get_skills(username):
-    #        """Get all skills of a user and return them as a `list` of `SkillModel`s
-    #            Args:
-    #                username (`str`): whose skills to return
-    #            Returns:
-    #                `[SkillModel]`
-    #        """
-    #        if database_controller.exists(username):
-    #            user_id = Users.query.filter_by(username=username).first().id
-    #            assocs = Association.query.filter_by(users_id=user_id).all()
-    #            skill_models = []
-    #            found_skills = []
-    #            for assoc in assocs:
-    #                skill = database_controller.get_skill_from_id(assoc.skill_id)
-    #                if skill not in found_skills:
-    #                    milestones = database_controller.get_milestones(username, skill.name)
-    #                    level = database_controller.get_recent_level(user_id, skill.id)
-    #                    skill_models.append(SkillModel(skill.name, level, category=skill.category, milestones=milestones))
-    #                    found_skills.append(skill)
-    #            return skill_models
-    #        return None
     @staticmethod
     def get_skills(username):
         """Get all skills of a user and return them as a `list` of `SkillModel`s
@@ -322,7 +302,7 @@ class DatabaseController:
                 SkillModel
 
         """
-        subcategories_string = database_controller.get_sub_categories(username, skillname)
+        subcategories_string = database_controller.get_subcategories(skillname, username=username)
         subcategories_model = []
         # case 1: category is a root element
         if Skill.query.filter_by(name=skillname).first().root:
@@ -359,6 +339,60 @@ class DatabaseController:
                           level=level,
                           milestones=database_controller.get_milestones(username, skillname)
                           )
+
+    @staticmethod
+    def add_guidelines(skillname, guidelines):
+        """Adds guideline for each level of given skill.
+            Args:
+                  skillname(`str`): the name of the skill
+                  guidelines(`dict(int=level)`: each level gets assigned a guideline text
+        """
+        skill_id = database_controller.get_skill_id(skillname)
+        for level, text in guidelines.items():
+            # TODO: create Guideline association or similar
+            pass
+        db.session.commit()
+
+    @staticmethod
+    def remove_skill_from_database(skillname):
+        """Removes a skill and all its subcategories from the database.
+            Args:
+                  skillname(`str`): name of the skill
+        """
+        to_remove = database_controller.get_subcategories(skillname)
+        to_remove.append(skillname)
+        subcategories_to_check = to_remove.copy()
+        while subcategories_to_check:
+            new_subcategories = database_controller.get_subcategories(subcategories_to_check.pop())
+            to_remove.extend(new_subcategories)
+            subcategories_to_check.extend(new_subcategories)
+        for skillname in to_remove:
+            sid = database_controller.get_skill_id(skillname)
+            Hierarchy.query.filter_by(parent_skill_id=sid).delete()
+            MilestoneAssociation.query.filter_by(milestone_skill_id=sid).delete()
+            Association.query.filter_by(skill_id=sid).delete()
+            # duplicate names WILL get removed here
+            Skill.query.filter_by(name=skillname).delete()
+        db.session.commit()
+
+    @staticmethod
+    def remove_skill(username, skillname):
+        to_remove = database_controller.get_subcategories(skillname, username=username)
+        subcategories_to_check = to_remove.copy
+        uid = database_controller.get_user_id(username)
+        while subcategories_to_check:
+            new_subcategories = database_controller.get_subcategories(subcategories_to_check.pop())
+            to_remove.extend(new_subcategories)
+            subcategories_to_check.extend(new_subcategories)
+        for skillname in to_remove:
+            sid = database_controller.get_skill_id(skillname)
+            MilestoneAssociation.query.filter_by(milestone_skill_id=sid, milestone_users_id=uid)
+            Association.query.filter_by(skill_id=sid, users_id=uid)
+        db.session.commit()
+        
+    @staticmethod
+    def remove_milestone(username, skillname, level, date):
+        pass
 
 
 database_controller = DatabaseController()
