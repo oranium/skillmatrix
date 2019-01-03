@@ -5,6 +5,7 @@ from flask_restful.utils import cors
 from os import environ
 import setupdb
 import sys
+import time
 from controller import database
 
 
@@ -21,7 +22,8 @@ while not connected:
         setupdb.checkdb()
         connected = True
     except Exception as e:
-        pass
+        print("Cannot connect to database. Retrying in 5s", file=sys.stderr)
+        time.sleep(5)
 database.set_db(app)
 
 
