@@ -47,7 +47,8 @@ class SearchController extends Component {
         //remove subcategories to flatten tree and reduce weight
         const {['subcategories']: value, ...skill} = node;
         results.push(skill);
-      } else if (node.subcategories && node.subcategories.length) {
+      } 
+      if (node.subcategories && node.subcategories.length) {
         for (ii = 0; ii < node.subcategories.length; ii += 1) {
           stack.push(node.subcategories[ii]);
         }
