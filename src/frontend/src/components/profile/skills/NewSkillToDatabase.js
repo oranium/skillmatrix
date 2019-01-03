@@ -28,6 +28,7 @@ import { closeProfileDialog, updateInput, resetForm, setOwnProfile, setError } f
 // Rest
 import RestPoints from 'rest/Init';
 import RestCom from 'rest/Rest';
+import { updateAllSkills } from 'rest/handleCommonRequests';
 
 const styles = theme => ({
   root: {
@@ -88,8 +89,9 @@ class FormDialog extends Component {
       // clear password input
       store.dispatch(setError(e.message));
     }
-
     this.handleClose();
+
+    await updateAllSkills();
   };
   render() {
     const state = store.getState();
