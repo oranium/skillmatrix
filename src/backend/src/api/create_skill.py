@@ -1,4 +1,6 @@
 """Contains the CreateSkill API"""
+import sys
+
 import json
 from flask import Response
 from flask_restful import Resource, reqparse
@@ -24,6 +26,9 @@ class CreateSkill(Resource):
             return Response(status=504)
         except PermissionError:
             return Response(status=401)
+        except Exception as e:
+            print(e, file=sys.stderr)
+            return Response(status=520)
 
     def options(self):
         pass
