@@ -3,7 +3,7 @@ from controller.database import db
 
 class Hierarchy(db.Model):
     __tablename__ = 'hierarchy'
-    parent_skill_id = db.Column(db.Integer, db.ForeignKey('skill.id'), default=0)
+    parent_skill_id = db.Column(db.Integer, db.ForeignKey('skill.id'), nullable=True)
     child_skill_id = db.Column(db.Integer, db.ForeignKey('skill.id'), primary_key=True)
     parent_skill_assoc =db.relationship("Skill", foreign_keys=[parent_skill_id])
     child_skill_assoc =db.relationship("Skill", foreign_keys=[child_skill_id])
