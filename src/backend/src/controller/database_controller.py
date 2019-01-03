@@ -144,9 +144,9 @@ class DatabaseController:
         # parent and child are skillnames
         x = Hierarchy()
         if parent:
-            parentobject= database_controller.get_skill(parent)
+            parentobject = database_controller.get_skill(parent)
             x.parent_skill_assoc = parentobject
-        childobject= database_controller.get_skill(child)
+        childobject = database_controller.get_skill(child)
         x.child_skill_assoc = childobject
         db.session.add(x)
         db.session.commit()
@@ -226,29 +226,29 @@ class DatabaseController:
             return True
         return False
 
-#   replaced by build_subcategories
-#    @staticmethod
-#    def get_skills(username):
-#        """Get all skills of a user and return them as a `list` of `SkillModel`s
-#            Args:
-#                username (`str`): whose skills to return
-#            Returns:
-#                `[SkillModel]`
-#        """
-#        if database_controller.exists(username):
-#            user_id = Users.query.filter_by(username=username).first().id
-#            assocs = Association.query.filter_by(users_id=user_id).all()
-#            skill_models = []
-#            found_skills = []
-#            for assoc in assocs:
-#                skill = database_controller.get_skill_from_id(assoc.skill_id)
-#                if skill not in found_skills:
-#                    milestones = database_controller.get_milestones(username, skill.name)
-#                    level = database_controller.get_recent_level(user_id, skill.id)
-#                    skill_models.append(SkillModel(skill.name, level, category=skill.category, milestones=milestones))
-#                    found_skills.append(skill)
-#            return skill_models
-#        return None
+    #   replaced by build_subcategories
+    #    @staticmethod
+    #    def get_skills(username):
+    #        """Get all skills of a user and return them as a `list` of `SkillModel`s
+    #            Args:
+    #                username (`str`): whose skills to return
+    #            Returns:
+    #                `[SkillModel]`
+    #        """
+    #        if database_controller.exists(username):
+    #            user_id = Users.query.filter_by(username=username).first().id
+    #            assocs = Association.query.filter_by(users_id=user_id).all()
+    #            skill_models = []
+    #            found_skills = []
+    #            for assoc in assocs:
+    #                skill = database_controller.get_skill_from_id(assoc.skill_id)
+    #                if skill not in found_skills:
+    #                    milestones = database_controller.get_milestones(username, skill.name)
+    #                    level = database_controller.get_recent_level(user_id, skill.id)
+    #                    skill_models.append(SkillModel(skill.name, level, category=skill.category, milestones=milestones))
+    #                    found_skills.append(skill)
+    #            return skill_models
+    #        return None
     @staticmethod
     def get_skills(username):
         """Get all skills of a user and return them as a `list` of `SkillModel`s
@@ -258,10 +258,12 @@ class DatabaseController:
             `[dict]`: each dict is created by SkillModel.jsonable()
         """
         root_categories = Skill.query.filter_by(root=True).all()
-        skills = []
+        skill_models = []
         for root in root_categories:
-            skills.append(database_controller.build_subcategories(username, root.name))
-        return skills
+            skill_model = database_controller.build_subcategories(username, root.name)
+            if skill_model:
+                skill_models.append(skill_model)
+        return skill_models
 
     @staticmethod
     def create_user(username, name):
@@ -328,11 +330,13 @@ class DatabaseController:
             for category in subcategories_string:
                 print(subcategories_string, file=sys.stderr)
                 subcategories_model.append(database_controller.build_subcategories(username, category))
-            return SkillModel(skillname,
-                              subcategories=subcategories_model,
-                              milestones=database_controller.get_milestones(username, skillname),
-                              root=True
-                              )
+            if subcategories_model:
+                return SkillModel(skillname,
+                                  subcategories=subcategories_model,
+                                  milestones=database_controller.get_milestones(username, skillname),
+                                  root=True
+                                  )
+            return
         # case 2: category is a node
         if subcategories_string:
             for category in subcategories_string:
@@ -347,6 +351,7 @@ class DatabaseController:
                               milestones=database_controller.get_milestones(username, skillname)
                               )
         # case 3: category is a leaf
+        print(skillname, file=sys.stderr)
         level = database_controller.get_recent_level(database_controller.get_user_id(username),
                                                      database_controller.get_skill_id(skillname)
                                                      )
