@@ -4,26 +4,15 @@ import React, { Component } from 'react';
 // import redux parts
 import store from 'Store';
 import {
-  updateInput,
-  switchPage,
-  setInputError,
-  setLoginError,
-  resetForm,
-  setUser,
-  setAllSkills,
-  setOwnProfile,
-  resetState,
+  updateInput, switchPage, setInputError, resetForm, setAllSkills, setError,
 } from 'actions';
 import { errorDisplayType } from 'reducers/reducers';
 
 // import page parts
 import SearchController from 'components/search/SearchController';
 import ProfileController from 'components/profile/ProfileController';
-
 import LoginForm from 'components/login/LoginForm';
-
 import Header from 'components/header/Header';
-
 import ErrorDialog from 'components/error/ErrorDialog';
 
 // Rest
@@ -31,30 +20,17 @@ import RestPoints from 'rest/Init';
 import RestCom from 'rest/Rest';
 
 class App extends Component {
-  static async handleLogin(username, password) {
-    const loginCredentials = {
-      username,
-      password,
-    };
-    const Rest = new RestCom(RestPoints.login, JSON.stringify(loginCredentials));
-
-    try {
-      const { data } = await Rest.post();
-      const { user, allSkills } = data;
-      store.dispatch(setUser({ username: user.username, name: user.name }));
-      store.dispatch(setAllSkills(allSkills));
-      store.dispatch(setOwnProfile(user));
-      store.dispatch(switchPage('search'));
-    } catch (e) {
-      store.dispatch(resetState);
-      store.dispatch(setLoginError(e.message));
-    }
-  }
-
   // user wants to reset all input fields
   static handleResetForm() {
     store.dispatch(resetForm);
   }
+
+  // async componentWillMount() {
+  //   await this.componentDidMount();
+  // }
+
+  // async componentDidMount() {
+  // }
 
   // user inputs something into an input field
   handleChange(id, value) {
@@ -99,12 +75,12 @@ class App extends Component {
 
     switch (page) {
       case 'login':
-        console.log(hasError && displayType === errorDisplayType.login);
         return (
           <LoginForm
-            errorMsg={(hasError && displayType === errorDisplayType.login) ? message : ''}
+            errorMsg={hasError && displayType === errorDisplayType.login ? message : ''}
             login={(username, password) => App.handleLogin(username, password)}
           />
+          // <ProfileController state={state} />
         );
       case 'search':
         main = (

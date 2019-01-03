@@ -75,8 +75,10 @@ class AuthenticationController:
             authentication_controller.connections[username] = new_connection
             return authentication_controller.get_name(username)
         # catch empty input
-        except (LDAPUnknownAuthenticationMethodError, LDAPInvalidCredentialsResult):
+        except (LDAPUnknownAuthenticationMethodError, LDAPInvalidCredentialsResult) as e:
             print("empty", file=sys.stderr)
+            print(e.__name__, file=sys.stderr)
+
             raise AttributeError
         # catch
         except LDAPStartTLSError:
@@ -111,7 +113,7 @@ class AuthenticationController:
             regex_principal_name = re.search('([^\\\\]+$)', username)
             user_principal_name = regex_principal_name.group(0)
 
-            connection.search(search_base='CN=Users,DC=AzureAD,DC=SWT,DC=com',
+            connection.search(search_base=environ.get('ENV_LDAP_SEARCH_BASE'),
                               search_filter='(&(objectCategory=person)(sAMAccountName='+user_principal_name+'))',
                               search_scope=SUBTREE,
                               attributes=['cn'])
@@ -119,11 +121,13 @@ class AuthenticationController:
             return displayname
         except LDAPSocketOpenError:
             raise TimeoutError
+            return username
         except IndexError:
             print("The response of connection-search was empty")
+            return username
         except Exception:
             print("Unexpected error: ", sys.exc_info()[0])
-            raise
+            return username
 
 
 authentication_controller = AuthenticationController(environ.get('ENV_LDAP_SERVER_URL'),

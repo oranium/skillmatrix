@@ -4,9 +4,9 @@ import React from 'react';
 // components
 import { DateInput, TextArea } from 'components/common/InputFields';
 import SingleSelect from 'components/common/SingleSelect';
+import RadioGroupShowLevel from 'components/common/RadioGroupShowLevel';
 
 // material-ui
-import { Typography } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -29,10 +29,11 @@ export default class FormDialog extends React.Component {
   };
 
   async handleSubmit(milestone) {
+    console.log(milestone);
     if (milestone.datum === '' || milestone.comment === '' || milestone.skill === '') {
       milestone = false;
     }
-    if (milestone){
+    if (milestone) {
       const Rest = new RestCom(RestPoints.milestone, JSON.stringify(milestone));
       try {
         const { data } = await Rest.post();
@@ -92,7 +93,7 @@ export default class FormDialog extends React.Component {
               To add a new milestone please fill in all inputfields.
             </DialogContentText>
             <SingleSelect allSkills={allSkillsOfUser} />
-            <Typography>Level: {aktLevel}</Typography>
+            <RadioGroupShowLevel level={aktLevel} />
             <DateInput data={datefield} onChange={(id, value) => this.handleChange(id, value)} />
             <TextArea data={textarea} onChange={(id, value) => this.handleChange(id, value)} />
           </DialogContent>

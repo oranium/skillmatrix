@@ -4,7 +4,9 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import { AccountCircle, PowerSettingsNew, Search } from '@material-ui/icons';
+import { AccountCircle, PowerSettingsNew, Search, Add } from '@material-ui/icons';
+import NewSkillToDatabase from '../profile/skills/NewSkillToDatabase';
+
 
 // import redux parts
 import store from '../../Store';
@@ -14,11 +16,13 @@ import {
   resetState,
   changeProfileOwner,
   resetSearch,
+  openProfileDialog,
 } from 'actions';
 
 // Rest
 import RestPoints from '../../rest/Init';
 import RestCom from '../../rest/Rest';
+import { updateAllSkills } from 'rest/handleCommonRequests';
 
 const styles = {
   root: {
@@ -34,19 +38,24 @@ const styles = {
 };
 
 class ButtonAppBar extends Component {
+  static openNewSkillDialog() {
+    // open dialog to add completly new skill to database
+    store.dispatch(openProfileDialog('newSkill'));
+  }
   static switchToPage(page) {
     store.dispatch(switchPage(page));
   }
 
   switchToProfilePage = () => {
     store.dispatch(changeProfileOwner(0));
-    this.constructor.switchToPage('profile');
-  }
+    ButtonAppBar.switchToPage('profile');
+  };
 
-  switchToSearchPage = () => {
+  async switchToSearchPage() {
     store.dispatch(resetSearch);
-    this.constructor.switchToPage('search');
-  }
+    await updateAllSkills();
+    ButtonAppBar.switchToPage('search');
+  };
 
   async handleLogout() {
     const { state } = this.props;
@@ -79,7 +88,8 @@ class ButtonAppBar extends Component {
               className={classes.menuButton}
               onClick={this.switchToProfilePage}
               color="inherit"
-              aria-label="Menu"
+              aria-label="own profile"
+              title="show own profile"
             >
               <AccountCircle />
             </IconButton>
@@ -88,9 +98,19 @@ class ButtonAppBar extends Component {
             </Typography>
             <IconButton
               className={classes.menuButton}
+              onClick={this.constructor.openNewSkillDialog}
+              color="inherit"
+              aria-label="add new skill"
+              title="new skill"
+            >
+              <Add onClick={this.openNewSkillDialog} />
+            </IconButton>
+            <IconButton
+              className={classes.menuButton}
               onClick={this.switchToSearchPage}
               color="inherit"
-              aria-label="Menu"
+              aria-label="open search"
+              title="search"
             >
               <Search />
             </IconButton>
@@ -98,12 +118,14 @@ class ButtonAppBar extends Component {
               className={classes.menuButton}
               onClick={() => this.handleLogout()}
               color="inherit"
-              aria-label="Menu"
+              aria-label="logout"
+              title="logout"
             >
               <PowerSettingsNew />
             </IconButton>
           </Toolbar>
         </AppBar>
+        <NewSkillToDatabase />
       </div>
     );
   }

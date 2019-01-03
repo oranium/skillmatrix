@@ -28,46 +28,14 @@ export default class FormDialog extends Component {
     store.dispatch(closeProfileDialog);
   };
 
-  async handleSubmit(skill, milestone) {
-    //todo api /skill
-
-    // send skill
-    // if (
-    //   //skill.skills.contains() ||
-    //   skill.skills[''] != undefined ||
-    //   skill.skills[0] === '' ||
-    //   milestone.datum === '' ||
-    //   milestone.comment === '' ||
-    //   milestone[0].skill === '' ||
-    //   milestone[0].level === ''
-    // ) {
-    //   //#########################################################
-    //   //hier dein code reinhauen, schau dir mal die consolen outputs an da wird skill und milestone geprintet
-    //   //milestone ist ja an sich ein object und nur wenn ein feld leer ist wird es auf false gesetzt deswegen funktioniert die
-    //   // if abfrage vlt  nicht ? vllt mal mit anderer variavle propieren ?
-    //   milestone = false;
-    // }
-    let Rest = new RestCom(RestPoints.skill, JSON.stringify(skill));
+  async handleSubmit(skill) {
+    let Rest = new RestCom(RestPoints.setSkills, JSON.stringify(skill));
     try {
       const { data } = await Rest.post();
       store.dispatch(setOwnProfile(data));
     } catch (e) {
       store.dispatch(setError(e.message));
     }
-
-    // //send milestone
-    // console.log(milestone);
-    // if (milestone) {
-    //   Rest = new RestCom(RestPoints.milestone, JSON.stringify(milestone));
-    //   try {
-    //     const { data } = await Rest.post();
-    //     store.dispatch(setOwnProfile(data));
-    //   } catch (e) {
-    //     store.dispatch(setError(e.message));
-    //   }
-    // }
-
-    //todo change to new api result and remove JSON stringify
     this.handleClose();
   }
 
@@ -75,24 +43,25 @@ export default class FormDialog extends Component {
     store.dispatch(updateInput(id, value));
   }
 
+  getPerson = state => {
+    return state.profile.person;
+  };
+
+  getProfile = state => {
+    return state.profile.profiles[this.getPerson(state)];
+  };
+
   render() {
     const state = store.getState();
 
     const { allSkills } = state;
     const { showDialog } = state.profile;
-    var { datefield, textarea, levelfield, singleselect } = state.formState;
+    var { levelfield, singleselect } = state.formState;
+    var profile = this.getProfile(state);
 
-    var profile = state.profile.profiles[state.profile.person];
-    var newSkill = '';
-    const aktMilestone = [
-      {
-        username: profile.username,
-        date: datefield.value,
-        level: levelfield.value,
-        skill: singleselect.value,
-        comment: textarea.value,
-      },
-    ];
+    function handleNewSkill(skill) {
+      singleselect.value = skill;
+    }
 
     const aktSkill = {
       username: profile.username,
@@ -125,16 +94,7 @@ export default class FormDialog extends Component {
               To add a new Skill please fill in all inputfields.
             </DialogContentText>
 
-            <SingleSelect allSkills={availableNewSkills} />
-            <TextField
-              id="standard-with-placeholder"
-              label="With placeholder"
-              placeholder="Placeholder"
-              margin="normal"
-              onChange={event => (newSkill = event.target.value)}
-            />
-
-            <Button onClick={() => (singleselect.value = newSkill)}>+</Button>
+            <SingleSelect placeholder={'Select a skill to add'} allSkills={availableNewSkills} />
             <LevelPicker
               data={levelfield}
               required={true}
@@ -148,7 +108,7 @@ export default class FormDialog extends Component {
             <Button onClick={this.handleClose} color="primary">
               Cancel
             </Button>
-            <Button onClick={() => this.handleSubmit(aktSkill, false)} color="primary">
+            <Button onClick={() => this.handleSubmit(aktSkill)} color="primary">
               Submit
             </Button>
           </DialogActions>

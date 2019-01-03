@@ -1,10 +1,9 @@
-import set_root_backend
-from src.model.search_model import SearchModel
-from src.model.model import Model
-from src.model.skill_model import SkillModel
-from src.model.logout_model import LogoutModel
-from src.model.milestone_model import MilestoneModel
-from src.model.profile_model import ProfileModel
+from model.search_model import SearchModel
+from model.model import Model
+from model.skill_model import SkillModel
+from model.logout_model import LogoutModel
+from model.milestone_model import MilestoneModel
+from model.profile_model import ProfileModel
 import unittest
 import datetime
 

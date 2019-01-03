@@ -1,5 +1,8 @@
+// react
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+
+// material-ui
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -10,6 +13,18 @@ import LockIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
+
+// import redux parts
+import store from 'Store';
+import {
+  switchPage, setLoginError, setUser, setOwnProfile,
+} from 'actions';
+
+import { updateAllSkills } from 'rest/handleCommonRequests';
+
+// Rest
+import RestPoints from 'rest/Init';
+import RestCom from 'rest/Rest';
 
 const styles = theme => ({
   main: {
@@ -44,10 +59,49 @@ const styles = theme => ({
 });
 
 class SignIn extends Component {
+  static async handleLogin(event) {
+    // avoid reloading on submit
+    event.preventDefault();
+    // avoid event is nullified => https://reactjs.org/docs/events.html#event-pooling
+    event.persist();
+
+    const { target } = event;
+
+    // ensure immutability
+    const usernameInput = { ...target.username };
+    const passwordInput = { ...target.password };
+
+    const loginCredentials = {
+      username: usernameInput.value,
+      password: passwordInput.value,
+    };
+
+    const Rest = new RestCom(RestPoints.login, JSON.stringify(loginCredentials));
+
+    try {
+      const { data } = await Rest.post();
+      const { user } = data;
+      //       {
+      // "username": String,
+      // "name": String,
+      // "skills": [Skill]
+      // }
+      const { username, name } = user;
+      store.dispatch(setUser({ username, name }));
+      store.dispatch(setOwnProfile(user));
+      store.dispatch(switchPage('search'));
+    } catch (e) {
+      // clear password input
+      target.password.value = '';
+      store.dispatch(setLoginError(e.message));
+    }
+
+    await updateAllSkills();
+  }
+
   componentDidMount() {
     // Get the components DOM node
     const elem = ReactDOM.findDOMNode(this);
-    console.log(elem);
     // Set the opacity of the element to 0
     elem.style.opacity = 0;
     window.requestAnimationFrame(() => {
@@ -59,9 +113,7 @@ class SignIn extends Component {
   }
 
   render() {
-    const { classes, errorMsg, login } = this.props;
-    let password = '';
-    let username = '';
+    const { classes, errorMsg } = this.props;
 
     return (
       <main className={classes.main}>
@@ -74,36 +126,14 @@ class SignIn extends Component {
             Skill Matrix
           </Typography>
           <p className="error">{errorMsg}</p>
-          <form
-            onSubmit={(evt) => {
-              login(username, password);
-              evt.preventDefault();
-            }}
-            className={classes.form}
-          >
+          <form onSubmit={this.constructor.handleLogin} className={classes.form}>
             <FormControl margin="normal" required fullWidth>
-              <InputLabel htmlFor="email">Email Address</InputLabel>
-              <Input
-                id="email"
-                name="email"
-                autoComplete="email"
-                onChange={(evt) => {
-                  username = evt.target.value;
-                }}
-                autoFocus
-              />
+              <InputLabel htmlFor="username">Username</InputLabel>
+              <Input id="username" name="username" autoFocus />
             </FormControl>
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="password">Password</InputLabel>
-              <Input
-                name="password"
-                type="password"
-                id="password"
-                onChange={(evt) => {
-                  password = evt.target.value;
-                }}
-                autoComplete="current-password"
-              />
+              <Input name="password" type="password" id="password" defaultValue="" />
             </FormControl>
             <Button
               type="submit"
@@ -115,6 +145,16 @@ class SignIn extends Component {
               Sign in
             </Button>
           </form>
+          <Button
+            type="button"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            onClick={() => store.dispatch(switchPage('search'))}
+          >
+            skip login (dev only)
+          </Button>
         </Paper>
       </main>
     );

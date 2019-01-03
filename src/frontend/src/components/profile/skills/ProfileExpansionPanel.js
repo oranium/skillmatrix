@@ -10,19 +10,23 @@ import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import RadioGroup from '../../common/RadioGroup';
+import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
-  root: {
-    width: '100%',
-  },
   heading: {
-    fontSize: theme.typography.pxToRem(15),
-    flexBasis: '33.33%',
-    flexShrink: 0,
+    display: 'flex',
+    flexDirection: 'column',
   },
+
   secondaryHeading: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'left',
+    alignItems: 'stretch',
+    flexBasis: '99%',
     color: theme.palette.text.secondary,
   },
+  row: { width: '320%' },
 });
 
 class ControlledExpansionPanels extends React.Component {
@@ -44,6 +48,7 @@ class ControlledExpansionPanels extends React.Component {
       milestones.length < 1
         ? ': -'
         : ` (${milestones[latestElement].date}): ${milestones[latestElement].comment}`;
+
     return (
       <div className={classes.root}>
         <ExpansionPanel
@@ -51,17 +56,33 @@ class ControlledExpansionPanels extends React.Component {
           onChange={this.handleChange(this.props.skill)}
         >
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography className={classes.Heading}>{skillname}</Typography>
-            <Typography className={classes.secondaryHeading}> </Typography>
+            <Typography className={classes.Heading}>
+              <div>
+                <div>
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    style={{ textTransform: 'none' }}
+                    fullWidth
+                  >
+                    {skillname}
+                  </Button>
+                </div>
+                <div className={classes.row} onClick={event => event.stopPropagation()}>
+                  <RadioGroup
+                    level={level}
+                    skill={skillname}
+                    levelChange={this.props.levelChange}
+                    disabled={this.props.isEditable}
+                  />
+                </div>
+              </div>
+            </Typography>
           </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
-            <RadioGroup
-              level={level}
-              skill={skillname}
-              levelChange={this.props.levelChange}
-              disabled={this.props.isEditable}
-            />
-            <Typography>{'Latest Milestone' + latestMilestone}</Typography>
+          <ExpansionPanelDetails className={classes.secondaryHeading}>
+            {' '}
+            {this.props.summary}
+            {/* <Typography>{'Latest Milestone' + latestMilestone}</Typography> */}
           </ExpansionPanelDetails>
         </ExpansionPanel>
       </div>

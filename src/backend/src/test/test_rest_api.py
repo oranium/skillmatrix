@@ -1,5 +1,4 @@
-import set_root_backend
-from src.controller.controller import controller
+from controller.controller import controller
 import unittest
 from unittest.mock import patch, ANY
 import json
