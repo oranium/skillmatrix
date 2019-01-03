@@ -8,8 +8,7 @@ import { setAllSkills, setAllCategories } from 'actions';
 export async function updateAllSkills() {
   const Rest = new RestCom(RestPoints.getSkills);
   try {
-    const response = await Rest.get();
-    const { allSkills, categories } = response;
+    const { allSkills, categories } = await Rest.get();
     store.dispatch(setAllSkills(allSkills));
     store.dispatch(setAllCategories(categories));
   } catch (e) {
