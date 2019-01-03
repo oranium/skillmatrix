@@ -89,7 +89,7 @@ class FormDialog extends Component {
       store.dispatch(setError(e.message));
     }
 
-  
+    this.handleClose();
   };
   render() {
     const state = store.getState();
