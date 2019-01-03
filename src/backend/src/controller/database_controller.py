@@ -135,12 +135,13 @@ class DatabaseController:
         return skill_names
 
     @staticmethod
-    def create_hierachy(parent, child):
+    def create_hierarchy(parent, child):
         # parent and child are skillnames
-        parentobject= database_controller.get_skill(parent)
-        childobject= database_controller.get_skill(child)
         x = Hierarchy()
-        x.parent_skill_assoc = parentobject
+        if parent:
+            parentobject= database_controller.get_skill(parent)
+            x.parent_skill_assoc = parentobject
+        childobject= database_controller.get_skill(child)
         x.child_skill_assoc = childobject
         db.session.add(x)
         db.session.commit()
@@ -207,7 +208,7 @@ class DatabaseController:
             new_skill.root = True
         db.session.add(new_skill)
         db.session.commit()
-        database_controller.create_hierachy(category, skillname)
+        database_controller.create_hierarchy(category, skillname)
 
     @staticmethod
     def exists(username):
@@ -255,6 +256,7 @@ class DatabaseController:
         root_categories = Skill.query.filter_by(root=True).all()
         skills = []
         for root in root_categories:
+            print(root.name, file=sys.stderr)
             skills.append(database_controller.build_subcategories(username, root.name))
         for skillmodel in skills:
             print(skillmodel.jsonable())
@@ -319,13 +321,9 @@ class DatabaseController:
         # case 1: category is a root element
         if Skill.query.filter_by(name=skillname).first().root:
             for category in subcategories_string:
+                print(subcategories_string, file=sys.stderr)
                 subcategories_model.append(database_controller.build_subcategories(username, category))
-
-            level = database_controller.get_recent_level(database_controller.get_user_id(username),
-                                                         database_controller.get_skill_id(skillname)
-                                                         )
             return SkillModel(skillname,
-                              level,
                               subcategories=subcategories_model,
                               milestones=database_controller.get_milestones(username, skillname),
                               root=True
@@ -339,7 +337,7 @@ class DatabaseController:
                                                              database_controller.get_skill_id(skillname)
                                                              )
             return SkillModel(skillname,
-                              level,
+                              level=level,
                               subcategories=subcategories_model,
                               milestones=database_controller.get_milestones(username, skillname)
                               )
@@ -347,7 +345,7 @@ class DatabaseController:
         level = database_controller.get_recent_level(database_controller.get_user_id(username),
                                                      database_controller.get_skill_id(skillname)
                                                      )
-        return SkillModel(skillname, level, milestones=database_controller.get_milestones(username, skillname))
+        return SkillModel(skillname, level=level, milestones=database_controller.get_milestones(username, skillname))
 
 
 database_controller = DatabaseController()

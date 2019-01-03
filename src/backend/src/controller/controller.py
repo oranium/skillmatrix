@@ -16,9 +16,9 @@ class Controller:
     @staticmethod
     def login(username, password):
         name = authentication_controller.login(username, password)
-        user_skills = database_controller.get_skills(username)
         if not database_controller.exists(username):
             database_controller.create_user(username, name)
+        user_skills = database_controller.get_skills(username)
         return dict(user=ProfileModel(username, name, user_skills).jsonable())
 
     @staticmethod
@@ -34,6 +34,7 @@ class Controller:
         if username and not controller.is_connected(username):
             raise PermissionError
         all_skill_names = database_controller.get_all_skill_names(username)
+        print(all_skill_names, file=sys.stderr)
         if username:
             return dict(username=username, allSkills=all_skill_names[0])
         return dict(allSkills=all_skill_names[0], categories=all_skill_names[1])
@@ -42,7 +43,7 @@ class Controller:
     def create_skill(username, skillname, category):
         if not controller.is_connected(username):
             raise PermissionError
-        database_controller.create_skill(username, skillname, category)
+        database_controller.create_skill(skillname, category)
 
     @staticmethod
     def search(username, query):
@@ -51,17 +52,6 @@ class Controller:
             raise PermissionError
         results = database_controller.search(query)
         return SearchModel(query, results).jsonable()
-
-    @staticmethod
-    def create_skill(username, skillname, level, category):
-        """Create a new skill in the database, called from CreateSkill-API"""
-        if not controller.is_connected(username):
-            database_controller.create_skill(skillname, category)
-            database_controller.set_skills(username, dict(skillname=level))
-            user_skills = database_controller.get_skills(username)
-            name = authentication_controller.get_name(username)
-            return ProfileModel(username, name, user_skills).jsonable()
-        raise PermissionError
 
     @staticmethod
     def set_skills(username, skills):
@@ -96,10 +86,6 @@ class Controller:
             return False
         except IndexError:
             return False
-
-    @staticmethod
-    def get_all_skill_names():
-        return dict(allSkills=database_controller.get_all_skill_names())
 
 
 controller = Controller()
