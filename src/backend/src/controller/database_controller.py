@@ -123,14 +123,19 @@ class DatabaseController:
     def get_sub_categories(username, parent_skillname):
         # parent is a skillname
         # returns list of childskillnames
+        print("The user is {0} and the parent_skillname is {1}".format(username, parent_skillname), file=sys.stderr)
         parentid = database_controller.get_skill_id(parent_skillname)
         childlist = Hierarchy.query.filter_by(parent_skill_id=parentid).all()
+        print("the list of children is {0}".format(childlist), file=sys.stderr)
         skill_names = []
         for hier in childlist:
+            print("i am in hierarchy {0}".format(hier), file=sys.stderr)
             skillobject = database_controller.get_skill_from_id(hier.child_skill_id)
+            print("the child skill is {0}".format(skillobject), file=sys.stderr)
             if Association.query.filter(Association.users_id == database_controller.get_user_id(username),
-                                        Association.skill_id == database_controller.get_skill_id(parent_skillname)
+                                        Association.skill_id == database_controller.get_skill_id(skillobject.name)
                                         ).first():
+                print("user has skill {0}".format(skillobject.name), file=sys.stderr)
                 skill_names.append(skillobject.name)
         return skill_names
 
@@ -149,7 +154,6 @@ class DatabaseController:
     @staticmethod
     def get_all_skill_names(username=None):
         skills = Skill.query.all()
-        print(skills, file=sys.stderr)
         # the first list contains all skills, the second list contains all categories (if username)
         skill_list = [[], []]
         # get skill names of specific user
@@ -251,15 +255,12 @@ class DatabaseController:
         Args:
             username (`str`): whose skills to return
         Returns:
-            `[SkillModel]`
+            `[dict]`: each dict is created by SkillModel.jsonable()
         """
         root_categories = Skill.query.filter_by(root=True).all()
         skills = []
         for root in root_categories:
-            print(root.name, file=sys.stderr)
             skills.append(database_controller.build_subcategories(username, root.name))
-        for skillmodel in skills:
-            print(skillmodel.jsonable())
         return skills
 
     @staticmethod
@@ -301,7 +302,6 @@ class DatabaseController:
             for skill_model in profile.skills:
                 if skill_model.skill_name.lower() == skill.lower():
                     rel_sum += skill_model.level
-        print("returning {0} for {1}".format(rel_sum, profile.username))
         return rel_sum
 
     @staticmethod
@@ -313,13 +313,18 @@ class DatabaseController:
                 skillname (str): the skill name as a string.
 
             Returns:
-                Exactly one SkillModel that contains all Skills that are below it in the hierarchy that the user has.
+                if skill is root:
+                dict:Exactly one jsonable SkillModel that contains all Skills that are below it in the hierarchy.
+                     The user needs to have to skill for it to show up.
+                else:
+                SkillModel
 
         """
         subcategories_string = database_controller.get_sub_categories(username, skillname)
         subcategories_model = []
         # case 1: category is a root element
         if Skill.query.filter_by(name=skillname).first().root:
+            print(subcategories_string, file=sys.stderr)
             for category in subcategories_string:
                 print(subcategories_string, file=sys.stderr)
                 subcategories_model.append(database_controller.build_subcategories(username, category))
@@ -345,7 +350,10 @@ class DatabaseController:
         level = database_controller.get_recent_level(database_controller.get_user_id(username),
                                                      database_controller.get_skill_id(skillname)
                                                      )
-        return SkillModel(skillname, level=level, milestones=database_controller.get_milestones(username, skillname))
+        return SkillModel(skillname,
+                          level=level,
+                          milestones=database_controller.get_milestones(username, skillname)
+                          )
 
 
 database_controller = DatabaseController()

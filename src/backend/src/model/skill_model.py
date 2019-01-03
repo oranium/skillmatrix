@@ -22,6 +22,6 @@ class SkillModel(Model):
             jsonable_milestones.append(milestone.jsonable())
         return dict(skillname=self.skill_name,
                     level=self.level,
-                    subcategories=self.subcategories,
+                    subcategories=jsonable_subcategories,
                     root=self.root,
                     milestones=jsonable_milestones)
