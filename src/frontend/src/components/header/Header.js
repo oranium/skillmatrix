@@ -48,13 +48,13 @@ class ButtonAppBar extends Component {
 
   switchToProfilePage = () => {
     store.dispatch(changeProfileOwner(0));
-    this.constructor.switchToPage('profile');
+    ButtonAppBar.switchToPage('profile');
   };
 
   async switchToSearchPage() {
     store.dispatch(resetSearch);
     await updateAllSkills();
-    this.constructor.switchToPage('search');
+    ButtonAppBar.switchToPage('search');
   };
 
   async handleLogout() {
