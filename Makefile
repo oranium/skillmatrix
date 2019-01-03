@@ -3,7 +3,7 @@ build:
 	cd src/frontend && npm run build
 	mv src/frontend/build/ src/backend/src/static/
 run:
-	docker-compose build && docker-compose up
+	docker-compose build -rm && docker-compose up
 clean:
 	docker-compose rm
 	rm -rf src/frontend/build
