@@ -94,7 +94,8 @@ class FormDialog extends Component {
   render() {
     const state = store.getState();
 
-    const { allSkills } = state;
+    const { allSkills, allCategories } = state;
+    const skillList = [...allSkills, ...allCategories];
     const { showDialog } = state.profile;
     var { datefield, textarea, levelfield, singleselect } = state.formState;
     const { classes } = this.props;
@@ -116,7 +117,7 @@ class FormDialog extends Component {
 
               <SingleSelect
                 placeholder={'Choose the category of your skill'}
-                allSkills={allSkills}
+                allSkills={skillList}
                 fullWidth
               />
 
