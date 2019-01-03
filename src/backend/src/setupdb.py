@@ -13,11 +13,11 @@ from os import environ
 def checkdb():
     engine = create_engine(environ.get('ENV_DATABASE_URI'))
 
-    if not engine.dialect.has_table(engine, 'hierachy'):
+    if not engine.dialect.has_table(engine, 'hierarchy'):
         Base = declarative_base()
 
         class Hierarchy(Base):
-            __tablename__ = 'hierachy'
+            __tablename__ = 'hierarchy'
             parent_skill_id = Column(Integer, ForeignKey('skill.id'), primary_key=True)
             child_skill_id = Column(Integer, ForeignKey('skill.id'), primary_key=True)
             parent_skill_assoc = relationship("Skill", foreign_keys=[parent_skill_id])
