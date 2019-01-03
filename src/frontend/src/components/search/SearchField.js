@@ -190,14 +190,12 @@ class IntegrationReactSelect extends React.Component {
       searchValues = null;
     }
     const {allSkills, allCategories} = state;
+    const skillList = [...allSkills, ...allCategories];
     const mapSuggestions = suggestion => ({
       value: suggestion,
       label: suggestion,
     })
-    const suggestions = allSkills.map(suggestion => mapSuggestions(suggestion));
-    console.log(allCategories);
-    suggestions.push(...allCategories.map(suggestion => mapSuggestions(suggestion)));
-    console.log(suggestions);
+    const suggestions = skillList.map(suggestion => mapSuggestions(suggestion));
     const selectStyles = {
       input: base => ({
         ...base,
