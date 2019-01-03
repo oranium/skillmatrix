@@ -150,7 +150,7 @@ class DatabaseController:
     def get_all_skill_names(username=None):
         skills = Skill.query.all()
         print(skills, file=sys.stderr)
-        # the first list contains all skills (that are not root), the second list contains all categories (if username)
+        # the first list contains all skills, the second list contains all categories (if username)
         skill_list = [[], []]
         # get skill names of specific user
         if username:
@@ -164,8 +164,7 @@ class DatabaseController:
             for skill in skills:
                 if skill.root:
                     skill_list[1].append(skill.name)
-                else:
-                    skill_list[0].append(skill.name)
+                skill_list[0].append(skill.name)
         return skill_list
 
     @staticmethod
