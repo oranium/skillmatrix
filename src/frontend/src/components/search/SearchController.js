@@ -7,14 +7,17 @@ import ControlledExpansionPanels from 'components/common/ControlledExpansionPane
 
 // redux
 import store from 'Store';
-import { setError, setSearchResults, showSearchResults, setSearchError } from 'actions';
+import { setError, setSearchResults, showSearchResults, setSearchError, addProfiles } from 'actions';
 
 // Rest
 import RestPoints from 'rest/Init';
 import RestCom from 'rest/Rest';
-import { addProfiles } from 'actions';
+import { updateAllSkills } from 'rest/handleCommonRequests';
 
 class SearchController extends Component {
+  componentDidMount() {
+    updateAllSkills();
+  }
   // build query object for api request
   getSearchQuery = searchValues => {
     const query = {};
