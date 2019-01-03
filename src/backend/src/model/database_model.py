@@ -1,12 +1,14 @@
 import datetime
 from controller.database import db
 
+
 class Hierarchy(db.Model):
     __tablename__ = 'hierarchy'
     parent_skill_id = db.Column(db.Integer, db.ForeignKey('skill.id'), nullable=True)
     child_skill_id = db.Column(db.Integer, db.ForeignKey('skill.id'), primary_key=True)
     parent_skill_assoc =db.relationship("Skill", foreign_keys=[parent_skill_id])
     child_skill_assoc =db.relationship("Skill", foreign_keys=[child_skill_id])
+
 
 class Association(db.Model):
     __tablename__ = 'association'
@@ -25,7 +27,7 @@ class MilestoneAssociation(db.Model):
     milestone_skill_id = db.Column(db.Integer, db.ForeignKey('skill.id'), primary_key=True)
     milestone_date_id = db.Column(db.Integer, db.ForeignKey('date.id'), primary_key=True)
     comment = db.Column(db.String(85), primary_key=True)
-    level = db.Column(db.Integer, nullable = False)
+    level = db.Column(db.Integer, nullable=False)
     users_milestone_assoc = db.relationship("Users", back_populates="users_milestone_association")
     skill_milestone_assoc = db.relationship("Skill", back_populates="skill_milestone_association")
     date_milestone_assoc = db.relationship("Date", back_populates="date_milestone_association")
@@ -38,8 +40,6 @@ class Skill(db.Model):
     root = db.Column(db.Boolean, unique=False, default=False)
     skill_association = db.relationship("Association", back_populates="skill_assoc")
     skill_milestone_association = db.relationship("MilestoneAssociation", back_populates="skill_milestone_assoc")
-    #skill_parent_skill = db.relationship("Hierarchy", back_populates="parent_skill_assoc")
-    #skill_child_skill = db.relationship("Hierarchy", back_populates="child_skill_assoc")
 
     def give_name(self):
         return self.name
