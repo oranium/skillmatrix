@@ -74,5 +74,12 @@ class RestCom {
       .then(ServerResponse => ServerResponse.data)
       .catch(error => errorHandling(error));
   }
+
+  async delete() {
+    return axios
+      .delete(this.restApi, this.headers)
+      .then(ServerResponse => ServerResponse.data)
+      .catch(error => errorHandling(error));
+  }
 }
 export default RestCom;
