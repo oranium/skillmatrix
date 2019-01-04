@@ -435,7 +435,7 @@ class DatabaseController:
                   skillname(`str`): name of the skill
         """
         to_remove = database_controller.get_subcategories(skillname, username=username)
-        subcategories_to_check = to_remove.copy
+        subcategories_to_check = to_remove.copy()
         uid = database_controller.get_user_id(username)
         while subcategories_to_check:
             new_subcategories = database_controller.get_subcategories(subcategories_to_check.pop())
