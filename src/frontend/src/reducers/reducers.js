@@ -316,3 +316,14 @@ export const allCategories = (state = defaultCategoryList, action) => {
       return state;
   }
 };
+
+export const drawer = (state = false, action) => {
+  switch (action.type) {
+    case 'TOGGLEDRAWER':
+      return action.open;
+    case 'RESETSTATE':
+      return false;
+    default:
+      return state;
+  }
+};
