@@ -58,111 +58,112 @@ const defaultSearch = {
 
 Object.freeze(defaultSearch);
 
-// const exSkill = {
-//   skillname: 'Python',
-//   level: 4,
-//   milestones: [
-//     {
-//       date: '2015-05-01',
-//       level: 0,
-//       comment: 'init',
-//     },
-//     {
-//       date: '2016-05-01',
-//       level: 1,
-//       comment: 'reversed engineering buch unters kopfkissen gelegt',
-//     },
-//     {
-//       date: '2016-08-03',
-//       level: 1,
-//       comment: 'Buch Hacking with Python gelesen',
-//     },
-//     {
-//       date: '2019-07-06',
-//       level: 4,
-//       comment: '72h Python workshop',
-//     },
-//   ],
-// };
+const exSkill = {
+  skillname: 'Python',
+  level: 4,
+  milestones: [
+    {
+      date: '2015-05-01',
+      level: 0,
+      comment: 'init',
+    },
+    {
+      date: '2016-05-01',
+      level: 1,
+      comment: 'reversed engineering buch unters kopfkissen gelegt',
+    },
+    {
+      date: '2016-08-03',
+      level: 1,
+      comment: 'Buch Hacking with Python gelesen',
+    },
+    {
+      date: '2019-07-06',
+      level: 4,
+      comment: '72h Python workshop',
+    },
+  ],
+  subcategories: [],
+};
 
-// const exSkill3 = {
-//   skillname: 'C++',
-//   level: 3,
-//   milestones: [
-//     {
-//       date: '2011-09-11',
-//       level: 0,
-//       comment: 'init',
-//     },
-//     {
-//       date: '2017-01-20',
-//       level: 1,
-//       comment: 'C++ Workshop',
-//     },
-//     {
-//       date: '2018-02-06',
-//       level: 2,
-//       comment: 'C++ Lehrgang',
-//     },
-//     {
-//       date: '2021-11-23',
-//       level: 3,
-//       comment: 'C++ 3 jähriges Projekt fertig gestellt, mit 100000 Zeilen c++ Code',
-//     },
-//   ],
-//   subcategories: [exSkill, exSkill, exSkill, exSkill],
-// };
-// const exSkill2 = {
-//   skillname: 'Java',
-//   level: 5,
-//   milestones: [
-//     {
-//       date: '2015-09-11',
-//       level: 0,
-//       comment: 'init',
-//     },
-//     {
-//       date: '2016-11-23',
-//       level: 1,
-//       comment: 'reversed engineering buch unters kopfkissen gelegt',
-//     },
-//     {
-//       date: '2017-01-20',
-//       level: 1,
-//       comment: 'Buch Hacking with Java gelesen',
-//     },
-//     {
-//       date: '2018-02-06',
-//       level: 4,
-//       comment: '36h Java workshop',
-//     },
-//     {
-//       date: '2020-11-23',
-//       level: 5,
-//       comment: 'Java Hackaton gewonnen',
-//     },
-//   ],
-//   subcategories: [exSkill3, exSkill, exSkill3],
-// };
+const exSkill3 = {
+  skillname: 'C++',
+  level: 3,
+  milestones: [
+    {
+      date: '2011-09-11',
+      level: 0,
+      comment: 'init',
+    },
+    {
+      date: '2017-01-20',
+      level: 1,
+      comment: 'C++ Workshop',
+    },
+    {
+      date: '2018-02-06',
+      level: 2,
+      comment: 'C++ Lehrgang',
+    },
+    {
+      date: '2021-11-23',
+      level: 3,
+      comment: 'C++ 3 jähriges Projekt fertig gestellt, mit 100000 Zeilen c++ Code',
+    },
+  ],
+  subcategories: [exSkill],
+};
+const exSkill2 = {
+  skillname: 'Java',
+  level: 5,
+  milestones: [
+    {
+      date: '2015-09-11',
+      level: 0,
+      comment: 'init',
+    },
+    {
+      date: '2016-11-23',
+      level: 1,
+      comment: 'reversed engineering buch unters kopfkissen gelegt',
+    },
+    {
+      date: '2017-01-20',
+      level: 1,
+      comment: 'Buch Hacking with Java gelesen',
+    },
+    {
+      date: '2018-02-06',
+      level: 4,
+      comment: '36h Java workshop',
+    },
+    {
+      date: '2020-11-23',
+      level: 5,
+      comment: 'Java Hackaton gewonnen',
+    },
+  ],
+  subcategories: [exSkill3, exSkill],
+};
 
-// const exCat = {
-//   skillname: 'Programming',
-//   level: 4,
-//   milestones: [],
-//   subcategories: [exSkill, exSkill2],
-// };
+const exCat = {
+  skillname: 'Programming',
+  level: 4,
+  milestones: [],
+  subcategories: [exSkill, exSkill2],
+};
 
-// const exProfile = {
-//   username: 'Valdemar',
-//   skills: [exCat, exSkill3], // alle skills übergeben
-// };
+const exProfile = {
+  username: 'Valdemar',
+  skills: [exCat, exSkill3], // alle skills übergeben
+};
 
 const defaultProfilePageState = {
   person: 0,
   isEditable: true,
   view: 0,
   showDialog: false,
-  profiles: [],
+  profiles: [exProfile],
 };
 
 const defaultSkillList = [];

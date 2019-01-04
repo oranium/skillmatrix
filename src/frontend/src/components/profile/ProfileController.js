@@ -174,7 +174,7 @@ class ProfileController extends Component {
                       <Button
                         className="applyButton"
                         variant="contained"
-                        color="primary"
+                        color="secondary"
                         onClick={this.applyLevelUpdates.bind(this, copy)}
                       >
                         Apply Changes
