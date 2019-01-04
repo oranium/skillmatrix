@@ -11,9 +11,13 @@ class DatabaseController:
 
     @staticmethod
     def search(query):
-        """ dict(str=int) -> dict(str=[ProfileModel],str=[ProfileModel]
-        Search through all users with a query from the backend controller.
+        """Search through all users with a query from the backend controller.
         Finds all users that fulfill all restrictions, and all users that fulfill some but not all.
+            Args:
+                query(`dict(str=int)`): search terms in form skillname:min_level
+            Returns:
+                `dict("has_all"=[ProfileModel],"has_some"=[ProfileModel]`): sorted dictionary of results.
+
         """
         has_some = []
         # list of all users
@@ -79,6 +83,14 @@ class DatabaseController:
 
     @staticmethod
     def add_milestone(username, skill, date, comment, level):
+        """ Adds a milestone to a user.
+            Args:
+                  username(`str`): name of the user
+                  skill(`str`): name of the skill
+                  date(`date`): date of milestone
+                  comment(`str`): comment/title of milestone
+                  level(`int`) level of user at time of milestone
+        """
         user = database_controller.get_user(username)
         mskill = database_controller.get_skill(skill)
         mdate = Date(date=date)
@@ -91,6 +103,13 @@ class DatabaseController:
 
     @staticmethod
     def get_milestones(username, skillname):
+        """Gets all milestones of a user as `MilestoneModel`s.
+            Args:
+                  username(`str`): name of the user
+                  skillname(`str`): name of the skill
+            Returns:
+                [MilestoneModel]: all milestones of user for skill
+        """
         muser = database_controller.get_user_id(username)
         mskillid = database_controller.get_skill_id(skillname)
         milestonelist = MilestoneAssociation.query.filter(MilestoneAssociation.milestone_users_id == muser,
@@ -102,9 +121,15 @@ class DatabaseController:
             milestone_models.append(MilestoneModel(date, milestone.comment, level))
         return milestone_models
 
-    # TODO: un-hardcode this
     @staticmethod
     def get_assocs(**kwargs):
+        """Checks if user has skill at certain level or returns all skill levels.
+           It is probably best to replace this method.
+            Args:
+                  **kwargs: type,level,users_id,skill_id
+            Returns:
+                 Association or [Association]
+         """
         if kwargs["type"] == "first":
             assoc = Association.query.filter(Association.level >= kwargs["level"],
                                              Association.users_id == kwargs["users_id"],
@@ -117,6 +142,7 @@ class DatabaseController:
 
     @staticmethod
     def get_all_users():
+        """Returns all Users objects."""
         return Users.query.all()
 
     @staticmethod
@@ -144,7 +170,11 @@ class DatabaseController:
 
     @staticmethod
     def create_hierarchy(parent, child):
-        # parent and child are skillnames
+        """Creates a parent/child relation in the database.
+            Args:
+                  parent(`str`): skillname of parent skill.
+                  child(`str`): skillname of child skill
+        """
         x = Hierarchy()
         if parent:
             parentobject = database_controller.get_skill(parent)
@@ -156,6 +186,10 @@ class DatabaseController:
 
     @staticmethod
     def get_all_skill_names(username=None):
+        """Gets names of all skills as two lists (root, non-root) disregarding hierarchy.
+           Only checks for skills of the user, if username is given
+            Args:
+                  username(`str`, optional): name of the user, defaults to None"""
         skills = Skill.query.all()
         # the first list contains all skills, the second list contains all categories (if username)
         skill_list = [[], []]
@@ -177,30 +211,37 @@ class DatabaseController:
 
     @staticmethod
     def get_skill_id(skillname):
+        """Gets id of skill, given name of the skill"""
         return Skill.query.filter_by(name=skillname).first().id
 
     @staticmethod
     def get_skill(skillname):
+        """Gets Skill object, given name of the skill"""
         return Skill.query.filter_by(name=skillname).first()
 
     @staticmethod
     def get_user_id(username):
+        """Gets id of user, given name of the user"""
         return Users.query.filter_by(username=username).first().id
 
     @staticmethod
     def get_user(username):
+        """Gets Users object, given name of the user"""
         return Users.query.filter_by(username=username).first()
 
     @staticmethod
     def get_date_from_id(date_id):
+        """Gets Date object, given id"""
         return Date.query.filter_by(id=date_id).first()
 
     @staticmethod
     def get_user_from_id(user_id):
+        """Gets Users object, given id of the user"""
         return Users.query.filter_by(id=user_id).first()
 
     @staticmethod
     def get_skill_from_id(skill_id):
+        """Gets Skill object, given id of the skill"""
         return Skill.query.filter_by(id=skill_id).first()
 
     @staticmethod
@@ -249,20 +290,31 @@ class DatabaseController:
     def create_user(username, name):
         """Create a user in the database.
            Args:
-               username (str): the username of the user to add - should be identical to the Active Directory username.
-               name (str): The full name of the user to add.
+               username (`str`): the username of the user to add - should be identical to the Active Directory username.
+               name (`str`): The full name of the user to add.
         """
         db.session.add(Users(username=username, name=name))
         db.session.commit()
 
     @staticmethod
     def get_recent_level(user_id, skill_id):
+        """Gets most recent level of user for given skill id.
+            Args:
+                  user_id(`int`): id of the Users object
+                  skill_id(`int`):id of the Skill object
+            Returns:
+                  `int`: most recent level of user for skill"""
         return Association.query.filter(Association.skill_id == skill_id,
                                         Association.users_id == user_id).all()[-1].level
 
     @staticmethod
     def get_profile_models(users):
-        """[Users] -> [ProfileModel]"""
+        """Takes a list of `Users` and converts them to `ProfileModel`s
+            Args:
+                users(`[Users]`): `list` of `Users` objects
+            Returns:
+                 `[ProfileModel]`: `ProfileModel` of each user.
+         """
         profile_models = []
         # iterate over the users
         for user in users:
@@ -377,8 +429,13 @@ class DatabaseController:
 
     @staticmethod
     def remove_skill(username, skillname):
+        """Removes skill and all subcategories of it for a user
+            Args:
+                  username(`str`): name of the user
+                  skillname(`str`): name of the skill
+        """
         to_remove = database_controller.get_subcategories(skillname, username=username)
-        subcategories_to_check = to_remove.copy
+        subcategories_to_check = to_remove.copy()
         uid = database_controller.get_user_id(username)
         while subcategories_to_check:
             new_subcategories = database_controller.get_subcategories(subcategories_to_check.pop())
@@ -392,6 +449,13 @@ class DatabaseController:
         
     @staticmethod
     def remove_milestone(username, skillname, level, date):
+        """Removes a milestone from user.
+            Args:
+                  username(`str`): name of the user
+                  skillname(`str`): name of the skill
+                  level(`int`): level of skill at milestone date
+                  date(`date`): date of milestone
+        """
         pass
 
 
