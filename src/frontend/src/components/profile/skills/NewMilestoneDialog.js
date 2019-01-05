@@ -7,7 +7,6 @@ import SingleSelect from 'components/common/SingleSelect';
 import RadioGroupShowLevel from 'components/common/RadioGroupShowLevel';
 
 // material-ui
-import { Typography } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -21,7 +20,7 @@ import { closeProfileDialog, updateInput, resetForm, setOwnProfile, setError } f
 
 // Rest
 import RestPoints from 'rest/Init';
-import RestCom from 'rest/Rest';
+import { updateOwnProfile } from 'rest/handleCommonRequests';
 
 export default class FormDialog extends React.Component {
   handleClose = () => {
@@ -30,17 +29,12 @@ export default class FormDialog extends React.Component {
   };
 
   async handleSubmit(milestone) {
+    console.log(milestone);
     if (milestone.datum === '' || milestone.comment === '' || milestone.skill === '') {
       milestone = false;
     }
     if (milestone) {
-      const Rest = new RestCom(RestPoints.milestone, JSON.stringify(milestone));
-      try {
-        const { data } = await Rest.post();
-        store.dispatch(setOwnProfile(data));
-      } catch (e) {
-        store.dispatch(setError(e.message));
-      }
+      await updateOwnProfile(RestPoints.milestone, milestone);
     }
     this.handleClose();
     //todo change to new api result and remove JSON stringify

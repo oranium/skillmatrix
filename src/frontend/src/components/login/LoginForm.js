@@ -17,13 +17,10 @@ import withStyles from '@material-ui/core/styles/withStyles';
 // import redux parts
 import store from 'Store';
 import {
-  switchPage,
-  setLoginError,
-  setUser,
-  setAllSkills,
-  setOwnProfile,
-  resetState,
+  switchPage, setLoginError, setUser, setOwnProfile,
 } from 'actions';
+
+import { updateAllSkills } from 'rest/handleCommonRequests';
 
 // Rest
 import RestPoints from 'rest/Init';
@@ -62,30 +59,43 @@ const styles = theme => ({
 });
 
 class SignIn extends Component {
-  static async handleLogin(username, password) {
+  static async handleLogin(event) {
+    // avoid reloading on submit
+    event.preventDefault();
+    // avoid event is nullified => https://reactjs.org/docs/events.html#event-pooling
+    event.persist();
+
+    const { target } = event;
+
+    // ensure immutability
+    const usernameInput = { ...target.username };
+    const passwordInput = { ...target.password };
+
     const loginCredentials = {
-      username,
-      password,
+      username: usernameInput.value,
+      password: passwordInput.value,
     };
+
     const Rest = new RestCom(RestPoints.login, JSON.stringify(loginCredentials));
 
     try {
-      const { data } = await Rest.post();
-      const { user, allSkills } = data;
-      store.dispatch(setUser({ username: user.username, name: user.name }));
-      store.dispatch(setAllSkills(allSkills));
+      const { user } = await Rest.post();
+      const { username, name } = user;
+      store.dispatch(setUser({ username, name }));
       store.dispatch(setOwnProfile(user));
       store.dispatch(switchPage('search'));
     } catch (e) {
-      store.dispatch(resetState);
+      // clear password input
+      target.password.value = '';
       store.dispatch(setLoginError(e.message));
     }
+
+    await updateAllSkills();
   }
 
   componentDidMount() {
     // Get the components DOM node
     const elem = ReactDOM.findDOMNode(this);
-    console.log(elem);
     // Set the opacity of the element to 0
     elem.style.opacity = 0;
     window.requestAnimationFrame(() => {
@@ -98,8 +108,6 @@ class SignIn extends Component {
 
   render() {
     const { classes, errorMsg } = this.props;
-    let password = '';
-    let username = '';
 
     return (
       <main className={classes.main}>
@@ -112,36 +120,14 @@ class SignIn extends Component {
             Skill Matrix
           </Typography>
           <p className="error">{errorMsg}</p>
-          <form
-            onSubmit={(evt) => {
-              evt.preventDefault();
-              this.constructor.handleLogin(username, password);
-            }}
-            className={classes.form}
-          >
+          <form onSubmit={this.constructor.handleLogin} className={classes.form}>
             <FormControl margin="normal" required fullWidth>
-              <InputLabel htmlFor="email">Email Address</InputLabel>
-              <Input
-                id="email"
-                name="email"
-                autoComplete="email"
-                onChange={(evt) => {
-                  username = evt.target.value;
-                }}
-                autoFocus
-              />
+              <InputLabel htmlFor="username">Username</InputLabel>
+              <Input id="username" name="username" autoFocus />
             </FormControl>
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="password">Password</InputLabel>
-              <Input
-                name="password"
-                type="password"
-                id="password"
-                onChange={(evt) => {
-                  password = evt.target.value;
-                }}
-                autoComplete="current-password"
-              />
+              <Input name="password" type="password" id="password" defaultValue="" />
             </FormControl>
             <Button
               type="submit"
@@ -153,6 +139,16 @@ class SignIn extends Component {
               Sign in
             </Button>
           </form>
+          <Button
+            type="button"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            onClick={() => store.dispatch(switchPage('search'))}
+          >
+            skip login (dev only)
+          </Button>
         </Paper>
       </main>
     );

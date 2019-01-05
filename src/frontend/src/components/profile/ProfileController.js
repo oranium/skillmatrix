@@ -26,6 +26,7 @@ import { ArrowLeft, Search } from '@material-ui/icons';
 // Rest
 import RestPoints from 'rest/Init';
 import RestCom from 'rest/Rest';
+import { updateAllSkills } from 'rest/handleCommonRequests';
 
 const styles = theme => ({
   root: {
@@ -65,11 +66,11 @@ class ProfileController extends Component {
     });
 
     // send skill
-    let Rest = new RestCom(RestPoints.skill, JSON.stringify(latestChanges));
+    let Rest = new RestCom(RestPoints.setSkills, JSON.stringify(latestChanges));
     //todo remove JSON.stringify
     try {
-      const { data } = await Rest.post();
-      store.dispatch(setOwnProfile(data));
+      const newProfile = await Rest.post();
+      store.dispatch(setOwnProfile(newProfile));
     } catch (e) {
       store.dispatch(setError(e.message));
     }
@@ -99,18 +100,16 @@ class ProfileController extends Component {
   handleChange = (evt, value) => {
     store.dispatch(changeView(value));
   };
-  Button;
-  handleNewSkill = () => {
+
+  async openNewSkillDialog() {
+    await updateAllSkills();
     store.dispatch(openProfileDialog('skill'));
-  };
+  }
 
-  handleNewMilestone = () => {
-    console.log('NewMilestone');
-  };
-
-  openNewMilestoneDialog = () => {
+  async openNewMilestoneDialog() {
+    await updateAllSkills();
     store.dispatch(openProfileDialog('milestone'));
-  };
+  }
 
   switchToSearchPage = () => {
     store.dispatch(switchPage('search'));
@@ -155,7 +154,6 @@ class ProfileController extends Component {
                 <div>
                   <NewMilestoneDialog open={showDialog === 'milestone'} />
                   <NewSkillDialog />
-
                   <div className={classes.buttons}>
                     <Button
                       variant="contained"
@@ -168,7 +166,7 @@ class ProfileController extends Component {
                       variant="contained"
                       color="primary"
                       name="submit"
-                      onClick={this.handleNewSkill}
+                      onClick={this.openNewSkillDialog}
                     >
                       New Skill
                     </Button>

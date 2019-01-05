@@ -4,10 +4,19 @@ import datetime
 from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
-from sqlalchemy import create_engine, Date, Text
+from sqlalchemy import create_engine, Date, Text, Boolean
 from sqlalchemy.orm import sessionmaker
+from os import environ
  
 Base = declarative_base()
+class Hierarchy(Base):
+    __tablename__ = 'hierachy'
+    id = Column(Integer, primary_key=True)
+    parent_skill_id = Column(Integer, ForeignKey('skill.id'), nullable=False)
+    child_skill_id = Column(Integer, ForeignKey('skill.id'), nullable=False)
+    parent_skill_assoc = relationship("Skill", foreign_keys=[parent_skill_id])
+    child_skill_assoc = relationship("Skill", foreign_keys=[child_skill_id])
+
 
 class Association(Base):
     __tablename__ = 'association'
@@ -36,10 +45,11 @@ class Skill(Base):
     __tablename__ = 'skill'
     id = Column(Integer, primary_key=True)
     name = Column(String(127), nullable=False)
-    description = Column(Text, nullable=True)
-    category = Column(String(127), nullable=False)
+    root = Column(Boolean, unique=False, default=False)
     skill_association = relationship("Association", back_populates="skill_assoc")
     skill_milestone_association = relationship("MilestoneAssociation", back_populates="skill_milestone_assoc")
+    #skill_parent_skill = relationship("Hierarchy", back_populates="parent_skill_assoc")
+    #skill_child_skill = relationship("Hierarchy", back_populates="child_skill_assoc")
 
     def give_name(self):
         return self.name
@@ -80,30 +90,46 @@ class Users(Base):
     def __repr__(self):
         return '<id = {0} und username = {1}>'.format(self.id, self.username)
 
-engine = create_engine('mysql+pymysql://root:Momomomo2@localhost/sm1')
+class Setup():
 
-Base.metadata.drop_all(bind=engine)
-Base.metadata.create_all(engine)
-DBSession = sessionmaker(bind=engine)
-session = DBSession()
+    engine = create_engine(environ.get('ENV_DATABASE_URI_TEST'))
 
-def create_skill(level, skill, date, username):
-    a = Association(level=level)
-    a.skill_assoc = skill
-    a.date_assoc = date
-    a.users_assoc = username
+    Base.metadata.drop_all(bind=engine)
+    Base.metadata.create_all(engine)
+    DBSession = sessionmaker(bind=engine)
+    session = DBSession()
+
+
+    def create_hiestory(self, parent, child):
+        x = Hierarchy()
+        x.parent_skill_assoc= parent
+        x.child_skill_assoc= child
+        self.session.add(x)
+        self.session.commit()
+
+
+    def create_skill(self, level, skill, date, username):
+        a = Association(level=level)
+        a.skill_assoc = skill
+        a.date_assoc = date
+        a.users_assoc = username
+
+testSetup = Setup()
+
 
 valdemar = Users(username='Valdemar-Forsberg',name="Valdemar Forsberg")
 karl = Users(username='Karl-Kalagin', name="Karl Kalagin")
 isaac = Users(username='Isaac-Hunt', name="Isaac Hunt")
-session.add(valdemar)
+testSetup.session.add(valdemar)
 session.add(karl)
 session.add(isaac)
-java1 = Skill(name='Java', category="Programming")
-python1 = Skill(name='Python', category="Programming")
-js1 = Skill(name='JavaScript', category="Programming")
+prog = Skill(name='Programming', root = True)
+java1 = Skill(name='Java')
+python1 = Skill(name='Python')
+js1 = Skill(name='JavaScript')
 session.add(java1)
 session.add(python1)
+session.add(prog)
 session.add(js1)
 date1 = Date()
 session.add(date1)
@@ -124,4 +150,9 @@ create_skill(2, java1, date1, isaac)
 create_skill(2, js1, date1, valdemar)
 create_skill(3, python1, date1, isaac)
 create_skill(1, java1, date1, karl)
+x = Hierarchy()
+x.parent_skill_assoc= java1
+x.child_skill_assoc= js1
+session.add(x)
+create_hiestory(python1,js1)
 session.commit()

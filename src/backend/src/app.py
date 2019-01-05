@@ -5,6 +5,7 @@ from flask_restful.utils import cors
 from os import environ
 import setupdb
 import sys
+import time
 from controller import database
 
 
@@ -21,7 +22,8 @@ while not connected:
         setupdb.checkdb()
         connected = True
     except Exception as e:
-        pass
+        print("Cannot connect to database. Retrying in 5s", file=sys.stderr)
+        time.sleep(5)
 database.set_db(app)
 
 
@@ -29,7 +31,9 @@ from api.login import Login
 from api.logout import Logout
 from api.search import Search
 from api.milestone import Milestone
-from api.set_skill import SetSkill
+from api.set_skills import SetSkills
+from api.get_skills import GetSkills
+from api.create_skill import CreateSkill
 
 
 api = Api(app)
@@ -39,7 +43,9 @@ api.add_resource(Login, "/login")
 api.add_resource(Logout, "/logout")
 api.add_resource(Search, "/search")
 api.add_resource(Milestone, "/milestone")
-api.add_resource(SetSkill, "/skill")
+api.add_resource(SetSkills, "/setskills")
+api.add_resource(GetSkills, "/getskills")
+api.add_resource(CreateSkill, "/createskill")
 
 
 if __name__ == "__main__":

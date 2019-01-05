@@ -24,46 +24,62 @@ const errorCodesToErrorMsg = (errorCode) => {
   }
 };
 
+const errorHandling = (error) => {
+  if (error.response) {
+    // The request was made and the server responded with a status code
+    // that falls out of the range of 2xx
+    const errorMsg = errorCodesToErrorMsg(error.response.status);
+    if (error.response.status === 401) {
+      // user is not logged in and has no permission to do the request
+      store.dispatch(resetState);
+      store.dispatch(setLoginError(errorMsg));
+    } else {
+      throw new Error(errorMsg);
+    }
+  } else if (error.request) {
+    // The request was made but no response was received
+    // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+    // http.ClientRequest in node.js
+    throw new Error(
+      'An error occured while connecting to the server. Please check your Internet connection.',
+    );
+  } else {
+    // Something happened in setting up the request that triggered an Error
+    throw new Error(errorCodesToErrorMsg(520));
+  }
+};
+
 class RestCom {
-  constructor(restPoint, data) {
+  constructor(restPoint, data = '') {
     this.restApi = APISERVER + restPoint;
     this.data = data;
-  }
-
-  async post() {
-    const headers = {
+    this.headers = {
       headers: {
         'Access-Control-Allow-Origin': '*',
         'Content-Type': 'application/json',
       },
     };
+  }
+
+  async post() {
     return axios
-      .post(this.restApi, this.data, headers)
-      .then(ServerResponse => ServerResponse)
-      .catch((error) => {
-        if (error.response) {
-          // The request was made and the server responded with a status code
-          // that falls out of the range of 2xx
-          const errorMsg = errorCodesToErrorMsg(error.response.status);
-          if (error.response.status === 401) {
-            // user is not logged in and has no permission to do the request
-            store.dispatch(resetState);
-            store.dispatch(setLoginError(errorMsg));
-          } else {
-            throw new Error(errorMsg);
-          }
-        } else if (error.request) {
-          // The request was made but no response was received
-          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-          // http.ClientRequest in node.js
-          throw new Error(
-            'An error occured while connecting to the server. Please check your Internet connection.',
-          );
-        } else {
-          // Something happened in setting up the request that triggered an Error
-          throw new Error(errorCodesToErrorMsg(520));
-        }
-      });
+      .post(this.restApi, this.data, this.headers)
+      .then(ServerResponse => ServerResponse.data)
+      .catch(error => errorHandling(error));
+  }
+
+  async get() {
+    return axios
+      .get(this.restApi, this.headers)
+      .then(ServerResponse => ServerResponse.data)
+      .catch(error => errorHandling(error));
+  }
+
+  async delete() {
+    return axios
+      .delete(this.restApi, this.headers)
+      .then(ServerResponse => ServerResponse.data)
+      .catch(error => errorHandling(error));
   }
 }
 export default RestCom;
