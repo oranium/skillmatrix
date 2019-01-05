@@ -3,7 +3,9 @@ import RestPoints from 'rest/Init';
 import RestCom from 'rest/Rest';
 
 import store from 'Store';
-import { setAllSkills, setAllCategories } from 'actions';
+import {
+  setAllSkills, setAllCategories, setOwnProfile, setError,
+} from 'actions';
 
 export async function updateAllSkills() {
   const Rest = new RestCom(RestPoints.getSkills);
@@ -13,6 +15,16 @@ export async function updateAllSkills() {
     store.dispatch(setAllCategories(categories));
   } catch (e) {
     console.log(e);
+  }
+}
+
+export async function updateOwnProfile(apiUrl, data) {
+  const Rest = new RestCom(apiUrl, JSON.stringify(data));
+  try {
+    const newProfile = await Rest.post();
+    store.dispatch(setOwnProfile(newProfile));
+  } catch (e) {
+    store.dispatch(setError(e.message));
   }
 }
 

@@ -71,14 +71,14 @@ class FormDialog extends Component {
   async handleSubmit(Skill) {
     //todo API
     var category = store.getState().formState.singleselect.value;
-    const {user} = store.getState();
-    const {username} = user;
+    const { user } = store.getState();
+    const { username } = user;
 
     const request = {
       username,
       category,
       ...this.state,
-    }
+    };
     console.log(request);
 
     const Rest = new RestCom(RestPoints.createSkill, JSON.stringify(request));
@@ -86,13 +86,12 @@ class FormDialog extends Component {
     try {
       await Rest.post();
     } catch (e) {
-      // clear password input
       store.dispatch(setError(e.message));
     }
     this.handleClose();
 
     await updateAllSkills();
-  };
+  }
   render() {
     const state = store.getState();
 

@@ -64,7 +64,7 @@ class RestCom {
   async post() {
     return axios
       .post(this.restApi, this.data, this.headers)
-      .then(ServerResponse => ServerResponse)
+      .then(ServerResponse => ServerResponse.data)
       .catch(error => errorHandling(error));
   }
 

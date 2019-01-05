@@ -20,7 +20,7 @@ import { closeProfileDialog, updateInput, resetForm, setOwnProfile, setError } f
 
 // Rest
 import RestPoints from 'rest/Init';
-import RestCom from 'rest/Rest';
+import { updateOwnProfile } from 'rest/handleCommonRequests';
 
 export default class FormDialog extends Component {
   handleClose = () => {
@@ -29,13 +29,7 @@ export default class FormDialog extends Component {
   };
 
   async handleSubmit(skill) {
-    let Rest = new RestCom(RestPoints.setSkills, JSON.stringify(skill));
-    try {
-      const { data } = await Rest.post();
-      store.dispatch(setOwnProfile(data));
-    } catch (e) {
-      store.dispatch(setError(e.message));
-    }
+    await updateOwnProfile(RestPoints.setSkills, skill);
     this.handleClose();
   }
 
