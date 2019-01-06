@@ -3,7 +3,7 @@ from controller.database import db
 from model.profile_model import ProfileModel
 from model.skill_model import SkillModel
 from model.milestone_model import MilestoneModel
-from model.database_model import Association, MilestoneAssociation, Skill, Date, Users, Hierarchy
+from model.database_model import Association, MilestoneAssociation, Skill, Date, Users, Hierarchy, Guidelines
 
 
 class DatabaseController:
@@ -285,6 +285,21 @@ class DatabaseController:
             if skill_model:
                 skill_models.append(skill_model)
         return skill_models
+
+    @staticmethod
+    def create_guidelines(skill_id, information_list):
+        """Create all 5 guidelines for one skill in the database.
+                   Args:
+                       skill_id (`int`): the id of the skill to ad to the guidelinetable.
+                       information_list (`strlist`): a list of strings that should look like this:
+                                                    [text for level 1, text for level 2,...,text for level 5]
+                """
+        level = 1
+        for information in information_list:
+            newguideline = Guidelines(skill_id=skill_id, level=level, information=information)
+            db.session.add(newguideline)
+            db.session.commit()
+            level = level + 1
 
     @staticmethod
     def create_user(username, name):

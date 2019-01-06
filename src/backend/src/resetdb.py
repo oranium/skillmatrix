@@ -111,6 +111,25 @@ def create_hiestory(parent, child):
     session.add(x)
     session.commit()
 
+def change_guideline(skill_id, level, new_information):
+    if session.query(Guidelines).filter(Guidelines.skill_id == skill_id, Guidelines.level == level).all():
+        print("gibt es schon")
+        d = session.query(Guidelines).filter(Guidelines.skill_id == skill_id, Guidelines.level == level).one()
+        session.delete(d)
+        session.commit()
+    newguideline = Guidelines(skill_id = skill_id, level = level, information = new_information)
+    session.add(newguideline)
+        
+
+def create_guidelines(skill_id, information_list):
+    level = 1
+    for information in information_list:
+        newguideline = Guidelines(skill_id = skill_id, level = level, information = information)
+        session.add(newguideline)
+        session.commit()
+        level = level +1
+
+
 def create_skill(level, skill, date, username):
     a = Association(level=level)
     a.skill_assoc = skill
@@ -143,7 +162,17 @@ def create_skill(level, skill, date, username):
 
 testSetup = Setup()'''
 
-
+inforlsite = ["gar nicht gut", "nicht gut", "mittel", "schon gut", "sehr gut"]
+pythonlevel1 = Guidelines(skill_id = 2, level = 1, information = "gar nicht gut")
+pythonlevel2 = Guidelines(skill_id = 2, level = 2, information = "nicht gut")
+pythonlevel3 = Guidelines(skill_id = 2, level = 3, information = "mittel")
+pythonlevel4 = Guidelines(skill_id = 2, level = 4, information = "schon gut")
+pythonlevel5 = Guidelines(skill_id = 2, level = 5, information = "what a man :O")
+session.add(pythonlevel1)
+session.add(pythonlevel2)
+session.add(pythonlevel3)
+session.add(pythonlevel4)
+session.add(pythonlevel5)
 valdemar = Users(username='Valdemar-Forsberg',name="Valdemar Forsberg")
 karl = Users(username='Karl-Kalagin', name="Karl Kalagin")
 isaac = Users(username='Isaac-Hunt', name="Isaac Hunt")
@@ -182,4 +211,7 @@ x.parent_skill_assoc= java1
 x.child_skill_assoc= python1
 session.add(x)
 create_hiestory(python1,js1)
+create_guidelines(1,inforlsite)
+change_guideline(1,2,"neue information")
 session.commit()
+
