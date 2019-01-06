@@ -9,6 +9,13 @@ from sqlalchemy.orm import sessionmaker
 from os import environ
  
 Base = declarative_base()
+
+class Guidelines(Base):
+    __tablename__ = 'guidelines'
+    skill_id = Column(Integer, primary_key=True)
+    level = Column(Integer, primary_key=True)
+    information = Column(Text, nullable=True, default='')
+
 class Hierarchy(Base):
     __tablename__ = 'hierachy'
     parent_skill_id = Column(Integer, ForeignKey('skill.id'), nullable=False)
@@ -89,7 +96,7 @@ class Users(Base):
     def __repr__(self):
         return '<id = {0} und username = {1}>'.format(self.id, self.username)
 
-class Setup():
+'''class Setup():
 
     engine = create_engine(environ.get('ENV_DATABASE_URI_TEST'))
 
@@ -113,13 +120,13 @@ class Setup():
         a.date_assoc = date
         a.users_assoc = username
 
-testSetup = Setup()
+testSetup = Setup()'''
 
 
 valdemar = Users(username='Valdemar-Forsberg',name="Valdemar Forsberg")
 karl = Users(username='Karl-Kalagin', name="Karl Kalagin")
 isaac = Users(username='Isaac-Hunt', name="Isaac Hunt")
-testSetup.session.add(valdemar)
+session.add(valdemar)
 session.add(karl)
 session.add(isaac)
 prog = Skill(name='Programming', root = True)
