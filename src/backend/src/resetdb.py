@@ -96,6 +96,27 @@ class Users(Base):
     def __repr__(self):
         return '<id = {0} und username = {1}>'.format(self.id, self.username)
 
+
+engine = create_engine('mysql+pymysql://root:Momomomo2@localhost/sm1')
+
+Base.metadata.drop_all(bind=engine)
+Base.metadata.create_all(engine)
+DBSession = sessionmaker(bind=engine)
+session = DBSession()
+
+def create_hiestory(parent, child):
+    x = Hierarchy()
+    x.parent_skill_assoc= parent
+    x.child_skill_assoc= child
+    session.add(x)
+    session.commit()
+
+def create_skill(level, skill, date, username):
+    a = Association(level=level)
+    a.skill_assoc = skill
+    a.date_assoc = date
+    a.users_assoc = username
+
 '''class Setup():
 
     engine = create_engine(environ.get('ENV_DATABASE_URI_TEST'))
@@ -158,7 +179,7 @@ create_skill(3, python1, date1, isaac)
 create_skill(1, java1, date1, karl)
 x = Hierarchy()
 x.parent_skill_assoc= java1
-x.child_skill_assoc= js1
+x.child_skill_assoc= python1
 session.add(x)
 create_hiestory(python1,js1)
 session.commit()

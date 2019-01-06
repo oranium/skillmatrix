@@ -2,6 +2,12 @@ import datetime
 from controller.database import db
 
 
+class Guidelines(db.Model):
+    __tablename__ = 'guidelines'
+    skill_id = db.Column(db.Integer, primary_key=True)
+    level = db.Column(db.Integer, primary_key=True)
+    information = db.Column(db.Text, nullable=True, default='')
+
 class Hierarchy(db.Model):
     __tablename__ = 'hierarchy'
     parent_skill_id = db.Column(db.Integer, db.ForeignKey('skill.id'), nullable=True)
@@ -65,7 +71,7 @@ class Date(db.Model):
 
 
 class Users(db.Model):
-    """SQL-Alchemy object users. Has an autoincremented id, an username, a surname, a forename"""
+    """SQL-Alchemy object users. Has an autoincremented id, an username and a name"""
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(45), nullable=False)
