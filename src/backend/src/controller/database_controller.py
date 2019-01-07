@@ -287,6 +287,18 @@ class DatabaseController:
         return skill_models
 
     @staticmethod
+    def get_certain_guideline(skill_id, level):
+        """Get a guideline-information of a skill for a certain level
+                Args:
+                    skill_id (`int`): id of a certain skill
+                    level (`int`): guideline-level of the chosen skill
+                Returns:
+                    `str`: guideline-information of a skill for a certain level
+                """
+        guideline = Guidelines.query.filter(skill_id=skill_id, level=level).first()
+        return guideline.information
+
+    @staticmethod
     def get_guidelines(skill_id):
         """Give back all 5 different guideline-information for one skill
                 Args:
@@ -302,7 +314,6 @@ class DatabaseController:
             guideline = Guidelines.query.filter(skill_id = skill_id, level = level).first()
             information_list.append(guideline.information)
             level = level + 1
-        #print(information_list)
         return information_list
 
     @staticmethod
