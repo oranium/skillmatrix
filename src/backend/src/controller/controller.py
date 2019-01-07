@@ -160,7 +160,7 @@ class Controller:
         """
         if not controller.is_connected(username):
             raise PermissionError
-        database_controller.add_guidelines(skillname, guidelines)
+        database_controller.create_guidelines(skillname, guidelines)
 
     @staticmethod
     def remove_skill(username, skillname, from_db=False):
