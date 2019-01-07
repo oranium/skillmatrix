@@ -69,15 +69,15 @@ export const DateInput = withStyles(styles)((props) => {
   const { classes } = props;
   const id = 'datefield';
   const heute = new Date();
-  var month = heute.getMonth() + 1
-  var day = heute.getDate()
+  let month = heute.getMonth() + 1;
+  let day = heute.getDate();
 
-  if(day < 10 ) day = "0" + day;
-  if(month < 10 ) month = "0" + month
-  
-  const heuteString= heute.getFullYear() + "-" + month + "-" + day;
-  var value;
-  if(props.data.value.length === 0) value = heuteString
+  if (day < 10) day = `0${day}`;
+  if (month < 10) month = `0${month}`;
+
+  const heuteString = `${heute.getFullYear()}-${month}-${day}`;
+  let value;
+  if (props.data.value.length === 0) value = heuteString;
   else value = props.data.value;
   return (
     <TextField
@@ -85,7 +85,7 @@ export const DateInput = withStyles(styles)((props) => {
       id="outlined-required"
       type="date"
       label={props.data.name}
-      value={ value }
+      value={value}
       className={`${classes.textField} ${props.data.name}`}
       error={props.data.error}
       margin="normal"
