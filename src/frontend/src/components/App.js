@@ -16,6 +16,9 @@ import Header from 'components/header/Header';
 import ErrorDialog from 'components/error/ErrorDialog';
 import Drawer from 'components/header/Drawer';
 
+// material-ui
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 class App extends Component {
   // user wants to reset all input fields
   static handleResetForm() {
@@ -63,7 +66,7 @@ class App extends Component {
   render() {
     const { state } = this.props;
     const {
-      page, error, user, drawer,
+      page, error, user, drawer, loading,
     } = state;
     const { hasError, displayType, message } = error;
 
@@ -72,11 +75,12 @@ class App extends Component {
     switch (page) {
       case 'login':
         return (
-          <LoginForm
-            errorMsg={hasError && displayType === errorDisplayType.login ? message : ''}
-            login={(username, password) => App.handleLogin(username, password)}
-          />
-          // <ProfileController state={state} />
+          <main>
+            <LoginForm
+              errorMsg={hasError && displayType === errorDisplayType.login ? message : ''}
+              loading={loading}
+            />
+          </main>
         );
       case 'search':
         main = (
@@ -99,6 +103,7 @@ class App extends Component {
         <main>
           {main}
           {hasError && displayType === errorDisplayType.window && <ErrorDialog state={state} />}
+          {loading && <CircularProgress />}
         </main>
       </div>
     );

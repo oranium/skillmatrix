@@ -13,6 +13,7 @@ import LockIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 // import redux parts
 import store from 'Store';
@@ -48,6 +49,9 @@ const styles = theme => ({
   avatar: {
     margin: theme.spacing.unit,
     backgroundColor: theme.palette.secondary.main,
+  },
+  spinner: {
+    margin: theme.spacing.unit,
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -107,15 +111,19 @@ class SignIn extends Component {
   }
 
   render() {
-    const { classes, errorMsg } = this.props;
+    const { classes, errorMsg, loading } = this.props;
 
     return (
       <main className={classes.main}>
         <CssBaseline />
         <Paper className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockIcon />
-          </Avatar>
+          {loading ? (
+            <CircularProgress className={classes.spinner} />
+          ) : (
+            <Avatar className={classes.avatar}>
+              <LockIcon />
+            </Avatar>
+          )}
           <Typography component="h1" variant="h4">
             Skill Matrix
           </Typography>
