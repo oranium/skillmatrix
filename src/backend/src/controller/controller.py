@@ -154,7 +154,7 @@ class Controller:
             Args:
                   username (`str`): the username of the current user
                   skillname(`str`): the name of the skill
-                  guidelines(`dict(int=level)`: each level gets assigned a guideline text
+                  guidelines(`list`): guideline text for each level in order - list of length 5
             Raises:
                 PermissionError if user is not logged in
         """
@@ -163,7 +163,7 @@ class Controller:
         database_controller.create_guidelines(skillname, guidelines)
 
     @staticmethod
-    def remove_skill(username, skillname, from_db=False):
+    def remove_skill(username, skillname, from_db):
         """Remove a skill either from the user's profile or the whole database.
            Args:
                username (`str`): the username of the current user
@@ -181,6 +181,28 @@ class Controller:
         user_skills = database_controller.get_skills(username)
         name = authentication_controller.get_name(username)
         return ProfileModel(username, name, user_skills).jsonable()
+
+    @staticmethod
+    def remove_milestone(username, skillname, level, date):
+        """Removes a milestone from user.
+            Args:
+                  username(`str`): name of the user
+                  skillname(`str`): name of the skill
+                  level(`int`): level of skill at milestone date
+                  date(`str`): date of milestone in format "YYYY-MM-DD"
+            Returns:
+                `ProfileModel`: updated ProfileModel of the user.
+            Raises:
+                `PermissionError` if user ist not logged in.
+        """
+        if not controller.is_connected(username):
+            raise PermissionError
+        database_controller.remove_milestone(username, skillname, level, date)
+        user_skills = database_controller.get_skills(username)
+        name = authentication_controller.get_name(username)
+        return ProfileModel(username, name, user_skills).jsonable()
+
+
 
 
 controller = Controller()

@@ -508,9 +508,16 @@ class DatabaseController:
                   username(`str`): name of the user
                   skillname(`str`): name of the skill
                   level(`int`): level of skill at milestone date
-                  date(`date`): date of milestone
+                  date(`str`): date of milestone in format "YYYY-MM-DD"
         """
-        pass
+        skill = database_controller.get_skill_id(skillname)
+        user = database_controller.get_user(username)
+        MilestoneAssociation.query.filter_by(milestone_skill_id=skill.id,
+                                             milestone_users_id=user.id,
+                                             level=level,
+                                             date=date).delete()
+        db.session.commit()
+
 
 
 database_controller = DatabaseController()

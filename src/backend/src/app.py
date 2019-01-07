@@ -35,6 +35,8 @@ from api.set_skills import SetSkills
 from api.get_skills import GetSkills
 from api.create_skill import CreateSkill
 from api.guideline import Guideline
+from api.remove_skill import RemoveSkill
+from api.remove_milestone import RemoveMilestone
 
 api = Api(app)
 api.decorators = [cors.crossdomain(origin='*',
@@ -43,10 +45,12 @@ api.add_resource(Login, "/login")
 api.add_resource(Logout, "/logout")
 api.add_resource(Search, "/search")
 api.add_resource(Milestone, "/milestone")
-api.add_resource(SetSkills, "/setskills")
-api.add_resource(GetSkills, "/getskills")
-api.add_resource(CreateSkill, "/createskill")
+api.add_resource(SetSkills, "/setSkills")
+api.add_resource(GetSkills, "/getSkills")
+api.add_resource(CreateSkill, "/createSkill")
 api.add_resource(Guideline, "/guideline")
+api.add_resource(RemoveSkill, "/removeSkill")
+api.add_resource(RemoveMilestone, "/removeMilestone")
 
 
 if __name__ == "__main__":
