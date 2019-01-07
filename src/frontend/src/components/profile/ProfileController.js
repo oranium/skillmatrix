@@ -119,7 +119,12 @@ class ProfileController extends Component {
     const { state, classes } = this.props;
     // person: array index in profiles
     const { person, profiles, view, showDialog, isEditable } = state.profile;
-    const skills = profiles[person].skills;
+    var skills = [];
+    try {
+      skills = profiles[person].skills;
+    }catch {
+      return <h2>Could not load profile.</h2>
+    }
     const copy = skills.slice();
     const ownerArticle = this.getOwnerArticle();
     return (
