@@ -287,11 +287,29 @@ class DatabaseController:
         return skill_models
 
     @staticmethod
+    def change_guidelines(skill_id, level, new_information):
+        """Checks if there is already certain guideline, if the guideline exists, it gets deleted and rebuild with new
+            information. Else the function just adds a new guideline.
+                Args:
+                    skill_id (`int`): id of a certain skill, where the information has to be changed
+                    level (`int`): guideline-level, where the information has to be changed
+                    new_information (`str`): new information for the certain guideline
+                """
+        if Guidelines.query.filter_by(skill_id = skill_id, level = level).all():
+            #print("gibt es schon")
+            d = Guidelines.query.filter_by(skill_id = skill_id, level = level).first()
+            db.session.delete(d)
+            db.session.commit()
+        newguideline = Guidelines(skill_id=skill_id, level=level, information=new_information)
+        db.session.add(newguideline)
+        db.session.commit()
+
+    @staticmethod
     def create_guidelines(skill_id, information_list):
         """Create all 5 guidelines for one skill in the database.
                    Args:
                        skill_id (`int`): the id of the skill to ad to the guidelinetable.
-                       information_list (`strlist`): a list of strings that should look like this:
+                       information_list `[str]`: a list of strings that should look like this:
                                                     [text for level 1, text for level 2,...,text for level 5]
                 """
         level = 1
