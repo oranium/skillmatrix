@@ -3,7 +3,7 @@ from controller.database import db
 from model.profile_model import ProfileModel
 from model.skill_model import SkillModel
 from model.milestone_model import MilestoneModel
-from model.database_model import Association, MilestoneAssociation, Skill, Date, Users, Hierarchy
+from model.database_model import Association, MilestoneAssociation, Skill, Date, Users, Hierarchy, Guidelines
 
 
 class DatabaseController:
@@ -287,6 +287,60 @@ class DatabaseController:
         return skill_models
 
     @staticmethod
+    def get_guidelines(skill_id):
+        """Give back all 5 different guideline-information for one skill
+                Args:
+                    skill_id (`str`): id of a certain skill
+                Returns:
+                    `[str]`: a list with 5 elements where the first element is the guideline-information
+                            for the first level
+                            Example: ['gar nicht gut', 'neue information', 'mittel', 'schon gut', 'sehr gut']
+                """
+        guidelines = []
+        level = 1
+        while level < 6:
+            guideline = Guidelines.query.filter(skill_id=skill_id, level=level).first()
+            guidelines.append(guideline.information)
+            level = level + 1
+        # print(guidelines)
+        return guidelines
+
+    @staticmethod
+    def change_guidelines(skill_id, level, new_guideline):
+        """Checks if there is already certain guideline, if the guideline exists, it gets deleted and rebuild with new
+            information. Else the function just adds a new guideline.
+                Args:
+                    skill_id (`int`): id of a certain skill, where the information has to be changed
+                    level (`int`): guideline-level, where the information has to be changed
+                    new_guideline (`str`): new information for the certain guideline
+                """
+        if Guidelines.query.filter_by(skill_id=skill_id, level=level).all():
+            prev_guideline = Guidelines.query.filter_by(skill_id=skill_id, level=level).first()
+            db.session.delete(prev_guideline)
+            db.session.commit()
+        new_guideline = Guidelines(skill_id=skill_id, level=level, information=new_guideline)
+        db.session.add(new_guideline)
+        db.session.commit()
+
+    @staticmethod
+    def create_guidelines(skillname, guidelines):
+        """Create all 5 guidelines for one skill in the database.
+                   Args:
+                       skillname (`int`): the id of the skill to ad to the guideline table.
+                       guidelines `[str]`: a list of strings that should look like this:
+                                                    [text for level 1, text for level 2,...,text for level 5]
+                """
+        level = 1
+        if not len(guidelines) == 5:
+            raise ValueError("Guidelines does not have 5 elements.")
+        skill_id = database_controller.get_skill_id(skillname)
+        for guideline in guidelines:
+            new_guideline = Guidelines(skill_id=skill_id, level=level, information=guideline)
+            db.session.add(new_guideline)
+            db.session.commit()
+            level = level + 1
+
+    @staticmethod
     def create_user(username, name):
         """Create a user in the database.
            Args:
@@ -454,9 +508,16 @@ class DatabaseController:
                   username(`str`): name of the user
                   skillname(`str`): name of the skill
                   level(`int`): level of skill at milestone date
-                  date(`date`): date of milestone
+                  date(`str`): date of milestone in format "YYYY-MM-DD"
         """
-        pass
+        skill = database_controller.get_skill_id(skillname)
+        user = database_controller.get_user(username)
+        MilestoneAssociation.query.filter_by(milestone_skill_id=skill.id,
+                                             milestone_users_id=user.id,
+                                             level=level,
+                                             date=date).delete()
+        db.session.commit()
+
 
 
 database_controller = DatabaseController()
