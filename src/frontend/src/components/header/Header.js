@@ -6,7 +6,8 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import { PowerSettingsNew, Search } from '@material-ui/icons';
 import MenuIcon from '@material-ui/icons/Menu';
-import NewSkillToDatabase from '../profile/skills/NewSkillToDatabase';
+import NewSkillToDatabase from '../admin/NewSkillToDatabase';
+import RemoveSkillFromDatabase from '../admin/RemoveSkillDialog';
 
 // import redux parts
 import store from '../../Store';
@@ -113,6 +114,7 @@ class ButtonAppBar extends Component {
           </Toolbar>
         </AppBar>
         <NewSkillToDatabase />
+        <RemoveSkillFromDatabase />
       </div>
     );
   }
