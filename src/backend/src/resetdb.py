@@ -111,6 +111,16 @@ def create_hiestory(parent, child):
     session.add(x)
     session.commit()
 
+def get_guidelines(skill_id):
+    information_list = []
+    level = 1
+    while (level < 6):
+        guideline = session.query(Guidelines).filter(Guidelines.skill_id == skill_id, Guidelines.level == level).one()
+        information_list.append(guideline.information)
+        level = level +1
+    print (information_list)
+    return information_list
+
 def change_guideline(skill_id, level, new_information):
     if session.query(Guidelines).filter(Guidelines.skill_id == skill_id, Guidelines.level == level).all():
         print("gibt es schon")
@@ -119,6 +129,7 @@ def change_guideline(skill_id, level, new_information):
         session.commit()
     newguideline = Guidelines(skill_id = skill_id, level = level, information = new_information)
     session.add(newguideline)
+    session.commit()
         
 
 def create_guidelines(skill_id, information_list):
@@ -214,4 +225,5 @@ create_hiestory(python1,js1)
 create_guidelines(1,inforlsite)
 change_guideline(1,2,"neue information")
 session.commit()
+liste = get_guidelines(1) #['gar nicht gut', 'neue information', 'mittel', 'schon gut', 'sehr gut']
 

@@ -287,6 +287,25 @@ class DatabaseController:
         return skill_models
 
     @staticmethod
+    def get_guidelines(skill_id):
+        """Give back all 5 different guideline-information for one skill
+                Args:
+                    skill_id (`str`): id of a certain skill
+                Returns:
+                    `[str]`: a list with 5 elements where the first element is the guideline-information
+                            for the first level
+                            Example: ['gar nicht gut', 'neue information', 'mittel', 'schon gut', 'sehr gut']
+                """
+        information_list = []
+        level = 1
+        while (level < 6):
+            guideline = Guidelines.query.filter(skill_id = skill_id, level = level).first()
+            information_list.append(guideline.information)
+            level = level + 1
+        #print(information_list)
+        return information_list
+
+    @staticmethod
     def change_guidelines(skill_id, level, new_information):
         """Checks if there is already certain guideline, if the guideline exists, it gets deleted and rebuild with new
             information. Else the function just adds a new guideline.
