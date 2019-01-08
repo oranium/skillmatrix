@@ -10,7 +10,7 @@ from controller.database_controller import database_controller
 
 
 class Controller:
-    """Singleton, calls DatabaseController and AuthenticationController. Returns JSONs from models to APIs
+    """Singleton, calls DatabaseController and AuthenticationController. Returns `dict`s from models to APIs
        Acts as a facade to the Database controller and AuthenticationController.
     """
     @staticmethod
@@ -20,7 +20,7 @@ class Controller:
                 username(`str`): name of the user
                 password(`str`): password of the user
             Returns:
-                `dict`: profile of the logged in user as JSON-ready `ProfileModel`
+                `dict`: profile of the logged in user as `ProfileModel` transformed into dict
         """
 
         name = authentication_controller.login(username, password)
@@ -50,8 +50,12 @@ class Controller:
             Args:
                 username(`str`, optional): name of the user, defaults to None
             Returns:
-                `dict("allSkills"=[dict(str=dict(int=str)], "categories"=[str])`:
-                 JSON-ready list of skills with guidelines and root categories.
+                if username is given:
+                    `dict("allSkills"=dict(str=dict(int=str), "categories"=[str])`:
+                     dict of skills with guidelines and root categories.
+                else:
+                    `dict("username"=username, "allSkills"=[str])`:
+                    dict with username and all skills as list of full paths.
             Raises:
                 PermissionError if username is given and user is not logged in
         """
@@ -61,7 +65,7 @@ class Controller:
         all_skill_names = database_controller.get_paths_with_guidelines(username)
         print(all_skill_names, file=sys.stderr)
         if username:
-            return dict(username=username, allSkills=all_skill_names[0])
+            return dict(username=username, allSkills=all_skill_names)
         return dict(allSkills=all_skill_names[0], categories=all_skill_names[1])
 
     @staticmethod
@@ -86,7 +90,7 @@ class Controller:
                 username(`str`): name of the user
                 query(`dict(str=int)`): skillpath:min_level pairs
             Returns:
-                `dict`: JSON-Ready `SearchModel`
+                `dict`: `SearchModel` transformed into dict
             Raises:
                 PermissionError if user is not logged in
         """
@@ -102,7 +106,7 @@ class Controller:
                 username(`str`): name of the user
                 skills(`dict(str=int)`): skillname:level pairs
             Returns:
-                `dict`: updated JSON-ready profile of the user
+                `dict`: updated ProfileModel of the user transformed into dict
             Raises:
                 PermissionError if user is not logged in
         """
@@ -123,7 +127,7 @@ class Controller:
                 comment(`str`): comment/text for the milestone
                 level(`int`): level of skill for user
             Returns:
-                `dict`: updated JSON-ready profile of the user
+                `dict`: updated ProfileModel of the user transformed into dict
             Raises:
                 PermissionError if user is not logged in
         """
