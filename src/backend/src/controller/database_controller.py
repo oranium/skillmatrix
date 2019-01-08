@@ -192,21 +192,23 @@ class DatabaseController:
                   username(`str`, optional): name of the user, defaults to None"""
         skills = Skill.query.all()
         # the first list contains all skills, the second list contains all categories (if username)
-        skill_list = [[], []]
-        # get skill names of specific user
+        skill_list = []
+        # get skill names of specific user without guidelines
         if username:
             for skill in skills:
                 # check if user has the skill
-                if Association.query.filter_by(user_id=database_controller.get_user_id(username),
+                if Association.query.filter_by(user_id=database_controller.get_user(username).id,
                                                skill_id=skill.id).first():
-                    skill_list[0].append(skill.path)
-        # get every skill
+                    skill_list.append(skill.path)
+        # get every skill with guidelines
         else:
+            skill_list.append({})
+            skill_list.append([])
             for skill in skills:
                 if skill.root:
                     skill_list[1].append(skill.path)
                 else:
-                    skill_list[0].append(skill.path)
+                    skill_list[0][skill.path] = database_controller.get_guideline_dict(skill.path)
         return skill_list
 
     @staticmethod
@@ -281,6 +283,21 @@ class DatabaseController:
             if skill_model:
                 skill_models.append(skill_model)
         return skill_models
+
+    @staticmethod
+    def get_guideline_dict(skillpath):
+        """Returns a dict of all guidelines for a skill
+           Args:
+                 skillpath `str`: full path of skill
+           Returns:
+                `dict(str=dict(int=str))`: """
+        guidelines = database_controller.get_guidelines(database_controller.get_skill(skillpath).id)
+        return {1: guidelines[0],
+                2: guidelines[1],
+                3: guidelines[2],
+                4: guidelines[3],
+                5: guidelines[4]
+                }
 
     @staticmethod
     def get_guidelines(skill_id):
