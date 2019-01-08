@@ -349,3 +349,14 @@ export const drawer = (state = false, action) => {
       return state;
   }
 };
+
+export const loading = (state = false, action) => {
+  switch (action.type) {
+    case 'TOGGLESPINNER':
+      return action.open;
+    case 'RESETSTATE':
+      return false;
+    default:
+      return state;
+  }
+};

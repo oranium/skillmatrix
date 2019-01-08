@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { resetState, setLoginError } from 'actions';
+import { resetState, setLoginError, toggleSpinner } from 'actions';
 import store from 'Store';
 
 const config = require('../config.json');
@@ -59,26 +59,32 @@ class RestCom {
         'Content-Type': 'application/json',
       },
     };
+    store.dispatch(toggleSpinner(true));
+  }
+
+  static handleThen(ServerResponse) {
+    store.dispatch(toggleSpinner(false));
+    return ServerResponse.data;
   }
 
   async post() {
     return axios
       .post(this.restApi, this.data, this.headers)
-      .then(ServerResponse => ServerResponse.data)
+      .then(ServerResponse => RestCom.handleThen(ServerResponse))
       .catch(error => errorHandling(error));
   }
 
   async get() {
     return axios
       .get(this.restApi, this.headers)
-      .then(ServerResponse => ServerResponse.data)
+      .then(ServerResponse => RestCom.handleThen(ServerResponse))
       .catch(error => errorHandling(error));
   }
 
   async delete() {
     return axios
       .delete(this.restApi, this.headers)
-      .then(ServerResponse => ServerResponse.data)
+      .then(ServerResponse => RestCom.handleThen(ServerResponse))
       .catch(error => errorHandling(error));
   }
 }

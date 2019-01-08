@@ -148,7 +148,12 @@ class ProfileController extends Component {
     });
 
     //console.log(profiles[person]);
-    const copy = skills.slice();
+    var skillsTmp = [];
+    try {
+      skillsTmp = profiles[person].skills;
+    } catch {
+      return <h2>Could not load profile.</h2>;
+    }
     const ownerArticle = this.getOwnerArticle();
     return (
       <div className={classes.root}>
