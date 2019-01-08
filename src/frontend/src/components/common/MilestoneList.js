@@ -26,28 +26,31 @@ const styles = theme => ({
 
 const MilestoneList = (props) => {
   const classes = { props };
+  const {
+    level, comment, date, removeMilestone,
+  } = props;
 
   return (
     <div className={classes.root} onClick={event => event.stopPropagation()}>
       <ExpansionPanel>
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography className={classes.heading}>{props.datum}</Typography>
+          <Typography className={classes.heading}>{date}</Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails className={classes.secondaryHeading}>
           <div>
             <Typography>
               Level:
-              {props.level}
+              {level}
               {' '}
             </Typography>
 
             <Typography style={{ width: '200%' }}>
               Comment:
-              {props.comment}
+              {comment}
             </Typography>
           </div>
           <ExpansionPanelActions style={{ width: '100%', textAlign: 'right' }}>
-            <IconButton>
+            <IconButton onClick={() => removeMilestone(level, date)}>
               <DeleteIcon />
             </IconButton>
           </ExpansionPanelActions>
