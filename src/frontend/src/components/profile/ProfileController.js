@@ -58,13 +58,13 @@ class ProfileController extends Component {
     var alreadyUpdated = [];
     Object.keys(skills).map(index => {
       Object.keys(this.localUpdate).map(idx => {
-        if (skills[index].skillname === this.localUpdate[idx][0].skill) {
+        if (skills[index].skillpath === this.localUpdate[idx][0].skill) {
           alreadyUpdated.push(this.localUpdate[idx][0].skill);
           latestChanges.skills[this.localUpdate[idx][0].skill] = this.localUpdate[idx][0].level;
         }
       });
     });
-
+    //console.log(latestChanges);
     // send skill
     let Rest = new RestCom(RestPoints.setSkills, JSON.stringify(latestChanges));
     //todo remove JSON.stringify
@@ -101,6 +101,14 @@ class ProfileController extends Component {
     store.dispatch(changeView(value));
   };
 
+  getAllSkillsRecursive(skill, allSkills) {
+    allSkills.push(skill);
+    skill.subcategories.map(subskill => {
+      this.getAllSkillsRecursive(subskill, allSkills);
+    });
+    return allSkills;
+  }
+
   async openNewSkillDialog() {
     await updateAllSkills();
     store.dispatch(openProfileDialog('skill'));
@@ -120,6 +128,26 @@ class ProfileController extends Component {
     // person: array index in profiles
     const { person, profiles, view, showDialog, isEditable } = state.profile;
     const skills = profiles[person].skills;
+
+    var allSkillsOfUser = [];
+    Object.keys(profiles[person].skills).map(index => {
+      Object.keys(profiles[person].skills[index].subcategories).map(subskill => {
+        if (allSkillsOfUser.length === 0) {
+          allSkillsOfUser = this.getAllSkillsRecursive(
+            profiles[person].skills[index].subcategories[subskill],
+            [],
+          );
+        } else
+          allSkillsOfUser.push(
+            ...this.getAllSkillsRecursive(
+              profiles[person].skills[index].subcategories[subskill],
+              [],
+            ),
+          );
+      });
+    });
+
+    //console.log(profiles[person]);
     const copy = skills.slice();
     const ownerArticle = this.getOwnerArticle();
     return (
@@ -175,7 +203,7 @@ class ProfileController extends Component {
                         className="applyButton"
                         variant="contained"
                         color="secondary"
-                        onClick={this.applyLevelUpdates.bind(this, copy)}
+                        onClick={this.applyLevelUpdates.bind(this, allSkillsOfUser)}
                       >
                         Apply Changes
                       </Button>

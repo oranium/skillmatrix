@@ -69,6 +69,7 @@ Object.freeze(defaultSearch);
 
 const exSkill = {
   skillname: 'Python',
+  skillpath: 'C++/Python',
   level: 4,
   milestones: [
     {
@@ -97,6 +98,7 @@ const exSkill = {
 
 const exSkill3 = {
   skillname: 'C++',
+  skillpath: 'C++',
   level: 3,
   milestones: [
     {
@@ -124,6 +126,7 @@ const exSkill3 = {
 };
 const exSkill2 = {
   skillname: 'Java',
+  skillpath: 'Programming/Java',
   level: 5,
   milestones: [
     {
@@ -152,14 +155,15 @@ const exSkill2 = {
       comment: 'Java Hackaton gewonnen',
     },
   ],
-  subcategories: [exSkill3, exSkill],
+  subcategories: [],
 };
 
 const exCat = {
   skillname: 'Programming',
+  skillpath: 'Programming',
   level: 4,
   milestones: [],
-  subcategories: [exSkill, exSkill2],
+  subcategories: [ exSkill2],
 };
 
 const exProfile = {

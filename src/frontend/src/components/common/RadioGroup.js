@@ -34,39 +34,40 @@ class RadioButtonsGroup extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, guidelines } = this.props;
     const numbers = ['1', '2', '3', '4', '5'];
     const rdBtns = numbers.map((num, index) =>
       num < this.props.level || num > this.props.level ? (
         <FormControlLabel
           key={index}
           value={num}
-          control={<Radio title={`Level ${num}`} />}
+          control={<Radio title={guidelines[num]} />}
           label={num}
           disabled={!this.props.disabled}
         />
       ) : (
         //add disabled to the props to disable
-        <FormControlLabel key={index} value={num} control={<Radio />} label={num} />
+        <FormControlLabel
+          key={index}
+          value={num}
+          control={<Radio title={guidelines[num]} />}
+          label={num}
+        />
       ),
     );
     return (
       <div className={classes.root}>
         <FormControl component="fieldset" className={classes.formControl}>
-          <Tooltip
-            title="1 - schlecht 2 - ausreichend 3 - befriedigend 4 - gut 5 - sehr gut"
-            placement="top"
+          <RadioGroup
+            aria-label="Level"
+            name="level"
+            className={classes.group}
+            value={this.state.value}
+            onChange={this.handleChange}
+            guidelines={this.guidelines}
           >
-            <RadioGroup
-              aria-label="Level"
-              name="level"
-              className={classes.group}
-              value={this.state.value}
-              onChange={this.handleChange}
-            >
-              {rdBtns}
-            </RadioGroup>
-          </Tooltip>
+            {rdBtns}
+          </RadioGroup>
         </FormControl>
       </div>
     );

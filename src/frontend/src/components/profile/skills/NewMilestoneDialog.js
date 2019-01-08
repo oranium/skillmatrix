@@ -47,7 +47,7 @@ export default class FormDialog extends React.Component {
       ) {
         level = this.getaktLevelRecursive(
           subskill,
-          aktPath + '>' + subskill.skillname,
+          aktPath + '/' + subskill.skillname,
           path,
           level,
         );
@@ -90,7 +90,7 @@ export default class FormDialog extends React.Component {
           currentProfile.skills[index].skillname,
           singleselect.value,
           0,
-        ) != 0
+        ) > 0
       ) {
         aktLevel = this.getaktLevelRecursive(
           currentProfile.skills[index],
@@ -132,7 +132,14 @@ export default class FormDialog extends React.Component {
           );
       });
     });
-
+    var guidelines;
+    Object.keys(state.allSkills).map(index => {
+      for (var key in state.allSkills[index]) {
+        if (singleselect.value === key) {
+          guidelines = state.allSkills[index][key];
+        }
+      }
+    });
     return (
       <div>
         <Dialog
@@ -146,7 +153,7 @@ export default class FormDialog extends React.Component {
               To add a new milestone please fill in all inputfields.
             </DialogContentText>
             <SingleSelect allSkills={allSkillsOfUser} />
-            <RadioGroupShowLevel level={aktLevel} />
+            <RadioGroupShowLevel level={aktLevel} guidelines={guidelines} />
             <DateInput data={datefield} onChange={(id, value) => this.handleChange(id, value)} />
             <TextArea data={textarea} onChange={(id, value) => this.handleChange(id, value)} />
           </DialogContent>
