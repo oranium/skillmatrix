@@ -50,7 +50,8 @@ class Controller:
             Args:
                 username(`str`, optional): name of the user, defaults to None
             Returns:
-                `dict("allSkills"=[str], "categories"=[str])`: JSON-ready list of skills and root categories.
+                `dict("allSkills"=[dict(str=dict(int=str)], "categories"=[str])`:
+                 JSON-ready list of skills with guidelines and root categories.
             Raises:
                 PermissionError if username is given and user is not logged in
         """
@@ -64,25 +65,26 @@ class Controller:
         return dict(allSkills=all_skill_names[0], categories=all_skill_names[1])
 
     @staticmethod
-    def create_skill(username, skillname, category):
+    def create_skill(username, skillname, skillpath, category):
         """Creates a new skill in the database
             Args:
                 username(`str`): name of the user
                 skillname(`str`): name of the skill
+                skillpath(`str`): full path of the skill
                 category(`str`): name of parent category of new skill
             Raises:
                 PermissionError if user is not logged in
         """
         if not controller.is_connected(username):
             raise PermissionError
-        database_controller.create_skill(skillname, category)
+        database_controller.create_skill(skillname, skillpath, category)
 
     @staticmethod
     def search(username, query):
         """Searches users in database with given number of skill/level pairs.
             Args:
                 username(`str`): name of the user
-                query(`dict(str=int)`): skillname:min_levl pairs
+                query(`dict(str=int)`): skillpath:min_level pairs
             Returns:
                 `dict`: JSON-Ready `SearchModel`
             Raises:
@@ -112,11 +114,11 @@ class Controller:
         return ProfileModel(username, name, user_skills).jsonable()
 
     @staticmethod
-    def add_milestone(username, skillname, date, comment, level):
+    def add_milestone(username, skillpath, date, comment, level):
         """Adds a milestone to skill of a user
             Args:
                 username(`str`): name of the user
-                skillname(`str`): name of the skill
+                skillpath(`str`): full path of the skill
                 date(`str`): date in "YYYY-MM-DD" format
                 comment(`str`): comment/text for the milestone
                 level(`int`): level of skill for user
@@ -128,7 +130,7 @@ class Controller:
         if not controller.is_connected(username):
             raise PermissionError
         date = datetime.datetime.strptime(date, "%Y-%m-%d").date()
-        database_controller.add_milestone(username, skillname, date, comment, level)
+        database_controller.add_milestone(username, skillpath, date, comment, level)
         user_skills = database_controller.get_skills(username)
         name = authentication_controller.get_name(username)
         return ProfileModel(username, name, user_skills).jsonable()
@@ -149,25 +151,25 @@ class Controller:
             return False
 
     @staticmethod
-    def add_guidelines(username, skillname, guidelines):
+    def add_guidelines(username, skillpath, guidelines):
         """Adds guideline for each level of given skill.
             Args:
                   username (`str`): the username of the current user
-                  skillname(`str`): the name of the skill
+                  skillpath(`str`): full path of the skill
                   guidelines(`list`): guideline text for each level in order - list of length 5
             Raises:
                 PermissionError if user is not logged in
         """
         if not controller.is_connected(username):
             raise PermissionError
-        database_controller.create_guidelines(skillname, guidelines)
+        database_controller.create_guidelines(skillpath, guidelines)
 
     @staticmethod
-    def remove_skill(username, skillname, from_db):
+    def remove_skill(username, skillpath, from_db):
         """Remove a skill either from the user's profile or the whole database.
            Args:
                username (`str`): the username of the current user
-               skillname(`str`): the name of the skill
+               skillpath(`str`): the full path of the skill
                from_db(`boolean`): deletes skill from database, if True, else only from user's profile
            Raises:
                PermissionError if user is not logged in
@@ -175,19 +177,19 @@ class Controller:
         if not controller.is_connected(username):
             raise PermissionError
         if from_db:
-            database_controller.remove_skill_from_database(skillname)
+            database_controller.remove_skill_from_database(skillpath)
         else:
-            database_controller.remove_skill(username, skillname)
+            database_controller.remove_skill(username, skillpath)
         user_skills = database_controller.get_skills(username)
         name = authentication_controller.get_name(username)
         return ProfileModel(username, name, user_skills).jsonable()
 
     @staticmethod
-    def remove_milestone(username, skillname, level, date):
+    def remove_milestone(username, skillpath, level, date):
         """Removes a milestone from user.
             Args:
                   username(`str`): name of the user
-                  skillname(`str`): name of the skill
+                  skillpath(`str`): full path of the skill
                   level(`int`): level of skill at milestone date
                   date(`str`): date of milestone in format "YYYY-MM-DD"
             Returns:
@@ -197,12 +199,10 @@ class Controller:
         """
         if not controller.is_connected(username):
             raise PermissionError
-        database_controller.remove_milestone(username, skillname, level, date)
+        database_controller.remove_milestone(username, skillpath, level, date)
         user_skills = database_controller.get_skills(username)
         name = authentication_controller.get_name(username)
         return ProfileModel(username, name, user_skills).jsonable()
-
-
 
 
 controller = Controller()
