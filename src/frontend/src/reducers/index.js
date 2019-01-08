@@ -10,6 +10,7 @@ import {
   profile,
   allSkills,
   allCategories,
+  loading,
 } from './reducers';
 
 export default combineReducers({
@@ -22,4 +23,5 @@ export default combineReducers({
   profile,
   allSkills,
   allCategories,
+  loading,
 });

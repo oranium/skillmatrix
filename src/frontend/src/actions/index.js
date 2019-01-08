@@ -118,3 +118,8 @@ export const toggleDrawer = open => ({
   type: 'TOGGLEDRAWER',
   open,
 });
+
+export const toggleSpinner = open => ({
+  type: 'TOGGLESPINNER',
+  open,
+});

@@ -58,16 +58,16 @@ class ProfileController extends Component {
     var alreadyUpdated = [];
     Object.keys(skills).map(index => {
       Object.keys(this.localUpdate).map(idx => {
-        if (skills[index].skillname === this.localUpdate[idx][0].skill) {
+        if (skills[index].skillpath === this.localUpdate[idx][0].skill) {
           alreadyUpdated.push(this.localUpdate[idx][0].skill);
           latestChanges.skills[this.localUpdate[idx][0].skill] = this.localUpdate[idx][0].level;
         }
       });
     });
-
+    //console.log(latestChanges);
     // send skill
-    let Rest = new RestCom(RestPoints.setSkills, JSON.stringify(latestChanges));
-    //todo remove JSON.stringify
+    let Rest = new RestCom(RestPoints.setSkills, latestChanges);
+
     try {
       const newProfile = await Rest.post();
       store.dispatch(setOwnProfile(newProfile));
@@ -101,6 +101,14 @@ class ProfileController extends Component {
     store.dispatch(changeView(value));
   };
 
+  getAllSkillsRecursive(skill, allSkills) {
+    allSkills.push(skill);
+    skill.subcategories.map(subskill => {
+      this.getAllSkillsRecursive(subskill, allSkills);
+    });
+    return allSkills;
+  }
+
   async openNewSkillDialog() {
     await updateAllSkills();
     store.dispatch(openProfileDialog('skill'));
@@ -120,7 +128,32 @@ class ProfileController extends Component {
     // person: array index in profiles
     const { person, profiles, view, showDialog, isEditable } = state.profile;
     const skills = profiles[person].skills;
-    const copy = skills.slice();
+
+    var allSkillsOfUser = [];
+    Object.keys(profiles[person].skills).map(index => {
+      Object.keys(profiles[person].skills[index].subcategories).map(subskill => {
+        if (allSkillsOfUser.length === 0) {
+          allSkillsOfUser = this.getAllSkillsRecursive(
+            profiles[person].skills[index].subcategories[subskill],
+            [],
+          );
+        } else
+          allSkillsOfUser.push(
+            ...this.getAllSkillsRecursive(
+              profiles[person].skills[index].subcategories[subskill],
+              [],
+            ),
+          );
+      });
+    });
+
+    //console.log(profiles[person]);
+    var skillsTmp = [];
+    try {
+      skillsTmp = profiles[person].skills;
+    } catch {
+      return <h2>Could not load profile.</h2>;
+    }
     const ownerArticle = this.getOwnerArticle();
     return (
       <div className={classes.root}>
@@ -174,8 +207,8 @@ class ProfileController extends Component {
                       <Button
                         className="applyButton"
                         variant="contained"
-                        color="primary"
-                        onClick={this.applyLevelUpdates.bind(this, copy)}
+                        color="secondary"
+                        onClick={this.applyLevelUpdates.bind(this, allSkillsOfUser)}
                       >
                         Apply Changes
                       </Button>

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { resetState, setLoginError } from 'actions';
+import { resetState, setLoginError, toggleSpinner } from 'actions';
 import store from 'Store';
 
 const config = require('../config.json');
@@ -52,33 +52,45 @@ const errorHandling = (error) => {
 class RestCom {
   constructor(restPoint, data = '') {
     this.restApi = APISERVER + restPoint;
-    this.data = data;
+    this.data = JSON.stringify(data);
     this.headers = {
       headers: {
         'Access-Control-Allow-Origin': '*',
         'Content-Type': 'application/json',
       },
     };
+    store.dispatch(toggleSpinner(true));
+  }
+
+  static handleThen(ServerResponse) {
+    return ServerResponse.data;
+  }
+
+  static endLoading() {
+    store.dispatch(toggleSpinner(false));
   }
 
   async post() {
     return axios
       .post(this.restApi, this.data, this.headers)
       .then(ServerResponse => ServerResponse.data)
+      .finally(RestCom.endLoading)
       .catch(error => errorHandling(error));
   }
 
   async get() {
     return axios
       .get(this.restApi, this.headers)
-      .then(ServerResponse => ServerResponse.data)
+      .then(ServerResponse => RestCom.handleThen(ServerResponse))
+      .finally(RestCom.endLoading)
       .catch(error => errorHandling(error));
   }
 
   async delete() {
     return axios
       .delete(this.restApi, this.headers)
-      .then(ServerResponse => ServerResponse.data)
+      .then(ServerResponse => RestCom.handleThen(ServerResponse))
+      .finally(RestCom.endLoading)
       .catch(error => errorHandling(error));
   }
 }
