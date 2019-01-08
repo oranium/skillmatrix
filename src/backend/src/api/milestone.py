@@ -13,11 +13,11 @@ class Milestone(Resource):
         parser.add_argument("comment", type=str)
         parser.add_argument("date", type=str)
         parser.add_argument("level", type=int)
-        parser.add_argument("skill", type=str)
+        parser.add_argument("skillpath", type=str)
         parser.add_argument("username", type=str)
         args = parser.parse_args()
         message = json.dumps(controller.add_milestone(args["username"],
-                                                      args["skill"],
+                                                      args["skillpath"],
                                                       args["date"],
                                                       args["comment"],
                                                       args["level"]))

@@ -119,12 +119,12 @@ class testDatabaseController(unittest.TestCase):
         Skill.query.filter_by(id=Skill.query.filter_by(name="Flask").first().id).delete()
 
     def test_get_all_skill_names(self):
-        result = database_controller.get_all_skill_names()
+        result = database_controller.get_paths_with_guidelines()
         expected_result = ["Java", "Python", "Programming", "JavaScript"]
         self.assertEquals(result, expected_result)
 
     def test_get_skill_id(self):
-        result = database_controller.get_skill_id("Java")
+        result = database_controller.get_skill("Java").id
         self.assertEqual(result, 1)
 
     def test_get_skill(self):
