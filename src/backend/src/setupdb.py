@@ -13,7 +13,7 @@ from os import environ
 def checkdb():
     engine = create_engine(environ.get('ENV_DATABASE_URI'))
 
-    if not engine.dialect.has_table(engine, 'hierarchy'):
+    if not engine.dialect.has_table(engine, 'guidelines'):
         Base = declarative_base()
 
         class Guidelines(Base):
@@ -54,7 +54,8 @@ def checkdb():
         class Skill(Base):
             __tablename__ = 'skill'
             id = Column(Integer, primary_key=True)
-            name = Column(String(127), nullable=False)
+            path = Column(Text, primary_key=True)
+            name = Column(String(255), nullable=False)
             root = Column(Boolean, unique=False, default=False)
             skill_association = relationship("Association", back_populates="skill_assoc")
             skill_milestone_association = relationship("MilestoneAssociation", back_populates="skill_milestone_assoc")

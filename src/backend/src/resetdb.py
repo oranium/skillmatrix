@@ -50,7 +50,8 @@ class MilestoneAssociation(Base):
 class Skill(Base):
     __tablename__ = 'skill'
     id = Column(Integer, primary_key=True)
-    name = Column(String(127), nullable=False)
+    path = Column(Text, primary_key=True)
+    name = Column(String(255), nullable=False)
     root = Column(Boolean, unique=False, default=False)
     skill_association = relationship("Association", back_populates="skill_assoc")
     skill_milestone_association = relationship("MilestoneAssociation", back_populates="skill_milestone_assoc")
