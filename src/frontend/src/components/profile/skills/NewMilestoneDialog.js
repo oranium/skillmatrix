@@ -132,11 +132,9 @@ export default class FormDialog extends React.Component {
       });
     });
     var guidelines;
-    Object.keys(state.allSkills).map(index => {
-      for (var key in state.allSkills[index]) {
-        if (singleselect.value === key) {
-          guidelines = state.allSkills[index][key];
-        }
+    Object.keys(state.allSkills).map(key => {
+      if (singleselect.value === key) {
+        guidelines = state.allSkills[key];
       }
     });
     return (

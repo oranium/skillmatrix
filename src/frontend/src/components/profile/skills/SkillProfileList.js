@@ -48,7 +48,6 @@ class SkillProfileList extends React.Component {
     const { categories } = this.props;
     const { classes } = this.props;
     const { expanded } = this.state;
-
     const panels = categories.map(skill => (
       <ExpansionPanel expanded={expanded} onChange={this.handleChange(this.props.skill)}>
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
@@ -62,6 +61,7 @@ class SkillProfileList extends React.Component {
         </ExpansionPanelDetails>
       </ExpansionPanel>
     ));
+
     return panels;
   }
 }

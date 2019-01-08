@@ -43,9 +43,8 @@ class ControlledExpansionPanels extends React.Component {
   };
 
   getGuidelines(skillname, allSkills) {
-    for (var key in allSkills) {
-      if (skillname in allSkills[key]) return allSkills[key][skillname];
-    }
+      if (skillname in allSkills) return allSkills[skillname];
+    
   }
 
   render() {
@@ -61,41 +60,71 @@ class ControlledExpansionPanels extends React.Component {
         : ` (${milestones[latestElement].date}): ${milestones[latestElement].comment}`;
     return (
       <div className={classes.root}>
-        <ExpansionPanel
-          expanded={expanded === this.props.skill}
-          onChange={this.handleChange(this.props.skill)}
-        >
-          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography className={classes.Heading}>
-              <div>
+        {this.props.summary.length !== 0 ? (
+          <ExpansionPanel
+            expanded={expanded === this.props.skill}
+            onChange={this.handleChange(this.props.skill)}
+          >
+            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+              <Typography className={classes.Heading}>
                 <div>
-                  <Button
-                    variant="outlined"
-                    color="primary"
-                    style={{ textTransform: 'none' }}
-                    fullWidth
-                  >
-                    {skillname}
-                  </Button>
+                  <div>
+                    <Button
+                      variant="outlined"
+                      color="primary"
+                      style={{ textTransform: 'none' }}
+                      fullWidth
+                    >
+                      {skillname}
+                    </Button>
+                  </div>
+                  <div className={classes.row} onClick={event => event.stopPropagation()}>
+                    <RadioGroup
+                      level={level}
+                      skill={skillpath}
+                      levelChange={this.props.levelChange}
+                      disabled={this.props.isEditable}
+                      guidelines={guidelines}
+                    />
+                  </div>
                 </div>
-                <div className={classes.row} onClick={event => event.stopPropagation()}>
-                  <RadioGroup
-                    level={level}
-                    skill={skillpath}
-                    levelChange={this.props.levelChange}
-                    disabled={this.props.isEditable}
-                    guidelines={guidelines}
-                  />
+              </Typography>
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails className={classes.secondaryHeading}>
+              {' '}
+              {this.props.summary}
+              {/* <Typography>{'Latest Milestone' + latestMilestone}</Typography> */}
+            </ExpansionPanelDetails>
+          </ExpansionPanel>
+        ) : (
+          <ExpansionPanel>
+            <ExpansionPanelSummary>
+              <Typography className={classes.Heading}>
+                <div>
+                  <div>
+                    <Button
+                      variant="outlined"
+                      color="primary"
+                      style={{ textTransform: 'none' }}
+                      fullWidth
+                    >
+                      {skillname}
+                    </Button>
+                  </div>
+                  <div className={classes.row} onClick={event => event.stopPropagation()}>
+                    <RadioGroup
+                      level={level}
+                      skill={skillpath}
+                      levelChange={this.props.levelChange}
+                      disabled={this.props.isEditable}
+                      guidelines={guidelines}
+                    />
+                  </div>
                 </div>
-              </div>
-            </Typography>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails className={classes.secondaryHeading}>
-            {' '}
-            {this.props.summary}
-            {/* <Typography>{'Latest Milestone' + latestMilestone}</Typography> */}
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
+              </Typography>
+            </ExpansionPanelSummary>
+          </ExpansionPanel>
+        )}
       </div>
     );
   }
