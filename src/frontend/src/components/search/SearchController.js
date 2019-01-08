@@ -117,6 +117,7 @@ class SearchController extends Component {
     const { state } = this.props;
     const { search, formState } = state;
     const { showResults, results } = search;
+
     return (
       <div>
         <SearchForm
