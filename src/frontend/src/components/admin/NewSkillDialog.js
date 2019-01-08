@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 // components
-import { DateInput, TextArea, LevelPicker } from 'components/common/InputFields';
 import SingleSelect from 'components/common/SingleSelect';
 
 // material-ui
@@ -14,7 +13,6 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { withStyles } from '@material-ui/core/styles';
-import InputAdornment from '@material-ui/core/InputAdornment';
 import classNames from 'classnames';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -23,7 +21,7 @@ import Card from '@material-ui/core/Card';
 
 // redux
 import store from 'Store';
-import { closeProfileDialog, updateInput, resetForm, setOwnProfile, setError } from 'actions';
+import { closeProfileDialog, resetForm, setError } from 'actions';
 
 // Rest
 import RestPoints from 'rest/Init';
