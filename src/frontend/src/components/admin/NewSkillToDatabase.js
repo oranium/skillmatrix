@@ -46,11 +46,11 @@ class FormDialog extends Component {
     open: false,
     skillname: '',
     guideline: {
-      '1': 'mangelhaft',
-      '2': 'ausreichend',
-      '3': 'befriedigend',
-      '4': 'gut',
-      '5': 'sehr gut',
+      '1': 'Insufficient',
+      '2': 'Sufficient/Below Average',
+      '3': 'Satisfactory / Average',
+      '4': 'Good',
+      '5': 'Excellent',
     },
   };
 
@@ -138,7 +138,7 @@ class FormDialog extends Component {
 
               <TextField
                 id="outlined-with-placeholder"
-                label="skillname"
+                label="skill name"
                 placeholder="write the skill to add"
                 className={classes.textField}
                 margin="normal"
