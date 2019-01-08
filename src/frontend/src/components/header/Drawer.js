@@ -37,6 +37,11 @@ class TemporaryDrawer extends Component {
     store.dispatch(openProfileDialog('newSkill'));
   }
 
+  openRemoveSkillDialog() {
+    // open dialog to remove any skill from database
+    store.dispatch(openProfileDialog('removeSkill'));
+  }
+
   static switchToPage(page) {
     store.dispatch(switchPage(page));
   }
@@ -67,7 +72,7 @@ class TemporaryDrawer extends Component {
             </ListItemIcon>
             <ListItemText primary="New Skill" />
           </ListItem>
-          <ListItem button>
+          <ListItem button onClick={this.openRemoveSkillDialog}>
             <ListItemIcon>
               <DeleteIcon />
             </ListItemIcon>

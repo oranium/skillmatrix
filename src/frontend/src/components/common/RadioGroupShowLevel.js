@@ -32,7 +32,7 @@ class RadioButtonsGroup extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, guidelines } = this.props;
     const numbers = ['1', '2', '3', '4', '5'];
     const rdBtns = numbers.map((num, index) =>
       num < this.props.level || num > this.props.level ? (
@@ -44,7 +44,12 @@ class RadioButtonsGroup extends React.Component {
           disabled={!this.props.disabled}
         /> //add disabled to the props to disable
       ) : (
-        <FormControlLabel key={index} value={num} control={<Radio checked />} label={num} />
+        <FormControlLabel
+          key={index}
+          value={num}
+          control={<Radio checked title={guidelines[num]} />}
+          label={num}
+        />
       ),
     );
     return (

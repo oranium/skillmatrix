@@ -19,7 +19,7 @@ export async function updateAllSkills() {
 }
 
 export async function updateOwnProfile(apiUrl, data) {
-  const Rest = new RestCom(apiUrl, JSON.stringify(data));
+  const Rest = new RestCom(apiUrl, data);
   try {
     const newProfile = await Rest.post();
     store.dispatch(setOwnProfile(newProfile));

@@ -5,6 +5,7 @@ const RestPoints = {
   setSkills: '/setskills',
   getSkills: '/getskills',
   createSkill: '/createskill',
+  removeSkill: '/removeSkill',
   milestone: '/milestone',
 
 };
