@@ -418,6 +418,7 @@ class DatabaseController:
                 subcategories_model.append(database_controller.build_subcategories(username, category))
             if subcategories_model:
                 return SkillModel(skillname,
+                                  skillpath,
                                   subcategories=subcategories_model,
                                   milestones=database_controller.get_milestones(username, skillname),
                                   root=True
@@ -432,6 +433,7 @@ class DatabaseController:
                                                              database_controller.get_skill_id(skillname)
                                                              )
             return SkillModel(skillname,
+                              skillpath,
                               level=level,
                               subcategories=subcategories_model,
                               milestones=database_controller.get_milestones(username, skillname)
@@ -442,6 +444,7 @@ class DatabaseController:
                                                      database_controller.get_skill_id(skillname)
                                                      )
         return SkillModel(skillname,
+                          skillpath,
                           level=level,
                           milestones=database_controller.get_milestones(username, skillname)
                           )
@@ -517,7 +520,6 @@ class DatabaseController:
                                              level=level,
                                              date=date).delete()
         db.session.commit()
-
 
 
 database_controller = DatabaseController()
