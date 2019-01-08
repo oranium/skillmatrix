@@ -64,7 +64,7 @@ class ProfileController extends Component {
         }
       });
     });
-    //console.log(latestChanges);
+    console.log(latestChanges);
     // send skill
     let Rest = new RestCom(RestPoints.setSkills, JSON.stringify(latestChanges));
     //todo remove JSON.stringify

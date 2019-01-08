@@ -87,7 +87,7 @@ class FormDialog extends Component {
       category,
       ...this.state,
     };
-    console.log(request);
+    // console.log(request);
 
     const Rest = new RestCom(RestPoints.createSkill, JSON.stringify(request));
 
