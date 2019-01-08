@@ -31,7 +31,7 @@ export default class FormDialog extends React.Component {
   getAllSkillsRecursive(skill, allSkills, aktPath) {
     allSkills.push(aktPath);
     skill.subcategories.map(subskill => {
-      this.getAllSkillsRecursive(subskill, allSkills, aktPath + '>' + subskill.skillname);
+      this.getAllSkillsRecursive(subskill, allSkills, aktPath + '/' + subskill.skillname);
     });
     return allSkills;
   }
@@ -43,7 +43,7 @@ export default class FormDialog extends React.Component {
     }
     skill.subcategories.map(subskill => {
       if (
-        this.getaktLevelRecursive(subskill, aktPath + '>' + subskill.skillname, path, level) !== 0
+        this.getaktLevelRecursive(subskill, aktPath + '/' + subskill.skillname, path, level) !== 0
       ) {
         level = this.getaktLevelRecursive(
           subskill,
@@ -78,7 +78,7 @@ export default class FormDialog extends React.Component {
     const { datefield, textarea, singleselect } = state.formState;
     var currentProfile = profiles[person];
 
-    const aktSkill = singleselect.value.split('>').pop();
+    var aktSkill = singleselect.value.split('/').pop();
 
     var aktLevel = 0;
 
@@ -117,7 +117,7 @@ export default class FormDialog extends React.Component {
             currentProfile.skills[index].subcategories[subskill],
             [],
             currentProfile.skills[index].skillname +
-              '>' +
+              '/' +
               currentProfile.skills[index].subcategories[subskill].skillname,
           );
         } else
@@ -126,7 +126,7 @@ export default class FormDialog extends React.Component {
               currentProfile.skills[index].subcategories[subskill],
               [],
               currentProfile.skills[index].skillname +
-                '>' +
+                '/' +
                 currentProfile.skills[index].subcategories[subskill].skillname,
             ),
           );

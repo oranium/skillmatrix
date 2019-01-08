@@ -123,7 +123,10 @@ export const LevelPicker = withStyles(styles)((props) => {
   const id = 'levelfield';
   const numbers = ['1', '2', '3', '4', '5'];
   let className = '';
-
+  var guidelines = {1: "", 2: "", 3: "", 4: "", 5: ""};
+  if(props.guidelines !== undefined){  
+    guidelines = props.guidelines;
+  }
   if (props.data.error) {
     className = classes.error;
   }
@@ -135,7 +138,7 @@ export const LevelPicker = withStyles(styles)((props) => {
       onChange={evt => props.onChange(id, evt.target.value)}
       value={value}
       aria-label={`Level ${value}`}
-      title={`Level ${value}`}
+      title={guidelines[value]}
       className={className}
     />
   ));

@@ -41,7 +41,7 @@ class RadioButtonsGroup extends React.Component {
         <FormControlLabel
           key={index}
           value={num}
-          control={<Radio />}
+          control={<Radio title={`Level ${num}`} />}
           label={num}
           disabled={!this.props.disabled}
         />

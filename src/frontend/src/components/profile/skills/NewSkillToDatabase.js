@@ -96,11 +96,16 @@ class FormDialog extends Component {
     const state = store.getState();
 
     const { allSkills, allCategories } = state;
-    const skillList = [...allSkills, ...allCategories];
-    const { showDialog } = state.profile;
-    var { datefield, textarea, levelfield, singleselect } = state.formState;
-    const { classes } = this.props;
 
+    var tmpAllSkills = [];
+    Object.keys(allSkills).map(index => {
+      for (var key in allSkills[index]) tmpAllSkills.push(key);
+    });
+
+    const skillList = [...tmpAllSkills, ...allCategories];
+
+    const { showDialog } = state.profile;
+    const { classes } = this.props;
     return (
       <div className={classes.root}>
         <Dialog
@@ -124,7 +129,7 @@ class FormDialog extends Component {
 
               <TextField
                 id="outlined-with-placeholder"
-                label="Skill input"
+                label="skillname"
                 placeholder="write the skill to add"
                 className={classes.textField}
                 margin="normal"
@@ -164,7 +169,7 @@ class FormDialog extends Component {
                   <ListItem>
                     <TextField
                       label="Level 3: "
-                      id="simple-start-adornment"
+                      id="level3"
                       className={classNames(classes.margin, classes.textField)}
                       placeholder={this.state.guideline['3']}
                       onChange={event => this.handleGuidelineChange('3', event)}
@@ -174,7 +179,7 @@ class FormDialog extends Component {
                   <ListItem>
                     <TextField
                       label="Level 4: "
-                      id="simple-start-adornment"
+                      id="level4"
                       className={classNames(classes.margin, classes.textField)}
                       placeholder={this.state.guideline['4']}
                       onChange={event => this.handleGuidelineChange('4', event)}
@@ -184,7 +189,7 @@ class FormDialog extends Component {
                   <ListItem>
                     <TextField
                       label="Level 5: "
-                      id="simple-start-adornment"
+                      id="level5"
                       className={classNames(classes.margin, classes.textField)}
                       placeholder={this.state.guideline['5']}
                       onChange={event => this.handleGuidelineChange('5', event)}
