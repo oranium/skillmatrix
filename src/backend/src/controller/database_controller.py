@@ -308,44 +308,45 @@ class DatabaseController:
                             for the first level
                             Example: ['gar nicht gut', 'neue information', 'mittel', 'schon gut', 'sehr gut']
                 """
-        information_list = []
+        guidelines = []
         level = 1
-        while (level < 6):
-            guideline = Guidelines.query.filter(skill_id = skill_id, level = level).first()
-            information_list.append(guideline.information)
+        while level < 6:
+            guideline = Guidelines.query.filter(skill_id=skill_id, level=level).first()
+            guidelines.append(guideline.information)
             level = level + 1
-        return information_list
+        return guidelines
 
     @staticmethod
-    def change_guidelines(skill_id, level, new_information):
+    def change_guidelines(skill_id, level, new_guideline):
         """Checks if there is already certain guideline, if the guideline exists, it gets deleted and rebuild with new
             information. Else the function just adds a new guideline.
                 Args:
                     skill_id (`int`): id of a certain skill, where the information has to be changed
                     level (`int`): guideline-level, where the information has to be changed
-                    new_information (`str`): new information for the certain guideline
+                    new_guideline (`str`): new information for the certain guideline
                 """
-        if Guidelines.query.filter_by(skill_id = skill_id, level = level).all():
-            #print("gibt es schon")
-            d = Guidelines.query.filter_by(skill_id = skill_id, level = level).first()
-            db.session.delete(d)
+        if Guidelines.query.filter_by(skill_id=skill_id, level=level).all():
+            prev_guideline = Guidelines.query.filter_by(skill_id=skill_id, level=level).first()
+            db.session.delete(prev_guideline)
             db.session.commit()
-        newguideline = Guidelines(skill_id=skill_id, level=level, information=new_information)
-        db.session.add(newguideline)
+        new_guideline = Guidelines(skill_id=skill_id, level=level, information=new_guideline)
+        db.session.add(new_guideline)
         db.session.commit()
 
     @staticmethod
-    def create_guidelines(skill_id, information_list):
+    def create_guidelines(skill_id, guidelines):
         """Create all 5 guidelines for one skill in the database.
                    Args:
-                       skill_id (`int`): the id of the skill to ad to the guidelinetable.
-                       information_list `[str]`: a list of strings that should look like this:
+                       skill_id (`int`): the id of the skill to ad to the guideline table.
+                       guidelines `[str]`: a list of strings that should look like this:
                                                     [text for level 1, text for level 2,...,text for level 5]
                 """
         level = 1
-        for information in information_list:
-            newguideline = Guidelines(skill_id=skill_id, level=level, information=information)
-            db.session.add(newguideline)
+        if not len(guidelines) == 5:
+            raise ValueError("Guidelines does not have 5 elements.")
+        for guideline in guidelines:
+            new_guideline = Guidelines(skill_id=skill_id, level=level, information=guideline)
+            db.session.add(new_guideline)
             db.session.commit()
             level = level + 1
 
