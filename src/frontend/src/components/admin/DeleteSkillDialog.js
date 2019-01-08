@@ -61,11 +61,11 @@ class RemoveSkillDialog extends Component {
 
     const request = {
       username,
-      skillToRemove,
+      skill: skillToRemove,
       forAll: true,
     };
 
-    const Rest = new RestCom(RestPoints.removeSkill, request);
+    const Rest = new RestCom(RestPoints.deleteSkill, request);
     //todo remove stringify
 
     try {
