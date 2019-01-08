@@ -43,6 +43,7 @@ const styles = theme => ({
 
 class FormDialog extends Component {
   state = {
+    open: false,
     skillname: '',
     guideline: {
       '1': 'mangelhaft',
@@ -68,6 +69,13 @@ class FormDialog extends Component {
     store.dispatch(closeProfileDialog);
   };
 
+  handleClickOpen = () => {
+    this.setState({ open: true });
+  };
+  handleClickClose = () => {
+    this.setState({ open: false });
+  };
+
   async handleSubmit(Skill) {
     //todo API
     var category = store.getState().formState.singleselect.value;
@@ -88,6 +96,7 @@ class FormDialog extends Component {
     } catch (e) {
       store.dispatch(setError(e.message));
     }
+    this.handleClickClose();
     this.handleClose();
 
     await updateAllSkills();
@@ -203,12 +212,44 @@ class FormDialog extends Component {
               <Button onClick={this.handleClose} color="primary">
                 Cancel
               </Button>
-              <Button onClick={() => this.handleSubmit(true)} color="primary">
-                Submit
-              </Button>
+              {store.getState().formState.singleselect.value.length == 0 ? (
+                <Button onClick={() => this.handleClickOpen()} color="primary">
+                  Submit
+                </Button>
+              ) : (
+                <Button onClick={() => this.handleSubmit(true)} color="primary">
+                  Submit
+                </Button>
+              )}
             </DialogActions>
           </div>
         </Dialog>
+        <div className="confirm-dialog">
+          <Dialog
+            open={this.state.open}
+            onClose={this.handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">
+              {'Are you sure you want to add "' + this.state.skillname + '" as a new category?'}
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                You didn't choose a category. This means you will add the skill as new main category
+                which has no attributes.
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={this.handleClickClose} color="primary">
+                Cancel
+              </Button>
+              <Button onClick={() => this.handleSubmit(true)} color="primary" autoFocus>
+                Submit
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </div>
       </div>
     );
   }
