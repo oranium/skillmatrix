@@ -118,10 +118,10 @@ Die Benutzeroberfläche wird mit React und Komponenten von Material-UI erstellt.
 ....
 {
 "skillname": String,
+"skillpath": String,
 "level": Integer,
 "milestones":[Milestone]
-"subcategories":[Skill]
-"root" = bool 
+"root" = bool
 }
 ....
 *Milestone hat folgende Form:*
@@ -156,7 +156,7 @@ Die Benutzeroberfläche wird mit React und Komponenten von Material-UI erstellt.
          }
 }
 ....
-_Anmerkung: Keys entsprechen dem Namen des Skills, Integers dem gewünschten Mindestlevel, der standardmäßig 1 ist._
+_Anmerkung: Keys in "query" entsprechen dem Namen des Skills, Integers dem gewünschten Mindestlevel, der standardmäßig 1 ist._
 
 * Form der Antwort (json):
 ....
@@ -174,7 +174,7 @@ _Anmerkung: Keys entsprechen dem Namen des Skills, Integers dem gewünschten Min
 ....
 _Anmerkung: Die Erklärung zu Profile ist unter dem Punkt /login zu finden_
 
-=== /getskills
+=== /getSkills
 * erlaubte Anfragen: GET, POST, OPTIONS
 
 * Form der POST-Anfrage (json):
@@ -195,12 +195,18 @@ _Anmerkung: Die Erklärung zu Profile ist unter dem Punkt /login zu finden_
 * Form der Antwort (GET, json):
 ....
 {
-"allSkills": [String]
+"allSkills": [String:{
+                        1:String,
+                        2:String,
+                        ...,
+                        5:String}
+                ]
 "categories":[String]
 }
 ....
+_Anmerkung: Der Objektkey in allSkills ist jeweils der (Pfad-)Name des Skills. Das zugehörige Objekt sind die Guidelines für Level 1-5_
 
-=== /setskills
+=== /setSkills
 * erlaubte Anfragen: POST, OPTIONS
 * Form der POST-Anfrage (json): 
 ....
@@ -222,7 +228,7 @@ Profile
 ....
 _Anmerkung: Die Erklärung zu Profile ist unter dem Punkt /login zu finden_
 
-=== /createskill
+=== /createSkill
 * erlaubte Anfragen: POST, OPTIONS
 * Form der POST-Anfrage (json): 
 ....
@@ -252,6 +258,45 @@ _Anmerkung: Die Erklärung zu Profile ist unter dem Punkt /login zu finden_
 "level": Int,
 "date": "YYYY-MM-DD",
 "comment": String
+}
+....
+
+* Form der Antwort:
+....
+{
+Profile
+}
+....
+_Anmerkung: Die Erklärung zu Profile ist unter dem Punkt /login zu finden_
+
+=== /deleteSkill
+* erlaubte Anfragen: POST, OPTIONS
+* Form der POST-Anfrage (json): 
+....
+{
+"username": String,
+"skill": String,
+"forAll": Boolean
+}
+....
+
+* Form der Antwort:
+....
+{
+Profile
+}
+....
+_Anmerkung: Die Erklärung zu Profile ist unter dem Punkt /login zu finden_
+
+=== /deleteMilestone
+* erlaubte Anfragen: POST, OPTIONS
+* Form der POST-Anfrage (json): 
+....
+{
+"username": String,
+"skill": String,
+"level": Int,
+"date": "YYYY-MM-DD",
 }
 ....
 
