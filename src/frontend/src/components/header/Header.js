@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import { PowerSettingsNew, Search } from '@material-ui/icons';
 import MenuIcon from '@material-ui/icons/Menu';
-import NewSkillToDatabase from 'components/admin/NewSkillToDatabase';
+import NewSkillToDatabase from 'components/admin/NewSkillDialog';
 import RemoveSkillFromDatabase from 'components/admin/DeleteSkillDialog';
 
 // import redux parts
