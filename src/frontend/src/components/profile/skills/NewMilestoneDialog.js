@@ -37,7 +37,6 @@ export default class FormDialog extends React.Component {
       await updateOwnProfile(RestPoints.milestone, milestone);
     }
     this.handleClose();
-    //todo change to new api result and remove JSON stringify
   }
 
   handleChange(id, value) {

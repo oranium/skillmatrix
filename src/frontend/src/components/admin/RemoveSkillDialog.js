@@ -65,7 +65,7 @@ class RemoveSkillDialog extends Component {
       forAll: true,
     };
 
-    const Rest = new RestCom(RestPoints.removeSkill, JSON.stringify(request));
+    const Rest = new RestCom(RestPoints.removeSkill, request);
     //todo remove stringify
 
     try {

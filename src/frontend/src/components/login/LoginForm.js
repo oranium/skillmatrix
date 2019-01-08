@@ -82,7 +82,7 @@ class SignIn extends Component {
       password: passwordInput.value,
     };
 
-    const Rest = new RestCom(RestPoints.login, JSON.stringify(loginCredentials));
+    const Rest = new RestCom(RestPoints.login, loginCredentials);
 
     try {
       const { user } = await Rest.post();

@@ -52,7 +52,7 @@ const errorHandling = (error) => {
 class RestCom {
   constructor(restPoint, data = '') {
     this.restApi = APISERVER + restPoint;
-    this.data = data;
+    this.data = JSON.stringify(data);
     this.headers = {
       headers: {
         'Access-Control-Allow-Origin': '*',
@@ -63,14 +63,18 @@ class RestCom {
   }
 
   static handleThen(ServerResponse) {
-    store.dispatch(toggleSpinner(false));
     return ServerResponse.data;
+  }
+
+  static endLoading() {
+    store.dispatch(toggleSpinner(false));
   }
 
   async post() {
     return axios
       .post(this.restApi, this.data, this.headers)
-      .then(ServerResponse => RestCom.handleThen(ServerResponse))
+      .then(ServerResponse => ServerResponse.data)
+      .finally(RestCom.endLoading)
       .catch(error => errorHandling(error));
   }
 
@@ -78,6 +82,7 @@ class RestCom {
     return axios
       .get(this.restApi, this.headers)
       .then(ServerResponse => RestCom.handleThen(ServerResponse))
+      .finally(RestCom.endLoading)
       .catch(error => errorHandling(error));
   }
 
@@ -85,6 +90,7 @@ class RestCom {
     return axios
       .delete(this.restApi, this.headers)
       .then(ServerResponse => RestCom.handleThen(ServerResponse))
+      .finally(RestCom.endLoading)
       .catch(error => errorHandling(error));
   }
 }
