@@ -1,4 +1,13 @@
 // default map for clean input fields
+
+const heute = new Date();
+  var month = heute.getMonth() + 1
+  var day = heute.getDate()
+
+  if(day < 10 ) day = "0" + day;
+  if(month < 10 ) month = "0" + month
+  
+  const heuteString= heute.getFullYear() + "-" + month + "-" + day;
 const defaultFormState = {
   singleselect: {
     value: '',
@@ -16,7 +25,7 @@ const defaultFormState = {
   },
   datefield: {
     name: 'Date',
-    value: '',
+    value: heuteString,
     error: false,
   },
   textarea: {
