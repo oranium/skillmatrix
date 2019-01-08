@@ -4,6 +4,7 @@ import {
   formState,
   user,
   page,
+  drawer,
   error,
   search,
   profile,
@@ -14,6 +15,7 @@ import {
 export default combineReducers({
   formState,
   page,
+  drawer,
   user,
   error,
   search,

@@ -113,3 +113,8 @@ export const setSearchError = error => ({
 export const resetSearch = {
   type: 'RESETSEARCH',
 };
+
+export const toggleDrawer = open => ({
+  type: 'TOGGLEDRAWER',
+  open,
+});

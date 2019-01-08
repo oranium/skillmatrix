@@ -69,8 +69,8 @@ class ProfileController extends Component {
     let Rest = new RestCom(RestPoints.setSkills, JSON.stringify(latestChanges));
     //todo remove JSON.stringify
     try {
-      const { data } = await Rest.post();
-      store.dispatch(setOwnProfile(data));
+      const newProfile = await Rest.post();
+      store.dispatch(setOwnProfile(newProfile));
     } catch (e) {
       store.dispatch(setError(e.message));
     }

@@ -79,13 +79,7 @@ class SignIn extends Component {
     const Rest = new RestCom(RestPoints.login, JSON.stringify(loginCredentials));
 
     try {
-      const { data } = await Rest.post();
-      const { user } = data;
-      //       {
-      // "username": String,
-      // "name": String,
-      // "skills": [Skill]
-      // }
+      const { user } = await Rest.post();
       const { username, name } = user;
       store.dispatch(setUser({ username, name }));
       store.dispatch(setOwnProfile(user));

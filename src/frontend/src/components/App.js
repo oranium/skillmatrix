@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 // import redux parts
 import store from 'Store';
 import {
-  updateInput, switchPage, setInputError, resetForm, setAllSkills, setError,
+  updateInput, switchPage, setInputError, resetForm, toggleDrawer,
 } from 'actions';
 import { errorDisplayType } from 'reducers/reducers';
 
@@ -14,10 +14,7 @@ import ProfileController from 'components/profile/ProfileController';
 import LoginForm from 'components/login/LoginForm';
 import Header from 'components/header/Header';
 import ErrorDialog from 'components/error/ErrorDialog';
-
-// Rest
-import RestPoints from 'rest/Init';
-import RestCom from 'rest/Rest';
+import Drawer from 'components/header/Drawer';
 
 class App extends Component {
   // user wants to reset all input fields
@@ -25,12 +22,9 @@ class App extends Component {
     store.dispatch(resetForm);
   }
 
-  // async componentWillMount() {
-  //   await this.componentDidMount();
-  // }
-
-  // async componentDidMount() {
-  // }
+  static handleToggleDrawer(open) {
+    store.dispatch(toggleDrawer(open));
+  }
 
   // user inputs something into an input field
   handleChange(id, value) {
@@ -68,7 +62,9 @@ class App extends Component {
 
   render() {
     const { state } = this.props;
-    const { page, error, user } = state;
+    const {
+      page, error, user, drawer,
+    } = state;
     const { hasError, displayType, message } = error;
 
     let main;
@@ -98,7 +94,8 @@ class App extends Component {
 
     return (
       <div>
-        <Header state={state} user={user} />
+        <Header state={state} user={user} openDrawer={() => App.handleToggleDrawer(true)} />
+        <Drawer name={user.name} open={drawer} closeDrawer={() => App.handleToggleDrawer(false)} />
         <main>
           {main}
           {hasError && displayType === errorDisplayType.window && <ErrorDialog state={state} />}

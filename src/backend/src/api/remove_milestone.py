@@ -1,4 +1,4 @@
-"""Contains the CreateSkill API"""
+"""Contains the RemoveMilestone API"""
 import sys
 
 import json
@@ -7,19 +7,22 @@ from flask_restful import Resource, reqparse
 from controller.controller import controller
 
 
-class CreateSkill(Resource):
-    """The CreateSkill-API takes the arguments and hands them over to the backend controller to create a new skill"""
+class RemoveMilestone(Resource):
+    """The RemoveSkill-API takes the arguments and hands them over to the backend controller
+       to delete a skill either for a user or from the whole database."""
 
     def post(self):
         parser = reqparse.RequestParser()
         parser.add_argument("username", type=str)
         parser.add_argument("skillname", type=str)
-        parser.add_argument("category", type=str)
+        parser.add_argument("level", type=int)
+        parser.add_argument("date", type=str)
         args = parser.parse_args()
         try:
-            message = json.dumps(controller.create_skill(args["username"],
+            message = json.dumps(controller.remove_skill(args["username"],
                                                          args["skillname"],
-                                                         args["category"])
+                                                         args["level"],
+                                                         args["date"])
                                  )
             return Response(message, status=200, mimetype="application/json")
         except TimeoutError:

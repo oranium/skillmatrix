@@ -1,4 +1,4 @@
-"""Contains the CreateSkill API"""
+"""Contains the Guidelines API for creating and updating guidelines"""
 import sys
 
 import json
@@ -7,21 +7,28 @@ from flask_restful import Resource, reqparse
 from controller.controller import controller
 
 
-class CreateSkill(Resource):
-    """The CreateSkill-API takes the arguments and hands them over to the backend controller to create a new skill"""
+class Guideline(Resource):
+    """The Guideline-API takes the arguments and hands them over to the backend controller
+       to create or update guidelines for a skill.
+    """
 
     def post(self):
         parser = reqparse.RequestParser()
         parser.add_argument("username", type=str)
         parser.add_argument("skillname", type=str)
-        parser.add_argument("category", type=str)
+        parser.add_argument("guidelines", type=dict)
         args = parser.parse_args()
         try:
+            guidelines = []
+            for guideline in args["guidelines"].items()[1]:
+                guidelines.append(guideline)
             message = json.dumps(controller.create_skill(args["username"],
                                                          args["skillname"],
-                                                         args["category"])
+                                                         guidelines)
                                  )
             return Response(message, status=200, mimetype="application/json")
+        except ValueError:
+            return Response(status=400)
         except TimeoutError:
             return Response(status=504)
         except PermissionError:

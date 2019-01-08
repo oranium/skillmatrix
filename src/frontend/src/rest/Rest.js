@@ -64,13 +64,20 @@ class RestCom {
   async post() {
     return axios
       .post(this.restApi, this.data, this.headers)
-      .then(ServerResponse => ServerResponse)
+      .then(ServerResponse => ServerResponse.data)
       .catch(error => errorHandling(error));
   }
 
   async get() {
     return axios
       .get(this.restApi, this.headers)
+      .then(ServerResponse => ServerResponse.data)
+      .catch(error => errorHandling(error));
+  }
+
+  async delete() {
+    return axios
+      .delete(this.restApi, this.headers)
       .then(ServerResponse => ServerResponse.data)
       .catch(error => errorHandling(error));
   }

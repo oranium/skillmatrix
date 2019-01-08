@@ -4,9 +4,9 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import { AccountCircle, PowerSettingsNew, Search, Add } from '@material-ui/icons';
+import { PowerSettingsNew, Search } from '@material-ui/icons';
+import MenuIcon from '@material-ui/icons/Menu';
 import NewSkillToDatabase from '../profile/skills/NewSkillToDatabase';
-
 
 // import redux parts
 import store from '../../Store';
@@ -38,10 +38,6 @@ const styles = {
 };
 
 class ButtonAppBar extends Component {
-  static openNewSkillDialog() {
-    // open dialog to add completly new skill to database
-    store.dispatch(openProfileDialog('newSkill'));
-  }
   static switchToPage(page) {
     store.dispatch(switchPage(page));
   }
@@ -55,7 +51,7 @@ class ButtonAppBar extends Component {
     store.dispatch(resetSearch);
     await updateAllSkills();
     ButtonAppBar.switchToPage('search');
-  };
+  }
 
   async handleLogout() {
     const { state } = this.props;
@@ -78,7 +74,7 @@ class ButtonAppBar extends Component {
   }
 
   render() {
-    const { classes, user } = this.props;
+    const { classes, user, openDrawer } = this.props;
 
     return (
       <div className={classes.root}>
@@ -86,25 +82,16 @@ class ButtonAppBar extends Component {
           <Toolbar>
             <IconButton
               className={classes.menuButton}
-              onClick={this.switchToProfilePage}
+              onClick={openDrawer}
               color="inherit"
               aria-label="own profile"
               title="show own profile"
             >
-              <AccountCircle />
+              <MenuIcon />
             </IconButton>
             <Typography variant="h6" color="inherit" className={classes.grow}>
               {user.name}
             </Typography>
-            <IconButton
-              className={classes.menuButton}
-              onClick={this.constructor.openNewSkillDialog}
-              color="inherit"
-              aria-label="add new skill"
-              title="new skill"
-            >
-              <Add onClick={this.openNewSkillDialog} />
-            </IconButton>
             <IconButton
               className={classes.menuButton}
               onClick={this.switchToSearchPage}

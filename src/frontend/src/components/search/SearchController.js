@@ -7,14 +7,17 @@ import ControlledExpansionPanels from 'components/common/ControlledExpansionPane
 
 // redux
 import store from 'Store';
-import { setError, setSearchResults, showSearchResults, setSearchError } from 'actions';
+import { setError, setSearchResults, showSearchResults, setSearchError, addProfiles } from 'actions';
 
 // Rest
 import RestPoints from 'rest/Init';
 import RestCom from 'rest/Rest';
-import { addProfiles } from 'actions';
+import { updateAllSkills } from 'rest/handleCommonRequests';
 
 class SearchController extends Component {
+  componentDidMount() {
+    updateAllSkills();
+  }
   // build query object for api request
   getSearchQuery = searchValues => {
     const query = {};
@@ -29,28 +32,23 @@ class SearchController extends Component {
   storeAllProfiles = results => {
     const { has_all, has_some } = results;
     const allProfiles = [...has_all, ...has_some];
-    console.log(allProfiles);
     store.dispatch(addProfiles(allProfiles));
   };
 
   searchTree = tree => {
-    var stack = [],
+    var stack = [...tree],
       results = [],
       node,
       ii;
-    stack.push(tree);
 
     while (stack.length > 0) {
       node = stack.pop();
       if (this.query.hasOwnProperty(node.skillname)) {
-        results.push(
-          {
-            skillname: node.skillname,
-            level: node.level,
-            milestones: node.milestones,
-          }
-        )
-      } else if (node.subcategories && node.subcategories.length) {
+        //remove subcategories to flatten tree and reduce weight
+        const {['subcategories']: value, ...skill} = node;
+        results.push(skill);
+      } 
+      if (node.subcategories && node.subcategories.length) {
         for (ii = 0; ii < node.subcategories.length; ii += 1) {
           stack.push(node.subcategories[ii]);
         }
@@ -90,7 +88,6 @@ class SearchController extends Component {
     e.preventDefault();
     const { state } = this.props;
     const { username } = state.user;
-    console.log(username);
     const { searchValues } = state.search;
     if (!Object.keys(searchValues).length) {
       // search field is empty
@@ -104,9 +101,9 @@ class SearchController extends Component {
     const Rest = new RestCom(RestPoints.search, JSON.stringify(search));
     // try to send data to api and
     try {
-      const { data } = await Rest.post();
-      this.storeAllProfiles(data.results);
-      this.storeSearchResults(data);
+      const response = await Rest.post();
+      this.storeAllProfiles(response.results);
+      this.storeSearchResults(response);
       // show results to user
       store.dispatch(showSearchResults);
     } catch (e) {

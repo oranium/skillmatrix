@@ -20,7 +20,7 @@ import { closeProfileDialog, updateInput, resetForm, setOwnProfile, setError } f
 
 // Rest
 import RestPoints from 'rest/Init';
-import RestCom from 'rest/Rest';
+import { updateOwnProfile } from 'rest/handleCommonRequests';
 
 export default class FormDialog extends React.Component {
   handleClose = () => {
@@ -62,13 +62,7 @@ export default class FormDialog extends React.Component {
       milestone = false;
     }
     if (milestone) {
-      const Rest = new RestCom(RestPoints.milestone, JSON.stringify(milestone));
-      try {
-        const { data } = await Rest.post();
-        store.dispatch(setOwnProfile(data));
-      } catch (e) {
-        store.dispatch(setError(e.message));
-      }
+      await updateOwnProfile(RestPoints.milestone, milestone);
     }
     this.handleClose();
     //todo change to new api result and remove JSON stringify

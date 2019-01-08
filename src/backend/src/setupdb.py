@@ -16,6 +16,12 @@ def checkdb():
     if not engine.dialect.has_table(engine, 'hierarchy'):
         Base = declarative_base()
 
+        class Guidelines(Base):
+            __tablename__ = 'guidelines'
+            skill_id = Column(Integer, primary_key=True)
+            level = Column(Integer, primary_key=True)
+            information = Column(Text, nullable=True, default='')
+
         class Hierarchy(Base):
             __tablename__ = 'hierarchy'
             parent_skill_id = Column(Integer, ForeignKey('skill.id'), nullable=True)

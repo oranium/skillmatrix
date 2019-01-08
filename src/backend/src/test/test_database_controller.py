@@ -105,7 +105,7 @@ class testDatabaseController(unittest.TestCase):
         self.assertEquals(result, expected_result)
 
     def test_get_subcategories(self):
-        result = database_controller.get_sub_categories("Valdemar-Forsberg", "Java")
+        result = database_controller.get_subcategories("Valdemar-Forsberg", "Java")
         expected_result = ["JavaScript", "Python"]
         self.assertEqual(result, expected_result)
 

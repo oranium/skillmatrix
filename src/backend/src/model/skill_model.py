@@ -6,7 +6,7 @@ class SkillModel(Model):
 
     """This class converts a skill to a JSON which is a component of a Profile """
 
-    def __init__(self, skill_name, level=None, subcategories=[], root=False, milestones=[]):
+    def __init__(self, skill_name, level=1, subcategories=[], root=False, milestones=[]):
         self.subcategories = subcategories
         self.skill_name = skill_name
         self.level = level

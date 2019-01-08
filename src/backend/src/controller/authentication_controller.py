@@ -42,8 +42,6 @@ class AuthenticationController:
         AttributeError for wrong credentials, TimeoutError if the AD doesn't respond.
         """
         try:
-            print(username, file=sys.stderr)
-            print(password, file=sys.stderr)
             if authentication_controller.authentication == "NTLM":
                 login_name = authentication_controller.login_prefix+username
                 print(login_name, file=sys.stderr)
