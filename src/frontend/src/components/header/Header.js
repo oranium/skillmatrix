@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import { PowerSettingsNew, Search } from '@material-ui/icons';
 import MenuIcon from '@material-ui/icons/Menu';
-import NewSkillToDatabase from 'components/admin/NewSkillDialog';
+import NewSkillToDatabase from 'components/admin/NewSkillToDBDialog';
 import RemoveSkillFromDatabase from 'components/admin/DeleteSkillDialog';
 
 // import redux parts
@@ -17,7 +17,6 @@ import {
   resetState,
   changeProfileOwner,
   resetSearch,
-  openProfileDialog,
 } from 'actions';
 
 // Rest
@@ -59,7 +58,7 @@ class ButtonAppBar extends Component {
     const user = {
       username: state.user.username,
     };
-    const Rest = new RestCom(RestPoints.logout, JSON.stringify(user));
+    const Rest = new RestCom(RestPoints.logout, user);
     try {
       await Rest.post();
       // logout in frontend
