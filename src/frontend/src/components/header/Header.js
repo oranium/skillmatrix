@@ -6,11 +6,11 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import { PowerSettingsNew, Search } from '@material-ui/icons';
 import MenuIcon from '@material-ui/icons/Menu';
-import NewSkillToDatabase from '../admin/NewSkillToDatabase';
-import RemoveSkillFromDatabase from '../admin/RemoveSkillDialog';
+import NewSkillToDatabase from 'components/admin/NewSkillToDatabase';
+import RemoveSkillFromDatabase from 'components/admin/DeleteSkillDialog';
 
 // import redux parts
-import store from '../../Store';
+import store from 'Store';
 import {
   switchPage,
   setError,
@@ -21,8 +21,8 @@ import {
 } from 'actions';
 
 // Rest
-import RestPoints from '../../rest/Init';
-import RestCom from '../../rest/Rest';
+import RestPoints from 'rest/Init';
+import RestCom from 'rest/Rest';
 import { updateAllSkills } from 'rest/handleCommonRequests';
 
 const styles = {
