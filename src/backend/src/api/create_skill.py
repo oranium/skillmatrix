@@ -14,11 +14,13 @@ class CreateSkill(Resource):
         parser = reqparse.RequestParser()
         parser.add_argument("username", type=str)
         parser.add_argument("skillname", type=str)
+        parser.add_argument("skillpath", type=str)
         parser.add_argument("category", type=str)
         args = parser.parse_args()
         try:
             message = json.dumps(controller.create_skill(args["username"],
                                                          args["skillname"],
+                                                         args["skillpath"],
                                                          args["category"])
                                  )
             return Response(message, status=200, mimetype="application/json")
