@@ -107,8 +107,8 @@ class FormDialog extends Component {
     const { allSkills, allCategories } = state;
 
     var tmpAllSkills = [];
-    Object.keys(allSkills).map(index => {
-      for (var key in allSkills[index]) tmpAllSkills.push(key);
+    Object.keys(allSkills).map(key => {
+      tmpAllSkills.push(key);
     });
 
     const skillList = [...tmpAllSkills, ...allCategories];

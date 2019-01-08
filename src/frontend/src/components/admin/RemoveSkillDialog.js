@@ -84,7 +84,7 @@ class RemoveSkillDialog extends Component {
     const state = store.getState();
 
     const { allSkills, allCategories } = state;
-    const skillList = [...allSkills, ...allCategories];
+    const skillList = [...allCategories];
     const { showDialog } = state.profile;
     const { classes } = this.props;
 

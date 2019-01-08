@@ -35,10 +35,8 @@ class SkillStatisticsPage extends React.Component {
 
   renderDatastructureRecursive(subcategories, index) {
     const { expanded } = this.state;
-    if (subcategories === undefined) return <div />;
-
     const subs = subcategories.map(skill =>
-      index < 5 ? (
+      skill.subcategories.length !== 0 ? (
         <ExpansionPanel expanded={expanded} onChange={this.handleChange(this.props.skill)}>
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
             <SimpleCard skill={skill.skillname} data={skill.milestones} />
@@ -48,10 +46,11 @@ class SkillStatisticsPage extends React.Component {
           </ExpansionPanelDetails>
         </ExpansionPanel>
       ) : (
-        <Grid style={{ display: 'flex', flexDirection: 'row-reverse' }}>
-          <SimpleCard skill={skill.skillname} data={skill.milestones} />
-          {this.renderDatastructureRecursive(skill.subcategories, index)}
-        </Grid>
+        <ExpansionPanel>
+          <ExpansionPanelSummary>
+            <SimpleCard skill={skill.skillname} data={skill.milestones} />
+          </ExpansionPanelSummary>
+        </ExpansionPanel>
       ),
     );
 

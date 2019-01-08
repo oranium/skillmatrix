@@ -122,7 +122,7 @@ const exSkill3 = {
       comment: 'C++ 3 jähriges Projekt fertig gestellt, mit 100000 Zeilen c++ Code',
     },
   ],
-  subcategories: [exSkill],
+  subcategories: [exSkill, exSkill, exSkill, exSkill, exSkill, exSkill],
 };
 const exSkill2 = {
   skillname: 'Java',
@@ -155,7 +155,7 @@ const exSkill2 = {
       comment: 'Java Hackaton gewonnen',
     },
   ],
-  subcategories: [],
+  subcategories: [exSkill],
 };
 
 const exCat = {
@@ -163,7 +163,7 @@ const exCat = {
   skillpath: 'Programming',
   level: 4,
   milestones: [],
-  subcategories: [ exSkill2],
+  subcategories: [exSkill2],
 };
 
 const exProfile = {
@@ -179,15 +179,15 @@ const defaultProfilePageState = {
   profiles: [exProfile],
 };
 
-const defaultSkillList = [
-{"Programming/Python": {1: "schlecht", 2: "geht so", 3: "zufriedenstellend", 4: "okay", 5: "seeehr gut"}}, 
-{"Programming/Java": {1: "schlecht", 2: "geht so", 3: "zufriedenstellend", 4: "okay", 5: "seeehr gut"}}, 
-{"Programming/Java/Python": {1: "schlecht", 2: "geht so", 3: "zufriedenstellend", 4: "okay", 5: "seeehr gut"}},
-{ "Programming/Java/C++": {1: "schlecht", 2: "geht so", 3: "zufriedenstellend", 4: "okay", 5: "seeehr gut"}}, 
-{"Programming/Java/C++/Python": {1: "schlecht", 2: "geht so", 3: "zufriedenstellend", 4: "okay", 5: "seeehr gut"}},
-{"C++/Python": {1: "Noch nie Python gecoded", 2: "1 Projekt bearbeitet", 3: "100000 Zeilen PyCode", 4: "großes Projekt", 5: "langjährige Python Erfahrung"}},
-{"C++/C++++": {1: "Noch nie Python gecoded", 2: "1 Projekt bearbeitet", 3: "100000 Zeilen PyCode", 4: "großes Projekt", 5: "langjährige Python Erfahrung"}}
-];
+const defaultSkillList  = {
+  "Programming/Python": {1: "schlecht", 2: "geht so", 3: "zufriedenstellend", 4: "okay", 5: "seeehr gut"}, 
+  "Programming/Java": {1: "schlecht", 2: "geht so", 3: "zufriedenstellend", 4: "okay", 5: "seeehr gut"}, 
+  "Programming/Java/Python": {1: "schlecht", 2: "geht so", 3: "zufriedenstellend", 4: "okay", 5: "seeehr gut"},
+  "Programming/Java/C++": {1: "schlecht", 2: "geht so", 3: "zufriedenstellend", 4: "okay", 5: "seeehr gut"}, 
+  "Programming/Java/C++/Python": {1: "schlecht", 2: "geht so", 3: "zufriedenstellend", 4: "okay", 5: "seeehr gut"},
+  "C++/Python": {1: "Noch nie Python gecoded", 2: "1 Projekt bearbeitet", 3: "100000 Zeilen PyCode", 4: "großes Projekt", 5: "langjährige Python Erfahrung"},
+  "C++/C++++": {1: "Noch nie Python gecoded", 2: "1 Projekt bearbeitet", 3: "100000 Zeilen PyCode", 4: "großes Projekt", 5: "langjährige Python Erfahrung"}
+  };
 const defaultCategoryList = ["Programming", "C++"];
 
 // has all the data for the inputfields

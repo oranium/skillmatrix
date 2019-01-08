@@ -93,19 +93,15 @@ export default class FormDialog extends Component {
     });
 
     const availableNewSkills = [];
-    Object.keys(allSkills).map(index => {
-      for (var key in allSkills[index]) {
-        if (!allSkillsOfUser.includes(key)) {
-          availableNewSkills.push(key);
-        }
+    Object.keys(allSkills).map(key => {
+      if (!allSkillsOfUser.includes(key)) {
+        availableNewSkills.push(key);
       }
     });
     var guidelines;
-    Object.keys(allSkills).map(index => {
-      for (var key in allSkills[index]) {
-        if (singleselect.value === key) {
-          guidelines = allSkills[index][key];
-        }
+    Object.keys(allSkills).map(key => {
+      if (singleselect.value === key) {
+        guidelines = allSkills[key];
       }
     });
     return (
