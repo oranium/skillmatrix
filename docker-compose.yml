@@ -4,6 +4,7 @@ services:
     environment:
       - ENV_TESTING=False
       - ENV_DEBUG=True
+      - ENV_TESTDATABASE_URI=sqlite:///sqlalchemy_example.db
       - ENV_DATABASE_URI=mysql+pymysql://root:Momomomo2@db/sm1
       - ENV_LDAP_SERVER_URL=ldap://vm01-azure-ad.westeurope.cloudapp.azure.com
       - ENV_LDAP_SERVER_PORT=389
