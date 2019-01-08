@@ -43,13 +43,14 @@ const styles = theme => ({
 
 class FormDialog extends Component {
   state = {
+    open: false,
     skillname: '',
     guideline: {
-      '1': 'mangelhaft',
-      '2': 'ausreichend',
-      '3': 'befriedigend',
-      '4': 'gut',
-      '5': 'sehr gut',
+      '1': 'Insufficient',
+      '2': 'Sufficient/Below Average',
+      '3': 'Satisfactory / Average',
+      '4': 'Good',
+      '5': 'Excellent',
     },
   };
 
@@ -66,6 +67,13 @@ class FormDialog extends Component {
   handleClose = () => {
     store.dispatch(resetForm);
     store.dispatch(closeProfileDialog);
+  };
+
+  handleClickOpen = () => {
+    this.setState({ open: true });
+  };
+  handleClickClose = () => {
+    this.setState({ open: false });
   };
 
   async handleSubmit(Skill) {
@@ -88,6 +96,7 @@ class FormDialog extends Component {
     } catch (e) {
       store.dispatch(setError(e.message));
     }
+    this.handleClickClose();
     this.handleClose();
 
     await updateAllSkills();
@@ -96,11 +105,16 @@ class FormDialog extends Component {
     const state = store.getState();
 
     const { allSkills, allCategories } = state;
-    const skillList = [...allSkills, ...allCategories];
-    const { showDialog } = state.profile;
-    var { datefield, textarea, levelfield, singleselect } = state.formState;
-    const { classes } = this.props;
 
+    var tmpAllSkills = [];
+    Object.keys(allSkills).map(index => {
+      for (var key in allSkills[index]) tmpAllSkills.push(key);
+    });
+
+    const skillList = [...tmpAllSkills, ...allCategories];
+
+    const { showDialog } = state.profile;
+    const { classes } = this.props;
     return (
       <div className={classes.root}>
         <Dialog
@@ -124,7 +138,7 @@ class FormDialog extends Component {
 
               <TextField
                 id="outlined-with-placeholder"
-                label="Skill input"
+                label="skill name"
                 placeholder="write the skill to add"
                 className={classes.textField}
                 margin="normal"
@@ -164,7 +178,7 @@ class FormDialog extends Component {
                   <ListItem>
                     <TextField
                       label="Level 3: "
-                      id="simple-start-adornment"
+                      id="level3"
                       className={classNames(classes.margin, classes.textField)}
                       placeholder={this.state.guideline['3']}
                       onChange={event => this.handleGuidelineChange('3', event)}
@@ -174,7 +188,7 @@ class FormDialog extends Component {
                   <ListItem>
                     <TextField
                       label="Level 4: "
-                      id="simple-start-adornment"
+                      id="level4"
                       className={classNames(classes.margin, classes.textField)}
                       placeholder={this.state.guideline['4']}
                       onChange={event => this.handleGuidelineChange('4', event)}
@@ -184,7 +198,7 @@ class FormDialog extends Component {
                   <ListItem>
                     <TextField
                       label="Level 5: "
-                      id="simple-start-adornment"
+                      id="level5"
                       className={classNames(classes.margin, classes.textField)}
                       placeholder={this.state.guideline['5']}
                       onChange={event => this.handleGuidelineChange('5', event)}
@@ -198,12 +212,44 @@ class FormDialog extends Component {
               <Button onClick={this.handleClose} color="primary">
                 Cancel
               </Button>
-              <Button onClick={() => this.handleSubmit(true)} color="primary">
-                Submit
-              </Button>
+              {store.getState().formState.singleselect.value.length == 0 ? (
+                <Button onClick={() => this.handleClickOpen()} color="primary">
+                  Submit
+                </Button>
+              ) : (
+                <Button onClick={() => this.handleSubmit(true)} color="primary">
+                  Submit
+                </Button>
+              )}
             </DialogActions>
           </div>
         </Dialog>
+        <div className="confirm-dialog">
+          <Dialog
+            open={this.state.open}
+            onClose={this.handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">
+              {'Are you sure you want to add "' + this.state.skillname + '" as a new category?'}
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                You didn't choose a category. This means you will add the skill as new main category
+                which has no attributes.
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={this.handleClickClose} color="primary">
+                Cancel
+              </Button>
+              <Button onClick={() => this.handleSubmit(true)} color="primary" autoFocus>
+                Submit
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </div>
       </div>
     );
   }

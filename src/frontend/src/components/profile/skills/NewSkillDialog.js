@@ -32,7 +32,13 @@ export default class FormDialog extends Component {
     await updateOwnProfile(RestPoints.setSkills, skill);
     this.handleClose();
   }
-
+  getAllSkillsRecursive(skill, allSkills, aktPath) {
+    allSkills.push(aktPath);
+    skill.subcategories.map(subskill => {
+      this.getAllSkillsRecursive(subskill, allSkills, aktPath + '/' + subskill.skillname);
+    });
+    return allSkills;
+  }
   handleChange(id, value) {
     store.dispatch(updateInput(id, value));
   }
@@ -62,19 +68,46 @@ export default class FormDialog extends Component {
       skills: { [singleselect.value]: levelfield.value },
     };
 
-    const allSkillsOfUser = Object.keys(profile.skills).map(
-      element => profile.skills[element].skillname,
-    );
+    var allSkillsOfUser = [];
+    Object.keys(profile.skills).map(index => {
+      Object.keys(profile.skills[index].subcategories).map(subskill => {
+        if (allSkillsOfUser.length === 0) {
+          allSkillsOfUser = this.getAllSkillsRecursive(
+            profile.skills[index].subcategories[subskill],
+            [],
+            profile.skills[index].skillname +
+              '/' +
+              profile.skills[index].subcategories[subskill].skillname,
+          );
+        } else
+          allSkillsOfUser.push(
+            ...this.getAllSkillsRecursive(
+              profile.skills[index].subcategories[subskill],
+              [],
+              profile.skills[index].skillname +
+                '/' +
+                profile.skills[index].subcategories[subskill].skillname,
+            ),
+          );
+      });
+    });
 
     const availableNewSkills = [];
-    for (var key in Object.keys(allSkills)) {
-      if (allSkills.hasOwnProperty(key)) {
-        if (!allSkillsOfUser.includes(allSkills[key])) {
-          availableNewSkills.push(allSkills[key]);
+    Object.keys(allSkills).map(index => {
+      for (var key in allSkills[index]) {
+        if (!allSkillsOfUser.includes(key)) {
+          availableNewSkills.push(key);
         }
       }
-    }
-
+    });
+    var guidelines;
+    Object.keys(allSkills).map(index => {
+      for (var key in allSkills[index]) {
+        if (singleselect.value === key) {
+          guidelines = allSkills[index][key];
+        }
+      }
+    });
     return (
       <div>
         <Dialog
@@ -91,6 +124,7 @@ export default class FormDialog extends Component {
             <SingleSelect placeholder={'Select a skill to add'} allSkills={availableNewSkills} />
             <LevelPicker
               data={levelfield}
+              guidelines={guidelines}
               required={true}
               onChange={(id, value) => this.handleChange(id, value)}
             />
