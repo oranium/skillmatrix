@@ -110,7 +110,7 @@ class DatabaseController:
             Returns:
                 [MilestoneModel]: all milestones of user for skill
         """
-        muser = database_controller.get_user_id(username)
+        muser = database_controller.get_user(username).id
         mskillid = database_controller.get_skill(skillpath).id
         milestonelist = MilestoneAssociation.query.filter(MilestoneAssociation.milestone_users_id == muser,
                                                           MilestoneAssociation.milestone_skill_id == mskillid).all()
@@ -162,7 +162,7 @@ class DatabaseController:
             if not username or \
                     (username and
                      Association.query.filter(
-                         Association.users_id == database_controller.get_user_id(username),
+                         Association.users_id == database_controller.get_user(username).id,
                          Association.skill_id == database_controller.get_skill(skill.name).id
                      ).first()):
                 skill_paths.append(skill.path)
@@ -215,11 +215,6 @@ class DatabaseController:
     def get_skill(skillpath):
         """Gets Skill object, given name of the skill"""
         return Skill.query.filter_by(path=skillpath).first()
-
-    @staticmethod
-    def get_user_id(username):
-        """Gets id of user, given name of the user"""
-        return Users.query.filter_by(username=username).first().id
 
     @staticmethod
     def get_user(username):
@@ -447,7 +442,7 @@ class DatabaseController:
         if subcategories_string:
             for category in subcategories_string:
                 subcategories_model.append(database_controller.build_subcategories(username, category))
-                level = database_controller.get_recent_level(database_controller.get_user_id(username),
+                level = database_controller.get_recent_level(database_controller.get_user(username).id,
                                                              database_controller.get_skill(skillpath).id
                                                              )
             return SkillModel(skill.name,
@@ -458,7 +453,7 @@ class DatabaseController:
                               )
         # case 3: category (current skill) is a leaf
         print(skillpath, file=sys.stderr)
-        level = database_controller.get_recent_level(database_controller.get_user_id(username),
+        level = database_controller.get_recent_level(database_controller.get_user(username).id,
                                                      database_controller.get_skill(skillpath).id
                                                      )
         return SkillModel(skill.name,
@@ -498,7 +493,7 @@ class DatabaseController:
         """
         to_remove = database_controller.get_subcategories(skillpath, username=username)
         subcategories_to_check = to_remove.copy()
-        uid = database_controller.get_user_id(username)
+        uid = database_controller.get_user(username).id
         while subcategories_to_check:
             new_subcategories = database_controller.get_subcategories(subcategories_to_check.pop())
             to_remove.extend(new_subcategories)
