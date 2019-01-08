@@ -9,11 +9,17 @@ from sqlalchemy.orm import sessionmaker
 from os import environ
  
 Base = declarative_base()
+
+class Guidelines(Base):
+    __tablename__ = 'guidelines'
+    skill_id = Column(Integer, primary_key=True)
+    level = Column(Integer, primary_key=True)
+    information = Column(Text, nullable=True, default='')
+
 class Hierarchy(Base):
     __tablename__ = 'hierachy'
-    id = Column(Integer, primary_key=True)
     parent_skill_id = Column(Integer, ForeignKey('skill.id'), nullable=False)
-    child_skill_id = Column(Integer, ForeignKey('skill.id'), nullable=False)
+    child_skill_id = Column(Integer, ForeignKey('skill.id'), primary_key=True)
     parent_skill_assoc = relationship("Skill", foreign_keys=[parent_skill_id])
     child_skill_assoc = relationship("Skill", foreign_keys=[child_skill_id])
 
@@ -90,7 +96,58 @@ class Users(Base):
     def __repr__(self):
         return '<id = {0} und username = {1}>'.format(self.id, self.username)
 
-class Setup():
+
+engine = create_engine('mysql+pymysql://root:Momomomo2@localhost/sm1')
+
+Base.metadata.drop_all(bind=engine)
+Base.metadata.create_all(engine)
+DBSession = sessionmaker(bind=engine)
+session = DBSession()
+
+def create_hiestory(parent, child):
+    x = Hierarchy()
+    x.parent_skill_assoc= parent
+    x.child_skill_assoc= child
+    session.add(x)
+    session.commit()
+
+def get_guidelines(skill_id):
+    information_list = []
+    level = 1
+    while (level < 6):
+        guideline = session.query(Guidelines).filter(Guidelines.skill_id == skill_id, Guidelines.level == level).one()
+        information_list.append(guideline.information)
+        level = level +1
+    print (information_list)
+    return information_list
+
+def change_guideline(skill_id, level, new_information):
+    if session.query(Guidelines).filter(Guidelines.skill_id == skill_id, Guidelines.level == level).all():
+        print("gibt es schon")
+        d = session.query(Guidelines).filter(Guidelines.skill_id == skill_id, Guidelines.level == level).one()
+        session.delete(d)
+        session.commit()
+    newguideline = Guidelines(skill_id = skill_id, level = level, information = new_information)
+    session.add(newguideline)
+    session.commit()
+        
+
+def create_guidelines(skill_id, information_list):
+    level = 1
+    for information in information_list:
+        newguideline = Guidelines(skill_id = skill_id, level = level, information = information)
+        session.add(newguideline)
+        session.commit()
+        level = level +1
+
+
+def create_skill(level, skill, date, username):
+    a = Association(level=level)
+    a.skill_assoc = skill
+    a.date_assoc = date
+    a.users_assoc = username
+
+'''class Setup():
 
     engine = create_engine(environ.get('ENV_DATABASE_URI_TEST'))
 
@@ -114,13 +171,23 @@ class Setup():
         a.date_assoc = date
         a.users_assoc = username
 
-testSetup = Setup()
+testSetup = Setup()'''
 
-
+inforlsite = ["gar nicht gut", "nicht gut", "mittel", "schon gut", "sehr gut"]
+pythonlevel1 = Guidelines(skill_id = 2, level = 1, information = "gar nicht gut")
+pythonlevel2 = Guidelines(skill_id = 2, level = 2, information = "nicht gut")
+pythonlevel3 = Guidelines(skill_id = 2, level = 3, information = "mittel")
+pythonlevel4 = Guidelines(skill_id = 2, level = 4, information = "schon gut")
+pythonlevel5 = Guidelines(skill_id = 2, level = 5, information = "what a man :O")
+session.add(pythonlevel1)
+session.add(pythonlevel2)
+session.add(pythonlevel3)
+session.add(pythonlevel4)
+session.add(pythonlevel5)
 valdemar = Users(username='Valdemar-Forsberg',name="Valdemar Forsberg")
 karl = Users(username='Karl-Kalagin', name="Karl Kalagin")
 isaac = Users(username='Isaac-Hunt', name="Isaac Hunt")
-testSetup.session.add(valdemar)
+session.add(valdemar)
 session.add(karl)
 session.add(isaac)
 prog = Skill(name='Programming', root = True)
@@ -152,7 +219,11 @@ create_skill(3, python1, date1, isaac)
 create_skill(1, java1, date1, karl)
 x = Hierarchy()
 x.parent_skill_assoc= java1
-x.child_skill_assoc= js1
+x.child_skill_assoc= python1
 session.add(x)
 create_hiestory(python1,js1)
+create_guidelines(1,inforlsite)
+change_guideline(1,2,"neue information")
 session.commit()
+liste = get_guidelines(1) #['gar nicht gut', 'neue information', 'mittel', 'schon gut', 'sehr gut']
+
