@@ -77,7 +77,7 @@ class App extends Component {
         return (
           <main>
             <LoginForm
-              errorMsg={hasError && displayType === errorDisplayType.login ? message : ''}
+              errorMsg={hasError && displayType === errorDisplayType.login ? message : false}
               loading={loading}
             />
           </main>

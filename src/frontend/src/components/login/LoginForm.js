@@ -1,6 +1,5 @@
 // react
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 
 // material-ui
 import Avatar from '@material-ui/core/Avatar';
@@ -9,11 +8,14 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
-import LockIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 import CircularProgress from '@material-ui/core/CircularProgress';
+
+// icons
+import LockIcon from '@material-ui/icons/LockOutlined';
+import ErrorIcon from '@material-ui/icons/ErrorOutline';
 
 // import redux parts
 import store from 'Store';
@@ -97,19 +99,6 @@ class SignIn extends Component {
     await updateAllSkills();
   }
 
-  componentDidMount() {
-    // Get the components DOM node
-    const elem = ReactDOM.findDOMNode(this);
-    // Set the opacity of the element to 0
-    elem.style.opacity = 0;
-    window.requestAnimationFrame(() => {
-      // Now set a transition on the opacity
-      elem.style.transition = 'opacity 250ms';
-      // and set the opacity to 1
-      elem.style.opacity = 1;
-    });
-  }
-
   render() {
     const { classes, errorMsg, loading } = this.props;
 
@@ -120,14 +109,12 @@ class SignIn extends Component {
           {loading ? (
             <CircularProgress className={classes.spinner} />
           ) : (
-            <Avatar className={classes.avatar}>
-              <LockIcon />
-            </Avatar>
+            <Avatar className={classes.avatar}>{errorMsg ? <ErrorIcon /> : <LockIcon />}</Avatar>
           )}
           <Typography component="h1" variant="h4">
             Skill Matrix
           </Typography>
-          <p className="error">{errorMsg}</p>
+          {errorMsg && <p className="error">{errorMsg}</p>}
           <form onSubmit={this.constructor.handleLogin} className={classes.form}>
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="username">Username</InputLabel>
