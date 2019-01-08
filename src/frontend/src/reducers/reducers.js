@@ -193,7 +193,7 @@ const defaultCategoryList = ["Programming", "C++"];
 // has all the data for the inputfields
 export const formState = (state = defaultFormState, action) => {
   switch (action.type) {
-    /* return new state,
+    /* return new state1,
     where only the one value of the certain input field has changed to action.input
     */
 
