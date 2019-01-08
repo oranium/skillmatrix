@@ -45,7 +45,7 @@ class Controller:
         return LogoutModel(username).jsonable()
 
     @staticmethod
-    def get_all_skill_names(username=None):
+    def get_paths_with_guidelines(username=None):
         """Gets all skillnames of user or of the whole database, depending on username arg.
             Args:
                 username(`str`, optional): name of the user, defaults to None
@@ -58,7 +58,7 @@ class Controller:
         # if username is not None, a POST request was sent -> requires login
         if username and not controller.is_connected(username):
             raise PermissionError
-        all_skill_names = database_controller.get_all_skill_names(username)
+        all_skill_names = database_controller.get_paths_with_guidelines(username)
         print(all_skill_names, file=sys.stderr)
         if username:
             return dict(username=username, allSkills=all_skill_names[0])
