@@ -111,7 +111,7 @@ class FormDialog extends Component {
     console.log(newGuidelineRequest);
 
     const RestSkillRequest = new RestCom(RestPoints.createSkill, newSkillRequest);
-    const RestGuidlineRequest = new RestCom(RestPoints.setGuideline, newGuidelineRequest);
+    const RestGuidlineRequest = new RestCom(RestPoints.setGuidelines, newGuidelineRequest);
     try {
       await RestSkillRequest.post();
       await RestGuidlineRequest.post();
