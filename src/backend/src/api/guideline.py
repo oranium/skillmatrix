@@ -15,7 +15,7 @@ class Guideline(Resource):
     def post(self):
         parser = reqparse.RequestParser()
         parser.add_argument("username", type=str)
-        parser.add_argument("skillname", type=str)
+        parser.add_argument("skillpath", type=str)
         parser.add_argument("guidelines", type=dict)
         args = parser.parse_args()
         try:
@@ -23,7 +23,7 @@ class Guideline(Resource):
             for guideline in args["guidelines"].items()[1]:
                 guidelines.append(guideline)
             message = json.dumps(controller.create_skill(args["username"],
-                                                         args["skillname"],
+                                                         args["skillpath"],
                                                          guidelines)
                                  )
             return Response(message, status=200, mimetype="application/json")

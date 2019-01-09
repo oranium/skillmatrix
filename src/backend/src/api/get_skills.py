@@ -12,7 +12,7 @@ class GetSkills(Resource):
 
     def get(self):
         try:
-            message = json.dumps(controller.get_all_skill_names())
+            message = json.dumps(controller.get_paths_with_guidelines())
             return Response(message, status=200, mimetype="application/json")
         except Exception as e:
             print(e, file=sys.stderr)
@@ -23,7 +23,7 @@ class GetSkills(Resource):
             parser = reqparse.RequestParser()
             parser.add_argument("username", type=str)
             args = parser.parse_args()
-            message = json.dumps(controller.get_all_skill_names(username=args["username"]))
+            message = json.dumps(controller.get_paths_with_guidelines(username=args["username"]))
             return Response(message, status=200, mimetype="application/json")
         except PermissionError:
             return Response(status=401)

@@ -14,12 +14,12 @@ class RemoveSkill(Resource):
     def post(self):
         parser = reqparse.RequestParser()
         parser.add_argument("username", type=str)
-        parser.add_argument("skillname", type=str)
+        parser.add_argument("skillpath", type=str)
         parser.add_argument("forAll", type=inputs.boolean)
         args = parser.parse_args()
         try:
             message = json.dumps(controller.remove_skill(args["username"],
-                                                         args["skillname"],
+                                                         args["skillpath"],
                                                          args["forAll"])
                                  )
             return Response(message, status=200, mimetype="application/json")

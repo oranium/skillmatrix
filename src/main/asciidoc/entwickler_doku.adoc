@@ -120,7 +120,8 @@ Die Benutzeroberfläche wird mit React und Komponenten von Material-UI erstellt.
 "skillname": String,
 "skillpath": String,
 "level": Integer,
-"milestones":[Milestone]
+"milestones":[Milestone],
+"subcategories":[Skill],
 "root" = bool
 }
 ....
