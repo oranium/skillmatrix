@@ -95,7 +95,7 @@ class RestCom {
   async get() {
     return axios
       .get(this.restApi, this.headers)
-      .then(ServerResponse => RestCom.handleThen(ServerResponse))
+      .then(ServerResponse => ServerResponse.data)
       .finally(RestCom.endLoading)
       .catch(error => RestCom.handleError(error));
   }
@@ -103,7 +103,7 @@ class RestCom {
   async delete() {
     return axios
       .delete(this.restApi, this.headers)
-      .then(ServerResponse => RestCom.handleThen(ServerResponse))
+      .then(ServerResponse => ServerResponse.data)
       .finally(RestCom.endLoading)
       .catch(error => RestCom.handleError(error));
   }
