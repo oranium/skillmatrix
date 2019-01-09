@@ -176,10 +176,10 @@ const defaultProfilePageState = {
   isEditable: true,
   view: 0,
   showDialog: false,
-  profiles: [exProfile],
+  profiles: [],
 };
 
-const defaultSkillList = {
+const exSkillList = {
   'Programming/Python': {
     1: 'schlecht',
     2: 'geht so',
@@ -230,7 +230,8 @@ const defaultSkillList = {
     5: 'langjährige Python Erfahrung',
   },
 };
-const defaultCategoryList = ['Programming', 'C++'];
+const defaultSkillList = {};
+const defaultCategoryList = [];
 
 // has all the data for the inputfields
 export const formState = (state = defaultFormState, action) => {
