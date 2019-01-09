@@ -14,13 +14,13 @@ class RemoveMilestone(Resource):
     def post(self):
         parser = reqparse.RequestParser()
         parser.add_argument("username", type=str)
-        parser.add_argument("skillname", type=str)
+        parser.add_argument("skillpath", type=str)
         parser.add_argument("level", type=int)
         parser.add_argument("date", type=str)
         args = parser.parse_args()
         try:
             message = json.dumps(controller.remove_skill(args["username"],
-                                                         args["skillname"],
+                                                         args["skillpath"],
                                                          args["level"],
                                                          args["date"])
                                  )

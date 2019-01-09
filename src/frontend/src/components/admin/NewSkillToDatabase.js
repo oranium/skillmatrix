@@ -89,7 +89,7 @@ class FormDialog extends Component {
     };
     // console.log(request);
 
-    const Rest = new RestCom(RestPoints.createSkill, JSON.stringify(request));
+    const Rest = new RestCom(RestPoints.createSkill, request);
 
     try {
       await Rest.post();

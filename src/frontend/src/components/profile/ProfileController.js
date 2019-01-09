@@ -66,8 +66,8 @@ class ProfileController extends Component {
     });
     console.log(latestChanges);
     // send skill
-    let Rest = new RestCom(RestPoints.setSkills, JSON.stringify(latestChanges));
-    //todo remove JSON.stringify
+    let Rest = new RestCom(RestPoints.setSkills, latestChanges);
+
     try {
       const newProfile = await Rest.post();
       store.dispatch(setOwnProfile(newProfile));
