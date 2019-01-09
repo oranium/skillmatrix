@@ -1,8 +1,9 @@
 // react
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+
 // components
-import SingleSelect from 'components/common/SingleSelect';
+import SingleSkillSelect from 'components/common/SingleSkillSelect';
 
 // material-ui
 import Button from '@material-ui/core/Button';
@@ -101,16 +102,6 @@ class FormDialog extends Component {
   }
   render() {
     const state = store.getState();
-
-    const { allSkills, allCategories } = state;
-
-    var tmpAllSkills = [];
-    Object.keys(allSkills).map(key => {
-      tmpAllSkills.push(key);
-    });
-
-    const skillList = [...tmpAllSkills, ...allCategories];
-
     const { showDialog } = state.profile;
     const { classes } = this.props;
     return (
@@ -128,11 +119,7 @@ class FormDialog extends Component {
                 To add a new Skill please fill in all inputfields.
               </DialogContentText>
 
-              <SingleSelect
-                placeholder={'Choose the category of your skill'}
-                allSkills={skillList}
-                fullWidth
-              />
+              <SingleSkillSelect placeholder={'Choose the category of your skill'} />
 
               <TextField
                 id="outlined-with-placeholder"

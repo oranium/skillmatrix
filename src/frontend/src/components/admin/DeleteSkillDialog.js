@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 // components
-import SingleSelect from 'components/common/SingleSelect';
+import SingleSkillSelect from 'components/common/SingleSkillSelect';
 
 // material-ui
 import Button from '@material-ui/core/Button';
@@ -81,12 +81,9 @@ class RemoveSkillDialog extends Component {
   }
 
   render() {
-    const state = store.getState();
-
-    const { allSkills, allCategories } = state;
-    const skillList = [...allCategories];
-    const { showDialog } = state.profile;
     const { classes } = this.props;
+    const state = store.getState();
+    const { showDialog } = state.profile;
 
     return (
       <div className={classes.root}>
@@ -103,11 +100,10 @@ class RemoveSkillDialog extends Component {
                 Remove Skill from database.
               </DialogContentText>
 
-              <SingleSelect
+              <SingleSkillSelect
                 placeholder={'Choose the skill you want to remove.'}
-                allSkills={skillList}
-                fullWidth
               />
+              
               <Card />
             </DialogContent>
             <DialogActions>
