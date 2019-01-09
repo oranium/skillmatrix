@@ -41,6 +41,7 @@ class AuthenticationController:
         Returns JSON with user object on successful login,
         AttributeError for wrong credentials, TimeoutError if the AD doesn't respond.
         """
+        print(username,file=sys.stderr)
         try:
             if authentication_controller.authentication == "NTLM":
                 login_name = authentication_controller.login_prefix+username
@@ -67,8 +68,7 @@ class AuthenticationController:
             print("binding connection", file=sys.stderr)
             new_connection.bind()
             print("adding connection", file=sys.stderr)
-            if authentication_controller.ssl == "False":
-                new_connection.start_tls()
+
             # successful login
             authentication_controller.connections[username] = new_connection
             return authentication_controller.get_name(username)

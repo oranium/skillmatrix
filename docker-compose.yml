@@ -5,11 +5,11 @@ services:
       - ENV_TESTING=False
       - ENV_DEBUG=True
       - ENV_DATABASE_URI=mysql+pymysql://root:Momomomo2@db/sm1
-      - ENV_LDAP_SERVER_URL=ldap://vm01-azure-ad.westeurope.cloudapp.azure.com
+      - ENV_LDAP_SERVER_URL=ldap://swtldap.cloudapp.net
       - ENV_LDAP_SERVER_PORT=389
-      - ENV_LDAP_SERVER_PREFIX=AzureAD.SWT.com\
-      - ENV_LDAP_BASE_DN=CN=Users,DC=AzureAD,DC=SWT,DC=com
-      - ENV_LDAP_SEARCH_BASE=DC=AzureAD,DC=SWT,DC=com
+      - ENV_LDAP_SERVER_PREFIX=SWTAD\
+      - ENV_LDAP_BASE_DN=CN=Users,DC=ldap,DC=SWT,DC=com
+      - ENV_LDAP_SEARCH_BASE=DC=ldap,DC=SWT,DC=com
       - ENV_LDAP_USE_SSL=False
       - ENV_LDAP_AUTHENTICATION=NTLM
     build: src/backend
