@@ -163,7 +163,7 @@ class DatabaseController:
                     (username and
                      Association.query.filter(
                          Association.users_id == database_controller.get_user(username).id,
-                         Association.skill_id == database_controller.get_skill(skill.name).id
+                         Association.skill_id == database_controller.get_skill(skill.path).id
                      ).first()):
                 skill_paths.append(skill.path)
         return skill_paths
