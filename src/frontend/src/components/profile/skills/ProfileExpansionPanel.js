@@ -48,25 +48,20 @@ class ControlledExpansionPanels extends React.Component {
   }
 
   render() {
-    const { classes, skill } = this.props;
-    const { skillname, level, milestones, skillpath } = skill;
+    const { classes, skill, summary } = this.props;
+    const { skillname, level, skillpath } = skill;
     const { expanded } = this.state;
-    const latestElement = milestones.length - 1;
     const { allSkills } = store.getState();
     const guidelines = this.getGuidelines(skillpath, allSkills);
-    const latestMilestone =
-      milestones.length < 1
-        ? ': -'
-        : ` (${milestones[latestElement].date}): ${milestones[latestElement].comment}`;
     return (
       <div className={classes.root}>
-        {this.props.summary.length !== 0 ? (
+        {summary.length !== 0 ? (
           <ExpansionPanel
-            expanded={expanded === this.props.skill}
-            onChange={this.handleChange(this.props.skill)}
+            expanded={expanded === skill}
+            onChange={this.handleChange(skill)}
           >
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography className={classes.Heading}>
+              <Typography component={'span'} className={classes.Heading}>
                 <div>
                   <div>
                     <Button
@@ -93,13 +88,12 @@ class ControlledExpansionPanels extends React.Component {
             <ExpansionPanelDetails className={classes.secondaryHeading}>
               {' '}
               {this.props.summary}
-              {/* <Typography>{'Latest Milestone' + latestMilestone}</Typography> */}
             </ExpansionPanelDetails>
           </ExpansionPanel>
         ) : (
           <ExpansionPanel>
             <ExpansionPanelSummary>
-              <Typography className={classes.Heading}>
+              <Typography component={'span'} className={classes.Heading}>
                 <div>
                   <div>
                     <Button

@@ -1,13 +1,13 @@
 // default map for clean input fields
 
 const heute = new Date();
-  var month = heute.getMonth() + 1
-  var day = heute.getDate()
+let month = heute.getMonth() + 1;
+let day = heute.getDate();
 
-  if(day < 10 ) day = "0" + day;
-  if(month < 10 ) month = "0" + month
-  
-  const heuteString= heute.getFullYear() + "-" + month + "-" + day;
+if (day < 10) day = `0${day}`;
+if (month < 10) month = `0${month}`;
+
+const heuteString = `${heute.getFullYear()}-${month}-${day}`;
 const defaultFormState = {
   singleselect: {
     value: '',
@@ -122,7 +122,7 @@ const exSkill3 = {
       comment: 'C++ 3 jähriges Projekt fertig gestellt, mit 100000 Zeilen c++ Code',
     },
   ],
-  subcategories: [exSkill, exSkill, exSkill, exSkill, exSkill, exSkill],
+  subcategories: [exSkill],
 };
 const exSkill2 = {
   skillname: 'Java',
@@ -179,16 +179,58 @@ const defaultProfilePageState = {
   profiles: [exProfile],
 };
 
-const defaultSkillList  = {
-  "Programming/Python": {1: "schlecht", 2: "geht so", 3: "zufriedenstellend", 4: "okay", 5: "seeehr gut"}, 
-  "Programming/Java": {1: "schlecht", 2: "geht so", 3: "zufriedenstellend", 4: "okay", 5: "seeehr gut"}, 
-  "Programming/Java/Python": {1: "schlecht", 2: "geht so", 3: "zufriedenstellend", 4: "okay", 5: "seeehr gut"},
-  "Programming/Java/C++": {1: "schlecht", 2: "geht so", 3: "zufriedenstellend", 4: "okay", 5: "seeehr gut"}, 
-  "Programming/Java/C++/Python": {1: "schlecht", 2: "geht so", 3: "zufriedenstellend", 4: "okay", 5: "seeehr gut"},
-  "C++/Python": {1: "Noch nie Python gecoded", 2: "1 Projekt bearbeitet", 3: "100000 Zeilen PyCode", 4: "großes Projekt", 5: "langjährige Python Erfahrung"},
-  "C++/C++++": {1: "Noch nie Python gecoded", 2: "1 Projekt bearbeitet", 3: "100000 Zeilen PyCode", 4: "großes Projekt", 5: "langjährige Python Erfahrung"}
-  };
-const defaultCategoryList = ["Programming", "C++"];
+const defaultSkillList = {
+  'Programming/Python': {
+    1: 'schlecht',
+    2: 'geht so',
+    3: 'zufriedenstellend',
+    4: 'okay',
+    5: 'seeehr gut',
+  },
+  'Programming/Java': {
+    1: 'schlecht',
+    2: 'geht so',
+    3: 'zufriedenstellend',
+    4: 'okay',
+    5: 'seeehr gut',
+  },
+  'Programming/Java/Python': {
+    1: 'schlecht',
+    2: 'geht so',
+    3: 'zufriedenstellend',
+    4: 'okay',
+    5: 'seeehr gut',
+  },
+  'Programming/Java/C++': {
+    1: 'schlecht',
+    2: 'geht so',
+    3: 'zufriedenstellend',
+    4: 'okay',
+    5: 'seeehr gut',
+  },
+  'Programming/Java/C++/Python': {
+    1: 'schlecht',
+    2: 'geht so',
+    3: 'zufriedenstellend',
+    4: 'okay',
+    5: 'seeehr gut',
+  },
+  'C++/Python': {
+    1: 'Noch nie Python gecoded',
+    2: '1 Projekt bearbeitet',
+    3: '100000 Zeilen PyCode',
+    4: 'großes Projekt',
+    5: 'langjährige Python Erfahrung',
+  },
+  'C++/C++++': {
+    1: 'Noch nie Python gecoded',
+    2: '1 Projekt bearbeitet',
+    3: '100000 Zeilen PyCode',
+    4: 'großes Projekt',
+    5: 'langjährige Python Erfahrung',
+  },
+};
+const defaultCategoryList = ['Programming', 'C++'];
 
 // has all the data for the inputfields
 export const formState = (state = defaultFormState, action) => {
