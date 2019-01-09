@@ -3,15 +3,30 @@ import axios from 'axios';
 import { resetState, setLoginError, toggleSpinner } from 'actions';
 import store from 'Store';
 
+import RestPoints from 'rest/Init';
+
 const config = require('../config.json');
 
 const { APISERVER } = config;
 
 class RestCom {
-  constructor(restPoint, data = '') {
+  constructor(restPoint, data = {}) {
     // serveradress + rest end point
     this.restApi = APISERVER + restPoint;
-    this.data = JSON.stringify(data);
+
+    const requestData = data;
+
+    // api requires username for all requests that are secured by login
+    const secured = restPoint !== RestPoints.login;
+    if (secured) {
+      const state = store.getState();
+      const { username } = state.user;
+      // add username to requestData object
+      requestData.username = username;
+    }
+
+    this.data = JSON.stringify(requestData);
+
     this.headers = {
       headers: {
         'Access-Control-Allow-Origin': '*',

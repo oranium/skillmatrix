@@ -68,7 +68,6 @@ class FormDialog extends Component {
   handleGuidelineChange(level, event) {
     const newGuideline = event.target.value;
     this.setState({
-      ...this.state,
       guideline: { ...this.state.guideline, [level]: newGuideline },
     });
   }
@@ -89,7 +88,6 @@ class FormDialog extends Component {
     const state = store.getState();
     const category = state.formState.singleselect.value;
     const { skillname, guideline } = this.state;
-    const { username } = state.user;
 
     //build whole path for new skill
     var skillpath = '';
@@ -98,7 +96,6 @@ class FormDialog extends Component {
     // #########################################################
     // send new skill
     const newSkillRequest = {
-      username,
       category,
       skillname,
       skillpath,
@@ -106,7 +103,6 @@ class FormDialog extends Component {
 
     // send guidline for new skill
     const newGuidelineRequest = {
-      username,
       skillname,
       guideline,
     };
