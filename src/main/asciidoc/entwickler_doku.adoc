@@ -121,6 +121,7 @@ Die Benutzeroberfläche wird mit React und Komponenten von Material-UI erstellt.
 "skillpath": String,
 "level": Integer,
 "milestones":[Milestone]
+"subcategories":[Skill],
 "root" = bool
 }
 ....
@@ -156,7 +157,7 @@ Die Benutzeroberfläche wird mit React und Komponenten von Material-UI erstellt.
          }
 }
 ....
-_Anmerkung: Keys in "query" entsprechen dem Namen des Skills, Integers dem gewünschten Mindestlevel, der standardmäßig 1 ist._
+_Anmerkung: Keys in "query" entsprechen dem vollständigen Pfad des Skills, Integers dem gewünschten Mindestlevel, der standardmäßig 1 ist._
 
 * Form der Antwort (json):
 ....
@@ -212,7 +213,7 @@ _Anmerkung: Der Objektkey in allSkills ist jeweils der (Pfad-)Name des Skills. D
 ....
 {
 "username": String,
-"skills": {
+"skillpaths": {
           String: Integer,
           String: Integer,
           ...
@@ -235,7 +236,7 @@ _Anmerkung: Die Erklärung zu Profile ist unter dem Punkt /login zu finden_
 {
 "username": String,
 "skillname": String,
-"level" : Integer,
+"skillpath" : String,
 "category": String
 }
 ....
@@ -254,7 +255,7 @@ _Anmerkung: Die Erklärung zu Profile ist unter dem Punkt /login zu finden_
 ....
 {
 "username": String,
-"skill": String,
+"skillpath": String,
 "level": Int,
 "date": "YYYY-MM-DD",
 "comment": String
@@ -269,13 +270,31 @@ Profile
 ....
 _Anmerkung: Die Erklärung zu Profile ist unter dem Punkt /login zu finden_
 
+=== /guideline
+* erlaubte Anfragen: POST, OPTIONS
+* Form der POST-Anfrage (json): 
+....
+{
+"username": String,
+"skillpath": String,
+"guidelines":{
+        1:String,
+        2:String,
+        ...,
+        5:String
+        }
+}
+....
+_Anmerkung: Die String-values in "guidelines" sind die jeweiligen Guidelines für zugehöriges Level._
+
+
 === /deleteSkill
 * erlaubte Anfragen: POST, OPTIONS
 * Form der POST-Anfrage (json): 
 ....
 {
 "username": String,
-"skill": String,
+"skillpath": String,
 "forAll": Boolean
 }
 ....
@@ -294,7 +313,7 @@ _Anmerkung: Die Erklärung zu Profile ist unter dem Punkt /login zu finden_
 ....
 {
 "username": String,
-"skill": String,
+"skillpath": String,
 "level": Int,
 "date": "YYYY-MM-DD",
 }
