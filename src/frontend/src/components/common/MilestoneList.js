@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
@@ -9,8 +8,6 @@ import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import IconButton from '@material-ui/core/IconButton';
-
-import Grid from '@material-ui/core/Grid';
 
 import DeleteIcon from '@material-ui/icons/Delete';
 
@@ -27,7 +24,7 @@ const styles = theme => ({
 const MilestoneList = (props) => {
   const classes = { props };
   const {
-    level, comment, date, removeMilestone,
+    level, comment, date, deleteMilestone,
   } = props;
 
   return (
@@ -50,7 +47,7 @@ const MilestoneList = (props) => {
             </Typography>
           </div>
           <ExpansionPanelActions style={{ width: '100%', textAlign: 'right' }}>
-            <IconButton onClick={() => removeMilestone(level, date)}>
+            <IconButton onClick={() => deleteMilestone(level, date)}>
               <DeleteIcon />
             </IconButton>
           </ExpansionPanelActions>
