@@ -197,8 +197,8 @@ class DatabaseController:
         if username:
             for skill in skills:
                 # check if user has the skill
-                if Association.query.filter_by(users_id=database_controller.get_user(username).id,
-                                               skill_id=skill.id).first():
+                if Association.query.filter_by(users_id=database_controller.get_user(username).id)\
+                        .filter_by(skill_id=skill.id).first():
                     skill_list.append(skill.path)
         # get every skill with guidelines
         else:
@@ -307,6 +307,7 @@ class DatabaseController:
         guidelines = []
         level = 1
         while level < 6:
+            guideline = Guidelines.query.filter(skill_id=skill_id, level=level).first()
             guideline = Guidelines.query.filter(skill_id=skill_id, level=level).first()
             guidelines.append(guideline.information)
             level = level + 1
