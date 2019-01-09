@@ -10,7 +10,7 @@ import Store from 'Store';
 const SingleSkillSelect = (props) => {
   const { placeholder } = props;
   const { allSkills, allCategories } = Store.getState();
-  const skillList = [...Object.keys(allSkills), ...allCategories];
+  const skillList = [...allCategories, ...Object.keys(allSkills)];
   return <SingleSelect placeholder={placeholder} allSkills={skillList} fullWidth />;
 };
 
