@@ -54,7 +54,7 @@ def checkdb():
         class Skill(Base):
             __tablename__ = 'skill'
             id = Column(Integer, primary_key=True)
-            path = Column(Text, primary_key=True)
+            path = Column(Text, nullable=False)
             name = Column(String(255), nullable=False)
             root = Column(Boolean, unique=False, default=False)
             skill_association = relationship("Association", back_populates="skill_assoc")
