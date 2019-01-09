@@ -56,9 +56,8 @@ class RestCom {
       // The request was made but no response was received
       // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
       // http.ClientRequest in node.js
-      throw new Error(
-        'An error occured while connecting to the server. Please check your Internet connection.',
-      );
+      const errorMsg = 'An error occured while connecting to the server. Please check your Internet connection.';
+      throw new Error(errorMsg);
     } else {
       // Something happened in setting up the request that triggered an Error
       throw new Error(RestCom.errorCodesToErrorMsg(520));
