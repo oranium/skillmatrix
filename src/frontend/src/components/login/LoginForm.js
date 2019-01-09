@@ -94,6 +94,7 @@ class SignIn extends Component {
       // clear password input
       target.password.value = '';
       store.dispatch(setLoginError(e.message));
+      return;
     }
 
     await updateAllSkills();
