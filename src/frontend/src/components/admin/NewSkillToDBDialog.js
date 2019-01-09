@@ -60,7 +60,10 @@ class FormDialog extends Component {
   };
 
   handleGuidelineChange(level, event) {
-    this.state.guideline[level] = event.target.value;
+    const newGuideline = event.target.value;
+    this.setState({
+      ...this.state, guideline: {...this.state.guideline, [level]: newGuideline}
+    })
   }
 
   handleClose = () => {
@@ -197,7 +200,7 @@ class FormDialog extends Component {
               <Button onClick={this.handleClose} color="primary">
                 Cancel
               </Button>
-              {store.getState().formState.singleselect.value.length == 0 ? (
+              {state.formState.singleselect.value.length === 0 ? (
                 <Button onClick={() => this.handleClickOpen()} color="primary">
                   Submit
                 </Button>
