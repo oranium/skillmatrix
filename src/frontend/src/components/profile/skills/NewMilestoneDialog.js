@@ -16,7 +16,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 // redux
 import store from 'Store';
-import { closeProfileDialog, updateInput, resetForm, setOwnProfile, setError } from 'actions';
+import { closeProfileDialog, updateInput, resetForm } from 'actions';
 
 // Rest
 import RestPoints from 'rest/Init';
@@ -30,7 +30,7 @@ export default class FormDialog extends React.Component {
 
   getAllSkillsRecursive(skill, allSkills, aktPath) {
     allSkills.push(aktPath);
-    skill.subcategories.map(subskill => {
+    skill.subcategories.forEach(subskill => {
       this.getAllSkillsRecursive(subskill, allSkills, aktPath + '/' + subskill.skillname);
     });
     return allSkills;
@@ -41,7 +41,7 @@ export default class FormDialog extends React.Component {
       level = skill.level;
       return level;
     }
-    skill.subcategories.map(subskill => {
+    skill.subcategories.forEach(subskill => {
       if (
         this.getaktLevelRecursive(subskill, aktPath + '/' + subskill.skillname, path, level) !== 0
       ) {
@@ -82,7 +82,7 @@ export default class FormDialog extends React.Component {
     var aktLevel = 0;
 
     //holt das aktuelle Level des im Select ausgewählten Skill aus dem State
-    Object.keys(currentProfile.skills).map(index => {
+    Object.keys(currentProfile.skills).forEach(index => {
       if (
         this.getaktLevelRecursive(
           currentProfile.skills[index],
@@ -109,8 +109,8 @@ export default class FormDialog extends React.Component {
     };
 
     var allSkillsOfUser = [];
-    Object.keys(currentProfile.skills).map(index => {
-      Object.keys(currentProfile.skills[index].subcategories).map(subskill => {
+    Object.keys(currentProfile.skills).forEach(index => {
+      Object.keys(currentProfile.skills[index].subcategories).forEach(subskill => {
         if (allSkillsOfUser.length === 0) {
           allSkillsOfUser = this.getAllSkillsRecursive(
             currentProfile.skills[index].subcategories[subskill],
@@ -132,7 +132,7 @@ export default class FormDialog extends React.Component {
       });
     });
     var guidelines;
-    Object.keys(state.allSkills).map(key => {
+    Object.keys(state.allSkills).forEach(key => {
       if (singleselect.value === key) {
         guidelines = state.allSkills[key];
       }
