@@ -9,11 +9,10 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
+import Tooltip from '@material-ui/core/Tooltip';
 
 const styles = theme => ({
-  root: {
-    width: '500%',
-  },
+  root: { left: 100 },
 
   group: {
     flexDirection: 'row',
@@ -35,19 +34,25 @@ class RadioButtonsGroup extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, guidelines } = this.props;
     const numbers = ['1', '2', '3', '4', '5'];
     const rdBtns = numbers.map((num, index) =>
       num < this.props.level || num > this.props.level ? (
         <FormControlLabel
           key={index}
           value={num}
-          control={<Radio />}
+          control={<Radio title={guidelines[num]} />}
           label={num}
           disabled={!this.props.disabled}
-        /> //add disabled to the props to disable
+        />
       ) : (
-        <FormControlLabel key={index} value={num} control={<Radio />} label={num} />
+        //add disabled to the props to disable
+        <FormControlLabel
+          key={index}
+          value={num}
+          control={<Radio title={guidelines[num]} />}
+          label={num}
+        />
       ),
     );
     return (
@@ -59,6 +64,7 @@ class RadioButtonsGroup extends React.Component {
             className={classes.group}
             value={this.state.value}
             onChange={this.handleChange}
+            guidelines={this.guidelines}
           >
             {rdBtns}
           </RadioGroup>

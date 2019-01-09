@@ -180,7 +180,7 @@ class IntegrationReactSelect extends React.Component {
             components={components}
             value={this.state.single}
             onChange={this.handleChange('single')}
-            placeholder="Select "
+            placeholder={this.props.placeholder}
           />
         </NoSsr>
       </div>

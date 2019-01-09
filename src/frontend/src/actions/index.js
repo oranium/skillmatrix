@@ -85,6 +85,12 @@ export const setAllSkills = skills => ({
   type: 'SETALLSKILLS',
   skills,
 });
+
+export const setAllCategories = categories => ({
+  type: 'SETALLCATEGORIES',
+  categories,
+});
+
 export const addProfiles = profiles => ({
   type: 'ADDPROFILES',
   profiles,
@@ -107,3 +113,13 @@ export const setSearchError = error => ({
 export const resetSearch = {
   type: 'RESETSEARCH',
 };
+
+export const toggleDrawer = open => ({
+  type: 'TOGGLEDRAWER',
+  open,
+});
+
+export const toggleSpinner = open => ({
+  type: 'TOGGLESPINNER',
+  open,
+});

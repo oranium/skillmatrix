@@ -2,7 +2,11 @@ const RestPoints = {
   login: '/login',
   logout: '/logout',
   search: '/search',
-  skill: '/skill',
+  setSkills: '/setskills',
+  getSkills: '/getskills',
+  createSkill: '/createskill',
+  removeSkill: '/removeSkill',
   milestone: '/milestone',
+
 };
 export default RestPoints;

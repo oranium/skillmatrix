@@ -40,6 +40,8 @@ node_modules/
 #python virtual environments
 venv/
 
+/src/frontend/prototyp_react/node_modules/
+/src/backend/venv/
 #python cache
 __pycache__/
 

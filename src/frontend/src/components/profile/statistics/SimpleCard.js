@@ -28,10 +28,6 @@ const styles = theme => ({
   container: {
     display: 'flex',
   },
-
-  card: {
-    minWidth: 150,
-  },
 });
 
 export class ClickableChart extends React.Component {
@@ -59,7 +55,7 @@ export class ClickableChart extends React.Component {
     ));
     return (
       <div>
-        <Card className={classes.card}>
+        <Card>
           <ButtonBase className={this.props.classes.cardAction} onClick={this.handleClickOpen}>
             <CardContent>
               <Chart //render small chart at the Card
@@ -73,7 +69,13 @@ export class ClickableChart extends React.Component {
             </CardContent>
           </ButtonBase>
         </Card>
-        <Dialog open={this.state.open} onClose={this.handleClose} TransitionComponent={Transition}>
+        <Dialog
+          className={classes.card}
+          open={this.state.open}
+          onClose={this.handleClose}
+          TransitionComponent={Transition}
+          fullWidth
+        >
           <Typography variant="h5" component="h2">
             <Card>
               <CardContent>

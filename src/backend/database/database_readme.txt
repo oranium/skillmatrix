@@ -1,5 +1,5 @@
 To work on the Skillmatrix, you need to have a working database. My name is Wilhelm Pertsch and we will setup the database togehter :)
-You can contact me any time you want, just write your problems via telegram: +4917668017024
+You can contact me any time you want, just write your problems via telegram:
 You need to have MySQL installed, if you havn't allready look here: https://dev.mysql.com/downloads/mysql/
 Make sure your Password in general (or to the sm1 database) is Momomomo2 (Momo was my Cat, R.I.P.)
 You can change it: https://www.geeksforgeeks.org/mysql-change-user-password/ (user has to be 'root')

@@ -2,9 +2,9 @@
 from flask_sqlalchemy import SQLAlchemy
 
 
-db = None
+db = SQLAlchemy()
 
 
 def set_db(app):
-    global db
-    db = SQLAlchemy(app)
+    db.init_app(app)
+    app.app_context().push()

@@ -1,4 +1,13 @@
 // default map for clean input fields
+
+const heute = new Date();
+  var month = heute.getMonth() + 1
+  var day = heute.getDate()
+
+  if(day < 10 ) day = "0" + day;
+  if(month < 10 ) month = "0" + month
+  
+  const heuteString= heute.getFullYear() + "-" + month + "-" + day;
 const defaultFormState = {
   singleselect: {
     value: '',
@@ -16,7 +25,7 @@ const defaultFormState = {
   },
   datefield: {
     name: 'Date',
-    value: '',
+    value: heuteString,
     error: false,
   },
   textarea: {
@@ -58,14 +67,9 @@ const defaultSearch = {
 
 Object.freeze(defaultSearch);
 
-const defaultMilestone = {
-  datum: '2000-01-01',
-  level: 1,
-  comment: '-',
-};
-
 const exSkill = {
   skillname: 'Python',
+  skillpath: 'C++/Python',
   level: 4,
   milestones: [
     {
@@ -89,9 +93,40 @@ const exSkill = {
       comment: '72h Python workshop',
     },
   ],
+  subcategories: [],
+};
+
+const exSkill3 = {
+  skillname: 'C++',
+  skillpath: 'C++',
+  level: 3,
+  milestones: [
+    {
+      date: '2011-09-11',
+      level: 0,
+      comment: 'init',
+    },
+    {
+      date: '2017-01-20',
+      level: 1,
+      comment: 'C++ Workshop',
+    },
+    {
+      date: '2018-02-06',
+      level: 2,
+      comment: 'C++ Lehrgang',
+    },
+    {
+      date: '2021-11-23',
+      level: 3,
+      comment: 'C++ 3 jähriges Projekt fertig gestellt, mit 100000 Zeilen c++ Code',
+    },
+  ],
+  subcategories: [exSkill],
 };
 const exSkill2 = {
   skillname: 'Java',
+  skillpath: 'Programming/Java',
   level: 5,
   milestones: [
     {
@@ -120,38 +155,20 @@ const exSkill2 = {
       comment: 'Java Hackaton gewonnen',
     },
   ],
+  subcategories: [],
 };
 
-const exSkill3 = {
-  skillname: 'C++',
-  level: 3,
-  milestones: [
-    {
-      date: '2011-09-11',
-      level: 0,
-      comment: 'init',
-    },
-    {
-      date: '2017-01-20',
-      level: 1,
-      comment: 'C++ Workshop',
-    },
-    {
-      date: '2018-02-06',
-      level: 2,
-      comment: 'C++ Lehrgang',
-    },
-    {
-      date: '2021-11-23',
-      level: 3,
-      comment: 'C++ 3 jähriges Projekt fertig gestellt, mit 100000 Zeilen c++ Code',
-    },
-  ],
+const exCat = {
+  skillname: 'Programming',
+  skillpath: 'Programming',
+  level: 4,
+  milestones: [],
+  subcategories: [ exSkill2],
 };
 
 const exProfile = {
   username: 'Valdemar',
-  skills: [exSkill, exSkill2, exSkill3, exSkill3, exSkill2, exSkill], // alle skills übergeben
+  skills: [exCat, exSkill3], // alle skills übergeben
 };
 
 const defaultProfilePageState = {
@@ -159,10 +176,19 @@ const defaultProfilePageState = {
   isEditable: true,
   view: 0,
   showDialog: false,
-  profiles: [exProfile, exProfile],
+  profiles: [exProfile],
 };
 
-const defaultSkillList = ['Python', 'Java', 'JavaScript'];
+const defaultSkillList = [
+{"Programming/Python": {1: "schlecht", 2: "geht so", 3: "zufriedenstellend", 4: "okay", 5: "seeehr gut"}}, 
+{"Programming/Java": {1: "schlecht", 2: "geht so", 3: "zufriedenstellend", 4: "okay", 5: "seeehr gut"}}, 
+{"Programming/Java/Python": {1: "schlecht", 2: "geht so", 3: "zufriedenstellend", 4: "okay", 5: "seeehr gut"}},
+{ "Programming/Java/C++": {1: "schlecht", 2: "geht so", 3: "zufriedenstellend", 4: "okay", 5: "seeehr gut"}}, 
+{"Programming/Java/C++/Python": {1: "schlecht", 2: "geht so", 3: "zufriedenstellend", 4: "okay", 5: "seeehr gut"}},
+{"C++/Python": {1: "Noch nie Python gecoded", 2: "1 Projekt bearbeitet", 3: "100000 Zeilen PyCode", 4: "großes Projekt", 5: "langjährige Python Erfahrung"}},
+{"C++/C++++": {1: "Noch nie Python gecoded", 2: "1 Projekt bearbeitet", 3: "100000 Zeilen PyCode", 4: "großes Projekt", 5: "langjährige Python Erfahrung"}}
+];
+const defaultCategoryList = ["Programming", "C++"];
 
 // has all the data for the inputfields
 export const formState = (state = defaultFormState, action) => {
@@ -297,6 +323,39 @@ export const allSkills = (state = defaultSkillList, action) => {
       return action.skills;
     case 'RESETSTATE':
       return defaultSkillList;
+    default:
+      return state;
+  }
+};
+
+export const allCategories = (state = defaultCategoryList, action) => {
+  switch (action.type) {
+    case 'SETALLCATEGORIES':
+      return action.categories;
+    case 'RESETSTATE':
+      return defaultCategoryList;
+    default:
+      return state;
+  }
+};
+
+export const drawer = (state = false, action) => {
+  switch (action.type) {
+    case 'TOGGLEDRAWER':
+      return action.open;
+    case 'RESETSTATE':
+      return false;
+    default:
+      return state;
+  }
+};
+
+export const loading = (state = false, action) => {
+  switch (action.type) {
+    case 'TOGGLESPINNER':
+      return action.open;
+    case 'RESETSTATE':
+      return false;
     default:
       return state;
   }

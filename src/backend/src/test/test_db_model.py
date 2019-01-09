@@ -1,7 +1,6 @@
-import set_root_backend
-from src.app import app
-from src.model.database_model import Time, Users, MilestoneAssociation
-from src.controller.database import db
+from app import app
+from model.database_model import Date, Users, MilestoneAssociation
+from controller.database import db
 import unittest
 import datetime
 
