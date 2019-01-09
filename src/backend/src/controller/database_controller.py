@@ -197,8 +197,8 @@ class DatabaseController:
         if username:
             for skill in skills:
                 # check if user has the skill
-                if Association.query.filter_by(users_id=database_controller.get_user(username).id)\
-                        .filter_by(skill_id=skill.id).first():
+                if Association.query.filter(Association.users_id == database_controller.get_user(username).id,
+                                            Association.skill_id == skill.id).first():
                     skill_list.append(skill.path)
         # get every skill with guidelines
         else:
