@@ -23,14 +23,13 @@ function sortDatastructureRecursive(subcategories, props) {
   if (subcategories === undefined) return <div />;
   // console.log(subcategories);
   const subs = subcategories.map(skill => (
-    <div key={skill.skillpath} className={props.classes.panelsInside}>
-      <ProfileExpansionPanel
-        skill={skill}
-        summary={sortDatastructureRecursive(skill.subcategories, props)}
-        levelChange={props.levelChange}
-        isEditable={props.isEditable}
-      />
-    </div>
+    <ProfileExpansionPanel
+      key={skill.skillpath}
+      skill={skill}
+      summary={sortDatastructureRecursive(skill.subcategories, props)}
+      levelChange={props.levelChange}
+      isEditable={props.isEditable}
+    />
   ));
 
   return subs;
