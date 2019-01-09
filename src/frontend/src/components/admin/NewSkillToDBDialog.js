@@ -54,16 +54,23 @@ class FormDialog extends Component {
   };
 
   handleChange = event => {
-    this.setState({
-      skillname: event.target.value,
-    });
+    const skillname = event.target.value;
+    if (skillname.includes('/')) {
+      store.dispatch(setError('You can\'t use "/" in a skillname.'));
+      event.target.value = this.state.skillname;
+    } else {
+      this.setState({
+        skillname,
+      });
+    }
   };
 
   handleGuidelineChange(level, event) {
     const newGuideline = event.target.value;
     this.setState({
-      ...this.state, guideline: {...this.state.guideline, [level]: newGuideline}
-    })
+      ...this.state,
+      guideline: { ...this.state.guideline, [level]: newGuideline },
+    });
   }
 
   handleClose = () => {
@@ -78,31 +85,52 @@ class FormDialog extends Component {
     this.setState({ open: false });
   };
 
-  async handleSubmit(Skill) {
-    //todo API
-    var category = store.getState().formState.singleselect.value;
-    const { user } = store.getState();
-    const { username } = user;
+  async handleSubmit() {
+    const state = store.getState();
+    const category = state.formState.singleselect.value;
+    const { skillname, guideline } = this.state;
+    const { username } = state.user;
 
-    const request = {
+    //build whole path for new skill
+    var skillpath = '';
+    category === '' ? (skillpath = skillname) : (skillpath = category + '/' + skillname);
+
+    // #########################################################
+    // send new skill
+    const newSkillRequest = {
       username,
       category,
-      ...this.state,
+      skillname,
+      skillpath,
     };
-    // console.log(request);
 
-    const Rest = new RestCom(RestPoints.createSkill, request);
+    // send guidline for new skill
+    const newGuidelineRequest = {
+      username,
+      skillname,
+      guideline,
+    };
 
+    console.log(newSkillRequest);
+    console.log(newGuidelineRequest);
+
+    const RestSkillRequest = new RestCom(RestPoints.createSkill, newSkillRequest);
+    const RestGuidlineRequest = new RestCom(RestPoints.setGuideline, newGuidelineRequest);
     try {
-      await Rest.post();
+      await RestSkillRequest.post();
+      await RestGuidlineRequest.post();
     } catch (e) {
       store.dispatch(setError(e.message));
     }
+    // ##########################################################
+
+    // clean up
     this.handleClickClose();
     this.handleClose();
 
     await updateAllSkills();
   }
+
   render() {
     const state = store.getState();
     const { showDialog } = state.profile;
@@ -205,7 +233,7 @@ class FormDialog extends Component {
                   Submit
                 </Button>
               ) : (
-                <Button onClick={() => this.handleSubmit(true)} color="primary">
+                <Button onClick={() => this.handleSubmit()} color="primary">
                   Submit
                 </Button>
               )}
@@ -232,7 +260,7 @@ class FormDialog extends Component {
               <Button onClick={this.handleClickClose} color="primary">
                 Cancel
               </Button>
-              <Button onClick={() => this.handleSubmit(true)} color="primary" autoFocus>
+              <Button onClick={() => this.handleSubmit()} color="primary" autoFocus>
                 Submit
               </Button>
             </DialogActions>
