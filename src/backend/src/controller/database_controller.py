@@ -98,8 +98,10 @@ class DatabaseController:
         # print("level: {0}".format(level), file=sys.stderr)
         user = database_controller.get_user(username)
         mskill = database_controller.get_skill(skillpath)
-        mdate = Date(date=date)
-        db.session.add(mdate)
+        mdate = Date.query.filter_by(date=date).first()
+        if not mdate:
+            mdate = Date(date=date)
+            db.session.add(mdate)
         m = MilestoneAssociation(comment=comment, level=level)
         m.skill_milestone_assoc = mskill
         m.date_milestone_assoc = mdate
@@ -164,6 +166,7 @@ class DatabaseController:
         skill_paths = []
         for hier in childlist:
             skill = database_controller.get_skill_from_id(hier.child_skill_id)
+            print("skill: {0}".format(skill), file=sys.stderr)
             if not username or \
                     (username and
                      Association.query.filter(
@@ -486,6 +489,7 @@ class DatabaseController:
             Args:
                   skillpath(`str`): full path of the skill
         """
+        print("removing {0}".format(skillpath), file=sys.stderr)
         to_remove = database_controller.get_subcategories(skillpath)
         subcategories_to_check = to_remove.copy()
         to_remove.append(skillpath)
@@ -496,6 +500,7 @@ class DatabaseController:
         for sub_path in reversed(to_remove):
             sid = database_controller.get_skill(sub_path).id
             Hierarchy.query.filter_by(parent_skill_id=sid).delete()
+            Hierarchy.query.filter_by(child_skill_id=sid).delete()
             MilestoneAssociation.query.filter_by(milestone_skill_id=sid).delete()
             Association.query.filter_by(skill_id=sid).delete()
             # duplicate names WILL get removed here
