@@ -47,8 +47,61 @@ Jede testbezogene Aufgabe muss einem Ansprechpartner zugeordnet werden.
 [options="headers"]
 |===
 |ID |Anwendungsfall |Vorbedingungen |Methode|Eingabe |Ausgabe
-|U-DBController-1  |Datenbankzugriff              |Datenbank ist online              |retrieveData()       |SQL-Query  |gesuchte Elemente als yaml-Objekt
-|U-DBController-2  |Einpflegen in Datenbank              |Datenbank ist online              |setData()       |JSON-Objekt  |Daten als yaml-Objekt eingepflegt
+
+|U-Reducer-1  |Test Reducer              |Zugriff auf local storage            |dispatch() subscribe()      |Javascript-Objekt  |korrekte Daten aus local storage
+
+|U-Component-1  |Render Login Component              |Login geöffnet            |render()      |UI Component |Component auf GUI
+
+|U-Component-2  |Render Header Component              |Header geöffnet
+            |render()      |UI Component |Component auf GUI
+
+|U-Component-3  |Render InputFields Components              |InputFields geöffnet
+            |render()      |UI Component |Component auf GUI   
+
+|U-Component-4  |Render ExpensionPanel Component              |ExpansionPanel geöffnet
+            |render()      |UI Component |Component auf GUI    
+
+|U-ProfileComponent-1  |Render ProfileController Component              |Profil geöffnet
+            |render()      |UI Component |Component auf GUI 
+
+|U-ProfileComponent-2  |Render TabContainer Component              |     Profil geöffnet
+            |render()      |UI Component |Component auf GUI 
+
+|U-ProfileComponent-3  |Render Label Component              |Profil/Skills geöffnet
+            |render()      |UI Component |Component auf GUI        
+
+|U-ProfileComponent-4  |Render NewMilestoneDialog Component              |Profil/Skills geöffnet
+            |render()      |UI Component |Component auf GUI 
+
+|U-ProfileComponent-5  |Render NewMilestoneDialog Component              |Profil/Skills geöffnet
+            |render()      |UI Component |Component auf GUI
+
+|U-ProfileComponent-6  |Render NewSkillDialog Component              |Profil/Skills geöffnet
+            |render()      |UI Component |Component auf GUI  
+
+|U-ProfileComponent-7  |Render SkillProfileList Component              |Profil/Skills geöffnet
+            |render()      |UI Component |Component auf GUI  
+
+|U-ProfileComponent-8  |Render ProfileExpensionPanel Component              |Profil/Skills geöffnet
+            |render()      |UI Component |Component auf GUI 
+                           
+|U-ProfileComponent-9  |Render Chart Component              |Profil/Statistics geöffnet
+            |render()      |UI Component |Component auf GUI 
+
+|U-ProfileComponent-10  |Render SimpleCard Component              |Profil/Statistics geöffnet
+            |render()      |UI Component |Component auf GUI                               
+|U-ProfileComponent-11  |Render SkillStatisticsGrid Component              |Profil/Statistics geöffnet
+            |render()      |UI Component |Component auf GUI  
+
+|U-ProfileComponent-12  |Render SimpleCard Component              |Profil/Statistics geöffnet
+            |render()      |UI Component |Component auf GUI 
+
+|U-AdminComponents-1  |Render DeleteSkillDialog Component              |DeleteSkillDialog geöffnet
+            |render()      |UI Component |Component auf GUI 
+
+|U-AdminComponents-2  |Render NewSkillToDBDialog Component              |NewSkillToDBDialog geöffnet
+            |render()      |UI Component |Component auf GUI              
+
 |U-DBController-3  |Suchanfrage              |Daten wurden aus Datenbank extrahiert              |getJSON()       |yaml-Objekt  |JSON-Objekt
 |U-Authenticator-1  |Login(Success)           |Anwendung ist geöffnet              |login()       |Username korrekt und Passwort korrekt | loginToken
 |U-Authenticator-2  |Login(Failure)              |Anwendung ist geöffnet              |login()      |Username korrekt und Passwort inkorrekt |Error
