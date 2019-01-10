@@ -469,13 +469,13 @@ class DatabaseController:
                   skillpath(`str`): full path of the skill
         """
         to_remove = database_controller.get_subcategories(skillpath)
-        to_remove.append(skillpath)
         subcategories_to_check = to_remove.copy()
+        to_remove.append(skillpath)
         while subcategories_to_check:
             new_subcategories = database_controller.get_subcategories(subcategories_to_check.pop())
             to_remove.extend(new_subcategories)
             subcategories_to_check.extend(new_subcategories)
-        for sub_path in to_remove:
+        for sub_path in reversed(to_remove):
             sid = database_controller.get_skill(sub_path).id
             Hierarchy.query.filter_by(parent_skill_id=sid).delete()
             MilestoneAssociation.query.filter_by(milestone_skill_id=sid).delete()
@@ -493,15 +493,16 @@ class DatabaseController:
         """
         to_remove = database_controller.get_subcategories(skillpath, username=username)
         subcategories_to_check = to_remove.copy()
+        to_remove.append(skillpath)
         uid = database_controller.get_user(username).id
         while subcategories_to_check:
             new_subcategories = database_controller.get_subcategories(subcategories_to_check.pop())
             to_remove.extend(new_subcategories)
             subcategories_to_check.extend(new_subcategories)
-        for sub_path in to_remove:
+        for sub_path in reversed(to_remove):
             sid = database_controller.get_skill(sub_path).id
-            MilestoneAssociation.query.filter_by(milestone_skill_id=sid, milestone_users_id=uid)
-            Association.query.filter_by(skill_id=sid, users_id=uid)
+            MilestoneAssociation.query.filter_by(milestone_skill_id=sid, milestone_users_id=uid).delete()
+            Association.query.filter_by(skill_id=sid, users_id=uid).delete()
         db.session.commit()
         
     @staticmethod
