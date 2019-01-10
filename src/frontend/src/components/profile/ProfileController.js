@@ -128,6 +128,8 @@ class ProfileController extends Component {
     const { person, profiles, view, showDialog, isEditable } = state.profile;
     const skills = profiles[person].skills;
 
+    const noSkills = skills.length === 0;
+
     var allSkillsOfUser = [];
     Object.keys(profiles[person].skills).forEach(index => {
       Object.keys(profiles[person].skills[index].subcategories).forEach(subskill => {
@@ -167,6 +169,12 @@ class ProfileController extends Component {
           </IconButton>
         )}
         <div>
+          {noSkills && (
+            <div>
+              <h2>Looks empty :( Go get some skills!</h2>
+              <img height="400" src="https://media.giphy.com/media/1Zbeweu52ZaQE/giphy.gif" />
+            </div>
+          )}
           {view === 0 && (
             <TabContainer>
               <SkillProfileList
