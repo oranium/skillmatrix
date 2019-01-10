@@ -10,10 +10,9 @@ class Guidelines(db.Model):
 
 class Hierarchy(db.Model):
     __tablename__ = 'hierarchy'
-    parent_skill_id = db.Column(db.Integer, db.ForeignKey('skill.id'), nullable=True)
-    child_skill_id = db.Column(db.Integer, db.ForeignKey('skill.id'), primary_key=True)
-    parent_skill_assoc =db.relationship("Skill", foreign_keys=[parent_skill_id])
-    child_skill_assoc =db.relationship("Skill", foreign_keys=[child_skill_id])
+    id = db.Column(db.Integer, primary_key=True)
+    parent_skill_id = db.Column(db.Integer, nullable=True)
+    child_skill_id = db.Column(db.Integer, nullable=True)
 
 
 class Association(db.Model):
@@ -42,7 +41,7 @@ class MilestoneAssociation(db.Model):
 class Skill(db.Model):
     __tablename__ = 'skill'
     id = db.Column(db.Integer, primary_key=True)
-    path = db.Column(db.Text, nullable=False)
+    path = db.Column(db.String(511), nullable=False)
     name = db.Column(db.String(255), nullable=False)
     root = db.Column(db.Boolean, unique=False, default=False)
     skill_association = db.relationship("Association", back_populates="skill_assoc")

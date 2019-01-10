@@ -49,8 +49,8 @@ api.add_resource(SetSkills, "/setSkills")
 api.add_resource(GetSkills, "/getSkills")
 api.add_resource(CreateSkill, "/createSkill")
 api.add_resource(Guideline, "/guideline")
-api.add_resource(RemoveSkill, "/removeSkill")
-api.add_resource(RemoveMilestone, "/removeMilestone")
+api.add_resource(RemoveSkill, "/deleteSkill")
+api.add_resource(RemoveMilestone, "/deleteMilestone")
 
 
 if __name__ == "__main__":

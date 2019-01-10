@@ -17,11 +17,10 @@ class Guidelines(Base):
     information = Column(Text, nullable=True, default='')
 
 class Hierarchy(Base):
-    __tablename__ = 'hierachy'
-    parent_skill_id = Column(Integer, ForeignKey('skill.id'), nullable=False)
-    child_skill_id = Column(Integer, ForeignKey('skill.id'), primary_key=True)
-    parent_skill_assoc = relationship("Skill", foreign_keys=[parent_skill_id])
-    child_skill_assoc = relationship("Skill", foreign_keys=[child_skill_id])
+    __tablename__ = 'hierarchy'
+    id = Column(Integer, primary_key=True)
+    parent_skill_id = Column(Integer, nullable=True)
+    child_skill_id = Column(Integer, nullable=True)
 
 
 class Association(Base):
@@ -50,7 +49,7 @@ class MilestoneAssociation(Base):
 class Skill(Base):
     __tablename__ = 'skill'
     id = Column(Integer, primary_key=True)
-    path = Column(Text, nullable=False)
+    path = Column(String(511), nullable=False)
     name = Column(String(255), nullable=False)
     root = Column(Boolean, unique=False, default=False)
     skill_association = relationship("Association", back_populates="skill_assoc")
@@ -191,10 +190,10 @@ isaac = Users(username='Isaac-Hunt', name="Isaac Hunt")
 session.add(valdemar)
 session.add(karl)
 session.add(isaac)
-prog = Skill(name='Programming', root = True)
-java1 = Skill(name='Java')
-python1 = Skill(name='Python')
-js1 = Skill(name='JavaScript')
+prog = Skill(name='Programming',path="Programming", root = True)
+java1 = Skill(name='Java', path="JavaProgramming/JavaProgramming/JavaProgramming/JavaProgramming/JavaProgramming/JavaProgramming/JavaProgramming/JavaProgramming/JavaProgramming/JavaProgramming/JavaProgramming/JavaProgramming/Java")
+python1 = Skill(name='Python',path="Programming/Python")
+js1 = Skill(name='JavaScript', path="Programming/JavaScript")
 session.add(java1)
 session.add(python1)
 session.add(prog)
