@@ -51,7 +51,7 @@ class Skill(Base):
     __tablename__ = 'skill'
     id = Column(Integer, primary_key=True)
     path = Column(Text, nullable=False)
-    name = Column(String(255), nullable=False)
+    name = Column(String(1000), nullable=False)
     root = Column(Boolean, unique=False, default=False)
     skill_association = relationship("Association", back_populates="skill_assoc")
     skill_milestone_association = relationship("MilestoneAssociation", back_populates="skill_milestone_assoc")
@@ -192,7 +192,7 @@ session.add(valdemar)
 session.add(karl)
 session.add(isaac)
 prog = Skill(name='Programming',path="Programming", root = True)
-java1 = Skill(name='Java', path="Programming/Java")
+java1 = Skill(name='Meine Brüder und Schwestern, was hat es für einen Wert, wenn jemand behauptet: »Ich vertraue auf Gott, ich habe Glau­ben!«, aber er hat keine guten Taten vorzuweisen? Kann der bloße Glaube ihn retten? Nehmt einmal an, bei euch gibt es ei­nen Bruder oder eine Schwester, die nichts anzuziehen haben und hungern müssen. Was nützt es ihnen, wenn dann jemand von euch zu ihnen sagt: »Ich wünsche euch das Beste; ich hoffe, dass ihr euch warm anziehen und satt essen könnt!« -, aber er gibt ihnen nicht, was sie zum Leben brauchen? Genauso ist es auch mit dem Glauben: Wenn er allein bleibt und aus ihm keine Taten hervorgehen, ist er tot. Ihr seht also, dass ein Mensch aufgrund seiner Taten von Gott als gerecht anerkannt wird und nicht schon durch bloßen Glauben.', path="Programming/Java")
 python1 = Skill(name='Python', path="Programming/Python")
 js1 = Skill(name='JavaScript', path="Programming/JavaScript")
 session.add(java1)
@@ -227,4 +227,5 @@ create_guidelines(1,inforlsite)
 change_guideline(1,2,"neue information")
 session.commit()
 liste = get_guidelines(1) #['gar nicht gut', 'neue information', 'mittel', 'schon gut', 'sehr gut']
-
+p = session.query(Skill).filter(Skill.name == "Meine Brüder und Schwestern, was hat es für einen Wert, wenn jemand behauptet: »Ich vertraue auf Gott, ich habe Glau­ben!«, aber er hat keine guten Taten vorzuweisen? Kann der bloße Glaube ihn retten? Nehmt einmal an, bei euch gibt es ei­nen Bruder oder eine Schwester, die nichts anzuziehen haben und hungern müssen. Was nützt es ihnen, wenn dann jemand von euch zu ihnen sagt: »Ich wünsche euch das Beste; ich hoffe, dass ihr euch warm anziehen und satt essen könnt!« -, aber er gibt ihnen nicht, was sie zum Leben brauchen? Genauso ist es auch mit dem Glauben: Wenn er allein bleibt und aus ihm keine Taten hervorgehen, ist er tot. Ihr seht also, dass ein Mensch aufgrund seiner Taten von Gott als gerecht anerkannt wird und nicht schon durch bloßen Glauben.").one().id
+print (p)
