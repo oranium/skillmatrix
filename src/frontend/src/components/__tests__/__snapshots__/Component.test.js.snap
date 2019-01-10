@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`test ExpensionPanels right render ControlledExpansionPanels component 1`] = `
+exports[`test ExpensionPanels right render SkillPanelList component 1`] = `
 <ControlledExpansionPanels
   classes={
     Object {
