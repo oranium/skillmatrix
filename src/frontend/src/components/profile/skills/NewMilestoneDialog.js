@@ -77,7 +77,7 @@ export default class FormDialog extends React.Component {
     const { datefield, textarea, singleselect } = state.formState;
     var currentProfile = profiles[person];
 
-    var aktSkill = singleselect.value.split('/').pop();
+    var aktSkill = singleselect.value;
 
     var aktLevel = 0;
 
@@ -102,7 +102,7 @@ export default class FormDialog extends React.Component {
     // todo change map function
     const aktMilestone = {
       username: currentProfile.username,
-      skill: aktSkill,
+      skillpath: aktSkill,
       date: datefield.value,
       level: aktLevel,
       comment: textarea.value,

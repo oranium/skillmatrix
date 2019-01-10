@@ -19,10 +19,10 @@ class RemoveMilestone(Resource):
         parser.add_argument("date", type=str)
         args = parser.parse_args()
         try:
-            message = json.dumps(controller.remove_skill(args["username"],
-                                                         args["skillpath"],
-                                                         args["level"],
-                                                         args["date"])
+            message = json.dumps(controller.remove_milestone(args["username"],
+                                                             args["skillpath"],
+                                                             args["level"],
+                                                             args["date"])
                                  )
             return Response(message, status=200, mimetype="application/json")
         except TimeoutError:
