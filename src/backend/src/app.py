@@ -15,7 +15,8 @@ app.config['TESTING'] = environ.get('ENV_TESTING')
 app.config['DEBUG'] = environ.get('ENV_DEBUG')
 if app.config['TESTING']:
     app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('ENV_TESTDATABASE_URI')
-app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('ENV_DATABASE_URI')
+else:
+    app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('ENV_DATABASE_URI')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 connected = None
