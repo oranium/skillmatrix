@@ -69,10 +69,10 @@ export class ClickableChart extends React.Component {
       const Rest = new RestCom(RestPoints.deleteMilestone, milestone);
 
       try {
-        const updatedProfile = Rest.post();
+        const updatedProfile = await Rest.post();
         Store.dispatch(setOwnProfile(updatedProfile));
       } catch (e) {
-        Store.dispatch(setError(e));
+        Store.dispatch(setError(e.message));
       }
     }
   }
