@@ -19,7 +19,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Button from '@material-ui/core/Button';
-import ButtonBase from '@material-ui/core/ButtonBase';
 import IconButton from '@material-ui/core/IconButton';
 import { ArrowLeft, Search } from '@material-ui/icons';
 
@@ -56,8 +55,8 @@ class ProfileController extends Component {
     const { username } = state.profile.profiles[person];
     var latestChanges = { username, skills: {} };
     var alreadyUpdated = [];
-    Object.keys(skills).map(index => {
-      Object.keys(this.localUpdate).map(idx => {
+    Object.keys(skills).forEach(index => {
+      Object.keys(this.localUpdate).forEach(idx => {
         if (skills[index].skillpath === this.localUpdate[idx][0].skill) {
           alreadyUpdated.push(this.localUpdate[idx][0].skill);
           latestChanges.skills[this.localUpdate[idx][0].skill] = this.localUpdate[idx][0].level;
@@ -103,7 +102,7 @@ class ProfileController extends Component {
 
   getAllSkillsRecursive(skill, allSkills) {
     allSkills.push(skill);
-    skill.subcategories.map(subskill => {
+    skill.subcategories.forEach(subskill => {
       this.getAllSkillsRecursive(subskill, allSkills);
     });
     return allSkills;
@@ -130,8 +129,8 @@ class ProfileController extends Component {
     const skills = profiles[person].skills;
 
     var allSkillsOfUser = [];
-    Object.keys(profiles[person].skills).map(index => {
-      Object.keys(profiles[person].skills[index].subcategories).map(subskill => {
+    Object.keys(profiles[person].skills).forEach(index => {
+      Object.keys(profiles[person].skills[index].subcategories).forEach(subskill => {
         if (allSkillsOfUser.length === 0) {
           allSkillsOfUser = this.getAllSkillsRecursive(
             profiles[person].skills[index].subcategories[subskill],
@@ -147,13 +146,6 @@ class ProfileController extends Component {
       });
     });
 
-    //console.log(profiles[person]);
-    var skillsTmp = [];
-    try {
-      skillsTmp = profiles[person].skills;
-    } catch {
-      return <h2>Could not load profile.</h2>;
-    }
     const ownerArticle = this.getOwnerArticle();
     return (
       <div className={classes.root}>
@@ -186,7 +178,7 @@ class ProfileController extends Component {
               {isEditable && (
                 <div>
                   <NewMilestoneDialog open={showDialog === 'milestone'} />
-                  <NewSkillDialog />
+                  <NewSkillDialog open={showDialog === 'skill'} />
                   <div className={classes.buttons}>
                     <Button
                       variant="contained"
