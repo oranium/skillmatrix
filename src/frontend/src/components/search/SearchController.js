@@ -43,9 +43,14 @@ class SearchController extends Component {
 
     while (stack.length > 0) {
       node = stack.pop();
-      if (this.query.hasOwnProperty(node.skillname)) {
+      if (this.query.hasOwnProperty(node.skillpath)) {
         //remove subcategories to flatten tree and reduce weight
-        const {['subcategories']: value, ...skill} = node;
+        const skill = {
+          skillname: node.skillname,
+          skillpath: node.skillpath,
+          milestones: node.milestones,
+          level: node.level,
+        };
         results.push(skill);
       } 
       if (node.subcategories && node.subcategories.length) {
@@ -57,14 +62,10 @@ class SearchController extends Component {
     return results;
   };
 
-  storeSearchResults = data => {
-    const { query, results } = data;
-    console.log(results);
-
+  storeSearchResults = results => {
     const { has_all, has_some } = results;
+
     var searchSkills;
-    
-    this.query = query;
 
     // build map from skills that only match query
     let searchResults = {
@@ -103,8 +104,9 @@ class SearchController extends Component {
     // try to send data to api and
     try {
       const response = await Rest.post();
+      this.query = response.query;
       this.storeAllProfiles(response.results);
-      this.storeSearchResults(response);
+      this.storeSearchResults(response.results);
       // show results to user
       store.dispatch(showSearchResults);
     } catch (e) {
@@ -118,8 +120,6 @@ class SearchController extends Component {
     const { state } = this.props;
     const { search, formState } = state;
     const { showResults, results } = search;
-
-    console.log(results);
 
     return (
       <div>
