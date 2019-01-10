@@ -49,7 +49,7 @@ const styles = theme => ({
     padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
   },
   avatar: {
-    margin: theme.spacing.unit,
+    margin: '20px',
     backgroundColor: theme.palette.secondary.main,
   },
   spinner: {
