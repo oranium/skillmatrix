@@ -48,7 +48,7 @@ Jede testbezogene Aufgabe muss einem Ansprechpartner zugeordnet werden.
 |===
 |ID |Anwendungsfall |Vorbedingungen |Methode|Eingabe |Ausgabe
 
-|U-Reducer-1  |Test Reducer              |Zugriff auf local storage            |dispatch() subscribe()      |Javascript-Objekt  |korrekte Daten aus local storage
+|U-Reducer-1  |Test Reducer              |Laden des aktuellen states aus dem local storage            |dispatch()     |Javascript-Objekt  |korrekt aktualisierter state
 
 |U-Component-1  |Render Login Component              |Login geöffnet            |render()      |UI Component |Component auf GUI
 
