@@ -1,5 +1,15 @@
 import reducer from '../../reducers';
 
+const heute = new Date();
+let month = heute.getMonth() + 1;
+let day = heute.getDate();
+
+if (day < 10) day = `0${day}`;
+if (month < 10) month = `0${month}`;
+const drawer = false;
+const loading = false;
+const heuteString = `${heute.getFullYear()}-${month}-${day}`;
+
 const defaultFormState = {
   textfield: {
     name: 'Skill',
@@ -13,7 +23,7 @@ const defaultFormState = {
   },
   datefield: {
     name: 'Date',
-    value: '',
+    value: heuteString,
     error: false,
   },
   textarea: {
@@ -88,7 +98,57 @@ const exProfile = {
 };
 
 const defaultSkillList = [];
-const exampleSkillList = ['Python', 'Java', 'JavaScript'];
+const exampleSkillList = {
+  'Programming/Python': {
+    1: 'schlecht',
+    2: 'geht so',
+    3: 'zufriedenstellend',
+    4: 'okay',
+    5: 'seeehr gut',
+  },
+  'Programming/Java': {
+    1: 'schlecht',
+    2: 'geht so',
+    3: 'zufriedenstellend',
+    4: 'okay',
+    5: 'seeehr gut',
+  },
+  'Programming/Java/Python': {
+    1: 'schlecht',
+    2: 'geht so',
+    3: 'zufriedenstellend',
+    4: 'okay',
+    5: 'seeehr gut',
+  },
+  'Programming/Java/C++': {
+    1: 'schlecht',
+    2: 'geht so',
+    3: 'zufriedenstellend',
+    4: 'okay',
+    5: 'seeehr gut',
+  },
+  'Programming/Java/C++/Python': {
+    1: 'schlecht',
+    2: 'geht so',
+    3: 'zufriedenstellend',
+    4: 'okay',
+    5: 'seeehr gut',
+  },
+  'C++/Python': {
+    1: 'Noch nie Python gecoded',
+    2: '1 Projekt bearbeitet',
+    3: '100000 Zeilen PyCode',
+    4: 'großes Projekt',
+    5: 'langjährige Python Erfahrung',
+  },
+  'C++/C++++': {
+    1: 'Noch nie Python gecoded',
+    2: '1 Projekt bearbeitet',
+    3: '100000 Zeilen PyCode',
+    4: 'großes Projekt',
+    5: 'langjährige Python Erfahrung',
+  },
+};
 
 // ###################################################  formstate reducers  ###################################################
 
@@ -135,7 +195,7 @@ describe('reducer tests', () => {
       errorMsg: 'server timeout',
     });
 
-    expect(errorState.error).toEqual({ hasError: true, message: 'server timeout' });
+    expect(errorState.error).toEqual({ displayType: 1, hasError: true, message: 'server timeout' });
   });
 
   it('should return the Errorpage state after Event "HIDEERRORDIALOG"', () => {
@@ -143,7 +203,7 @@ describe('reducer tests', () => {
       type: 'HIDEERRORDIALOG',
     });
 
-    expect(errorState.error).toEqual({ hasError: false, message: '' });
+    expect(errorState.error).toEqual({ displayType: 1, hasError: false, message: '' });
   });
 
   // ###################################################  Switch page reducer  ###################################################
@@ -210,9 +270,9 @@ describe('reducer tests', () => {
     expect(actState.search.error).toBe('Server timeout');
   });
 
-  it('should update the actual state after Event "RESETSTATE"', () => {
+  it('should update the actual state after Event "RESETSEARCH"', () => {
     const actState = reducer(defaultSearch, {
-      type: 'RESETSTATE',
+      type: 'RESETSEARCH',
     });
 
     expect(actState.search).toEqual(defaultSearch);
@@ -266,12 +326,6 @@ describe('reducer tests', () => {
     expect(actState.profile.profiles[0]).toBe(exProfile);
   });
 
-  //   it('should update the actual state after Event "RESETSTATE" on Profile', () => {
-  //     const actState = reducer(defaultProfilePageState, {
-  //       type: 'RESETSTATE',
-  //     });
-  //     expect(actState).toBe(defaultProfilePageState);
-  //   });
 
   // ###################################################  all Skills reducers  ###################################################
   it('should update the actual state after Event "SETALLSKILLS"', () => {
@@ -280,6 +334,22 @@ describe('reducer tests', () => {
       skills: exampleSkillList,
     });
     expect(actState.allSkills).toBe(exampleSkillList);
+  });
+
+  // ###################################################  toggle spinner reducers  ###################################################
+  it('should update the actual state after Event "TOGGLEDRAWER"', () => {
+    const actState = reducer(drawer, {
+      type: 'TOGGLEDRAWER',
+      open: true,
+    });
+    expect(actState.drawer).toBe(true);
+  });
+  it('should update the actual state after Event "TOGGLESPINNER"', () => {
+    const actState = reducer(drawer, {
+      type: 'TOGGLESPINNER',
+      open: true,
+    });
+    expect(actState.loading).toBe(true);
   });
 
   // it('should update the actual state after Event "RESETSTATE" on allSkills', () => {

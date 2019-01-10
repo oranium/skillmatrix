@@ -4,9 +4,9 @@ exports[`test ExpensionPanels right render ControlledExpansionPanels component 1
 <ControlledExpansionPanels
   classes={
     Object {
-      "heading": "ControlledExpansionPanels-heading-25",
-      "root": "ControlledExpansionPanels-root-24",
-      "secondaryHeading": "ControlledExpansionPanels-secondaryHeading-26",
+      "heading": "ControlledExpansionPanels-heading-26",
+      "root": "ControlledExpansionPanels-root-25",
+      "secondaryHeading": "ControlledExpansionPanels-secondaryHeading-27",
     }
   }
 />
@@ -16,9 +16,9 @@ exports[`test Header component render Header component 1`] = `
 <ButtonAppBar
   classes={
     Object {
-      "grow": "ButtonAppBar-grow-7",
-      "menuButton": "ButtonAppBar-menuButton-8",
-      "root": "ButtonAppBar-root-6",
+      "grow": "ButtonAppBar-grow-8",
+      "menuButton": "ButtonAppBar-menuButton-9",
+      "root": "ButtonAppBar-root-7",
     }
   }
   logout="handleLogout"
@@ -31,10 +31,11 @@ exports[`test Login Components render Login component 1`] = `
   classes={
     Object {
       "avatar": "SignIn-avatar-3",
-      "form": "SignIn-form-4",
+      "form": "SignIn-form-5",
       "main": "SignIn-main-1",
       "paper": "SignIn-paper-2",
-      "submit": "SignIn-submit-5",
+      "spinner": "SignIn-spinner-4",
+      "submit": "SignIn-submit-6",
     }
   }
   errorMsg=""
@@ -46,9 +47,9 @@ exports[`test components from InputFields render DateInput from InputFields 1`] 
 <Component
   classes={
     Object {
-      "container": "Component-container-12",
-      "error": "Component-error-14",
-      "textField": "Component-textField-13",
+      "container": "Component-container-13",
+      "error": "Component-error-15",
+      "textField": "Component-textField-14",
     }
   }
 />
@@ -58,9 +59,9 @@ exports[`test components from InputFields render LevelPicker from InputFields 1`
 <Component
   classes={
     Object {
-      "container": "Component-container-15",
-      "error": "Component-error-17",
-      "textField": "Component-textField-16",
+      "container": "Component-container-16",
+      "error": "Component-error-18",
+      "textField": "Component-textField-17",
     }
   }
 />
@@ -70,9 +71,9 @@ exports[`test components from InputFields render SearchInput from InputFields 1`
 <Component
   classes={
     Object {
-      "container": "Component-container-21",
-      "error": "Component-error-23",
-      "textField": "Component-textField-22",
+      "container": "Component-container-22",
+      "error": "Component-error-24",
+      "textField": "Component-textField-23",
     }
   }
 />
@@ -82,9 +83,9 @@ exports[`test components from InputFields render SkillNameInput from InputFields
 <Component
   classes={
     Object {
-      "container": "Component-container-9",
-      "error": "Component-error-11",
-      "textField": "Component-textField-10",
+      "container": "Component-container-10",
+      "error": "Component-error-12",
+      "textField": "Component-textField-11",
     }
   }
   data="skill"
@@ -96,9 +97,9 @@ exports[`test components from InputFields render TextArea from InputFields 1`] =
 <Component
   classes={
     Object {
-      "container": "Component-container-18",
-      "error": "Component-error-20",
-      "textField": "Component-textField-19",
+      "container": "Component-container-19",
+      "error": "Component-error-21",
+      "textField": "Component-textField-20",
     }
   }
 />

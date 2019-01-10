@@ -4,9 +4,8 @@ exports[`test Profile Components render ProfileController component 1`] = `
 <ProfileController
   classes={
     Object {
-      "buttonContainer": "ProfileController-buttonContainer-11",
-      "goBackButton": "ProfileController-goBackButton-10",
-      "root": "ProfileController-root-9",
+      "buttons": "ProfileController-buttons-11",
+      "root": "ProfileController-root-10",
     }
   }
   data={Array []}
@@ -55,24 +54,26 @@ exports[`test Profile/skills Components render NewMilestoneDialog component 1`] 
       <WithStyles(IntegrationReactSelect)
         allSkills={
           Array [
-            "Python",
-            "Java",
-            "C++",
-            "C++",
-            "Java",
-            "Python",
+            "Programming/Java",
+            "Programming/Java/Python",
+            "C++/Python",
+            "C++/Python",
+            "C++/Python",
+            "C++/Python",
+            "C++/Python",
+            "C++/Python",
           ]
         }
       />
       <WithStyles(RadioButtonsGroup)
-        level="Choose a Skill!"
+        level={0}
       />
       <WithStyles(Component)
         data={
           Object {
             "error": false,
             "name": "Date",
-            "value": "",
+            "value": "2019-01-09",
           }
         }
         onChange={[Function]}
@@ -125,19 +126,13 @@ exports[`test Profile/skills Components render NewSkillDialog component 1`] = `
       <WithStyles(IntegrationReactSelect)
         allSkills={
           Array [
-            "JavaScript",
+            "Programming/Python",
+            "Programming/Java/C++",
+            "Programming/Java/C++/Python",
+            "C++/C++++",
           ]
         }
-      />
-      <TextField
-        id="standard-with-placeholder"
-        label="add new skill to database"
-        margin="normal"
-        onChange={[Function]}
-        placeholder="new skill"
-        required={false}
-        select={false}
-        variant="standard"
+        placeholder="Select a skill to add"
       />
       <WithStyles(Component)
         data={
@@ -173,8 +168,9 @@ exports[`test Profile/skills Components render ProfileExpensionPanel component 1
 <ControlledExpansionPanels
   classes={
     Object {
-      "heading": "ControlledExpansionPanels-heading-2",
-      "secondaryHeading": "ControlledExpansionPanels-secondaryHeading-3",
+      "heading": "ControlledExpansionPanels-heading-3",
+      "row": "ControlledExpansionPanels-row-5",
+      "secondaryHeading": "ControlledExpansionPanels-secondaryHeading-4",
     }
   }
   isEditable={true}
@@ -186,8 +182,9 @@ exports[`test Profile/skills Components render ProfileExpensionPanel component 2
 <ControlledExpansionPanels
   classes={
     Object {
-      "heading": "ControlledExpansionPanels-heading-2",
-      "secondaryHeading": "ControlledExpansionPanels-secondaryHeading-3",
+      "heading": "ControlledExpansionPanels-heading-3",
+      "row": "ControlledExpansionPanels-row-5",
+      "secondaryHeading": "ControlledExpansionPanels-secondaryHeading-4",
     }
   }
   isEditable={false}
@@ -196,79 +193,51 @@ exports[`test Profile/skills Components render ProfileExpensionPanel component 2
 `;
 
 exports[`test Profile/skills Components render SkillProfileList component 1`] = `
-Array [
-  <div>
-    <WithStyles(ControlledExpansionPanels)
-      isEditable={true}
-      key="1"
-      skill={
-        Object {
-          "skillname": "Java",
-        }
-      }
-    />
-  </div>,
-  <div>
-    <WithStyles(ControlledExpansionPanels)
-      isEditable={true}
-      key="2"
-      skill={
-        Object {
-          "skillname": "Python",
-        }
-      }
-    />
-  </div>,
-  <div>
-    <WithStyles(ControlledExpansionPanels)
-      isEditable={true}
-      key="3"
-      skill={
-        Object {
-          "skillname": "Haskell",
-        }
-      }
-    />
-  </div>,
-]
+<SkillProfileList
+  categories={
+    Array [
+      Object {
+        "skillname": "Java",
+      },
+      Object {
+        "skillname": "Python",
+      },
+      Object {
+        "skillname": "Haskell",
+      },
+    ]
+  }
+  classes={
+    Object {
+      "panels": "SkillProfileList-panels-2",
+    }
+  }
+  isEditable={true}
+/>
 `;
 
 exports[`test Profile/skills Components render SkillProfileList component 2`] = `
-Array [
-  <div>
-    <WithStyles(ControlledExpansionPanels)
-      isEditable={false}
-      key="1"
-      skill={
-        Object {
-          "skillname": "Java",
-        }
-      }
-    />
-  </div>,
-  <div>
-    <WithStyles(ControlledExpansionPanels)
-      isEditable={false}
-      key="2"
-      skill={
-        Object {
-          "skillname": "Python",
-        }
-      }
-    />
-  </div>,
-  <div>
-    <WithStyles(ControlledExpansionPanels)
-      isEditable={false}
-      key="3"
-      skill={
-        Object {
-          "skillname": "Haskell",
-        }
-      }
-    />
-  </div>,
-]
+<SkillProfileList
+  categories={
+    Array [
+      Object {
+        "skillname": "Java",
+      },
+      Object {
+        "skillname": "Python",
+      },
+      Object {
+        "skillname": "Haskell",
+      },
+    ]
+  }
+  classes={
+    Object {
+      "panels": "SkillProfileList-panels-2",
+    }
+  }
+  isEditable={false}
+/>
 `;
 
 exports[`test Profile/stats Components render Chart component 1`] = `
@@ -350,11 +319,10 @@ exports[`test Profile/stats Components render SimpleCard component 1`] = `
 <SimpleCard
   classes={
     Object {
-      "appBar": "SimpleCard-appBar-5",
-      "card": "SimpleCard-card-8",
-      "container": "SimpleCard-container-7",
-      "flex": "SimpleCard-flex-6",
-      "root": "SimpleCard-root-4",
+      "appBar": "SimpleCard-appBar-7",
+      "container": "SimpleCard-container-9",
+      "flex": "SimpleCard-flex-8",
+      "root": "SimpleCard-root-6",
     }
   }
   data={Array []}
