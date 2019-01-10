@@ -17,11 +17,10 @@ class Guidelines(Base):
     information = Column(Text, nullable=True, default='')
 
 class Hierarchy(Base):
-    __tablename__ = 'hierachy'
-    parent_skill_id = Column(Integer, ForeignKey('skill.id'), nullable=False)
-    child_skill_id = Column(Integer, ForeignKey('skill.id'), primary_key=True)
-    parent_skill_assoc = relationship("Skill", foreign_keys=[parent_skill_id])
-    child_skill_assoc = relationship("Skill", foreign_keys=[child_skill_id])
+    __tablename__ = 'hierarchy'
+    id = Column(Integer, primary_key=True)
+    parent_skill_id = Column(Integer, nullable=True)
+    child_skill_id = Column(Integer, nullable=True)
 
 
 class Association(Base):
