@@ -13,7 +13,7 @@ print(environ.keys(), file=sys.stderr)
 app = Flask(__name__)
 app.config['TESTING'] = environ.get('ENV_TESTING')
 app.config['DEBUG'] = environ.get('ENV_DEBUG')
-if app.config['TESTING']:
+if app.config['TESTING'] == 'True':
     app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('ENV_TESTDATABASE_URI')
 else:
     app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('ENV_DATABASE_URI')
