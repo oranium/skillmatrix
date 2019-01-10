@@ -22,9 +22,9 @@ class Guideline(Resource):
             guidelines = []
             for guideline in args["guidelines"].items()[1]:
                 guidelines.append(guideline)
-            message = json.dumps(controller.create_skill(args["username"],
-                                                         args["skillpath"],
-                                                         guidelines)
+            message = json.dumps(controller.add_guidelines(args["username"],
+                                                           args["skillpath"],
+                                                           guidelines)
                                  )
             return Response(message, status=200, mimetype="application/json")
         except ValueError:

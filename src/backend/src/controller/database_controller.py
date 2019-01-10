@@ -307,8 +307,7 @@ class DatabaseController:
         guidelines = []
         level = 1
         while level < 6:
-            guideline = Guidelines.query.filter(skill_id=skill_id, level=level).first()
-            guideline = Guidelines.query.filter(skill_id=skill_id, level=level).first()
+            guideline = Guidelines.query.filter(Guidelines.skill_id == skill_id, Guidelines.level == level).first()
             guidelines.append(guideline.information)
             level = level + 1
         # print(guidelines)
