@@ -59,6 +59,8 @@ class SearchController extends Component {
 
   storeSearchResults = data => {
     const { query, results } = data;
+    console.log(results);
+
     const { has_all, has_some } = results;
     var searchSkills;
     
@@ -88,18 +90,16 @@ class SearchController extends Component {
   async handleSearch(e) {
     e.preventDefault();
     const { state } = this.props;
-    const { username } = state.user;
     const { searchValues } = state.search;
     if (!Object.keys(searchValues).length) {
       // search field is empty
       store.dispatch(setSearchError(true));
       return;
     }
-    const search = {
-      username,
+    const searchRequest = {
       query: this.getSearchQuery(searchValues),
     };
-    const Rest = new RestCom(RestPoints.search, JSON.stringify(search));
+    const Rest = new RestCom(RestPoints.search, searchRequest);
     // try to send data to api and
     try {
       const response = await Rest.post();
@@ -118,6 +118,8 @@ class SearchController extends Component {
     const { state } = this.props;
     const { search, formState } = state;
     const { showResults, results } = search;
+
+    console.log(results);
 
     return (
       <div>

@@ -173,12 +173,12 @@ const components = {
   ValueContainer,
 };
 
-const required = (value, error) => (value == null && error ? 'Required' : undefined);
-
 class IntegrationReactSelect extends React.Component {
   handleChange = value => {
     store.dispatch(setQuery(value));
   };
+
+  isError = (value, error) => value == null && error;
 
   render() {
     const { classes, theme } = this.props;
@@ -214,7 +214,7 @@ class IntegrationReactSelect extends React.Component {
               InputLabelProps: {
                 shrink: true,
               },
-              error: required(searchValues, error),
+              error: this.isError(searchValues, error),
             }}
             options={suggestions}
             components={components}
