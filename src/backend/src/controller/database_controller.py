@@ -494,7 +494,7 @@ class DatabaseController:
             MilestoneAssociation.query.filter_by(milestone_skill_id=sid).delete()
             Association.query.filter_by(skill_id=sid).delete()
             # duplicate names WILL get removed here
-            Skill.query.filter_by(path=skillpath).delete()
+            Skill.query.filter_by(path=sub_path).delete()
         db.session.commit()
 
     @staticmethod
