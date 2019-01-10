@@ -62,17 +62,11 @@ class ControlledExpansionPanels extends React.Component {
 
     // only if user confirms deletion
     if (confirmation) {
-      // Api request to remove skill from database
-      const { user } = Store.getState();
-      const { username } = user;
-
+      // Api request to delete skill from own skilllist
       const request = {
-        username,
-        skill: skillToRemove,
+        skillpath: skillToRemove,
         forAll: false,
       };
-
-      console.log(request);
 
       const Rest = new RestCom(RestPoints.deleteSkill, request);
       //todo remove stringify
