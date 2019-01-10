@@ -331,17 +331,17 @@ class DatabaseController:
         db.session.commit()
 
     @staticmethod
-    def create_guidelines(skillname, guidelines):
+    def create_guidelines(skillpath, guidelines):
         """Create all 5 guidelines for one skill in the database.
                    Args:
-                       skillname (`int`): the id of the skill to ad to the guideline table.
+                       skillpath (`str`): the path of the skill to ad to the guideline table.
                        guidelines `[str]`: a list of strings that should look like this:
                                                     [text for level 1, text for level 2,...,text for level 5]
                 """
         level = 1
         if not len(guidelines) == 5:
             raise ValueError("Guidelines does not have 5 elements.")
-        skill_id = database_controller.get_skill(skillname).id
+        skill_id = database_controller.get_skill(skillpath).id
         for guideline in guidelines:
             new_guideline = Guidelines(skill_id=skill_id, level=level, information=guideline)
             db.session.add(new_guideline)
