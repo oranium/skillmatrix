@@ -167,8 +167,8 @@ const exCat = {
 };
 
 const exProfile = {
-  username: 'Valdemar',
-  skills: [exCat, exSkill3], // alle skills übergeben
+  username: '',
+  skills: [], // alle skills übergeben
 };
 
 const defaultProfilePageState = {
@@ -176,7 +176,7 @@ const defaultProfilePageState = {
   isEditable: true,
   view: 0,
   showDialog: false,
-  profiles: [],
+  profiles: [exProfile],
 };
 
 const exSkillList = {

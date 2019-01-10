@@ -4,8 +4,8 @@ exports[`test Profile Components render ProfileController component 1`] = `
 <ProfileController
   classes={
     Object {
-      "buttons": "ProfileController-buttons-11",
-      "root": "ProfileController-root-10",
+      "buttons": "ProfileController-buttons-13",
+      "root": "ProfileController-root-12",
     }
   }
   data={Array []}
@@ -17,7 +17,7 @@ exports[`test Profile Components render TabContainer component 1`] = `
 <TabContainer
   classes={
     Object {
-      "root": "TabContainer-root-12",
+      "root": "TabContainer-root-14",
     }
   }
   skill="Javascript"
@@ -52,18 +52,7 @@ exports[`test Profile/skills Components render NewMilestoneDialog component 1`] 
         To add a new milestone please fill in all inputfields.
       </WithStyles(DialogContentText)>
       <WithStyles(IntegrationReactSelect)
-        allSkills={
-          Array [
-            "Programming/Java",
-            "Programming/Java/Python",
-            "C++/Python",
-            "C++/Python",
-            "C++/Python",
-            "C++/Python",
-            "C++/Python",
-            "C++/Python",
-          ]
-        }
+        allSkills={Array []}
       />
       <WithStyles(RadioButtonsGroup)
         level={0}
@@ -73,7 +62,7 @@ exports[`test Profile/skills Components render NewMilestoneDialog component 1`] 
           Object {
             "error": false,
             "name": "Date",
-            "value": "2019-01-09",
+            "value": "2019-01-10",
           }
         }
         onChange={[Function]}
@@ -112,7 +101,6 @@ exports[`test Profile/skills Components render NewSkillDialog component 1`] = `
   <WithStyles(Dialog)
     aria-labelledby="form-dialog-title"
     onClose={[Function]}
-    open={false}
   >
     <WithStyles(DialogTitle)
       id="form-dialog-title"
@@ -124,14 +112,7 @@ exports[`test Profile/skills Components render NewSkillDialog component 1`] = `
         To add a new Skill please fill in all inputfields.
       </WithStyles(DialogContentText)>
       <WithStyles(IntegrationReactSelect)
-        allSkills={
-          Array [
-            "Programming/Python",
-            "Programming/Java/C++",
-            "Programming/Java/C++/Python",
-            "C++/C++++",
-          ]
-        }
+        allSkills={Array []}
         placeholder="Select a skill to add"
       />
       <WithStyles(Component)
@@ -168,9 +149,11 @@ exports[`test Profile/skills Components render ProfileExpensionPanel component 1
 <ControlledExpansionPanels
   classes={
     Object {
-      "heading": "ControlledExpansionPanels-heading-3",
-      "row": "ControlledExpansionPanels-row-5",
-      "secondaryHeading": "ControlledExpansionPanels-secondaryHeading-4",
+      "headingButton": "ControlledExpansionPanels-headingButton-5",
+      "left": "ControlledExpansionPanels-left-3",
+      "noFlex": "ControlledExpansionPanels-noFlex-7",
+      "removeButton": "ControlledExpansionPanels-removeButton-6",
+      "right": "ControlledExpansionPanels-right-4",
     }
   }
   isEditable={true}
@@ -182,9 +165,11 @@ exports[`test Profile/skills Components render ProfileExpensionPanel component 2
 <ControlledExpansionPanels
   classes={
     Object {
-      "heading": "ControlledExpansionPanels-heading-3",
-      "row": "ControlledExpansionPanels-row-5",
-      "secondaryHeading": "ControlledExpansionPanels-secondaryHeading-4",
+      "headingButton": "ControlledExpansionPanels-headingButton-5",
+      "left": "ControlledExpansionPanels-left-3",
+      "noFlex": "ControlledExpansionPanels-noFlex-7",
+      "removeButton": "ControlledExpansionPanels-removeButton-6",
+      "right": "ControlledExpansionPanels-right-4",
     }
   }
   isEditable={false}
@@ -319,10 +304,10 @@ exports[`test Profile/stats Components render SimpleCard component 1`] = `
 <SimpleCard
   classes={
     Object {
-      "appBar": "SimpleCard-appBar-7",
-      "container": "SimpleCard-container-9",
-      "flex": "SimpleCard-flex-8",
-      "root": "SimpleCard-root-6",
+      "appBar": "SimpleCard-appBar-9",
+      "container": "SimpleCard-container-11",
+      "flex": "SimpleCard-flex-10",
+      "root": "SimpleCard-root-8",
     }
   }
   data={Array []}
