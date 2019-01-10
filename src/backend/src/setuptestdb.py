@@ -98,7 +98,7 @@ class Users(Base):
         return '<id = {0} und username = {1}>'.format(self.id, self.username)
 
 
-engine = create_engine('ENV_TESTDATABASE_URI')
+engine = create_engine('sqlite:///sqlalchemy_example.db')
 
 Base.metadata.drop_all(bind=engine)
 Base.metadata.create_all(engine)
