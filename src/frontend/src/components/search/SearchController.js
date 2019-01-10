@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 
 // react components
 import SearchForm from 'components/search/SearchForm';
-import ControlledExpansionPanels from 'components/common/ControlledExpansionPanels';
+import SkillPanelList from 'components/search/SkillPanelList';
 
 // redux
 import store from 'Store';
@@ -129,11 +129,11 @@ class SearchController extends Component {
         />
         {showResults && (
           <div>
-            <ControlledExpansionPanels
+            <SkillPanelList
               heading={'Matches all search terms'}
               results={results.hasAll}
             />
-            <ControlledExpansionPanels
+            <SkillPanelList
               heading={'Matches some search terms'}
               results={results.hasSome}
             />
