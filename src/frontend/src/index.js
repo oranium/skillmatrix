@@ -6,10 +6,7 @@ import './index.css';
 
 // ========================================
 
-// window.onbeforeunload = (event) => {
-//   event.preventDefault();
-//   console.log('test');
-// };
+window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
 
 const render = () => {
   ReactDOM.render(<App state={store.getState()} />, document.getElementById('root'));
