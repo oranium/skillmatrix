@@ -97,56 +97,56 @@ class Users(Base):
     def __repr__(self):
         return '<id = {0} und username = {1}>'.format(self.id, self.username)
 
+class Setup():
+    engine = create_engine('sqlite:///sqlalchemy_example.db')
 
-engine = create_engine('sqlite:///sqlalchemy_example.db')
+    Base.metadata.drop_all(bind=engine)
+    Base.metadata.create_all(engine)
+    DBSession = sessionmaker(bind=engine)
+    session = DBSession()
 
-Base.metadata.drop_all(bind=engine)
-Base.metadata.create_all(engine)
-DBSession = sessionmaker(bind=engine)
-session = DBSession()
+    def create_hiestory(self, parent, child):
+        x = Hierarchy()
+        x.parent_skill_assoc= parent
+        x.child_skill_assoc= child
+        self.session.add(x)
+        self.session.commit()
 
-def create_hiestory(parent, child):
-    x = Hierarchy()
-    x.parent_skill_assoc= parent
-    x.child_skill_assoc= child
-    session.add(x)
-    session.commit()
+    def get_guidelines(self, skill_id):
+        information_list = []
+        level = 1
+        while (level < 6):
+            guideline = self.session.query(Guidelines).filter(Guidelines.skill_id == skill_id, Guidelines.level == level).one()
+            information_list.append(guideline.information)
+            level = level +1
+        print (information_list)
+        return information_list
 
-def get_guidelines(skill_id):
-    information_list = []
-    level = 1
-    while (level < 6):
-        guideline = session.query(Guidelines).filter(Guidelines.skill_id == skill_id, Guidelines.level == level).one()
-        information_list.append(guideline.information)
-        level = level +1
-    print (information_list)
-    return information_list
-
-def change_guideline(skill_id, level, new_information):
-    if session.query(Guidelines).filter(Guidelines.skill_id == skill_id, Guidelines.level == level).all():
-        print("gibt es schon")
-        d = session.query(Guidelines).filter(Guidelines.skill_id == skill_id, Guidelines.level == level).one()
-        session.delete(d)
-        session.commit()
-    newguideline = Guidelines(skill_id = skill_id, level = level, information = new_information)
-    session.add(newguideline)
-    session.commit()
-        
-
-def create_guidelines(skill_id, information_list):
-    level = 1
-    for information in information_list:
-        newguideline = Guidelines(skill_id = skill_id, level = level, information = information)
-        session.add(newguideline)
-        session.commit()
-        level = level +1
+    def change_guideline(self, skill_id, level, new_information):
+        if self.session.query(Guidelines).filter(Guidelines.skill_id == skill_id, Guidelines.level == level).all():
+            print("gibt es schon")
+            d = self.session.query(Guidelines).filter(Guidelines.skill_id == skill_id, Guidelines.level == level).one()
+            self.session.delete(d)
+            self.session.commit()
+        newguideline = Guidelines(skill_id = skill_id, level = level, information = new_information)
+        self.session.add(newguideline)
+        self.session.commit()
 
 
-def create_skill(level, skill, date, username):
-    a = Association(level=level)
-    a.skill_assoc = skill
-    a.date_assoc = date
-    a.users_assoc = username
+    def create_guidelines(self, skill_id, information_list):
+        level = 1
+        for information in information_list:
+            newguideline = Guidelines(skill_id = skill_id, level = level, information = information)
+            self.session.add(newguideline)
+            self.session.commit()
+            level = level +1
+
+
+    def create_skill(self, level, skill, date, username):
+        a = Association(level=level)
+        a.skill_assoc = skill
+        a.date_assoc = date
+        a.users_assoc = username
 
 '''class Setup():
 
@@ -172,8 +172,10 @@ def create_skill(level, skill, date, username):
         a.date_assoc = date
         a.users_assoc = username
 
-testSetup = Setup()'''
+testSetup = Setup()
+'''
 
+'''
 inforlsite = ["gar nicht gut", "nicht gut", "mittel", "schon gut", "sehr gut"]
 pythonlevel1 = Guidelines(skill_id = 2, level = 1, information = "gar nicht gut")
 pythonlevel2 = Guidelines(skill_id = 2, level = 2, information = "nicht gut")
@@ -227,4 +229,4 @@ create_guidelines(1,inforlsite)
 change_guideline(1,2,"neue information")
 session.commit()
 liste = get_guidelines(1) #['gar nicht gut', 'neue information', 'mittel', 'schon gut', 'sehr gut']
-
+'''

@@ -4,7 +4,7 @@ from controller.database_controller import database_controller
 from controller.database import db
 from model.skill_model import SkillModel
 from model.milestone_model import MilestoneModel
-from resetdb import Setup, Date, Skill, Users, Association, MilestoneAssociation, Hierarchy
+from setuptestdb import Setup, Date, Skill, Users, Association, MilestoneAssociation, Hierarchy
 
 
 def setUpModule():
@@ -67,7 +67,7 @@ class testDatabaseController(unittest.TestCase):
         self.test_setup.session.commit()
 
     def tearDown(self):
-        pass
+
 
     def test_search_success(self):
         result = database_controller.search({"Java": 1})
