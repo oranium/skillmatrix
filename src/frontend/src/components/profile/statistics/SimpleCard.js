@@ -52,33 +52,33 @@ export class ClickableChart extends React.Component {
   };
 
   async handleDeleteMilestone(level, date) {
-    const { skill } = this.props;
+    const { skillpath } = this.props;
 
     const confirmation = window.confirm(
-      'Are you sure you want to remove this Milestone for ' + skill + ' from your profile?',
+      'Are you sure you want to remove this Milestone for ' + skillpath + ' from your profile?',
     );
 
     // only if user confirms to delete the milestone
     if (confirmation) {
       const milestone = {
-        skillpath: skill,
+        skillpath,
         level,
         date,
       };
-  
+
       const Rest = new RestCom(RestPoints.deleteMilestone, milestone);
-  
+
       try {
-        const updatedProfile = Rest.post();
+        const updatedProfile = await Rest.post();
         Store.dispatch(setOwnProfile(updatedProfile));
       } catch (e) {
-        Store.dispatch(setError(e));
+        Store.dispatch(setError(e.message));
       }
     }
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, skillname } = this.props;
 
     const milestones = Object.keys(classes.data).map(key => (
       <MilestoneList
@@ -98,7 +98,7 @@ export class ClickableChart extends React.Component {
                 height={200}
                 width={300}
                 display={false}
-                skill={this.props.skill}
+                skill={skillname}
                 data={classes.data}
                 enabledZoom={false}
               />
@@ -120,7 +120,7 @@ export class ClickableChart extends React.Component {
                     height={400}
                     width={800}
                     display={true}
-                    skill={this.props.skill}
+                    skill={skillname}
                     data={classes.data}
                     enabledZoom={true}
                   />
@@ -143,7 +143,7 @@ export class ClickableChart extends React.Component {
 
 //SimpleCard renders one Clickable Chart
 function SimpleCard(props) {
-  return <ClickableChart skill={props.skill} classes={props} />;
+  return <ClickableChart skillpath={props.skillpath} skillname={props.skillname} classes={props} />;
 }
 function Transition(props) {
   return <Slide direction="up" {...props} />;
