@@ -18,10 +18,6 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { openProfileDialog, changeProfileOwner, switchPage } from 'actions';
 import store from '../../Store';
 
-// Rest
-import RestPoints from '../../rest/Init';
-import RestCom from '../../rest/Rest';
-
 const styles = {
   list: {
     width: 250,

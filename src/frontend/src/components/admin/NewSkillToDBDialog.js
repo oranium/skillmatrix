@@ -1,9 +1,9 @@
 // react
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+
 // components
-import { DateInput, TextArea, LevelPicker } from 'components/common/InputFields';
-import SingleSelect from 'components/common/SingleSelect';
+import SingleSkillSelect from 'components/common/SingleSkillSelect';
 
 // material-ui
 import Button from '@material-ui/core/Button';
@@ -14,7 +14,6 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { withStyles } from '@material-ui/core/styles';
-import InputAdornment from '@material-ui/core/InputAdornment';
 import classNames from 'classnames';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -23,7 +22,7 @@ import Card from '@material-ui/core/Card';
 
 // redux
 import store from 'Store';
-import { closeProfileDialog, updateInput, resetForm, setOwnProfile, setError } from 'actions';
+import { closeProfileDialog, resetForm, setError } from 'actions';
 
 // Rest
 import RestPoints from 'rest/Init';
@@ -55,13 +54,22 @@ class FormDialog extends Component {
   };
 
   handleChange = event => {
-    this.setState({
-      skillname: event.target.value,
-    });
+    const skillname = event.target.value;
+    if (skillname.includes('/')) {
+      store.dispatch(setError('You can\'t use "/" in a skillname.'));
+      event.target.value = this.state.skillname;
+    } else {
+      this.setState({
+        skillname,
+      });
+    }
   };
 
   handleGuidelineChange(level, event) {
-    this.state.guideline[level] = event.target.value;
+    const newGuideline = event.target.value;
+    this.setState({
+      guideline: { ...this.state.guideline, [level]: newGuideline },
+    });
   }
 
   handleClose = () => {
@@ -76,43 +84,52 @@ class FormDialog extends Component {
     this.setState({ open: false });
   };
 
-  async handleSubmit(Skill) {
-    //todo API
-    var category = store.getState().formState.singleselect.value;
-    const { user } = store.getState();
-    const { username } = user;
+  async handleSubmit() {
+    const state = store.getState();
+    const category = state.formState.singleselect.value;
+    const { skillname, guideline } = this.state;
 
-    const request = {
-      username,
+    //build whole path for new skill
+    var skillpath = '';
+    category === '' ? (skillpath = skillname) : (skillpath = category + '/' + skillname);
+
+    // #########################################################
+    // send new skill
+    const newSkillRequest = {
       category,
-      ...this.state,
+      skillname,
+      skillpath,
     };
-    console.log(request);
 
-    const Rest = new RestCom(RestPoints.createSkill, request);
+    // send guidline for new skill
+    const newGuidelineRequest = {
+      skillname,
+      guideline,
+    };
+
+    console.log(newSkillRequest);
+    console.log(newGuidelineRequest);
+
+    const RestSkillRequest = new RestCom(RestPoints.createSkill, newSkillRequest);
+    const RestGuidlineRequest = new RestCom(RestPoints.setGuidelines, newGuidelineRequest);
 
     try {
-      await Rest.post();
+      await RestSkillRequest.post();
+      await RestGuidlineRequest.post();
     } catch (e) {
       store.dispatch(setError(e.message));
     }
+    // ##########################################################
+
+    // clean up
     this.handleClickClose();
     this.handleClose();
 
     await updateAllSkills();
   }
+
   render() {
     const state = store.getState();
-
-    const { allSkills, allCategories } = state;
-
-    var tmpAllSkills = [];
-    Object.keys(allSkills).map(index => {
-      for (var key in allSkills[index]) tmpAllSkills.push(key);
-    });
-
-    const skillList = [...tmpAllSkills, ...allCategories];
-
     const { showDialog } = state.profile;
     const { classes } = this.props;
     return (
@@ -130,11 +147,7 @@ class FormDialog extends Component {
                 To add a new Skill please fill in all inputfields.
               </DialogContentText>
 
-              <SingleSelect
-                placeholder={'Choose the category of your skill'}
-                allSkills={skillList}
-                fullWidth
-              />
+              <SingleSkillSelect placeholder={'Choose the category of your skill'} />
 
               <TextField
                 id="outlined-with-placeholder"
@@ -212,12 +225,12 @@ class FormDialog extends Component {
               <Button onClick={this.handleClose} color="primary">
                 Cancel
               </Button>
-              {store.getState().formState.singleselect.value.length == 0 ? (
+              {state.formState.singleselect.value.length === 0 ? (
                 <Button onClick={() => this.handleClickOpen()} color="primary">
                   Submit
                 </Button>
               ) : (
-                <Button onClick={() => this.handleSubmit(true)} color="primary">
+                <Button onClick={() => this.handleSubmit()} color="primary">
                   Submit
                 </Button>
               )}
@@ -244,7 +257,7 @@ class FormDialog extends Component {
               <Button onClick={this.handleClickClose} color="primary">
                 Cancel
               </Button>
-              <Button onClick={() => this.handleSubmit(true)} color="primary" autoFocus>
+              <Button onClick={() => this.handleSubmit()} color="primary" autoFocus>
                 Submit
               </Button>
             </DialogActions>

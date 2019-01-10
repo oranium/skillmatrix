@@ -54,7 +54,6 @@ class SearchController extends Component {
         }
       }
     }
-
     return results;
   };
 
@@ -81,6 +80,8 @@ class SearchController extends Component {
       searchResults.hasSome.push({ ...profile, skills: searchSkills });
     });
     store.dispatch(setSearchResults(searchResults));
+
+    return searchResults;
   };
 
   // get results for query when user clicks on search button and store them into state
@@ -117,6 +118,7 @@ class SearchController extends Component {
     const { state } = this.props;
     const { search, formState } = state;
     const { showResults, results } = search;
+
     return (
       <div>
         <SearchForm
