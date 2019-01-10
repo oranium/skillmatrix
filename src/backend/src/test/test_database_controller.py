@@ -49,67 +49,70 @@ class testDatabaseController(unittest.TestCase):
         self.a1.skill_assoc = self.js1
         self.a1.date_assoc = self.date1
         self.a1.users_assoc = self.isaac
-        self.session.add(self.a1)
+        db.session.add(self.a1)
 
         self.a2 = Association(level=3)
         self.a2.skill_assoc = self.python1
         self.a2.date_assoc = self.date1
         self.a2.users_assoc = self.karl
-        self.session.add(self.a2)
+        db.session.add(self.a2)
 
         self.a3 = Association(level=3)
         self.a3.skill_assoc = self.java1
         self.a3.date_assoc = self.date1
         self.a3.users_assoc = self.valdemar
-        self.session.add(self.a3)
+        db.session.add(self.a3)
 
         self.a4 = Association(level=3)
         self.a4.skill_assoc = self.js1
         self.a4.date_assoc = self.date1
         self.a4.users_assoc = self.karl
-        self.session.add(self.a4)
+        db.session.add(self.a4)
 
         self.a5 = Association(level=4)
         self.a5.skill_assoc = self.python1
         self.a5.date_assoc = self.date1
         self.a5.users_assoc = self.valdemar
-        self.session.add(self.a5)
+        db.session.add(self.a5)
 
         self.a6 = Association(level=2)
         self.a6.skill_assoc = self.java1
         self.a6.date_assoc = self.date1
         self.a6.users_assoc = self.isaac
-        self.session.add(self.a6)
+        db.session.add(self.a6)
 
         self.a7 = Association(level=2)
         self.a7.skill_assoc = self.js1
         self.a7.date_assoc = self.date1
         self.a7.users_assoc = self.valdemar
-        self.session.add(self.a7)
+        db.session.add(self.a7)
 
         self.a8 = Association(level=3)
         self.a8.skill_assoc = self.python1
         self.a8.date_assoc = self.date1
         self.a8.users_assoc = self.karl
-        self.session.add(self.a8)
+        db.session.add(self.a8)
 
         self.a9 = Association(level=3)
         self.a9.skill_assoc = self.python1
         self.a9.date_assoc = self.date1
         self.a9.users_assoc = self.isaac
-        self.session.add(self.a9)
+        db.session.add(self.a9)
 
         self.a10 = Association(level=1)
         self.a10.skill_assoc = self.java1
         self.a10.date_assoc = self.date1
         self.a10.users_assoc = self.karl
-        self.session.add(self.a10)
+        db.session.add(self.a10)
 
         self.x = Hierarchy()
         self.x.parent_skill_assoc = self.java1
         self.x.child_skill_assoc = self.js1
         db.session.add(self.x)
-        db.create_hiestory(self.python1, self.js1)
+
+        self.x1 = Hierarchy()
+        self.x1.parent_skill_assoc = self.python1
+        self.x1.child_skill_assoc = self.js1
         db.session.commit()
 
     def tearDown(self):
