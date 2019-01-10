@@ -48,7 +48,7 @@ Jede testbezogene Aufgabe muss einem Ansprechpartner zugeordnet werden.
 |===
 |ID |Anwendungsfall |Vorbedingungen |Methode|Eingabe |Ausgabe
 
-|U-Reducer-1  |Test Reducer              |Zugriff auf local storage            |dispatch() subscribe()      |Javascript-Objekt  |korrekte Daten aus local storage
+|U-Reducer-1  |Test Reducer              |Laden des aktuellen states aus dem local storage            |dispatch()     |Javascript-Objekt  |korrekt aktualisierter state
 
 |U-Component-1  |Render Login Component              |Login geöffnet            |render()      |UI Component |Component auf GUI
 
@@ -100,8 +100,9 @@ Jede testbezogene Aufgabe muss einem Ansprechpartner zugeordnet werden.
             |render()      |UI Component |Component auf GUI 
 
 |U-AdminComponents-2  |Render NewSkillToDBDialog Component              |NewSkillToDBDialog geöffnet
-            |render()      |UI Component |Component auf GUI              
+            |render()      |UI Component |Component auf GUI 
 
+|U-Search-Frontend-1 |Verarbeitung Serverantwort auf Suchanfrage |Suchanfrage an Server |SearchController.storeSearchResults() |results JSON von Server, query |korrekte Liste mit für Suche relevanten skills
 |U-DBController-3  |Suchanfrage              |Daten wurden aus Datenbank extrahiert              |getJSON()       |yaml-Objekt  |JSON-Objekt
 |U-Authenticator-1  |Login(Success)           |Anwendung ist geöffnet              |login()       |Username korrekt und Passwort korrekt | loginToken
 |U-Authenticator-2  |Login(Failure)              |Anwendung ist geöffnet              |login()      |Username korrekt und Passwort inkorrekt |Error
