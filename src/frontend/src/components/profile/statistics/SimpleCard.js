@@ -13,7 +13,15 @@ import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 
 import Chart from './Chart';
-import MilestoneList from '../../common/MilestoneList';
+import MilestoneList from 'components/common/MilestoneList';
+
+// Redux
+import Store from 'Store';
+import { setOwnProfile, setError } from 'actions';
+
+// Rest
+import RestPoints from 'rest/Init';
+import RestCom from 'rest/Rest';
 
 const styles = theme => ({
   root: {
@@ -43,14 +51,44 @@ export class ClickableChart extends React.Component {
     this.setState({ open: false });
   };
 
+  async handleDeleteMilestone(level, date) {
+    const { skill } = this.props;
+    const { username } = Store.getState().user;
+
+    const confirmation = window.confirm(
+      'Are you sure you want to remove this Milestone for ' + skill + ' from your profile?',
+    );
+
+    // only if user confirms to delete the milestone
+    if (confirmation) {
+      const milestone = {
+        username,
+        skill,
+        level,
+        date,
+      };
+  
+      const Rest = new RestCom(RestPoints.deleteMilestone, milestone);
+  
+      try {
+        const updatedProfile = Rest.post();
+        Store.dispatch(setOwnProfile(updatedProfile));
+      } catch (e) {
+        Store.dispatch(setError(e));
+      }
+    }
+  }
+
   render() {
     const { classes } = this.props;
 
     const milestones = Object.keys(classes.data).map(key => (
       <MilestoneList
-        datum={classes.data[key].date}
+        key={key}
+        date={classes.data[key].date}
         level={classes.data[key].level}
         comment={classes.data[key].comment}
+        deleteMilestone={(level, date) => this.handleDeleteMilestone(level, date)}
       />
     ));
     return (
