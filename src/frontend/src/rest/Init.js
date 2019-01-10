@@ -8,6 +8,6 @@ const RestPoints = {
   deleteSkill: '/deleteSkill',
   milestone: '/milestone',
   deleteMilestone: '/deleteMilestone',
-  setGuidlines: '/guidline',
+  setGuidelines: '/guideline',
 };
 export default RestPoints;
