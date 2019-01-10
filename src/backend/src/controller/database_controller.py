@@ -98,8 +98,10 @@ class DatabaseController:
         # print("level: {0}".format(level), file=sys.stderr)
         user = database_controller.get_user(username)
         mskill = database_controller.get_skill(skillpath)
-        mdate = Date(date=date)
-        db.session.add(mdate)
+        mdate = Date.query.filter_by(date=date).first()
+        if not mdate:
+            mdate = Date(date=date)
+            db.session.add(mdate)
         m = MilestoneAssociation(comment=comment, level=level)
         m.skill_milestone_assoc = mskill
         m.date_milestone_assoc = mdate
