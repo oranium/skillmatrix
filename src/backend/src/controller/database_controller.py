@@ -175,6 +175,18 @@ class DatabaseController:
                   parent_path(`str`): full path of parent skill.
                   child_path(`str`): full path of child skill
         """
+        if parent_path:
+            parent_skill_id = database_controller.get_skill(parent_path).id
+            child_skill_id = database_controller.get_skill(child_path).id
+            new_hierarchy = Hierarchy(parent_skill_id=parent_skill_id, child_skill_id=child_skill_id)
+            db.session.add(new_hierarchy)
+            db.session.commit()
+        else:
+            child_skill_id = database_controller.get_skill(child_path).id
+            new_hierarchy = Hierarchy(child_skill_id=child_skill_id)
+            db.session.add(new_hierarchy)
+            db.session.commit()
+        '''    
         new_hierarchy = Hierarchy()
         if parent_path:
             parent_skill = database_controller.get_skill(parent_path)
@@ -183,6 +195,7 @@ class DatabaseController:
         new_hierarchy.child_skill_assoc = child_skill
         db.session.add(new_hierarchy)
         db.session.commit()
+        '''
 
     @staticmethod
     def get_paths_with_guidelines(username=None):

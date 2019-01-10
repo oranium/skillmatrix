@@ -19,10 +19,8 @@ class Guidelines(Base):
 class Hierarchy(Base):
     __tablename__ = 'hierachy'
     id = Column(Integer, primary_key=True)
-    parent_skill_id = Column(Integer, ForeignKey('skill.id'), nullable=True)
-    child_skill_id = Column(Integer, ForeignKey('skill.id'), nullable=True)
-    parent_skill_assoc = relationship("Skill", foreign_keys=[parent_skill_id])
-    child_skill_assoc = relationship("Skill", foreign_keys=[child_skill_id])
+    parent_skill_id = Column(Integer, nullable=True)
+    child_skill_id = Column(Integer, nullable=True)
 
 
 class Association(Base):
