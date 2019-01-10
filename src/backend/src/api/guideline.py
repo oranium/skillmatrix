@@ -16,15 +16,15 @@ class Guideline(Resource):
         parser = reqparse.RequestParser()
         parser.add_argument("username", type=str)
         parser.add_argument("skillpath", type=str)
-        parser.add_argument("guidelines", type=dict)
+        parser.add_argument("guideline", type=dict)
         args = parser.parse_args()
         try:
             guidelines = []
-            for guideline in args["guidelines"].items()[1]:
+            for level, guideline in args["guideline"].items():
                 guidelines.append(guideline)
-            message = json.dumps(controller.create_skill(args["username"],
-                                                         args["skillpath"],
-                                                         guidelines)
+            message = json.dumps(controller.add_guidelines(args["username"],
+                                                           args["skillpath"],
+                                                           guidelines)
                                  )
             return Response(message, status=200, mimetype="application/json")
         except ValueError:

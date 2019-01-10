@@ -21,15 +21,15 @@ const styles = theme => ({
 
 function sortDatastructureRecursive(subcategories, props) {
   if (subcategories === undefined) return <div />;
+  // console.log(subcategories);
   const subs = subcategories.map(skill => (
-    <div classname={props.classes.panelsInside}>
-      <ProfileExpansionPanel
-        skill={skill}
-        summary={sortDatastructureRecursive(skill.subcategories, props)}
-        levelChange={props.levelChange}
-        isEditable={props.isEditable}
-      />
-    </div>
+    <ProfileExpansionPanel
+      key={skill.skillpath}
+      skill={skill}
+      summary={sortDatastructureRecursive(skill.subcategories, props)}
+      levelChange={props.levelChange}
+      isEditable={props.isEditable}
+    />
   ));
 
   return subs;
@@ -45,12 +45,14 @@ class SkillProfileList extends React.Component {
     });
   };
   render() {
-    const { categories } = this.props;
-    const { classes } = this.props;
+    const { categories, classes } = this.props;
     const { expanded } = this.state;
-
     const panels = categories.map(skill => (
-      <ExpansionPanel expanded={expanded} onChange={this.handleChange(this.props.skill)}>
+      <ExpansionPanel
+        key={skill.skillpath}
+        expanded={expanded}
+        onChange={this.handleChange(this.props.skill)}
+      >
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
           {' '}
           {skill.skillname}{' '}
@@ -62,6 +64,7 @@ class SkillProfileList extends React.Component {
         </ExpansionPanelDetails>
       </ExpansionPanel>
     ));
+
     return panels;
   }
 }

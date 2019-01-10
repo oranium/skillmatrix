@@ -1,13 +1,13 @@
 // default map for clean input fields
 
 const heute = new Date();
-  var month = heute.getMonth() + 1
-  var day = heute.getDate()
+let month = heute.getMonth() + 1;
+let day = heute.getDate();
 
-  if(day < 10 ) day = "0" + day;
-  if(month < 10 ) month = "0" + month
-  
-  const heuteString= heute.getFullYear() + "-" + month + "-" + day;
+if (day < 10) day = `0${day}`;
+if (month < 10) month = `0${month}`;
+
+const heuteString = `${heute.getFullYear()}-${month}-${day}`;
 const defaultFormState = {
   singleselect: {
     value: '',
@@ -155,7 +155,7 @@ const exSkill2 = {
       comment: 'Java Hackaton gewonnen',
     },
   ],
-  subcategories: [],
+  subcategories: [exSkill],
 };
 
 const exCat = {
@@ -163,7 +163,7 @@ const exCat = {
   skillpath: 'Programming',
   level: 4,
   milestones: [],
-  subcategories: [ exSkill2],
+  subcategories: [exSkill2],
 };
 
 const exProfile = {
@@ -176,24 +176,67 @@ const defaultProfilePageState = {
   isEditable: true,
   view: 0,
   showDialog: false,
-  profiles: [exProfile],
+  profiles: [],
 };
 
-const defaultSkillList = [
-{"Programming/Python": {1: "schlecht", 2: "geht so", 3: "zufriedenstellend", 4: "okay", 5: "seeehr gut"}}, 
-{"Programming/Java": {1: "schlecht", 2: "geht so", 3: "zufriedenstellend", 4: "okay", 5: "seeehr gut"}}, 
-{"Programming/Java/Python": {1: "schlecht", 2: "geht so", 3: "zufriedenstellend", 4: "okay", 5: "seeehr gut"}},
-{ "Programming/Java/C++": {1: "schlecht", 2: "geht so", 3: "zufriedenstellend", 4: "okay", 5: "seeehr gut"}}, 
-{"Programming/Java/C++/Python": {1: "schlecht", 2: "geht so", 3: "zufriedenstellend", 4: "okay", 5: "seeehr gut"}},
-{"C++/Python": {1: "Noch nie Python gecoded", 2: "1 Projekt bearbeitet", 3: "100000 Zeilen PyCode", 4: "großes Projekt", 5: "langjährige Python Erfahrung"}},
-{"C++/C++++": {1: "Noch nie Python gecoded", 2: "1 Projekt bearbeitet", 3: "100000 Zeilen PyCode", 4: "großes Projekt", 5: "langjährige Python Erfahrung"}}
-];
-const defaultCategoryList = ["Programming", "C++"];
+const exSkillList = {
+  'Programming/Python': {
+    1: 'schlecht',
+    2: 'geht so',
+    3: 'zufriedenstellend',
+    4: 'okay',
+    5: 'seeehr gut',
+  },
+  'Programming/Java': {
+    1: 'schlecht',
+    2: 'geht so',
+    3: 'zufriedenstellend',
+    4: 'okay',
+    5: 'seeehr gut',
+  },
+  'Programming/Java/Python': {
+    1: 'schlecht',
+    2: 'geht so',
+    3: 'zufriedenstellend',
+    4: 'okay',
+    5: 'seeehr gut',
+  },
+  'Programming/Java/C++': {
+    1: 'schlecht',
+    2: 'geht so',
+    3: 'zufriedenstellend',
+    4: 'okay',
+    5: 'seeehr gut',
+  },
+  'Programming/Java/C++/Python': {
+    1: 'schlecht',
+    2: 'geht so',
+    3: 'zufriedenstellend',
+    4: 'okay',
+    5: 'seeehr gut',
+  },
+  'C++/Python': {
+    1: 'Noch nie Python gecoded',
+    2: '1 Projekt bearbeitet',
+    3: '100000 Zeilen PyCode',
+    4: 'großes Projekt',
+    5: 'langjährige Python Erfahrung',
+  },
+  'C++/C++++': {
+    1: 'Noch nie Python gecoded',
+    2: '1 Projekt bearbeitet',
+    3: '100000 Zeilen PyCode',
+    4: 'großes Projekt',
+    5: 'langjährige Python Erfahrung',
+  },
+};
+const defaultSkillList = {};
+const defaultCategoryList = [];
 
 // has all the data for the inputfields
 export const formState = (state = defaultFormState, action) => {
   switch (action.type) {
-    /* return new state,
+    /* return new state1,
     where only the one value of the certain input field has changed to action.input
     */
 
