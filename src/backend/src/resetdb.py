@@ -17,7 +17,7 @@ class Guidelines(Base):
     information = Column(Text, nullable=True, default='')
 
 class Hierarchy(Base):
-    __tablename__ = 'hierachy'
+    __tablename__ = 'hierarchy'
     id = Column(Integer, primary_key=True)
     parent_skill_id = Column(Integer, nullable=True)
     child_skill_id = Column(Integer, nullable=True)
