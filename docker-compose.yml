@@ -2,7 +2,7 @@ version: "3"
 services:
   backend:
     environment:
-      - ENV_TESTING=False
+      - ENV_TESTING=True
       - ENV_DEBUG=True
       - ENV_TESTDATABASE_URI=sqlite:///sqlalchemy_example.db
       - ENV_DATABASE_URI=mysql+pymysql://root:Momomomo2@db/sm1

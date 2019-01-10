@@ -1,43 +1,39 @@
 import unittest
 from app import app
-from controller.database_controller import database_controller
 from controller.database import db
+from controller.database_controller import database_controller
 from model.skill_model import SkillModel
 from model.milestone_model import MilestoneModel
-from setuptestdb import Setup, Date, Skill, Users, Association, MilestoneAssociation, Hierarchy
+from model.database_model import Date, Skill, Users, Association, MilestoneAssociation, Hierarchy
 
 
 def setUpModule():
     app.testing = True
 
-
 class testDatabaseController(unittest.TestCase):
 
     def setUp(self):
-        self.test_app = app.test_client()
-
-        self.test_setup = Setup()
 
         self.valdemar = Users(username='Valdemar-Forsberg', name="Valdemar Forsberg")
         self.karl = Users(username='Karl-Kalagin', name="Karl Kalagin")
         self.isaac = Users(username='Isaac-Hunt', name="Isaac Hunt")
 
-        self.test_setup.session.add(self.valdemar)
-        self.test_setup.session.add(self.karl)
-        self.test_setup.session.add(self.isaac)
+        db.session.add(self.valdemar)
+        db.session.add(self.karl)
+        db.session.add(self.isaac)
 
         self.prog = Skill(name='Programming', root=True)
         self.java1 = Skill(name='Java')
         self.python1 = Skill(name='Python')
         self.js1 = Skill(name='JavaScript')
 
-        self.test_setup.session.add(self.java1)
-        self.test_setup.session.add(self.python1)
-        self.test_setup.session.add(self.prog)
-        self.test_setup.session.add(self.js1)
+        db.session.add(self.java1)
+        db.session.add(self.python1)
+        db.session.add(self.prog)
+        db.session.add(self.js1)
 
         self.date1 = Date()
-        self.test_setup.session.add(self.date1)
+        db.session.add(self.date1)
         self.a = Association(level=4)
         self.a.skill_assoc = self.js1
         self.a.date_assoc = self.date1
@@ -49,25 +45,75 @@ class testDatabaseController(unittest.TestCase):
         self.b.users_milestone_assoc = self.isaac
         self.b.level = self.a.level
 
-        self.test_setup.create_skill(3, self.js1,self. date1, self.isaac)
-        self.test_setup.create_skill(3, self.python1, self.date1, self.karl)
-        self.test_setup.create_skill(3, self.java1, self.date1, self.valdemar)
-        self.test_setup.create_skill(4, self.js1, self.date1, self.karl)
-        self.test_setup.create_skill(4, self.python1, self.date1, self.valdemar)
-        self.test_setup.create_skill(2, self.java1, self.date1, self.isaac)
-        self.test_setup.create_skill(2, self.js1, self.date1, self.valdemar)
-        self.test_setup.create_skill(3, self.python1, self.date1, self.isaac)
-        self.test_setup.create_skill(1, self.java1, self.date1, self.karl)
+        self.a1 = Association(level=3)
+        self.a1.skill_assoc = self.js1
+        self.a1.date_assoc = self.date1
+        self.a1.users_assoc = self.isaac
+        self.session.add(self.a1)
+
+        self.a2 = Association(level=3)
+        self.a2.skill_assoc = self.python1
+        self.a2.date_assoc = self.date1
+        self.a2.users_assoc = self.karl
+        self.session.add(self.a2)
+
+        self.a3 = Association(level=3)
+        self.a3.skill_assoc = self.java1
+        self.a3.date_assoc = self.date1
+        self.a3.users_assoc = self.valdemar
+        self.session.add(self.a3)
+
+        self.a4 = Association(level=3)
+        self.a4.skill_assoc = self.js1
+        self.a4.date_assoc = self.date1
+        self.a4.users_assoc = self.karl
+        self.session.add(self.a4)
+
+        self.a5 = Association(level=4)
+        self.a5.skill_assoc = self.python1
+        self.a5.date_assoc = self.date1
+        self.a5.users_assoc = self.valdemar
+        self.session.add(self.a5)
+
+        self.a6 = Association(level=2)
+        self.a6.skill_assoc = self.java1
+        self.a6.date_assoc = self.date1
+        self.a6.users_assoc = self.isaac
+        self.session.add(self.a6)
+
+        self.a7 = Association(level=2)
+        self.a7.skill_assoc = self.js1
+        self.a7.date_assoc = self.date1
+        self.a7.users_assoc = self.valdemar
+        self.session.add(self.a7)
+
+        self.a8 = Association(level=3)
+        self.a8.skill_assoc = self.python1
+        self.a8.date_assoc = self.date1
+        self.a8.users_assoc = self.karl
+        self.session.add(self.a8)
+
+        self.a9 = Association(level=3)
+        self.a9.skill_assoc = self.python1
+        self.a9.date_assoc = self.date1
+        self.a9.users_assoc = self.isaac
+        self.session.add(self.a9)
+
+        self.a10 = Association(level=1)
+        self.a10.skill_assoc = self.java1
+        self.a10.date_assoc = self.date1
+        self.a10.users_assoc = self.karl
+        self.session.add(self.a10)
 
         self.x = Hierarchy()
         self.x.parent_skill_assoc = self.java1
         self.x.child_skill_assoc = self.js1
-        self.test_setup.session.add(self.x)
-        self.test_setup.create_hiestory(self.python1, self.js1)
-        self.test_setup.session.commit()
+        db.session.add(self.x)
+        db.create_hiestory(self.python1, self.js1)
+        db.session.commit()
 
     def tearDown(self):
-
+        pass
 
     def test_search_success(self):
         result = database_controller.search({"Java": 1})
@@ -111,7 +157,7 @@ class testDatabaseController(unittest.TestCase):
 
     def test_create_hierachy(self):
         self.flask = Skill(name='Flask')
-        self.test_setup.session.add(self.flask)
+        db.session.add(self.flask)
         database_controller.create_hierachy('Python', 'Flask')
         hierarchy_exists = Hierarchy.query.filter(Hierarchy.child_skill_assoc == self.flask,
                                        Hierarchy.parent_skill_assoc == self.python1).first()

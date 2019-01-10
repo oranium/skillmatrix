@@ -13,6 +13,8 @@ print(environ.keys(), file=sys.stderr)
 app = Flask(__name__)
 app.config['TESTING'] = environ.get('ENV_TESTING')
 app.config['DEBUG'] = environ.get('ENV_DEBUG')
+if app.config['TESTING']:
+    app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('ENV_TESTDATABASE_URI')
 app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('ENV_DATABASE_URI')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 

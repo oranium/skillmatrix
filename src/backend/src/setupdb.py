@@ -13,7 +13,7 @@ from os import environ
 def checkdb():
     engine = create_engine(environ.get('ENV_DATABASE_URI'))
 
-    if not engine.dialect.has_table(engine, 'guidelines'):
+    if not engine.dialect.has_table(engine, 'guidelines') | environ.get('ENV_TESTING'):
         Base = declarative_base()
 
         class Guidelines(Base):
