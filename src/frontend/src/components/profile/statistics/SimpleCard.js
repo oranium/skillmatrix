@@ -53,7 +53,6 @@ export class ClickableChart extends React.Component {
 
   async handleDeleteMilestone(level, date) {
     const { skill } = this.props;
-    const { username } = Store.getState().user;
 
     const confirmation = window.confirm(
       'Are you sure you want to remove this Milestone for ' + skill + ' from your profile?',
@@ -62,8 +61,7 @@ export class ClickableChart extends React.Component {
     // only if user confirms to delete the milestone
     if (confirmation) {
       const milestone = {
-        username,
-        skill,
+        skillpath: skill,
         level,
         date,
       };

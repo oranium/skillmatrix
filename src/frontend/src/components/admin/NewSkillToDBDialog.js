@@ -103,7 +103,7 @@ class FormDialog extends Component {
 
     // send guidline for new skill
     const newGuidelineRequest = {
-      skillname,
+      skillpath,
       guideline,
     };
 

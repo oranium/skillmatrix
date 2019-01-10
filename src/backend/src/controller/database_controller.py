@@ -331,17 +331,17 @@ class DatabaseController:
         db.session.commit()
 
     @staticmethod
-    def create_guidelines(skillname, guidelines):
+    def create_guidelines(skillpath, guidelines):
         """Create all 5 guidelines for one skill in the database.
                    Args:
-                       skillname (`int`): the id of the skill to ad to the guideline table.
+                       skillpath (`str`): the path of the skill to ad to the guideline table.
                        guidelines `[str]`: a list of strings that should look like this:
                                                     [text for level 1, text for level 2,...,text for level 5]
                 """
         level = 1
         if not len(guidelines) == 5:
             raise ValueError("Guidelines does not have 5 elements.")
-        skill_id = database_controller.get_skill(skillname).id
+        skill_id = database_controller.get_skill(skillpath).id
         for guideline in guidelines:
             new_guideline = Guidelines(skill_id=skill_id, level=level, information=guideline)
             db.session.add(new_guideline)
@@ -469,13 +469,13 @@ class DatabaseController:
                   skillpath(`str`): full path of the skill
         """
         to_remove = database_controller.get_subcategories(skillpath)
-        to_remove.append(skillpath)
         subcategories_to_check = to_remove.copy()
+        to_remove.append(skillpath)
         while subcategories_to_check:
             new_subcategories = database_controller.get_subcategories(subcategories_to_check.pop())
             to_remove.extend(new_subcategories)
             subcategories_to_check.extend(new_subcategories)
-        for sub_path in to_remove:
+        for sub_path in reversed(to_remove):
             sid = database_controller.get_skill(sub_path).id
             Hierarchy.query.filter_by(parent_skill_id=sid).delete()
             MilestoneAssociation.query.filter_by(milestone_skill_id=sid).delete()
@@ -493,15 +493,16 @@ class DatabaseController:
         """
         to_remove = database_controller.get_subcategories(skillpath, username=username)
         subcategories_to_check = to_remove.copy()
+        to_remove.append(skillpath)
         uid = database_controller.get_user(username).id
         while subcategories_to_check:
             new_subcategories = database_controller.get_subcategories(subcategories_to_check.pop())
             to_remove.extend(new_subcategories)
             subcategories_to_check.extend(new_subcategories)
-        for sub_path in to_remove:
+        for sub_path in reversed(to_remove):
             sid = database_controller.get_skill(sub_path).id
-            MilestoneAssociation.query.filter_by(milestone_skill_id=sid, milestone_users_id=uid)
-            Association.query.filter_by(skill_id=sid, users_id=uid)
+            MilestoneAssociation.query.filter_by(milestone_skill_id=sid, milestone_users_id=uid).delete()
+            Association.query.filter_by(skill_id=sid, users_id=uid).delete()
         db.session.commit()
         
     @staticmethod
