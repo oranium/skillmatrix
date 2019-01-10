@@ -91,6 +91,11 @@ class DatabaseController:
                   comment(`str`): comment/title of milestone
                   level(`int`) level of user at time of milestone
         """
+        # print("username: {0}".format(username), file=sys.stderr)
+        # print("skillpath: {0}".format(skillpath), file=sys.stderr)
+        # print("date: {0}".format(date), file=sys.stderr)
+        # print("comment: {0}".format(comment), file=sys.stderr)
+        # print("level: {0}".format(level), file=sys.stderr)
         user = database_controller.get_user(username)
         mskill = database_controller.get_skill(skillpath)
         mdate = Date(date=date)
@@ -527,12 +532,13 @@ class DatabaseController:
                   level(`int`): level of skill at milestone date
                   date(`str`): date of milestone in format "YYYY-MM-DD"
         """
-        skill = database_controller.get_skill(skillpath).id
+        date_id = Date.query.filter_by(date=date).first().id
+        skill = database_controller.get_skill(skillpath)
         user = database_controller.get_user(username)
         MilestoneAssociation.query.filter_by(milestone_skill_id=skill.id,
                                              milestone_users_id=user.id,
                                              level=level,
-                                             date=date).delete()
+                                             milestone_date_id=date_id).delete()
         db.session.commit()
 
 
