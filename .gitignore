@@ -47,3 +47,4 @@ __pycache__/
 
 #config file
 config.py
+src/backend/src/sqlalchemy_example.db
