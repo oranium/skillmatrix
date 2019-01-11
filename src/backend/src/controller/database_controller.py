@@ -531,7 +531,7 @@ class DatabaseController:
             MilestoneAssociation.query.filter_by(milestone_skill_id=sid, milestone_users_id=uid).delete()
             Association.query.filter_by(skill_id=sid, users_id=uid).delete()
         db.session.commit()
-        
+
     @staticmethod
     def remove_milestone(username, skillpath, level, date, comment):
         """Removes a milestone from user.
@@ -544,12 +544,18 @@ class DatabaseController:
         date_id = Date.query.filter_by(date=date).first().id
         skill = database_controller.get_skill(skillpath)
         user = database_controller.get_user(username)
+        print("Here come the Milestones for date user level and skill: \n {0}".format(
+            MilestoneAssociation.query.filter_by(milestone_skill_id=skill.id,
+                                                 milestone_users_id=user.id,
+                                                 level=level,
+                                                 milestone_date_id=date_id).first()), file=sys.stderr)
         to_delete = MilestoneAssociation.query.filter_by(milestone_skill_id=skill.id,
                                                          milestone_users_id=user.id,
                                                          level=level,
                                                          milestone_date_id=date_id,
-                                                         comment=comment).first()
-        if not to_delete:
+                                                         comment=comment)
+        print("\n Now filtered with comment: {0}: \n {1}".format(comment, to_delete.first()), file=sys.stderr)
+        if to_delete is None:
             raise AttributeError
         to_delete.delete()
         db.session.commit()

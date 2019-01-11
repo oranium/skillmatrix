@@ -22,6 +22,9 @@ import { closeProfileDialog, updateInput, resetForm } from 'actions';
 import RestPoints from 'rest/Init';
 import { updateOwnProfile } from 'rest/handleCommonRequests';
 
+// functions
+import checkEmptyInputs from 'functions/checkEmptyInputs';
+
 export default class FormDialog extends React.Component {
   //handles formstate and dialog state
   handleClose = () => {
@@ -61,14 +64,16 @@ export default class FormDialog extends React.Component {
 
   //submits the values of the form as new milestone Object to the backend
   async handleSubmit(milestone) {
-    console.log(milestone);
-    if (milestone.datum === '' || milestone.comment === '' || milestone.skill === '') {
-      milestone = false;
-    }
-    if (milestone) {
+    const inputFieldIDs = {
+      datum: 'datefield',
+      comment: 'textarea',
+      skillpath: 'singleselect',
+    };
+
+    if (!checkEmptyInputs(milestone, inputFieldIDs)) {
       await updateOwnProfile(RestPoints.milestone, milestone);
+      this.handleClose();
     }
-    this.handleClose();
   }
 
   handleChange(id, value) {
