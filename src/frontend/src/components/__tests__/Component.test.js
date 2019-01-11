@@ -1,31 +1,24 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import LoginForm from '../LoginForm';
-import Form from '../Form';
-import Header from '../Header';
+import SkillPanelList from 'components/search/SkillPanelList';
+import LoginForm from '../login/LoginForm';
+import Header from '../header/Header';
 import App from '../App';
-import Panel from '../Panel'
-import ControlledExpansionPanels from '../ControlledExpansionPanels'
 import {
-  SkillNameInput, DateInput, TextArea, LevelPicker, SearchInput
-} from '../InputFields';
-
-const username = 'Valdemar Forsberg';
-const password = 'password';
+  SkillNameInput,
+  DateInput,
+  TextArea,
+  LevelPicker,
+  SearchInput,
+} from '../common/InputFields';
 
 describe('test Login Components', () => {
-  const wrapper = shallow(<LoginForm errorMsg="" login={(username, password) => App.handleLogin(username, password)} />);
+  const username = 'Valdemar Forsberg';
+  const password = 'password';
+  const wrapper = shallow(
+    <LoginForm errorMsg="" login={() => App.handleLogin(username, password)} />,
+  );
   it('render Login component', () => {
-    expect(wrapper).toMatchSnapshot();
-  });
-});
-
-describe('test Form component', () => {
-  const wrapper = shallow(<Form inputs="" page="login" name="test" onChange="" onSubmit="" onClick="" />);
-  it('contains important components as children', () => {
-    expect(wrapper.contains([<SkillNameInput />, <DateInput />, <TextArea />, <LevelPicker />]));
-  });
-  it('renders single component correctly', () => {
     expect(wrapper).toMatchSnapshot();
   });
 });
@@ -58,32 +51,14 @@ describe('test components from InputFields', () => {
     expect(wrapper).toMatchSnapshot();
   });
   it('render SearchInput from InputFields', () => {
-    const wrapper = shallow(<SearchInput />)
+    const wrapper = shallow(<SearchInput />);
     expect(wrapper).toMatchSnapshot();
   });
 });
 
-
-describe('test Panels right', () => {
-  const wrapper = shallow(<Panel
-    key={1}
-    id={1}
-    username={username} 
-    level={2}
-    onChange={() => console.log('test')}
-/>);
-  it('render Panel component', () => {
-    const wrapper = shallow(<Panel
-      key={1}
-      id={1}
-      username={username} 
-      level={2}
-      onChange={() => console.log('test')}
-/>);
-    expect(wrapper).toMatchSnapshot();
-  });
-  it('render ControlledExpansionPanels component', () => {
-    const wrapper = shallow(<ControlledExpansionPanels />);
+describe('test ExpensionPanels right', () => {
+  it('render SkillPanelList component', () => {
+    const wrapper = shallow(<SkillPanelList />);
     expect(wrapper).toMatchSnapshot();
   });
 });

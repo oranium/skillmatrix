@@ -1,5 +1,15 @@
 import reducer from '../../reducers';
 
+const heute = new Date();
+let month = heute.getMonth() + 1;
+let day = heute.getDate();
+
+if (day < 10) day = `0${day}`;
+if (month < 10) month = `0${month}`;
+const drawer = false;
+const loading = false;
+const heuteString = `${heute.getFullYear()}-${month}-${day}`;
+
 const defaultFormState = {
   textfield: {
     name: 'Skill',
@@ -13,7 +23,7 @@ const defaultFormState = {
   },
   datefield: {
     name: 'Date',
-    value: '',
+    value: heuteString,
     error: false,
   },
   textarea: {
@@ -61,6 +71,12 @@ const defaultSearch = {
   searchValues: {},
   results: {},
   showResults: false,
+  error: false,
+};
+
+const defaultUser = {
+  username: undefined,
+  name: undefined,
 };
 
 const defaultProfilePageState = {
@@ -82,7 +98,69 @@ const exProfile = {
 };
 
 const defaultSkillList = [];
-const exampleSkillList = ['Python', 'Java', 'JavaScript'];
+const exampleSkillList = {
+  'Programming/Python': {
+    1: 'schlecht',
+    2: 'geht so',
+    3: 'zufriedenstellend',
+    4: 'okay',
+    5: 'seeehr gut',
+  },
+  'Programming/Java': {
+    1: 'schlecht',
+    2: 'geht so',
+    3: 'zufriedenstellend',
+    4: 'okay',
+    5: 'seeehr gut',
+  },
+  'Programming/Java/Python': {
+    1: 'schlecht',
+    2: 'geht so',
+    3: 'zufriedenstellend',
+    4: 'okay',
+    5: 'seeehr gut',
+  },
+  'Programming/Java/C++': {
+    1: 'schlecht',
+    2: 'geht so',
+    3: 'zufriedenstellend',
+    4: 'okay',
+    5: 'seeehr gut',
+  },
+  'Programming/Java/C++/Python': {
+    1: 'schlecht',
+    2: 'geht so',
+    3: 'zufriedenstellend',
+    4: 'okay',
+    5: 'seeehr gut',
+  },
+  'C++/Python': {
+    1: 'Noch nie Python gecoded',
+    2: '1 Projekt bearbeitet',
+    3: '100000 Zeilen PyCode',
+    4: 'großes Projekt',
+    5: 'langjährige Python Erfahrung',
+  },
+  'C++/C++++': {
+    1: 'Noch nie Python gecoded',
+    2: '1 Projekt bearbeitet',
+    3: '100000 Zeilen PyCode',
+    4: 'großes Projekt',
+    5: 'langjährige Python Erfahrung',
+  },
+};
+
+const defaultNewSkillToDBDialog = {
+  skillname: '',
+  guideline: {
+    1: 'Insufficient',
+    2: 'Sufficient/Below Average',
+    3: 'Satisfactory / Average',
+    4: 'Good',
+    5: 'Excellent',
+  },
+  confirmDialogOpen: false,
+};
 
 // ###################################################  formstate reducers  ###################################################
 
@@ -129,7 +207,7 @@ describe('reducer tests', () => {
       errorMsg: 'server timeout',
     });
 
-    expect(errorState.error).toEqual({ hasError: true, message: 'server timeout' });
+    expect(errorState.error).toEqual({ displayType: 1, hasError: true, message: 'server timeout' });
   });
 
   it('should return the Errorpage state after Event "HIDEERRORDIALOG"', () => {
@@ -137,7 +215,7 @@ describe('reducer tests', () => {
       type: 'HIDEERRORDIALOG',
     });
 
-    expect(errorState.error).toEqual({ hasError: false, message: '' });
+    expect(errorState.error).toEqual({ displayType: 1, hasError: false, message: '' });
   });
 
   // ###################################################  Switch page reducer  ###################################################
@@ -149,13 +227,15 @@ describe('reducer tests', () => {
     expect(actState.page).toEqual('login');
   });
 
-  // ###################################################  Username reducer  ###################################################
-  it('should update the actual state after Event "SETUSERNAME"', () => {
-    const actState = reducer(exampleFormState, {
-      type: 'SETUSERNAME',
-      username: 'Vladimir',
+  // ###################################################  user reducer  ###################################################
+
+  it('should update the actual state after Event "SETUSER"', () => {
+    const actState = reducer(defaultUser, {
+      type: 'SETUSER',
+      user: { username: 'Vladi69', name: 'Valdemar Forsberg' },
     });
-    expect(actState.user).toEqual('Vladimir');
+    expect(actState.user.username).toEqual('Vladi69');
+    expect(actState.user.name).toEqual('Valdemar Forsberg');
   });
 
   // ###################################################  Search page reducers  ###################################################
@@ -202,13 +282,13 @@ describe('reducer tests', () => {
     expect(actState.search.error).toBe('Server timeout');
   });
 
-  // it('should update the actual state after Event "RESETSTATE"', () => {
-  //   const actState = reducer(defaultSearch, {
-  //     type: 'RESETSTATE',
-  //   });
+  it('should update the actual state after Event "RESETSEARCH"', () => {
+    const actState = reducer(defaultSearch, {
+      type: 'RESETSEARCH',
+    });
 
-  //   expect(actState.search).toBe(false);
-  // });
+    expect(actState.search).toEqual(defaultSearch);
+  });
 
   // ###################################################  Profile page reducers  ###################################################
   it('should update the actual state after Event "CHANGEVIEW"', () => {
@@ -250,20 +330,40 @@ describe('reducer tests', () => {
     expect(actState.profile.profiles[actState.profile.profiles.length - 1]).toBe(exProfile);
   });
 
-  it('should update the actual state after Event "SETOWNPROFILE"', () => {
-    const actState = reducer(defaultProfilePageState, {
-      type: 'SETOWNPROFILE',
-      profile: exProfile,
+  // ###################################################  newSkillToDB reducers  ###################################################
+
+  it('should update the actual state after Event "SETSKILLNAME"', () => {
+    const actState = reducer(defaultNewSkillToDBDialog, {
+      type: 'SETSKILLNAME',
+      skillname: 'Python',
     });
-    expect(actState.profile.profiles[0]).toBe(exProfile);
+    expect(actState.newSkillToDBDialog.skillname).toBe('Python');
   });
 
-  //   it('should update the actual state after Event "RESETSTATE" on Profile', () => {
-  //     const actState = reducer(defaultProfilePageState, {
-  //       type: 'RESETSTATE',
-  //     });
-  //     expect(actState).toBe(defaultProfilePageState);
-  //   });
+  it('should update the actual state after Event "CHANGEGUIDELINE"', () => {
+    const actState = reducer(defaultNewSkillToDBDialog, {
+      type: 'CHANGEGUIDELINE',
+      level: 2,
+      value: 'sehr sehr schlecht',
+    });
+    expect(actState.newSkillToDBDialog.guideline[2]).toBe('sehr sehr schlecht');
+  });
+
+  it('should update the actual state after Event "TOGGLECONFIRMDIALOG"', () => {
+    const actState = reducer(defaultNewSkillToDBDialog, {
+      type: 'TOGGLECONFIRMDIALOG',
+      open: true,
+    });
+    expect(actState.newSkillToDBDialog.confirmDialogOpen).toBe(true);
+  });
+
+  it('should update the actual state after Event "TOGGLESKILLNAMEEMPTY"', () => {
+    const actState = reducer(defaultNewSkillToDBDialog, {
+      type: 'TOGGLESKILLNAMEEMPTY',
+      empty: true,
+    });
+    expect(actState.newSkillToDBDialog.skillNameIsEmptyError).toBe(true);
+  });
 
   // ###################################################  all Skills reducers  ###################################################
   it('should update the actual state after Event "SETALLSKILLS"', () => {
@@ -272,6 +372,22 @@ describe('reducer tests', () => {
       skills: exampleSkillList,
     });
     expect(actState.allSkills).toBe(exampleSkillList);
+  });
+
+  // ###################################################  toggle spinner reducers  ###################################################
+  it('should update the actual state after Event "TOGGLEDRAWER"', () => {
+    const actState = reducer(drawer, {
+      type: 'TOGGLEDRAWER',
+      open: true,
+    });
+    expect(actState.drawer).toBe(true);
+  });
+  it('should update the actual state after Event "TOGGLESPINNER"', () => {
+    const actState = reducer(drawer, {
+      type: 'TOGGLESPINNER',
+      open: true,
+    });
+    expect(actState.loading).toBe(true);
   });
 
   // it('should update the actual state after Event "RESETSTATE" on allSkills', () => {

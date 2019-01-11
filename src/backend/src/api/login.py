@@ -1,3 +1,4 @@
+import traceback
 import sys
 from flask import Response
 from flask_restful import Resource, reqparse
@@ -15,13 +16,14 @@ class Login(Resource):
         try:
             message = json.dumps(controller.login(args["username"], args["password"]))
             return Response(message, status=200, mimetype="application/json")
-        except AttributeError as e:
-            print(e, file=sys.stderr)
+        except AttributeError:
+            tb = traceback.format_exc()
+            print(tb, file=sys.stderr)
             return Response(status=400)
         except TimeoutError:
             return Response(status=504)
-        except Exception as e:
-            print(e, file=sys.stderr)
+        except Exception:
+            traceback.print_exc()
             return Response(status=520)
 
     def options(self):

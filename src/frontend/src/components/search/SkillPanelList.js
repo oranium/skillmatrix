@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
-import Panel from 'components/search/Panel';
+import SkillPanel from 'components/search/SkillPanel';
 
 const styles = theme => ({
   root: {
@@ -22,10 +22,14 @@ const styles = theme => ({
 
 function ControlledExpansionPanels(props) {
   const { classes, results, heading } = props;
-
-  const panels = results.map((user, i) => (
-    <Panel key={i} id={i} username={user.username} skills={user.skills} />
-  ));
+  let panels;
+  if (results.length === 0) {
+    panels = 'No Users found.';
+  } else {
+    panels = results.map((user, i) => (
+      <SkillPanel key={user.username} id={i} username={user.username} skills={user.skills} />
+    ));
+  }
 
   return (
     <div className={classes.root}>

@@ -1,5 +1,9 @@
 #build directory
 build/
+static/
+
+#dockerdata for database
+dockerdata/
 
 # Maven
 target/
@@ -36,8 +40,11 @@ node_modules/
 #python virtual environments
 venv/
 
+/src/frontend/prototyp_react/node_modules/
+/src/backend/venv/
 #python cache
 __pycache__/
 
 #config file
 config.py
+src/backend/src/sqlalchemy_example.db

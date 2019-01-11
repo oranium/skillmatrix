@@ -1,4 +1,22 @@
 // default map for clean input fields
+export const errorDisplayType = {
+  login: 0,
+  window: 1,
+  input: 2,
+};
+
+// ##########################################################
+// Get todays date as String
+const heute = new Date();
+let month = heute.getMonth() + 1;
+let day = heute.getDate();
+
+if (day < 10) day = `0${day}`;
+if (month < 10) month = `0${month}`;
+
+const heuteString = `${heute.getFullYear()}-${month}-${day}`;
+// ############################################################
+
 const defaultFormState = {
   singleselect: {
     value: '',
@@ -16,7 +34,7 @@ const defaultFormState = {
   },
   datefield: {
     name: 'Date',
-    value: '',
+    value: heuteString,
     error: false,
   },
   textarea: {
@@ -40,6 +58,7 @@ const defaultPage = 'login';
 const defaultError = {
   hasError: false,
   message: '',
+  displayType: errorDisplayType.window,
 };
 
 const defaultSearch = {
@@ -49,113 +68,30 @@ const defaultSearch = {
   error: false,
 };
 
+const defaultNewSkillToDBDialog = {
+  skillname: '',
+  guideline: {
+    1: 'Insufficient',
+    2: 'Sufficient/Below Average',
+    3: 'Satisfactory / Average',
+    4: 'Good',
+    5: 'Excellent',
+  },
+  confirmDialogOpen: false,
+  skillNameIsEmptyError: false,
+};
+
 Object.freeze(defaultSearch);
-
-const defaultMilestone = {
-  datum: '2000-01-01',
-  level: 1,
-  comment: '-',
-};
-
-const exSkill = {
-  skillname: 'Python',
-  level: 4,
-  milestones: [
-    {
-      date: '2015-05-01',
-      level: 0,
-      comment: 'init',
-    },
-    {
-      date: '2016-05-01',
-      level: 1,
-      comment: 'reversed engineering buch unters kopfkissen gelegt',
-    },
-    {
-      date: '2016-08-03',
-      level: 1,
-      comment: 'Buch Hacking with Python gelesen',
-    },
-    {
-      date: '2019-07-06',
-      level: 4,
-      comment: '72h Python workshop',
-    },
-  ],
-};
-const exSkill2 = {
-  skillname: 'Java',
-  level: 5,
-  milestones: [
-    {
-      date: '2015-09-11',
-      level: 0,
-      comment: 'init',
-    },
-    {
-      date: '2016-11-23',
-      level: 1,
-      comment: 'reversed engineering buch unters kopfkissen gelegt',
-    },
-    {
-      date: '2017-01-20',
-      level: 1,
-      comment: 'Buch Hacking with Java gelesen',
-    },
-    {
-      date: '2018-02-06',
-      level: 4,
-      comment: '36h Java workshop',
-    },
-    {
-      date: '2020-11-23',
-      level: 5,
-      comment: 'Java Hackaton gewonnen',
-    },
-  ],
-};
-
-const exSkill3 = {
-  skillname: 'C++',
-  level: 3,
-  milestones: [
-    {
-      date: '2011-09-11',
-      level: 0,
-      comment: 'init',
-    },
-    {
-      date: '2017-01-20',
-      level: 1,
-      comment: 'C++ Workshop',
-    },
-    {
-      date: '2018-02-06',
-      level: 2,
-      comment: 'C++ Lehrgang',
-    },
-    {
-      date: '2021-11-23',
-      level: 3,
-      comment: 'C++ 3 jähriges Projekt fertig gestellt, mit 100000 Zeilen c++ Code',
-    },
-  ],
-};
-
-const exProfile = {
-  username: 'Valdemar',
-  skills: [exSkill, exSkill2, exSkill3], // alle skills übergeben
-};
 
 const defaultProfilePageState = {
   person: 0,
   isEditable: true,
   view: 0,
   showDialog: false,
-  profiles: [exProfile, exProfile],
+  profiles: [],
 };
-
-const defaultSkillList = ['Python', 'Java', 'JavaScript'];
+const defaultSkillList = {};
+const defaultCategoryList = [];
 
 // has all the data for the inputfields
 export const formState = (state = defaultFormState, action) => {
@@ -163,21 +99,20 @@ export const formState = (state = defaultFormState, action) => {
     /* return new state,
     where only the one value of the certain input field has changed to action.input
     */
-
     case 'UPDATEINPUT':
-      return Object.assign({}, state, {
-        [action.id]: Object.assign({}, state[action.id], {
-          value: action.input,
-        }),
-      });
+      return { ...state, [action.id]: { ...state[action.id], value: action.input } };
 
-    // return new state, where input field with action.id has a new bool
     case 'SETINPUTERROR':
-      return Object.assign({}, state, {
-        [action.id]: Object.assign({}, state[action.id], {
-          error: action.error,
-        }),
+      return { ...state, [action.id]: { ...state[action.id], error: action.error } };
+
+    case 'SETVARIOUSINPUTERRORS': {
+      const inputsWithErrors = {};
+      // set error to true for all ids (immutable)
+      action.ids.forEach((id) => {
+        inputsWithErrors[id] = { ...state[id], error: true };
       });
+      return { ...state, ...inputsWithErrors };
+    }
 
     case 'RESETFORM':
       return defaultFormState;
@@ -220,9 +155,17 @@ export const error = (state = defaultError, action) => {
       return {
         hasError: true,
         message: action.errorMsg,
+        displayType: errorDisplayType.window,
+      };
+    case 'SETLOGINERROR':
+      return {
+        hasError: true,
+        message: action.errorMsg,
+        displayType: errorDisplayType.login,
       };
     case 'HIDEERRORDIALOG':
       return {
+        ...state,
         hasError: false,
         message: '',
       };
@@ -282,6 +225,58 @@ export const allSkills = (state = defaultSkillList, action) => {
       return action.skills;
     case 'RESETSTATE':
       return defaultSkillList;
+    default:
+      return state;
+  }
+};
+
+export const allCategories = (state = defaultCategoryList, action) => {
+  switch (action.type) {
+    case 'SETALLCATEGORIES':
+      return action.categories;
+    case 'RESETSTATE':
+      return defaultCategoryList;
+    default:
+      return state;
+  }
+};
+
+export const drawer = (state = false, action) => {
+  switch (action.type) {
+    case 'TOGGLEDRAWER':
+      return action.open;
+    case 'RESETSTATE':
+      return false;
+    default:
+      return state;
+  }
+};
+
+export const loading = (state = false, action) => {
+  switch (action.type) {
+    case 'TOGGLESPINNER':
+      return action.open;
+    case 'RESETSTATE':
+      return false;
+    default:
+      return state;
+  }
+};
+
+export const newSkillToDBDialog = (state = defaultNewSkillToDBDialog, action) => {
+  switch (action.type) {
+    case 'CHANGEGUIDELINE':
+      return { ...state, guideline: { ...state.guideline, [action.level]: action.value } };
+    case 'SETSKILLNAME':
+      return { ...state, skillname: action.skillname };
+    case 'TOGGLECONFIRMDIALOG':
+      return { ...state, confirmDialogOpen: action.open };
+    case 'TOGGLESKILLNAMEEMPTY':
+      return { ...state, skillNameIsEmptyError: action.empty };
+    case 'RESETFORM':
+      return defaultNewSkillToDBDialog;
+    case 'RESETSTATE':
+      return defaultNewSkillToDBDialog;
     default:
       return state;
   }

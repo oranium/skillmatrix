@@ -14,7 +14,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import CancelIcon from '@material-ui/icons/Cancel';
 import { emphasize } from '@material-ui/core/styles/colorManipulator';
 
-
 // redux
 import store from 'Store';
 import { setQuery } from 'actions';
@@ -174,27 +173,27 @@ const components = {
   ValueContainer,
 };
 
-const required = (value, error) => (value == null && error ? 'Required' : undefined);
-
 class IntegrationReactSelect extends React.Component {
   handleChange = value => {
     store.dispatch(setQuery(value));
   };
 
+  isError = (value, error) => value == null && error;
+
   render() {
     const { classes, theme } = this.props;
     const state = store.getState();
-    const {error} = state.search;
+    const { error } = state.search;
     let { searchValues } = state.search;
-    if (!Object.keys(searchValues).length){
+    if (!Object.keys(searchValues).length) {
       searchValues = null;
     }
-    const {allSkills} = state;
-    const suggestions = allSkills.map(suggestion => ({
+    const { allSkills } = state;
+    const mapSuggestions = suggestion => ({
       value: suggestion,
       label: suggestion,
-    }));
-
+    });
+    const suggestions = Object.keys(allSkills).map(suggestion => mapSuggestions(suggestion));
     const selectStyles = {
       input: base => ({
         ...base,
@@ -215,7 +214,7 @@ class IntegrationReactSelect extends React.Component {
               InputLabelProps: {
                 shrink: true,
               },
-              error: required(searchValues, error)
+              error: this.isError(searchValues, error),
             }}
             options={suggestions}
             components={components}

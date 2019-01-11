@@ -2,12 +2,26 @@ import datetime
 from controller.database import db
 
 
+class Guidelines(db.Model):
+    __tablename__ = 'guidelines'
+    skill_id = db.Column(db.Integer, primary_key=True)
+    level = db.Column(db.Integer, primary_key=True)
+    information = db.Column(db.Text, nullable=True, default='')
+
+class Hierarchy(db.Model):
+    __tablename__ = 'hierarchy'
+    id = db.Column(db.Integer, primary_key=True)
+    parent_skill_id = db.Column(db.Integer, nullable=True)
+    child_skill_id = db.Column(db.Integer, nullable=True)
+
+
 class Association(db.Model):
     __tablename__ = 'association'
-    users_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
-    skill_id = db.Column(db.Integer, db.ForeignKey('skill.id'), primary_key=True)
-    date_id = db.Column(db.Integer, db.ForeignKey('date.id'), primary_key=True)
-    level = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
+    users_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    skill_id = db.Column(db.Integer, db.ForeignKey('skill.id'))
+    date_id = db.Column(db.Integer, db.ForeignKey('date.id'))
+    level = db.Column(db.Integer)
     users_assoc = db.relationship("Users", back_populates="users_association")
     skill_assoc = db.relationship("Skill", back_populates="skill_association")
     date_assoc = db.relationship("Date", back_populates="date_association")
@@ -15,11 +29,12 @@ class Association(db.Model):
 
 class MilestoneAssociation(db.Model):
     __tablename__ = 'milestoneassociation'
-    milestone_users_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
-    milestone_skill_id = db.Column(db.Integer, db.ForeignKey('skill.id'), primary_key=True)
-    milestone_date_id = db.Column(db.Integer, db.ForeignKey('date.id'), primary_key=True)
-    comment = db.Column(db.String(85), primary_key=True)
-    level = db.Column(db.Integer, nullable = False)
+    id = db.Column(db.Integer, primary_key=True)
+    milestone_users_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    milestone_skill_id = db.Column(db.Integer, db.ForeignKey('skill.id'))
+    milestone_date_id = db.Column(db.Integer, db.ForeignKey('date.id'))
+    comment = db.Column(db.String(150))
+    level = db.Column(db.Integer, nullable=False)
     users_milestone_assoc = db.relationship("Users", back_populates="users_milestone_association")
     skill_milestone_assoc = db.relationship("Skill", back_populates="skill_milestone_association")
     date_milestone_assoc = db.relationship("Date", back_populates="date_milestone_association")
@@ -28,9 +43,9 @@ class MilestoneAssociation(db.Model):
 class Skill(db.Model):
     __tablename__ = 'skill'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(127), nullable=False)
-    description = db.Column(db.Text, nullable=True)
-    category = db.Column(db.String(127), nullable=False)
+    path = db.Column(db.String(511), nullable=False)
+    name = db.Column(db.String(255), nullable=False)
+    root = db.Column(db.Boolean, unique=False, default=False)
     skill_association = db.relationship("Association", back_populates="skill_assoc")
     skill_milestone_association = db.relationship("MilestoneAssociation", back_populates="skill_milestone_assoc")
 
@@ -58,7 +73,7 @@ class Date(db.Model):
 
 
 class Users(db.Model):
-    """SQL-Alchemy object users. Has an autoincremented id, an username, a surname, a forename"""
+    """SQL-Alchemy object users. Has an autoincremented id, an username and a name"""
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(45), nullable=False)

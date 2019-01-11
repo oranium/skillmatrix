@@ -12,6 +12,11 @@ export const setInputError = (id, error) => ({
   error,
 });
 
+export const setVariousInputErrors = ids => ({
+  type: 'SETVARIOUSINPUTERRORS',
+  ids,
+});
+
 export const switchPage = page => ({
   type: 'SWITCHPAGE',
   page,
@@ -28,6 +33,11 @@ export const setUser = user => ({
 
 export const setError = errorMsg => ({
   type: 'SETERROR',
+  errorMsg,
+});
+
+export const setLoginError = errorMsg => ({
+  type: 'SETLOGINERROR',
   errorMsg,
 });
 
@@ -80,6 +90,12 @@ export const setAllSkills = skills => ({
   type: 'SETALLSKILLS',
   skills,
 });
+
+export const setAllCategories = categories => ({
+  type: 'SETALLCATEGORIES',
+  categories,
+});
+
 export const addProfiles = profiles => ({
   type: 'ADDPROFILES',
   profiles,
@@ -102,3 +118,34 @@ export const setSearchError = error => ({
 export const resetSearch = {
   type: 'RESETSEARCH',
 };
+
+export const toggleDrawer = open => ({
+  type: 'TOGGLEDRAWER',
+  open,
+});
+
+export const toggleSpinner = open => ({
+  type: 'TOGGLESPINNER',
+  open,
+});
+
+export const changeGuideline = (level, value) => ({
+  type: 'CHANGEGUIDELINE',
+  level,
+  value,
+});
+
+export const setSkillName = skillname => ({
+  type: 'SETSKILLNAME',
+  skillname,
+});
+
+export const toggleConfirmDialog = open => ({
+  type: 'TOGGLECONFIRMDIALOG',
+  open,
+});
+
+export const toggleSkillNameEmpty = empty => ({
+  type: 'TOGGLESKILLNAMEEMPTY',
+  empty,
+});

@@ -1,57 +1,60 @@
 """Configures and sets up the app connecting frontend to backend via RESTful APIs"""
-import sys
 from flask import Flask
 from flask_restful import Api
 from flask_restful.utils import cors
+from os import environ
+import setupdb
+import sys
+import time
 from controller import database
-from controller import authentication_controller
 
 
-def configure_app(capp, arg):
-    if arg == "0":
-        print("PRODUCTION MODE")
-        capp.config.from_object("config.ProductionConfig")
-    if arg == "1":
-        print("TEST MODE")
-        capp.config.from_object("config.TestConfig")
-    if arg == "2":
-        print("DEBUGGING MODE")
-        capp.config.from_object("config.DebugConfig")
-
-
+print(environ.keys(), file=sys.stderr)
 app = Flask(__name__)
-# set the configurations for testing/debugging/database with 0: production, 1: test, 2: debugging
-# configuration is mandatory before local imports
-if sys.argv.__len__() > 1:
-    configure_app(app, sys.argv[1])
-    authentication_controller.set_controller(sys.argv[1])
+app.config['TESTING'] = environ.get('ENV_TESTING')
+app.config['DEBUG'] = environ.get('ENV_DEBUG')
+if app.config['TESTING'] == 'True':
+    app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('ENV_TESTDATABASE_URI')
 else:
-    print("no argument, defaulting to debug config")
-    configure_app(app, "2")
-    authentication_controller.set_controller("2")
+    app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('ENV_DATABASE_URI')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+connected = None
+while not connected:
+    try:
+        setupdb.checkdb()
+        connected = True
+    except Exception as e:
+        print("Cannot connect to database. Retrying in 5s", file=sys.stderr)
+        time.sleep(5)
 database.set_db(app)
 
-# pylint: disable=wrong-import-position
 
 from api.login import Login
 from api.logout import Logout
 from api.search import Search
 from api.milestone import Milestone
-from api.set_skill import SetSkill
-
-# pylint: enable=wrong-import-position
-
+from api.set_skills import SetSkills
+from api.get_skills import GetSkills
+from api.create_skill import CreateSkill
+from api.guideline import Guideline
+from api.remove_skill import RemoveSkill
+from api.remove_milestone import RemoveMilestone
 
 api = Api(app)
-api.decorators = [cors.crossdomain(origin='http://localhost:3000',
-                                   headers=['accept', 'Content-Type', 'access-control-allow-origin'])]
+api.decorators = [cors.crossdomain(origin='*',
+                                   headers=['accept', 'Content-Type', 'Access-Control-Allow-Origin'])]
 api.add_resource(Login, "/login")
 api.add_resource(Logout, "/logout")
 api.add_resource(Search, "/search")
 api.add_resource(Milestone, "/milestone")
-api.add_resource(SetSkill, "/skill")
+api.add_resource(SetSkills, "/setSkills")
+api.add_resource(GetSkills, "/getSkills")
+api.add_resource(CreateSkill, "/createSkill")
+api.add_resource(Guideline, "/guideline")
+api.add_resource(RemoveSkill, "/deleteSkill")
+api.add_resource(RemoveMilestone, "/deleteMilestone")
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host="0.0.0.0")

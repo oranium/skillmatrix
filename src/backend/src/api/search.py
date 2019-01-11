@@ -1,5 +1,5 @@
-import sys
 import json
+import traceback
 from flask import Response
 from flask_restful import Resource, reqparse
 from controller.controller import controller
@@ -13,15 +13,16 @@ class Search(Resource):
             parser.add_argument("username", type=str)
             parser.add_argument("query", type=dict)
             args = parser.parse_args()
-            print(args, file=sys.stderr)
             try:
                 message = json.dumps(controller.search(args["username"], args["query"]))
-                print(message, file=sys.stderr)
                 return Response(message, status=200, mimetype="application/json")
             except ValueError:
                 return json.dumps(list())
             except PermissionError:
                 return Response(status=401)
+            except Exception:
+                traceback.print_exc()
+                return Response(status=520)
 
     def options(self):
         pass

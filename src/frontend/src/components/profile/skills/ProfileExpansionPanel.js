@@ -4,24 +4,37 @@ import React from 'react';
 // material-ui
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import Typography from '@material-ui/core/Typography';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+
 import RadioGroup from '../../common/RadioGroup';
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+
+// icons
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import DeleteIcon from '@material-ui/icons/Delete';
+
+// redux
+import Store from 'Store';
+import { setError, setOwnProfile } from 'actions';
+
+// Rest
+import RestPoints from 'rest/Init';
+import RestCom from 'rest/Rest';
 
 const styles = theme => ({
-  root: {
-    width: '100%',
+  left: {
+    width: '35%',
+    height: '80px',
   },
-  heading: {
-    fontSize: theme.typography.pxToRem(15),
-    flexBasis: '33.33%',
-    flexShrink: 0,
-  },
-  secondaryHeading: {
-    color: theme.palette.text.secondary,
+  right: { width: '50%', alignSelf: 'flex-end' },
+  headingButton: { display: 'inline-block', width: '80%' },
+  removeButton: { display: 'inline-block', width: '20%' },
+  noFlex: {
+    display: 'block',
   },
 });
 
@@ -35,34 +48,96 @@ class ControlledExpansionPanels extends React.Component {
     });
   };
 
+  getGuidelines(skillname, allSkills) {
+    if (skillname in allSkills) return allSkills[skillname];
+  }
+
+  async handleRemoveSkill(event, skillToRemove) {
+    event.stopPropagation();
+    const confirmation = window.confirm(
+      'Are you sure you want to remove ' + skillToRemove + ' from your skill list?',
+    );
+
+    // only if user confirms deletion
+    if (confirmation) {
+      // Api request to delete skill from own skilllist
+      const request = {
+        skillpath: skillToRemove,
+        forAll: false,
+      };
+
+      const Rest = new RestCom(RestPoints.deleteSkill, request);
+      //todo remove stringify
+
+      try {
+        const updatedProfile = await Rest.post();
+        Store.dispatch(setOwnProfile(updatedProfile));
+      } catch (e) {
+        Store.dispatch(setError(e.message));
+      }
+    }
+  }
+
+  //render one displayed ExpansionPanel for one skill
   render() {
-    const { classes, skill } = this.props;
-    const { skillname, level, milestones } = skill;
+    const { classes, skill, summary } = this.props;
+    const { skillname, level, skillpath } = skill;
     const { expanded } = this.state;
-    const latestElement = milestones.length - 1;
-    const latestMilestone =
-      milestones.length < 1
-        ? ': -'
-        : ` (${milestones[latestElement].date}): ${milestones[latestElement].comment}`;
+    const { allSkills } = Store.getState();
+    const guidelines = this.getGuidelines(skillpath, allSkills);
+
+    // skill leaves in the tree should not be opened and have no sub categories
+    const hasSubCategories = summary.length !== 0;
+
+    const onChangeProp = {};
+    if (hasSubCategories) {
+      onChangeProp['onChange'] = this.handleChange(skill);
+    }
+
     return (
       <div className={classes.root}>
-        <ExpansionPanel
-          expanded={expanded === this.props.skill}
-          onChange={this.handleChange(this.props.skill)}
-        >
-          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography className={classes.Heading}>{skillname}</Typography>
-            <Typography className={classes.secondaryHeading}> </Typography>
+        <ExpansionPanel expanded={expanded === skill} {...onChangeProp}>
+          <ExpansionPanelSummary
+            className={classes.wrap}
+            expandIcon={hasSubCategories && <ExpandMoreIcon />}
+          >
+            <div className={classes.left}>
+              <div className={classes.headingButton}>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  style={{ textTransform: 'none' }}
+                  fullWidth
+                >
+                  {skillname}
+                </Button>
+              </div>
+              <div className={classes.removeButton}>
+                <IconButton
+                  title={'Delete ' + skillname}
+                  onClick={event => this.handleRemoveSkill(event, skillpath)}
+                >
+                  <DeleteIcon />
+                </IconButton>
+              </div>
+            </div>
+            <div className={classes.right} onClick={event => event.stopPropagation()}>
+              <RadioGroup
+                className={classes.radioGroup}
+                level={level}
+                skill={skillpath}
+                wholeSkill={skill}
+                levelChange={this.props.levelChange}
+                disabled={this.props.isEditable}
+                guidelines={guidelines}
+              />
+            </div>
           </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
-            <RadioGroup
-              level={level}
-              skill={skillname}
-              levelChange={this.props.levelChange}
-              disabled={this.props.isEditable}
-            />
-            <Typography>{'Latest Milestone' + latestMilestone}</Typography>
-          </ExpansionPanelDetails>
+          {hasSubCategories && (
+            <ExpansionPanelDetails className={classes.noFlex}>
+              {this.props.summary}
+            </ExpansionPanelDetails>
+          )}
         </ExpansionPanel>
       </div>
     );

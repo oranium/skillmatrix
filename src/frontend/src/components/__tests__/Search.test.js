@@ -2,69 +2,122 @@ import SearchController from 'components/search/SearchController';
 
 const Search = new SearchController();
 
+Search.query = { 'Programming/Python/NumPy': 1, 'Programming/Java': 1 };
+
+const milestones = [
+  {
+    date: '2015-05-01',
+    level: 0,
+    comment: 'init',
+  },
+  {
+    date: '2016-05-01',
+    level: 1,
+    comment: 'reversed engineering buch unters kopfkissen gelegt',
+  },
+  {
+    date: '2016-08-03',
+    level: 1,
+    comment: 'Buch Hacking with Python gelesen',
+  },
+  {
+    date: '2019-07-06',
+    level: 4,
+    comment: '72h Python workshop',
+  },
+];
+
+const exSkill = {
+  skillname: 'NumPy',
+  skillpath: 'Programming/Python/NumPy',
+  level: 4,
+  milestones,
+  subcategories: [],
+};
+
+const exSkillPython = {
+  skillname: 'Python',
+  skillpath: 'Programming/Python',
+  level: 3,
+  milestones,
+  subcategories: [exSkill],
+};
+const exSkill2 = {
+  skillname: 'Java',
+  skillpath: 'Programming/Java',
+  level: 5,
+  milestones,
+  subcategories: [],
+};
+
+const exCat = {
+  skillname: 'Programming',
+  skillpath: 'Programming',
+  level: 4,
+  milestones: [],
+  subcategories: [exSkill2, exSkillPython],
+};
+
+const exCat2 = {
+  skillname: 'Programming',
+  skillpath: 'Programming',
+  level: 4,
+  milestones: [],
+  subcategories: [exSkill2],
+};
+
 const exProfile1 = {
-  username: 'test1',
-  skills: [
-    {
-      skillname: 'Java',
-      level: 2,
-      milestones: [],
-    },
-    { skillname: 'Python', level: 3, milestones: [] },
-    { skillname: 'C', level: 4, milestones: [] },
-  ],
+  username: 'testuser1',
+  skills: [exCat],
 };
 
 const exProfile2 = {
-  username: 'test1',
-  skills: [
-    {
-      skillname: 'Java',
-      level: 2,
-      milestones: [],
-    },
-    { skillname: 'C#', level: 5, milestones: [] },
-  ],
+  username: 'testuser2',
+  skills: [exCat2],
 };
 
 const exSearchResult = {
-  query: { Python: 1, Java: 1 },
-  results: {
-    has_all: [exProfile1],
-    has_some: [exProfile2],
-  },
+  has_all: [exProfile1],
+  has_some: [exProfile2],
 };
 
 const exProzessedResults = {
   hasAll: [
     {
-      username: 'test1',
+      username: 'testuser1',
       skills: [
         {
-          skillname: 'Java',
-          level: 2,
-          milestones: [],
+          skillname: 'NumPy',
+          skillpath: 'Programming/Python/NumPy',
+          level: 4,
+          milestones,
         },
-        { skillname: 'Python', level: 3, milestones: [] },
+        {
+          skillname: 'Java',
+          skillpath: 'Programming/Java',
+          level: 5,
+          milestones,
+        },
       ],
     },
   ],
   hasSome: [
     {
-      username: 'test1',
+      username: 'testuser2',
       skills: [
         {
           skillname: 'Java',
-          level: 2,
-          milestones: [],
+          skillpath: 'Programming/Java',
+          level: 5,
+          milestones,
         },
       ],
     },
   ],
 };
 describe('search tests', () => {
-  it('rest response should be prozessed correctly', () => {
-    const actResult = Search.prozessSearchResults(exSearchResult);
+  it('rest response form search should be prozessed correctly', () => {
+    const actResult = Search.storeSearchResults(exSearchResult);
     expect(actResult).toEqual(exProzessedResults);
   });
 });

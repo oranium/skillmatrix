@@ -10,20 +10,11 @@ To run all tests:
 $ cd src/backend/test
 $ python3 test_runner.py
 ....
+
+Environment variables must be set (see docker-compose.yml). ENV_TESTING must be "True".
+
 The _requirements.txt_ contains pylint. To run pylint on all files in `src/backend/src` and `src/backend/tests`:
 ....
 $ cd src/backend
 $ pylint src && pylint test
 ....
-The app can be started with different arguments. To run the app, the config.py file is required.
-....
-$ cd src/backend/src
-$ python3 app.py ARG
-....
-Where ARG can be one of the following: +
-
-* 0 for production (not implemented) +
-* 1 for testing +
-* 2 for debugging. +
-
-If ARG is not given, the app defaults to debugging mode.

@@ -4,54 +4,29 @@ import React, { Component } from 'react';
 // import redux parts
 import store from 'Store';
 import {
-  updateInput,
-  switchPage,
-  setInputError,
-  setError,
-  resetForm,
-  setUser,
-  setAllSkills,
-  setOwnProfile,
+  updateInput, switchPage, setInputError, resetForm, toggleDrawer,
 } from 'actions';
+import { errorDisplayType } from 'reducers/reducers';
 
 // import page parts
 import SearchController from 'components/search/SearchController';
 import ProfileController from 'components/profile/ProfileController';
-
 import LoginForm from 'components/login/LoginForm';
-
 import Header from 'components/header/Header';
-
 import ErrorDialog from 'components/error/ErrorDialog';
+import Drawer from 'components/header/Drawer';
 
-// Rest
-import RestPoints from 'rest/Init';
-import RestCom from 'rest/Rest';
+// material-ui
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 class App extends Component {
-  static async handleLogin(username, password) {
-    const loginCredentials = {
-      username,
-      password,
-    };
-    const Rest = new RestCom(RestPoints.login, JSON.stringify(loginCredentials));
-
-    try {
-      const { data } = await Rest.post();
-      const { user, allSkills } = data;
-      store.dispatch(setUser({ username: user.username, name: user.name }));
-      store.dispatch(setAllSkills(allSkills));
-      store.dispatch(setOwnProfile(user));
-      store.dispatch(switchPage('search'));
-    } catch (e) {
-      store.dispatch(setError(e.message));
-      store.dispatch(switchPage('profile'));
-    }
-  }
-
   // user wants to reset all input fields
   static handleResetForm() {
     store.dispatch(resetForm);
+  }
+
+  static handleToggleDrawer(open) {
+    store.dispatch(toggleDrawer(open));
   }
 
   // user inputs something into an input field
@@ -91,19 +66,21 @@ class App extends Component {
   render() {
     const { state } = this.props;
     const {
-      page, error, user,
+      page, error, user, drawer, loading,
     } = state;
-    const { hasError } = error;
+    const { hasError, displayType, message } = error;
 
     let main;
 
     switch (page) {
       case 'login':
         return (
-          <LoginForm
-            errorMsg={error.message}
-            login={(username, password) => App.handleLogin(username, password)}
-          />
+          <main>
+            <LoginForm
+              errorMsg={hasError && displayType === errorDisplayType.login ? message : false}
+              loading={loading}
+            />
+          </main>
         );
       case 'search':
         main = (
@@ -121,13 +98,12 @@ class App extends Component {
 
     return (
       <div>
-        <Header
-          state={state}
-          user={user}
-        />
+        <Header state={state} user={user} openDrawer={() => App.handleToggleDrawer(true)} />
+        <Drawer name={user.name} open={drawer} closeDrawer={() => App.handleToggleDrawer(false)} />
         <main>
           {main}
-          {hasError && <ErrorDialog state={state} />}
+          {hasError && displayType === errorDisplayType.window && <ErrorDialog state={state} />}
+          {loading && <CircularProgress />}
         </main>
       </div>
     );

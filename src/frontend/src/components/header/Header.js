@@ -4,10 +4,13 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import { AccountCircle, PowerSettingsNew, Search } from '@material-ui/icons';
+import { PowerSettingsNew, Search } from '@material-ui/icons';
+import MenuIcon from '@material-ui/icons/Menu';
+import NewSkillToDatabase from 'components/admin/NewSkillToDBDialog';
+import RemoveSkillFromDatabase from 'components/admin/DeleteSkillDialog';
 
 // import redux parts
-import store from '../../Store';
+import store from 'Store';
 import {
   switchPage,
   setError,
@@ -17,8 +20,9 @@ import {
 } from 'actions';
 
 // Rest
-import RestPoints from '../../rest/Init';
-import RestCom from '../../rest/Rest';
+import RestPoints from 'rest/Init';
+import RestCom from 'rest/Rest';
+import { updateAllSkills } from 'rest/handleCommonRequests';
 
 const styles = {
   root: {
@@ -40,12 +44,13 @@ class ButtonAppBar extends Component {
 
   switchToProfilePage = () => {
     store.dispatch(changeProfileOwner(0));
-    this.constructor.switchToPage('profile');
-  }
+    ButtonAppBar.switchToPage('profile');
+  };
 
-  switchToSearchPage = () => {
+  async switchToSearchPage() {
     store.dispatch(resetSearch);
-    this.constructor.switchToPage('search');
+    await updateAllSkills();
+    ButtonAppBar.switchToPage('search');
   }
 
   async handleLogout() {
@@ -53,7 +58,7 @@ class ButtonAppBar extends Component {
     const user = {
       username: state.user.username,
     };
-    const Rest = new RestCom(RestPoints.logout, JSON.stringify(user));
+    const Rest = new RestCom(RestPoints.logout, user);
     try {
       await Rest.post();
       // logout in frontend
@@ -69,7 +74,7 @@ class ButtonAppBar extends Component {
   }
 
   render() {
-    const { classes, user } = this.props;
+    const { classes, user, openDrawer } = this.props;
 
     return (
       <div className={classes.root}>
@@ -77,11 +82,12 @@ class ButtonAppBar extends Component {
           <Toolbar>
             <IconButton
               className={classes.menuButton}
-              onClick={this.switchToProfilePage}
+              onClick={openDrawer}
               color="inherit"
-              aria-label="Menu"
+              aria-label="menu"
+              title="show mene"
             >
-              <AccountCircle />
+              <MenuIcon />
             </IconButton>
             <Typography variant="h6" color="inherit" className={classes.grow}>
               {user.name}
@@ -90,7 +96,8 @@ class ButtonAppBar extends Component {
               className={classes.menuButton}
               onClick={this.switchToSearchPage}
               color="inherit"
-              aria-label="Menu"
+              aria-label="open search"
+              title="search"
             >
               <Search />
             </IconButton>
@@ -98,12 +105,15 @@ class ButtonAppBar extends Component {
               className={classes.menuButton}
               onClick={() => this.handleLogout()}
               color="inherit"
-              aria-label="Menu"
+              aria-label="logout"
+              title="logout"
             >
               <PowerSettingsNew />
             </IconButton>
           </Toolbar>
         </AppBar>
+        <NewSkillToDatabase />
+        <RemoveSkillFromDatabase />
       </div>
     );
   }

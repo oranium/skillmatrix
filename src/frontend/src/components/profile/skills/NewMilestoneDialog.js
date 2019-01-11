@@ -4,9 +4,9 @@ import React from 'react';
 // components
 import { DateInput, TextArea } from 'components/common/InputFields';
 import SingleSelect from 'components/common/SingleSelect';
+import RadioGroupShowLevel from 'components/common/RadioGroupShowLevel';
 
 // material-ui
-import { Typography } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -16,33 +16,64 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 // redux
 import store from 'Store';
-import { closeProfileDialog, updateInput, resetForm, setOwnProfile, setError } from 'actions';
+import { closeProfileDialog, updateInput, resetForm } from 'actions';
 
 // Rest
 import RestPoints from 'rest/Init';
-import RestCom from 'rest/Rest';
+import { updateOwnProfile } from 'rest/handleCommonRequests';
+
+// functions
+import checkEmptyInputs from 'functions/checkEmptyInputs';
 
 export default class FormDialog extends React.Component {
+  //handles formstate and dialog state
   handleClose = () => {
     store.dispatch(resetForm);
     store.dispatch(closeProfileDialog);
   };
 
-  async handleSubmit(milestone) {
-    if (milestone.datum === '' || milestone.comment === '' || milestone.skill === '') {
-      milestone = false;
+  //gets all Skill by traversing the passed skill tree recursive
+  getAllSkillsRecursive(skill, allSkills, aktPath) {
+    allSkills.push(aktPath);
+    skill.subcategories.forEach(subskill => {
+      this.getAllSkillsRecursive(subskill, allSkills, aktPath + '/' + subskill.skillname);
+    });
+    return allSkills;
+  }
+  //gets the actual level of a passes skill by recursivly traversing the skill tree
+  //submits if the skillpath equals the passed skills path
+  getaktLevelRecursive(skill, aktPath, path, level) {
+    if (aktPath === path) {
+      level = skill.level;
+      return level;
     }
-    if (milestone){
-      const Rest = new RestCom(RestPoints.milestone, JSON.stringify(milestone));
-      try {
-        const { data } = await Rest.post();
-        store.dispatch(setOwnProfile(data));
-      } catch (e) {
-        store.dispatch(setError(e.message));
+    skill.subcategories.forEach(subskill => {
+      if (
+        this.getaktLevelRecursive(subskill, aktPath + '/' + subskill.skillname, path, level) !== 0
+      ) {
+        level = this.getaktLevelRecursive(
+          subskill,
+          aktPath + '/' + subskill.skillname,
+          path,
+          level,
+        );
       }
+    });
+    return level;
+  }
+
+  //submits the values of the form as new milestone Object to the backend
+  async handleSubmit(milestone) {
+    const inputFieldIDs = {
+      datum: 'datefield',
+      comment: 'textarea',
+      skillpath: 'singleselect',
+    };
+
+    if (!checkEmptyInputs(milestone, inputFieldIDs)) {
+      await updateOwnProfile(RestPoints.milestone, milestone);
+      this.handleClose();
     }
-    this.handleClose();
-    //todo change to new api result and remove JSON stringify
   }
 
   handleChange(id, value) {
@@ -55,30 +86,74 @@ export default class FormDialog extends React.Component {
     const { datefield, textarea, singleselect } = state.formState;
     var currentProfile = profiles[person];
 
-    const aktSkill = singleselect.value;
+    var aktSkill = singleselect.value;
 
-    var aktLevel = 'Choose a Skill!';
+    var aktLevel = 0;
 
-    //holt das aktuelle Level des im Select ausgewählten Skill aus dem State
-    Object.keys(currentProfile.skills).map(index => {
-      if (currentProfile.skills[index].skillname === aktSkill) {
-        aktLevel = currentProfile.skills[index].level;
+    //gets the actual level of a selected skill by recursivly traversing the skill tree
+    Object.keys(currentProfile.skills).forEach(index => {
+      if (
+        this.getaktLevelRecursive(
+          currentProfile.skills[index],
+          currentProfile.skills[index].skillname,
+          singleselect.value,
+          0,
+        ) > 0
+      ) {
+        aktLevel = this.getaktLevelRecursive(
+          currentProfile.skills[index],
+          currentProfile.skills[index].skillname,
+          singleselect.value,
+          0,
+        );
       }
     });
     // todo change map function
     const aktMilestone = {
       username: currentProfile.username,
-      skill: aktSkill,
+      skillpath: aktSkill,
       date: datefield.value,
       level: aktLevel,
       comment: textarea.value,
     };
 
-    const allSkillsOfUser = [];
-    //holt alle skills, die der User besitzt aus dem State
-    Object.keys(currentProfile.skills).map(element => {
-      allSkillsOfUser[element] = currentProfile.skills[element].skillname;
+    var allSkillsOfUser = [];
+    //get all skills of the actual user by recursivly travsersing the
+    //skill tree /skill => subcategories
+    //and always pass the name + "/" to the next depth of the tree
+    //this generates the skillpath name => Programming/Python/Flask
+
+    Object.keys(currentProfile.skills).forEach(index => {
+      Object.keys(currentProfile.skills[index].subcategories).forEach(subskill => {
+        if (allSkillsOfUser.length === 0) {
+          allSkillsOfUser = this.getAllSkillsRecursive(
+            currentProfile.skills[index].subcategories[subskill],
+            [],
+            currentProfile.skills[index].skillname +
+              '/' +
+              currentProfile.skills[index].subcategories[subskill].skillname,
+          );
+        } else
+          allSkillsOfUser.push(
+            ...this.getAllSkillsRecursive(
+              currentProfile.skills[index].subcategories[subskill],
+              [],
+              currentProfile.skills[index].skillname +
+                '/' +
+                currentProfile.skills[index].subcategories[subskill].skillname,
+            ),
+          );
+      });
     });
+
+    //get guidelines from the  actual selected skill
+    var guidelines;
+    Object.keys(state.allSkills).forEach(key => {
+      if (singleselect.value === key) {
+        guidelines = state.allSkills[key];
+      }
+    });
+
     return (
       <div>
         <Dialog
@@ -92,7 +167,7 @@ export default class FormDialog extends React.Component {
               To add a new milestone please fill in all inputfields.
             </DialogContentText>
             <SingleSelect allSkills={allSkillsOfUser} />
-            <Typography>Level: {aktLevel}</Typography>
+            <RadioGroupShowLevel level={aktLevel} guidelines={guidelines} />
             <DateInput data={datefield} onChange={(id, value) => this.handleChange(id, value)} />
             <TextArea data={textarea} onChange={(id, value) => this.handleChange(id, value)} />
           </DialogContent>

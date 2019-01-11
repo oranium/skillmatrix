@@ -65,6 +65,9 @@ function inputComponent({ inputRef, ...props }) {
 }
 
 function Control(props) {
+  const { formState } = store.getState();
+  const { value, error } = formState.singleselect;
+  const isError = (value === '' || value == null) && error;
   return (
     <TextField
       fullWidth
@@ -78,6 +81,7 @@ function Control(props) {
         },
       }}
       {...props.selectProps.textFieldProps}
+      error={isError}
     />
   );
 }
@@ -180,7 +184,8 @@ class IntegrationReactSelect extends React.Component {
             components={components}
             value={this.state.single}
             onChange={this.handleChange('single')}
-            placeholder="Select "
+            placeholder={this.props.placeholder}
+            error={true}
           />
         </NoSsr>
       </div>

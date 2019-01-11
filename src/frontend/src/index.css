@@ -37,3 +37,13 @@ main {
 
 .button-container button {
   margin: 3px; }
+
+@keyframes error {
+  from{opacity: 0;}
+  to{opacity: 100;}
+}
+
+.error{
+  color: red;
+  animation: error 1s ease-in;
+}

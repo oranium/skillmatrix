@@ -10,8 +10,18 @@ import Dialog from '@material-ui/core/Dialog';
 import Slide from '@material-ui/core/Slide';
 import DialogActions from '@material-ui/core/DialogActions';
 import Button from '@material-ui/core/Button';
+import List from '@material-ui/core/List';
 
 import Chart from './Chart';
+import MilestoneList from 'components/common/MilestoneList';
+
+// Redux
+import Store from 'Store';
+import { setOwnProfile, setError } from 'actions';
+
+// Rest
+import RestPoints from 'rest/Init';
+import RestCom from 'rest/Rest';
 
 const styles = theme => ({
   root: {
@@ -25,10 +35,6 @@ const styles = theme => ({
   },
   container: {
     display: 'flex',
-  },
-
-  card: {
-    minWidth: 150,
   },
 });
 
@@ -45,32 +51,63 @@ export class ClickableChart extends React.Component {
     this.setState({ open: false });
   };
 
-  render() {
-    const { classes } = this.props;
+  async handleDeleteMilestone(milestoneData) {
+    const { skillpath } = this.props;
+    const confirmation = window.confirm(
+      'Are you sure you want to remove this Milestone for ' + skillpath + ' from your profile?',
+    );
 
-    const milestones = Object.keys(classes.data).map(key => (
-      <Typography key={key}>
-        Datum: {classes.data[key].date}, Level update auf: {classes.data[key].level} Beschreibung:{' '}
-        {classes.data[key].comment}
-      </Typography>
+    // only if user confirms to delete the milestone
+    if (confirmation) {
+      const milestone = {
+        skillpath,
+        ...milestoneData,
+      };
+
+      const Rest = new RestCom(RestPoints.deleteMilestone, milestone);
+
+      try {
+        const updatedProfile = await Rest.post();
+        Store.dispatch(setOwnProfile(updatedProfile));
+      } catch (e) {
+        Store.dispatch(setError(e.message));
+      }
+    }
+  }
+
+  render() {
+    const { classes, skillname, milestones } = this.props;
+
+    const milestoneList = Object.keys(milestones).map(key => (
+      <MilestoneList
+        key={key}
+        milestone={milestones[key]}
+        deleteMilestone={milestoneData => this.handleDeleteMilestone(milestoneData)}
+      />
     ));
     return (
       <div>
-        <Card className={classes.card}>
-          <ButtonBase className={this.props.classes.cardAction} onClick={this.handleClickOpen}>
+        <Card>
+          <ButtonBase className={classes.cardAction} onClick={this.handleClickOpen}>
             <CardContent>
               <Chart //render small chart at the Card
                 height={200}
                 width={300}
                 display={false}
-                skill={this.props.skill}
-                data={classes.data}
+                skill={skillname}
+                milestones={milestones}
                 enabledZoom={false}
               />
             </CardContent>
           </ButtonBase>
         </Card>
-        <Dialog open={this.state.open} onClose={this.handleClose} TransitionComponent={Transition}>
+        <Dialog
+          className={classes.card}
+          open={this.state.open}
+          onClose={this.handleClose}
+          TransitionComponent={Transition}
+          fullWidth
+        >
           <Typography variant="h5" component="h2">
             <Card>
               <CardContent>
@@ -79,12 +116,12 @@ export class ClickableChart extends React.Component {
                     height={400}
                     width={800}
                     display={true}
-                    skill={this.props.skill}
-                    data={classes.data}
+                    skill={skillname}
+                    milestones={milestones}
                     enabledZoom={true}
                   />
                 </Typography>
-                Milestones: {milestones}
+                <List>{milestoneList}</List>
               </CardContent>
             </Card>
           </Typography>
@@ -100,16 +137,12 @@ export class ClickableChart extends React.Component {
   }
 }
 
-//SimpleCard renders one Clickable Chart
-function SimpleCard(props) {
-  return <ClickableChart skill={props.skill} classes={props} />;
-}
 function Transition(props) {
   return <Slide direction="up" {...props} />;
 }
 
-SimpleCard.propTypes = {
+ClickableChart.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(SimpleCard);
+export default withStyles(styles)(ClickableChart);
