@@ -17,7 +17,7 @@ import Card from '@material-ui/core/Card';
 
 // redux
 import store from 'Store';
-import { closeProfileDialog, resetForm, setError, setOwnProfile } from 'actions';
+import { closeProfileDialog, resetForm, setError, setOwnProfile, setInputError} from 'actions';
 
 // Rest
 import RestPoints from 'rest/Init';
@@ -43,6 +43,11 @@ class RemoveSkillDialog extends Component {
 
   async handleSubmit() {
     const skillToRemove = store.getState().formState.singleselect.value;
+    //if select field is empty mark it red and don't send request
+    if (skillToRemove === ''){
+      store.dispatch(setInputError('singleselect', true));
+      return
+    }
     const confirmation = window.confirm(
       'Are you sure you want to remove ' +
         skillToRemove +
@@ -56,11 +61,8 @@ class RemoveSkillDialog extends Component {
     }
 
     // Api request to remove skill from database
-    const { user } = store.getState();
-    const { username } = user;
 
     const request = {
-      username,
       skillpath: skillToRemove,
       forAll: true,
     };
