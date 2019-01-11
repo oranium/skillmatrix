@@ -53,16 +53,17 @@ class ProfileController extends Component {
     const { state } = this.props;
     const { person } = state.profile;
     const { username } = state.profile.profiles[person];
-    var latestChanges = { username, skills: {} };
+    var latestChanges = { username, skillpaths: {} };
     var alreadyUpdated = [];
     Object.keys(skills).forEach(index => {
       Object.keys(this.localUpdate).forEach(idx => {
         if (skills[index].skillpath === this.localUpdate[idx][0].skill) {
           alreadyUpdated.push(this.localUpdate[idx][0].skill);
-          latestChanges.skills[this.localUpdate[idx][0].skill] = this.localUpdate[idx][0].level;
+          latestChanges.skillpaths[this.localUpdate[idx][0].skill] = this.localUpdate[idx][0].level;
         }
       });
     });
+    console.log(latestChanges);
     // send skill
     let Rest = new RestCom(RestPoints.setSkills, latestChanges);
 
