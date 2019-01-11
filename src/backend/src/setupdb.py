@@ -49,7 +49,7 @@ def checkdb():
             milestone_users_id = Column(Integer, ForeignKey('users.id'))
             milestone_skill_id = Column(Integer, ForeignKey('skill.id'))
             milestone_date_id = Column(Integer, ForeignKey('date.id'))
-            comment = Column(String(85), primary_key=True)
+            comment = Column(String(150))
             level = Column(Integer, nullable = True)
             users_milestone_assoc = relationship("Users", back_populates="users_milestone_association")
             skill_milestone_assoc = relationship("Skill", back_populates="skill_milestone_association")
