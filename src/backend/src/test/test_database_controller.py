@@ -209,14 +209,14 @@ class testDatabaseController(unittest.TestCase):
         expected_result = ["JavaScript", "Python"]
         self.assertEqual(result, expected_result)
 
-    def test_create_hierachy(self):
-        self.flask = Skill(name='Flask')
+    def test_create_hierarchy(self):
+        self.flask = Skill(name='Flask', path="Programming/Python/Flask")
         db.session.add(self.flask)
-        database_controller.create_hierachy('Python', 'Flask')
-        hierarchy_exists = Hierarchy.query.filter(Hierarchy.child_skill_assoc == self.flask,
-                                       Hierarchy.parent_skill_assoc == self.python1).first()
+        db.session.commit()
+        database_controller.create_hierarchy('Programming/Python', 'Programming/Python/Flask')
+        hierarchy_exists = Hierarchy.query.filter(Hierarchy.child_skill_id == self.flask.id,
+                                       Hierarchy.parent_skill_id == self.python1.id).first()
         self.assertIsNotNone(hierarchy_exists)
-        Skill.query.filter_by(id=Skill.query.filter_by(name="Flask").first().id).delete()
 
     def test_get_path_with_guidlines(self):
         pass
