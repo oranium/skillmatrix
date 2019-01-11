@@ -126,6 +126,33 @@ Jede testbezogene Aufgabe muss einem Ansprechpartner zugeordnet werden.
 |U-State-1 |State speichern |Nutzer gibt etwas in ein Fomularfeld ein |saveState() |JSON-Objekt |Daten erfolgreich gespeichert
 |U-State-2 |State einlesen  |Seite wird geladen |loadState() |Itemname |store Objekt
 |U-State-3 |Wert eines Inputfelds im State ändern |Nutzer gibt etwas in ein Fomularfeld ein |updateInput() |Id, Wert |neuer State
+|U-database_controler-1|Suchen welcher User den SKill mindestens zu einem bestimmten Level besitzt|Skills und Users müssen existieren|database_controller.search()|{Skill:Level}|Liste von Usern
+|U-database_controler-2|Suche nach einem nicht bestehenden Skill|Users müssen existieren|database_controller.search()|{Skill:Level}|Leere Liste
+|U-database_controler-3|Füge einem User einen Skill hinzu, welchen dieser auf einem bestimmten Level beherrscht|Skill und User müssen existieren|database_controller.set_skills()|User,{Skill:Level}|keine Ausgabe
+|U-database_controler-4|Erstellt einen Milestone für einen User mit einem Skill, einem Datum, einem Kommentar und einem Level| User, Skill und Datum müssen existieren|database_controller.add_milestone()|Username, Skillpath, Datum, Kommentar, Level|keine Ausgabe
+|U-database_controler-5|Sucht nach einem Milestone mit bestimmten Username und Skillpath|User und Skill müssen existieren|database_controller.get_milestone()|Username, Skillpath|Milestone
+|U-database_controler-6|Sucht nach einer Association welche einem User einen Skill zuweist|User und Skill müssen existieren|database_controller.get_assoc()|User_id, Skill_id| Assiociation
+|U-database_controler-7|Sucht nach allen Usern|keine Anforderungen|database_controller.get_all_users()|keine Parameter|Liste von allen Usern
+|U-database_controler-8|Sucht nach allen Unterkategorien eines Skills, welchen ein User kann| User und Skill müssen existieren|database_controller.get_subcategories()|Usernmae,Skillpath|Dict aller Unterkategorien
+|U-database_controler-9|Erstellt eine Hierarchie-Verknüpfung zwischen zwei Skills oder markiert einen Skill als Wurzel des Hierarchiebaumes|Kindskill muss existieren|database_controller.create_hierarchy|Child_skill, Parent_skill|keine Ausgabe
+|U-database_controler-10|Sucht nach allen Skillnamen|keine Anforderungen|database_controller.get_all_skill_names|keine Parameter|Liste aller Skillnamen
+|U-database_controler-11|Sucht nach einer SKillid|Skill muss existieren|database_controller.get_skill_id|Skillpath|Skillid
+|U-database_controler-12|Sucht nach einem SKill|keine Anforderungen|database_controller.get_skill|Skillpath|Skill
+|U-database_controler-13|Sucht nach einer Userid|User muss existieren|database_controller.get_user_id|Username|Userid
+|U-database_controler-14|Sucht nach einem User|keine Anforderungen|database_controller.get_user|Userid|User
+|U-database_controler-15|Sucht nach einem Datum|keine Anforderungen|database_controller.get_date_from_id|Datumsid|Datum
+|U-database_controler-16|Sucht nach einem User|keine Anforderungen|database_controller.get_user_from_id|Userid|User
+|U-database_controler-17|Sucht nach einem Skill|keine Anforderungen|database_controller.get_skill_from_id|Skillid|Skill
+|U-database_controler-18|Erstellt einen neuen SKill|keine Anforderungen|database_controller.create_skill|Skillnamen,Skillpath|keine Ausgabe
+|U-database_controler-19+20|Testet ob ein User existiert|keine Anforderungen|keine Methode|keine Parameter|keine Ausgabe
+|U-database_controler-21|Erstellt einen User|keine Anforderungen|database_controller.create_user|Usernamen, Name|keine Ausgabe
+|U-database_controler-22|Gibt das momentane Level zurück, welches ein User zu einem bestimmten Skill besitzt|User muss den Skill können|database_controller.get_recent_level|Userid, Skillid|Level
+|U-database_controler-23|Gibt Profielmodell eines Users zurück|User muss existieren|database_controller.get_profile_models|User|Profielmodell
+|U-database_controler-24|Zählt die Anzahl der Skilllevel welche ein User insgesammt zu einer Suchanfrage besitzt|User muss existieren|database_controller.sum_relevant_skills|Dict(Username=Username,name=Name des Users, skills= Liste von gesuchten Skills,[Skillname,Skillpath])|Levelsumme
+|U-database_controler-25|Erstellt Unterkategorie zu einem Skill welchen ein User kann|User muss existieren und den Skill können|database_controller.build_subcategories|Username,Skillpath|keine Ausgabe
+
+
+
 
 
 
