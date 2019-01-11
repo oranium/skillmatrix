@@ -64,7 +64,6 @@ export default class FormDialog extends React.Component {
     };
     const inputErrors = [];
     Object.keys(milestone).forEach(key => {
-      console.log(milestone[key]);
       if (milestone[key] === '' && inputFieldsID.hasOwnProperty(key)) {
         inputErrors.push(inputFieldsID[key]);
       }
@@ -73,9 +72,7 @@ export default class FormDialog extends React.Component {
   }
 
   async handleSubmit(milestone) {
-    console.log(milestone);
     const emptyInputs = this.getEmptyInputs(milestone);
-    console.log(emptyInputs);
     if (emptyInputs) {
       store.dispatch(setVariousInputErrors(emptyInputs));
     } else {
