@@ -360,7 +360,7 @@ describe('reducer tests', () => {
   it('should update the actual state after Event "TOGGLESKILLNAMEEMPTY"', () => {
     const actState = reducer(defaultNewSkillToDBDialog, {
       type: 'TOGGLESKILLNAMEEMPTY',
-      emtpy: true,
+      empty: true,
     });
     expect(actState.newSkillToDBDialog.skillNameIsEmptyError).toBe(true);
   });
