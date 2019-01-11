@@ -4,6 +4,7 @@ exports[`test Profile Components render ProfileController component 1`] = `
 <ProfileController
   classes={
     Object {
+      "buttonMargin": "ProfileController-buttonMargin-14",
       "buttons": "ProfileController-buttons-13",
       "root": "ProfileController-root-12",
     }
@@ -17,7 +18,7 @@ exports[`test Profile Components render TabContainer component 1`] = `
 <TabContainer
   classes={
     Object {
-      "root": "TabContainer-root-14",
+      "root": "TabContainer-root-15",
     }
   }
   skill="Javascript"
@@ -52,7 +53,15 @@ exports[`test Profile/skills Components render NewMilestoneDialog component 1`] 
         To add a new milestone please fill in all inputfields.
       </WithStyles(DialogContentText)>
       <WithStyles(IntegrationReactSelect)
-        allSkills={Array []}
+        allSkills={
+          Array [
+            "Programming/Python",
+            "Programming/Python/NumPy",
+            "Design/Photoshop",
+            "Sport/Aikido",
+            "Sport/Socker",
+          ]
+        }
       />
       <WithStyles(RadioButtonsGroup)
         level={0}
@@ -112,7 +121,14 @@ exports[`test Profile/skills Components render NewSkillDialog component 1`] = `
         To add a new Skill please fill in all inputfields.
       </WithStyles(DialogContentText)>
       <WithStyles(IntegrationReactSelect)
-        allSkills={Array []}
+        allSkills={
+          Array [
+            "Programming/Python/SQLAlchemy",
+            "Programming/Java",
+            "Design/Skillname",
+            "Sport/Kung Fu",
+          ]
+        }
         placeholder="Select a skill to add"
       />
       <WithStyles(Component)
