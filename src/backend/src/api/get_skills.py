@@ -1,6 +1,4 @@
 """Contains the GetSkills API"""
-import sys
-
 import json
 import traceback
 from flask import Response
@@ -15,8 +13,8 @@ class GetSkills(Resource):
         try:
             message = json.dumps(controller.get_paths_with_guidelines())
             return Response(message, status=200, mimetype="application/json")
-        except Exception as e:
-            print(e, file=sys.stderr)
+        except Exception:
+            traceback.print_exc()
             return Response(status=520)
 
     def options(self):

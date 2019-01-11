@@ -36,13 +36,11 @@ class DatabaseController:
                                                              type="first")
                 # skill_assoc will be None if the user does not have the skill on the desired level or higher
                 if skill_assoc is not None:
-                    print("{0} has {1} at least on level {2}".format(user.username, skillpath, min_level))
                     # adds user to has_some, in case he does not have other skills
                     if user not in has_some:
                         has_some.append(user)
                 # if the user does not have the current skill at the required level, he gets removed from has_all
                 else:
-                    print("{0} has {1} not on level {2}".format(user.username, skillpath, min_level))
                     if user in has_all:
                         has_all.remove(user)
         # remove intersection of has_all and has_some
@@ -91,13 +89,8 @@ class DatabaseController:
                   comment(`str`): comment/title of milestone
                   level(`int`) level of user at time of milestone
         """
-        # print("username: {0}".format(username), file=sys.stderr)
-        # print("skillpath: {0}".format(skillpath), file=sys.stderr)
-        # print("date: {0}".format(date), file=sys.stderr)
-        # print("comment: {0}".format(comment), file=sys.stderr)
-        # print("level: {0}".format(level), file=sys.stderr)
+
         user = database_controller.get_user(username)
-        # print(user.id, file=sys.stderr)
         mskill = database_controller.get_skill(skillpath)
         mdate = Date.query.filter_by(date=date).first()
         if not mdate:
@@ -167,7 +160,6 @@ class DatabaseController:
         skill_paths = []
         for hier in childlist:
             skill = database_controller.get_skill_from_id(hier.child_skill_id)
-            print("skill: {0}".format(skill), file=sys.stderr)
             if not username or \
                     (username and
                      Association.query.filter(
@@ -324,32 +316,14 @@ class DatabaseController:
             guideline = Guidelines.query.filter(Guidelines.skill_id == skill_id, Guidelines.level == level).first()
             guidelines.append(guideline.information)
             level = level + 1
-        # print(guidelines)
         return guidelines
-
-    @staticmethod
-    def change_guidelines(skill_id, level, new_guideline):
-        """Checks if there is already certain guideline, if the guideline exists, it gets deleted and rebuild with new
-            information. Else the function just adds a new guideline.
-                Args:
-                    skill_id (`int`): id of a certain skill, where the information has to be changed
-                    level (`int`): guideline-level, where the information has to be changed
-                    new_guideline (`str`): new information for the certain guideline
-                """
-        if Guidelines.query.filter_by(skill_id=skill_id, level=level).all():
-            prev_guideline = Guidelines.query.filter_by(skill_id=skill_id, level=level).first()
-            db.session.delete(prev_guideline)
-            db.session.commit()
-        new_guideline = Guidelines(skill_id=skill_id, level=level, information=new_guideline)
-        db.session.add(new_guideline)
-        db.session.commit()
 
     @staticmethod
     def create_guidelines(skillpath, guidelines):
         """Create all 5 guidelines for one skill in the database.
                    Args:
                        skillpath (`str`): the path of the skill to ad to the guideline table.
-                       guidelines `[str]`: a list of strings that should look like this:
+                       guidelines`[str]`: a list of strings that should look like this:
                                                     [text for level 1, text for level 2,...,text for level 5]
                 """
         level = 1
@@ -440,9 +414,7 @@ class DatabaseController:
         # case 1: category (current skill) is a root element
         skill = Skill.query.filter_by(path=skillpath).first()
         if skill.root:
-            print(subcategories_string, file=sys.stderr)
             for category in subcategories_string:
-                print(subcategories_string, file=sys.stderr)
                 subcategories_model.append(database_controller.build_subcategories(username, category))
             if subcategories_model:
                 return SkillModel(skill.name,
@@ -466,7 +438,6 @@ class DatabaseController:
                               milestones=database_controller.get_milestones(username, skillpath)
                               )
         # case 3: category (current skill) is a leaf
-        print(skillpath, file=sys.stderr)
         level = database_controller.get_recent_level(database_controller.get_user(username).id,
                                                      database_controller.get_skill(skillpath).id
                                                      )
@@ -482,7 +453,6 @@ class DatabaseController:
             Args:
                   skillpath(`str`): full path of the skill
         """
-        print("removing {0}".format(skillpath), file=sys.stderr)
         to_remove = database_controller.get_subcategories(skillpath)
         subcategories_to_check = to_remove.copy()
         to_remove.append(skillpath)
@@ -529,21 +499,17 @@ class DatabaseController:
                   skillpath(`str`): full path of the skill
                   level(`int`): level of skill at milestone date
                   date(`str`): date of milestone in format "YYYY-MM-DD"
+                  comment `str`: milestone comment
         """
         date_id = Date.query.filter_by(date=date).first().id
         skill = database_controller.get_skill(skillpath)
         user = database_controller.get_user(username)
-        print("Here come the Milestones for date user level and skill: \n {0}".format(
-            MilestoneAssociation.query.filter_by(milestone_skill_id=skill.id,
-                                                 milestone_users_id=user.id,
-                                                 level=level,
-                                                 milestone_date_id=date_id).first()), file=sys.stderr)
+
         to_delete = MilestoneAssociation.query.filter_by(milestone_skill_id=skill.id,
                                                          milestone_users_id=user.id,
                                                          level=level,
                                                          milestone_date_id=date_id,
                                                          comment=comment)
-        print("\n Now filtered with comment: {0}: \n {1}".format(comment, to_delete.first()), file=sys.stderr)
         if to_delete is None:
             raise AttributeError
         to_delete.delete()

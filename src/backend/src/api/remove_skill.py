@@ -2,6 +2,7 @@
 import sys
 
 import json
+import traceback
 from flask import Response
 from flask_restful import Resource, reqparse, inputs
 from controller.controller import controller
@@ -27,8 +28,8 @@ class RemoveSkill(Resource):
             return Response(status=504)
         except PermissionError:
             return Response(status=401)
-        except Exception as e:
-            print(e, file=sys.stderr)
+        except Exception:
+            traceback.print_exc()
             return Response(status=520)
 
     def options(self):

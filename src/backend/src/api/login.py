@@ -23,8 +23,7 @@ class Login(Resource):
         except TimeoutError:
             return Response(status=504)
         except Exception:
-            tb = traceback.format_exc()
-            print(tb, file=sys.stderr)
+            traceback.print_exc()
             return Response(status=520)
 
     def options(self):

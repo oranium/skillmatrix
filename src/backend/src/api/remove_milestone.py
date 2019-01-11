@@ -2,6 +2,7 @@
 import sys
 
 import json
+import traceback
 from flask import Response
 from flask_restful import Resource, reqparse
 from controller.controller import controller
@@ -33,8 +34,8 @@ class RemoveMilestone(Resource):
             return Response(status=401)
         except AttributeError:
             return Response(status=410)
-        except Exception as e:
-            print(e, file=sys.stderr)
+        except Exception:
+            traceback.print_exc()
             return Response(status=520)
 
     def options(self):
