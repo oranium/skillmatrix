@@ -1,3 +1,5 @@
+import json
+
 from controller.controller import controller
 import unittest
 from unittest.mock import patch
@@ -7,10 +9,19 @@ class TestController(unittest.TestCase):
     """Unittests for Controller"""
 
     def setUp(self):
-        pass
+        self.EMPTY_PROFILE = dict(user=dict(username="User-Name", name="User Name", skills=[]))
 
-    def test_login_new_user(self):
-        pass
+    @patch("controller.database_controller.database_controller.get_skills")
+    @patch("controller.database_controller.database_controller.create_user")
+    @patch("controller.database_controller.database_controller.exists")
+    @patch("controller.authentication_controller.authentication_controller.login")
+    def test_login_new_user(self, mock_login, mock_exists, mock_create, mock_get_skills):
+        mock_login.return_value = "User Name"
+        mock_exists.return_value = False
+        mock_get_skills.return_value = []
+        new_login_return = controller.login("User-Name", "password")
+        mock_create.assert_called_with("User-Name", "User Name")
+        self.assertEquals(self.EMPTY_PROFILE, new_login_return)
 
     @patch("controller.controller.controller.is_connected")
     def test_logout_not_logged_in(self, mock_connected):
