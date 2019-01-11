@@ -272,7 +272,6 @@ export const newSkillToDBDialog = (state = defaultNewSkillToDBDialog, action) =>
     case 'TOGGLECONFIRMDIALOG':
       return { ...state, confirmDialogOpen: action.open };
     case 'TOGGLESKILLNAMEEMPTY':
-      console.log(action);
       return { ...state, skillNameIsEmptyError: action.empty };
     case 'RESETFORM':
       return defaultNewSkillToDBDialog;

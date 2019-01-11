@@ -1,8 +1,13 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-// import profile/skills components
+// redux
+import store from 'Store';
+import {
+  setAllSkills, setAllCategories, setUser, setOwnProfile,
+} from 'actions';
 
+// import profile/skills components
 import Label from '../profile/skills/Label';
 import NewMilestoneDialog from '../profile/skills/NewMilestoneDialog';
 import NewSkillDialog from '../profile/skills/NewSkillDialog';
@@ -13,12 +18,20 @@ import SkillProfileList from '../profile/skills/SkillProfileList';
 
 import Chart from '../profile/statistics/Chart';
 import ClickableChart from '../profile/statistics/ClickableChart';
-import SkillStatisticsGrid from '../profile/statistics/Chart';
 
 // import profile main components
 
 import ProfileController from '../profile/ProfileController';
 import TabContainer from '../profile/TabContainer';
+
+// fill store with example data where it's needed
+const exStoreJson = '{"formState":{"singleselect":{"value":""},"textfield":{"name":"Skill","value":"","error":false},"levelfield":{"name":"Level","value":"","error":false},"datefield":{"name":"Date","value":"2019-01-11","error":false},"textarea":{"name":"Note","value":"","error":false},"searchfield":{"name":"Search","value":"","error":false}},"page":"profile","drawer":false,"user":{"username":"Karl-Kalagin","name":"Karl Kalagin"},"error":{"hasError":false,"message":"","displayType":1},"search":{"searchValues":[{"value":"Programming/Python/NumPy","label":"Programming/Python/NumPy"}],"results":{"hasAll":[{"username":"Karl-Kalagin","name":"Karl-Kalagin","skills":[{"skillname":"NumPy","skillpath":"Programming/Python/NumPy","milestones":[{"date":"2019-01-11","comment":"Level 3","level":3}],"level":3}]}],"hasSome":[]},"showResults":true,"error":false},"profile":{"person":0,"isEditable":true,"view":0,"showDialog":false,"profiles":[{"username":"Karl-Kalagin","name":"Karl-Kalagin","skills":[{"skillname":"Programming","skillpath":"Programming","level":1,"subcategories":[{"skillname":"Python","skillpath":"Programming/Python","level":4,"subcategories":[{"skillname":"NumPy","skillpath":"Programming/Python/NumPy","level":3,"subcategories":[],"root":false,"milestones":[{"date":"2019-01-11","comment":"Level 3","level":3}]}],"root":false,"milestones":[{"date":"2019-01-11","comment":"Level 1","level":1},{"date":"2019-01-11","comment":"Level 4","level":4}]}],"root":true,"milestones":[]},{"skillname":"Design","skillpath":"Design","level":1,"subcategories":[{"skillname":"Photoshop","skillpath":"Design/Photoshop","level":4,"subcategories":[],"root":false,"milestones":[{"date":"2019-01-16","comment":"I bims der Photoshop Phillip !!","level":4},{"date":"2019-01-11","comment":"Level 4","level":4}]}],"root":true,"milestones":[]},{"skillname":"Sport","skillpath":"Sport","level":1,"subcategories":[{"skillname":"Aikido","skillpath":"Sport/Aikido","level":3,"subcategories":[],"root":false,"milestones":[{"date":"2019-01-11","comment":"Level 3","level":3}]},{"skillname":"Socker","skillpath":"Sport/Socker","level":5,"subcategories":[],"root":false,"milestones":[{"date":"2019-01-11","comment":"Level 5","level":5}]}],"root":true,"milestones":[]}]},{"username":"Karl-Kalagin","name":"Karl-Kalagin","skills":[{"skillname":"Programming","skillpath":"Programming","level":1,"subcategories":[{"skillname":"Python","skillpath":"Programming/Python","level":4,"subcategories":[{"skillname":"NumPy","skillpath":"Programming/Python/NumPy","level":3,"subcategories":[],"root":false,"milestones":[{"date":"2019-01-11","comment":"Level 3","level":3}]}],"root":false,"milestones":[{"date":"2019-01-11","comment":"Level 1","level":1},{"date":"2019-01-11","comment":"Level 4","level":4}]}],"root":true,"milestones":[]},{"skillname":"Design","skillpath":"Design","level":1,"subcategories":[{"skillname":"Photoshop","skillpath":"Design/Photoshop","level":4,"subcategories":[],"root":false,"milestones":[{"date":"2019-01-16","comment":"I bims der Photoshop Phillip !!","level":4},{"date":"2019-01-11","comment":"Level 4","level":4}]}],"root":true,"milestones":[]},{"skillname":"Sport","skillpath":"Sport","level":1,"subcategories":[{"skillname":"Aikido","skillpath":"Sport/Aikido","level":3,"subcategories":[],"root":false,"milestones":[{"date":"2019-01-11","comment":"Level 3","level":3}]}],"root":true,"milestones":[]}]}]},"allSkills":{"Programming/Python":{"1":"Insufficient","2":"Sufficient/Below Average","3":"Satisfactory / Average","4":"Good","5":"Excellent"},"Programming/Python/NumPy":{"1":"Insufficient","2":"Sufficient/Below Average","3":"Satisfactory / Average","4":"Good","5":"Excellent"},"Programming/Python/SQLAlchemy":{"1":"Insufficient","2":"Sufficient/Below Average","3":"Satisfactory / Average","4":"Good","5":"Excellent"},"Design/Photoshop":{"1":"1","2":"2","3":"3","4":"4","5":"5"},"Programming/Java":{"1":"Insufficient","2":"Sufficient/Below Average","3":"Satisfactory / Average","4":"Good","5":"Excellent"},"Design/Skillname":{"1":"hjhjh","2":"h","3":"Satisfactory / Average","4":"Good","5":"Excellent"},"Sport/Kung Fu":{"1":"Insufficient","2":"Sufficient/Below Average","3":"Satisfactory / Average","4":"Good","5":"Excellent"},"Sport/Aikido":{"1":"Insufficient","2":"asdasdasd","3":"Satisfactory / Average","4":"Good","5":"asdsad"},"Sport/Socker":{"1":"","2":"Sufficient/Below Average","3":"Satisfactory / Average","4":"Good","5":"Max"}},"allCategories":["Programming","Design","Sport"],"loading":false,"newSkillToDBDialog":{"skillname":"","guideline":{"1":"Insufficient","2":"Sufficient/Below Average","3":"Satisfactory / Average","4":"Good","5":"Excellent"},"confirmDialogOpen":false,"skillNameIsEmptyError":false}}';
+const exStore = JSON.parse(exStoreJson);
+
+store.dispatch(setUser(exStore.user));
+store.dispatch(setOwnProfile(exStore.profile.profiles[0]));
+store.dispatch(setAllSkills(exStore.allSkills));
+store.dispatch(setAllCategories(exStore.allCategories));
 
 const exSkill = {
   skillname: 'Python',
@@ -132,10 +145,6 @@ describe('test Profile/stats Components', () => {
         milestones={exSkill3.milestones}
       />,
     );
-    expect(wrapper).toMatchSnapshot();
-  });
-  it('render SkillStatisticsGrid component', () => {
-    const wrapper = shallow(<SkillStatisticsGrid categories={exSkill3} />);
     expect(wrapper).toMatchSnapshot();
   });
 });
