@@ -186,13 +186,12 @@ class testDatabaseController(unittest.TestCase):
 
     def test_add_milestone(self):
         database_controller.add_milestone("Karl-Kalagin", "Programming/Java", "2019-01-01", "testmiltestone", 5)
-        #skill_id = Skill.query.filter_by(path=)
         association_exists = MilestoneAssociation.query.filter(MilestoneAssociation.milestone_skill_id == self.java1.id,
                                                                MilestoneAssociation.milestone_users_id == self.karl.id)
         self.assertIsNotNone(association_exists)
 
     def test_get_milestones(self):
-        result = database_controller.get_milestones("Karl-Kalagin", "JavaScript")
+        result = database_controller.get_milestones("Karl-Kalagin", "Programming/JavaScript")
         expected_result = [MilestoneModel(self.b.date_milestone_assoc, "bootcamp", self.b.level)]
 
     def test_get_assocs(self):
@@ -205,8 +204,8 @@ class testDatabaseController(unittest.TestCase):
         self.assertEquals(result, expected_result)
 
     def test_get_subcategories(self):
-        result = database_controller.get_subcategories("Valdemar-Forsberg", "Java")
-        expected_result = ["JavaScript", "Python"]
+        result = database_controller.get_subcategories("Valdemar-Forsberg", "Programming/Java")
+        expected_result = ["Programming/JavaScript", "Programming/Python"]
         self.assertEqual(result, expected_result)
 
     def test_create_hierarchy(self):
@@ -218,17 +217,17 @@ class testDatabaseController(unittest.TestCase):
                                        Hierarchy.parent_skill_id == self.python1.id).first()
         self.assertIsNotNone(hierarchy_exists)
 
-    def test_get_path_with_guidlines(self):
+    def test_get_path_with_guidelines(self):
         pass
 
 
     def test_get_skill(self):
-        result = database_controller.get_skill("Python")
-        self.assertEqual(result.name, "Python")
+        result = database_controller.get_skill("Programming/Python")
+        self.assertEqual(result.name, "Programming/Python")
 
 
     def test_get_user(self):
-        result = database_controller.get_user_id("Valdemar-Forsberg")
+        result = database_controller.get_user("Valdemar-Forsberg")
         self.assertEqual(result.username, "Valdemar-Forsberg")
         self.assertEqual(result.name, "Valdemar Forsberg")
 
@@ -242,24 +241,35 @@ class testDatabaseController(unittest.TestCase):
 
     def test_get_skill_from_id(self):
         result = database_controller.get_skill_from_id(1)
-        self.assertEqual(result.name, "Java")
+        self.assertEqual(result.path, "Programming")
 
     def test_create_skill(self):
-        new_skill = Skill(name='C#')
+        new_skill = Skill(name='C#', path="Programming/C#")
         db.session.add(new_skill)
         db.session.commit()
-        self.assertEqual(Skill.query.filter_by(name="C#").first().name, "C#")
-        Skill.query.filter_by(id=Skill.query.filter_by(name="C#").first().id).delete()
+        self.assertEqual(Skill.query.filter_by(path="Progamming/C#").first().name, "C#")
 
     def test_exists_success(self):
-        self.assertTrue(Users.query.filter_by(username="Valdemar-Forsberg").first())
+        self.assertIsNotNone(Users.query.filter_by(username="Valdemar-Forsberg").first())
 
     def test_exists_fail(self):
-        self.assertFalse(Users.query.filter_by(username="Lisza-Zulu").first())
+        self.assertIsNone(Users.query.filter_by(username="Lisza-Zulu").first())
 
     def test_get_skills(self):
         result = database_controller.get_skills("Valdemar-Forsberg")
-        self.assertEqual(result, [[["Java", 3,[]]],["Python",4,[]],["JavaScript",2,[]]])
+        self.assertEqual(result,
+        {"skillname": "Programming",
+         "skillpath": "Programming",
+         "level": 1,
+         "root": True,
+         "milestones": [],
+         "subcategories":
+             [{"skillname": "Java",
+               "skillpath": "Programming/Java",
+               "level": 5,
+               "root": False,
+               "subcategories": [],
+               "milestones": []}]})
 
     def test_get_skills_inexistent(self):
         result = database_controller.get_skills("Lisza-Zulu")
