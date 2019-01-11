@@ -7,8 +7,10 @@ const Chart = (props) => {
     skill, witdh, height, display, enabledZoom, milestones,
   } = props;
 
-  const datastructure = [];
-  Object.keys(milestones).map(idx => datastructure.push({ x: milestones[idx].date, y: milestones[idx].level }));
+  const datastructure = Object.keys(milestones).map(idx => ({
+    x: milestones[idx].date,
+    y: milestones[idx].level,
+  }));
 
   const dataSet = {
     datasets: [
