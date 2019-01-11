@@ -78,28 +78,28 @@ export class ClickableChart extends React.Component {
   }
 
   render() {
-    const { classes, skillname } = this.props;
+    const { classes, skillname, milestones } = this.props;
 
-    const milestones = Object.keys(classes.data).map(key => (
+    const milestoneList = Object.keys(milestones).map(key => (
       <MilestoneList
         key={key}
-        date={classes.data[key].date}
-        level={classes.data[key].level}
-        comment={classes.data[key].comment}
+        date={milestones[key].date}
+        level={milestones[key].level}
+        comment={milestones[key].comment}
         deleteMilestone={(level, date) => this.handleDeleteMilestone(level, date)}
       />
     ));
     return (
       <div>
         <Card>
-          <ButtonBase className={this.props.classes.cardAction} onClick={this.handleClickOpen}>
+          <ButtonBase className={classes.cardAction} onClick={this.handleClickOpen}>
             <CardContent>
               <Chart //render small chart at the Card
                 height={200}
                 width={300}
                 display={false}
                 skill={skillname}
-                data={classes.data}
+                milestones={milestones}
                 enabledZoom={false}
               />
             </CardContent>
@@ -121,11 +121,11 @@ export class ClickableChart extends React.Component {
                     width={800}
                     display={true}
                     skill={skillname}
-                    data={classes.data}
+                    milestones={milestones}
                     enabledZoom={true}
                   />
                 </Typography>
-                <List>{milestones}</List>
+                <List>{milestoneList}</List>
               </CardContent>
             </Card>
           </Typography>
@@ -141,16 +141,12 @@ export class ClickableChart extends React.Component {
   }
 }
 
-//SimpleCard renders one Clickable Chart
-function SimpleCard(props) {
-  return <ClickableChart skillpath={props.skillpath} skillname={props.skillname} classes={props} />;
-}
 function Transition(props) {
   return <Slide direction="up" {...props} />;
 }
 
-SimpleCard.propTypes = {
+ClickableChart.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(SimpleCard);
+export default withStyles(styles)(ClickableChart);
