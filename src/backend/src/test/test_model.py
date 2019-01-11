@@ -18,13 +18,21 @@ class TestProfileModel(unittest.TestCase):
 
     def setUp(self):
         self.TEST_MILESTONE_MODEL = MilestoneModel(datetime.date(2018, 11, 30), "Created humongous Python backend", 3)
-        self.TEST_SKILL_MODEL = SkillModel("Java", 3, category="Programming", milestones=[self.TEST_MILESTONE_MODEL])
+        self.TEST_SKILL_MODEL = SkillModel("Java",
+                                           "Programming/Java",
+                                           3,
+                                           milestones=[self.TEST_MILESTONE_MODEL])
         self.TEST_PROFILE_MODEL = ProfileModel("Aron", "Aron", [self.TEST_SKILL_MODEL])
         self.MILESTONE_JSONABLE = dict(date="2018-11-30", comment="Created humongous Python backend", level=3)
-        self.SKILL_JSONABLE = dict(skillname="Java", level=3, milestones=[self.TEST_MILESTONE_MODEL.jsonable()])
+        self.SKILL_JSONABLE = dict(skillname="Java",
+                                   skillpath="Programming/Java",
+                                   level=3,
+                                   milestones=[self.TEST_MILESTONE_MODEL.jsonable()],
+                                   subcategories=[],
+                                   root=False
+                                   )
         self.PROFILE_JSONABLE = dict(username="Aron", name="Aron", skills=[self.TEST_SKILL_MODEL.jsonable()])
 
-    # TODO
     def test_milestone_jsonable(self):
         self.assertEqual(self.MILESTONE_JSONABLE, self.TEST_MILESTONE_MODEL.jsonable())
 
