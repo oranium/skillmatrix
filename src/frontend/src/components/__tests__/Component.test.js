@@ -55,8 +55,6 @@ describe('test components from InputFields', () => {
     expect(wrapper).toMatchSnapshot();
   });
 });
-<<<<<<< HEAD
-=======
 
 describe('test ExpensionPanels right', () => {
   it('render SkillPanelList component', () => {
@@ -64,4 +62,3 @@ describe('test ExpensionPanels right', () => {
     expect(wrapper).toMatchSnapshot();
   });
 });
->>>>>>> 55d50be485162fb6eddc9f2156a828c14bf6b251

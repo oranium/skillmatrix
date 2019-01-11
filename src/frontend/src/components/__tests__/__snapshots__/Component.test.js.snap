@@ -1,0 +1,106 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test ExpensionPanels right render SkillPanelList component 1`] = `
+<ControlledExpansionPanels
+  classes={
+    Object {
+      "heading": "ControlledExpansionPanels-heading-26",
+      "root": "ControlledExpansionPanels-root-25",
+      "secondaryHeading": "ControlledExpansionPanels-secondaryHeading-27",
+    }
+  }
+/>
+`;
+
+exports[`test Header component render Header component 1`] = `
+<ButtonAppBar
+  classes={
+    Object {
+      "grow": "ButtonAppBar-grow-8",
+      "menuButton": "ButtonAppBar-menuButton-9",
+      "root": "ButtonAppBar-root-7",
+    }
+  }
+  logout="handleLogout"
+  username="Valdemar"
+/>
+`;
+
+exports[`test Login Components render Login component 1`] = `
+<SignIn
+  classes={
+    Object {
+      "avatar": "SignIn-avatar-3",
+      "form": "SignIn-form-5",
+      "main": "SignIn-main-1",
+      "paper": "SignIn-paper-2",
+      "spinner": "SignIn-spinner-4",
+      "submit": "SignIn-submit-6",
+    }
+  }
+  errorMsg=""
+  login={[Function]}
+/>
+`;
+
+exports[`test components from InputFields render DateInput from InputFields 1`] = `
+<Component
+  classes={
+    Object {
+      "container": "Component-container-13",
+      "error": "Component-error-15",
+      "textField": "Component-textField-14",
+    }
+  }
+/>
+`;
+
+exports[`test components from InputFields render LevelPicker from InputFields 1`] = `
+<Component
+  classes={
+    Object {
+      "container": "Component-container-16",
+      "error": "Component-error-18",
+      "textField": "Component-textField-17",
+    }
+  }
+/>
+`;
+
+exports[`test components from InputFields render SearchInput from InputFields 1`] = `
+<Component
+  classes={
+    Object {
+      "container": "Component-container-22",
+      "error": "Component-error-24",
+      "textField": "Component-textField-23",
+    }
+  }
+/>
+`;
+
+exports[`test components from InputFields render SkillNameInput from InputFields component 1`] = `
+<Component
+  classes={
+    Object {
+      "container": "Component-container-10",
+      "error": "Component-error-12",
+      "textField": "Component-textField-11",
+    }
+  }
+  data="skill"
+  value="python"
+/>
+`;
+
+exports[`test components from InputFields render TextArea from InputFields 1`] = `
+<Component
+  classes={
+    Object {
+      "container": "Component-container-19",
+      "error": "Component-error-21",
+      "textField": "Component-textField-20",
+    }
+  }
+/>
+`;
