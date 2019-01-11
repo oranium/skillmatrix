@@ -20,15 +20,15 @@ class testDatabaseController(unittest.TestCase):
         self.valdemar = Users(username='Valdemar-Forsberg', name="Valdemar Forsberg")
         self.karl = Users(username='Karl-Kalagin', name="Karl Kalagin")
         self.isaac = Users(username='Isaac-Hunt', name="Isaac Hunt")
-
+        self.empty = Users(username='emptyUser', name="empty")
         db.session.add(self.valdemar)
         db.session.add(self.karl)
         db.session.add(self.isaac)
-
+        db.session.add(self.empty)
         self.prog = Skill(name='Programming', path='Programming', root=True)
         self.java1 = Skill(name='Java', path='Programming/Java')
         self.python1 = Skill(name='Python', path='Programming/Python')
-        self.js1 = Skill(name='JavaScript', path='Programming/Javascript')
+        self.js1 = Skill(name='JavaScript', path='Programming/JavaScript')
 
         db.session.add(self.prog)
         db.session.add(self.java1)
@@ -121,6 +121,12 @@ class testDatabaseController(unittest.TestCase):
         self.x1.parent_skill_assoc = self.prog
         self.x1.child_skill_assoc = self.java1
         db.session.commit()
+
+        self.x2 = Hierarchy()
+        self.x2.parent_skill_assoc = self.prog
+        self.x2.child_skill_assoc = self.python1
+        db.session.commit()
+
 
         self.pythonlevel1 = Guidelines(skill_id=3, level=1, information="gar nicht gut")
         self.pythonlevel2 = Guidelines(skill_id=3, level=2, information="nicht gut")
@@ -258,22 +264,34 @@ class testDatabaseController(unittest.TestCase):
     def test_get_skills(self):
         result = database_controller.get_skills("Valdemar-Forsberg")
         self.assertEqual(result,
-        {"skillname": "Programming",
-         "skillpath": "Programming",
-         "level": 1,
-         "root": True,
-         "milestones": [],
-         "subcategories":
-             [{"skillname": "Java",
-               "skillpath": "Programming/Java",
-               "level": 5,
-               "root": False,
-               "subcategories": [],
-               "milestones": []}]})
+                         [{"skillname": "Programming",
+                           "skillpath": "Programming",
+                           "level": 1,
+                           "subcategories": [
+                             {"skillname": "Java",
+                              "skillpath": "Programming/Java",
+                              "level": 3,
+                              "subcategories": [],
+                              "root": False,
+                              "milestones": []},
+                             {"skillname": "Python",
+                              "skillpath": "Programming/Python",
+                              "level": 4,
+                              "subcategories": [],
+                              "root": False,
+                              "milestones": []},
+                             {"skillname": "JavaScript",
+                              "skillpath": "Programming/JavaScript",
+                              "level": 2,
+                              "subcategories": [],
+                              "root": False,
+                              "milestones": []}],
+                           "root": True,
+                           "milestones": []}])
 
     def test_get_skills_inexistent(self):
-        result = database_controller.get_skills("Lisza-Zulu")
-        self.assertIsNone(result)
+        result = database_controller.get_skills("emptyUser")
+        self.assertEquals(result, [])
 
     def test_get_guideline_dict(self):
         pass
