@@ -15,8 +15,9 @@ def setUpModule():
 class testDatabaseController(unittest.TestCase):
 
     def setUp(self):
+        setuptestdb.dropdb()
         setupdb.checkdb()
-        database_controller.create_user('Valdemar-Forsberg',"Valdemar Forsberg")
+        database_controller.create_user('Valdemar-Forsberg', 'Valdemar Forsberg')
         database_controller.create_user('Karl-Kalagin', "Karl Kalagin")
         database_controller.create_user('Isaac-Hunt', "Isaac Hunt")
         '''
@@ -28,7 +29,7 @@ class testDatabaseController(unittest.TestCase):
         db.session.add(self.karl)
         db.session.add(self.isaac)
         '''
-        database_controller.create_skill('Programming', 'Programming','')
+        database_controller.create_skill('Programming', 'Programming',"")
         database_controller.create_skill('Java', 'Programming/Java', 'Programming')
         database_controller.create_skill('Python', 'Programming/Python', 'Programming')
         database_controller.create_skill('JavaScript', 'Programming/JavaScript', 'Programming')
@@ -179,7 +180,7 @@ class testDatabaseController(unittest.TestCase):
 
     def test_get_milestones(self):
         result = database_controller.get_milestones("Karl-Kalagin", "JavaScript")
-        expected_result = [MilestoneModel(self.b.date_milestone_assoc, "bootcamp69", self.b.level)]
+        expected_result = [MilestoneModel(self.b.date_milestone_assoc, "bootcamp", self.b.level)]
 
     def test_get_assocs(self):
         association_exists = database_controller.get_assocs(1,1,1,"first")
