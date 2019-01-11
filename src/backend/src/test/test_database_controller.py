@@ -122,6 +122,17 @@ class testDatabaseController(unittest.TestCase):
         self.x1.child_skill_assoc = self.java1
         db.session.commit()
 
+        self.pythonlevel1 = Guidelines(skill_id=2, level=1, information="gar nicht gut")
+        self.pythonlevel2 = Guidelines(skill_id=2, level=2, information="nicht gut")
+        self.pythonlevel3 = Guidelines(skill_id=2, level=3, information="mittel")
+        self.pythonlevel4 = Guidelines(skill_id=2, level=4, information="schon gut")
+        self.pythonlevel5 = Guidelines(skill_id=2, level=5, information="what a man :O")
+        db.session.add(self.pythonlevel1)
+        db.session.add(self.pythonlevel2)
+        db.session.add(self.pythonlevel3)
+        db.session.add(self.pythonlevel4)
+        db.session.add(self.pythonlevel5)
+
     def tearDown(self):
         pass
 
