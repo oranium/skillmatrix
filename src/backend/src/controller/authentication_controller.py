@@ -61,7 +61,6 @@ class AuthenticationController:
 
             print("created connection!", file=sys.stderr)
             # wrong credentials
-            print(new_connection)
             if new_connection is None:
                 print("wrong cred", file=sys.stderr)
                 raise AttributeError

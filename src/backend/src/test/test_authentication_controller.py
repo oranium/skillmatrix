@@ -5,10 +5,6 @@ from ldap3 import Connection
 from ldap3.core.exceptions import LDAPSocketOpenError, LDAPUnknownAuthenticationMethodError
 
 
-def setUpModule():
-    authentication_controller.set_controller("1")
-
-
 class TestAuthentication(unittest.TestCase):
     def setUp(self):
         self.SUCCESS_RETURN = "Full Name"
