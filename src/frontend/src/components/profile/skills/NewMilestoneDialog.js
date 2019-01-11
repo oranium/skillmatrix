@@ -16,7 +16,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 // redux
 import store from 'Store';
-import { closeProfileDialog, updateInput, resetForm } from 'actions';
+import { closeProfileDialog, updateInput, resetForm, setVariousInputErrors } from 'actions';
 
 // Rest
 import RestPoints from 'rest/Init';
@@ -56,15 +56,32 @@ export default class FormDialog extends React.Component {
     return level;
   }
 
+  getEmptyInputs(milestone) {
+    const inputFieldsID = {
+      datum: 'datefield',
+      comment: 'textarea',
+      skillpath: 'singleselect',
+    };
+    const inputErrors = [];
+    Object.keys(milestone).forEach(key => {
+      console.log(milestone[key]);
+      if (milestone[key] === '' && inputFieldsID.hasOwnProperty(key)) {
+        inputErrors.push(inputFieldsID[key]);
+      }
+    });
+    return inputErrors.length === 0 ? false : inputErrors;
+  }
+
   async handleSubmit(milestone) {
     console.log(milestone);
-    if (milestone.datum === '' || milestone.comment === '' || milestone.skill === '') {
-      milestone = false;
-    }
-    if (milestone) {
+    const emptyInputs = this.getEmptyInputs(milestone);
+    console.log(emptyInputs);
+    if (emptyInputs) {
+      store.dispatch(setVariousInputErrors(emptyInputs));
+    } else {
       await updateOwnProfile(RestPoints.milestone, milestone);
+      this.handleClose();
     }
-    this.handleClose();
   }
 
   handleChange(id, value) {
