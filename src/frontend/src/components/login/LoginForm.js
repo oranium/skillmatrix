@@ -135,16 +135,6 @@ class SignIn extends Component {
               Sign in
             </Button>
           </form>
-          <Button
-            type="button"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            onClick={() => store.dispatch(switchPage('search'))}
-          >
-            skip login (dev only)
-          </Button>
         </Paper>
       </main>
     );
