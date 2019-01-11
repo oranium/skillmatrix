@@ -1,7 +1,7 @@
 // react
 import React from 'react';
 
-import SimpleCard from 'components/profile/statistics/SimpleCard';
+import ClickableChart from 'components/profile/statistics/ClickableChart';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -32,11 +32,12 @@ class SkillStatisticsPage extends React.Component {
 
   renderDatastructureRecursive(subcategories, index) {
     const { expanded } = this.state;
+    
     const subs = subcategories.map(skill =>
       skill.subcategories.length !== 0 ? (
         <ExpansionPanel key={skill.skillpath} expanded={expanded} onChange={this.handleChange(this.props.skill)}>
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-            <SimpleCard skill={skill.skillname} data={skill.milestones} />
+            <ClickableChart skillpath={skill.skillpath} skillname={skill.skillname} milestones={skill.milestones} />
           </ExpansionPanelSummary>
           <ExpansionPanelDetails className={this.props.classes.panels}>
             {this.renderDatastructureRecursive(skill.subcategories, index + 1)}
@@ -45,7 +46,7 @@ class SkillStatisticsPage extends React.Component {
       ) : (
         <ExpansionPanel key={skill.skillpath}>
           <ExpansionPanelSummary>
-            <SimpleCard skill={skill.skillname} data={skill.milestones} />
+            <ClickableChart skillpath={skill.skillpath} skillname={skill.skillname} milestones={skill.milestones} />
           </ExpansionPanelSummary>
         </ExpansionPanel>
       ),

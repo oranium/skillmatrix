@@ -91,10 +91,17 @@ class DatabaseController:
                   comment(`str`): comment/title of milestone
                   level(`int`) level of user at time of milestone
         """
+        # print("username: {0}".format(username), file=sys.stderr)
+        # print("skillpath: {0}".format(skillpath), file=sys.stderr)
+        # print("date: {0}".format(date), file=sys.stderr)
+        # print("comment: {0}".format(comment), file=sys.stderr)
+        # print("level: {0}".format(level), file=sys.stderr)
         user = database_controller.get_user(username)
         mskill = database_controller.get_skill(skillpath)
-        mdate = Date(date=date)
-        db.session.add(mdate)
+        mdate = Date.query.filter_by(date=date).first()
+        if not mdate:
+            mdate = Date(date=date)
+            db.session.add(mdate)
         m = MilestoneAssociation(comment=comment, level=level)
         m.skill_milestone_assoc = mskill
         m.date_milestone_assoc = mdate
@@ -159,6 +166,7 @@ class DatabaseController:
         skill_paths = []
         for hier in childlist:
             skill = database_controller.get_skill_from_id(hier.child_skill_id)
+            print("skill: {0}".format(skill), file=sys.stderr)
             if not username or \
                     (username and
                      Association.query.filter(
@@ -175,6 +183,18 @@ class DatabaseController:
                   parent_path(`str`): full path of parent skill.
                   child_path(`str`): full path of child skill
         """
+        if parent_path:
+            parent_skill_id = database_controller.get_skill(parent_path).id
+            child_skill_id = database_controller.get_skill(child_path).id
+            new_hierarchy = Hierarchy(parent_skill_id=parent_skill_id, child_skill_id=child_skill_id)
+            db.session.add(new_hierarchy)
+            db.session.commit()
+        else:
+            child_skill_id = database_controller.get_skill(child_path).id
+            new_hierarchy = Hierarchy(child_skill_id=child_skill_id)
+            db.session.add(new_hierarchy)
+            db.session.commit()
+        '''    
         new_hierarchy = Hierarchy()
         if parent_path:
             parent_skill = database_controller.get_skill(parent_path)
@@ -183,6 +203,7 @@ class DatabaseController:
         new_hierarchy.child_skill_assoc = child_skill
         db.session.add(new_hierarchy)
         db.session.commit()
+        '''
 
     @staticmethod
     def get_paths_with_guidelines(username=None):
@@ -243,7 +264,11 @@ class DatabaseController:
                 skillname str: Name of the skill to add.
                 skillpath str: Full path of the skill to add.
                 category str: Category that the skill belongs to.
+            Raises:
+                AttributeError if the skill (identified by skillpath) already exists in the database.
         """
+        if Skill.query.filter_by(path=skillpath).first():
+            raise AttributeError
         new_skill = Skill(name=skillname, path=skillpath)
         if not category:
             new_skill.root = True
@@ -468,20 +493,22 @@ class DatabaseController:
             Args:
                   skillpath(`str`): full path of the skill
         """
+        print("removing {0}".format(skillpath), file=sys.stderr)
         to_remove = database_controller.get_subcategories(skillpath)
-        to_remove.append(skillpath)
         subcategories_to_check = to_remove.copy()
+        to_remove.append(skillpath)
         while subcategories_to_check:
             new_subcategories = database_controller.get_subcategories(subcategories_to_check.pop())
             to_remove.extend(new_subcategories)
             subcategories_to_check.extend(new_subcategories)
-        for sub_path in to_remove:
+        for sub_path in reversed(to_remove):
             sid = database_controller.get_skill(sub_path).id
             Hierarchy.query.filter_by(parent_skill_id=sid).delete()
+            Hierarchy.query.filter_by(child_skill_id=sid).delete()
             MilestoneAssociation.query.filter_by(milestone_skill_id=sid).delete()
             Association.query.filter_by(skill_id=sid).delete()
             # duplicate names WILL get removed here
-            Skill.query.filter_by(path=skillpath).delete()
+            Skill.query.filter_by(path=sub_path).delete()
         db.session.commit()
 
     @staticmethod
@@ -493,19 +520,20 @@ class DatabaseController:
         """
         to_remove = database_controller.get_subcategories(skillpath, username=username)
         subcategories_to_check = to_remove.copy()
+        to_remove.append(skillpath)
         uid = database_controller.get_user(username).id
         while subcategories_to_check:
             new_subcategories = database_controller.get_subcategories(subcategories_to_check.pop())
             to_remove.extend(new_subcategories)
             subcategories_to_check.extend(new_subcategories)
-        for sub_path in to_remove:
+        for sub_path in reversed(to_remove):
             sid = database_controller.get_skill(sub_path).id
-            MilestoneAssociation.query.filter_by(milestone_skill_id=sid, milestone_users_id=uid)
-            Association.query.filter_by(skill_id=sid, users_id=uid)
+            MilestoneAssociation.query.filter_by(milestone_skill_id=sid, milestone_users_id=uid).delete()
+            Association.query.filter_by(skill_id=sid, users_id=uid).delete()
         db.session.commit()
         
     @staticmethod
-    def remove_milestone(username, skillpath, level, date):
+    def remove_milestone(username, skillpath, level, date, comment):
         """Removes a milestone from user.
             Args:
                   username(`str`): name of the user
@@ -513,12 +541,17 @@ class DatabaseController:
                   level(`int`): level of skill at milestone date
                   date(`str`): date of milestone in format "YYYY-MM-DD"
         """
-        skill = database_controller.get_skill(skillpath).id
+        date_id = Date.query.filter_by(date=date).first().id
+        skill = database_controller.get_skill(skillpath)
         user = database_controller.get_user(username)
-        MilestoneAssociation.query.filter_by(milestone_skill_id=skill.id,
-                                             milestone_users_id=user.id,
-                                             level=level,
-                                             date=date).delete()
+        to_delete = MilestoneAssociation.query.filter_by(milestone_skill_id=skill.id,
+                                                         milestone_users_id=user.id,
+                                                         level=level,
+                                                         milestone_date_id=date_id,
+                                                         comment=comment).first()
+        if not to_delete:
+            raise AttributeError
+        to_delete.delete()
         db.session.commit()
 
 

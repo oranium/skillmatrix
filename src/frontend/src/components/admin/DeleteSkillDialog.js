@@ -61,7 +61,7 @@ class RemoveSkillDialog extends Component {
 
     const request = {
       username,
-      skill: skillToRemove,
+      skillpath: skillToRemove,
       forAll: true,
     };
 

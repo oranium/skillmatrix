@@ -22,9 +22,8 @@ const styles = theme => ({
 });
 
 const MilestoneList = (props) => {
-  const classes = { props };
   const {
-    level, comment, date, deleteMilestone,
+    classes, level, comment, date, deleteMilestone,
   } = props;
 
   return (
@@ -35,16 +34,9 @@ const MilestoneList = (props) => {
         </ExpansionPanelSummary>
         <ExpansionPanelDetails className={classes.secondaryHeading}>
           <div>
-            <Typography>
-              Level:
-              {level}
-              {' '}
-            </Typography>
+            <Typography>{`Level: ${level}`}</Typography>
 
-            <Typography style={{ width: '200%' }}>
-              Comment:
-              {comment}
-            </Typography>
+            <Typography style={{ width: '200%' }}>{`Comment: ${comment}`}</Typography>
           </div>
           <ExpansionPanelActions style={{ width: '100%', textAlign: 'right' }}>
             <IconButton onClick={() => deleteMilestone(level, date)}>

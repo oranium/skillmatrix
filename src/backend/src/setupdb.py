@@ -28,15 +28,15 @@ def checkdb():
         class Hierarchy(Base):
             __tablename__ = 'hierarchy'
             id = Column(Integer, primary_key=True)
-            parent_skill_id = Column(Integer, ForeignKey('skill.id'), nullable=True)
-            child_skill_id = Column(Integer, ForeignKey('skill.id'), nullable=True)
+            parent_skill_id = Column(Integer, nullable=True)
+            child_skill_id = Column(Integer, nullable=True)
 
 
         class Association(Base):
             __tablename__ = 'association'
             users_id = Column(Integer, ForeignKey('users.id'), primary_key=True)
             skill_id = Column(Integer, ForeignKey('skill.id'), primary_key=True)
-            date_id = Column(Integer, ForeignKey('date.id'), primary_key=True)
+            date_id = Column(Integer, ForeignKey('date.id'))
             level = Column(Integer, primary_key=True)
             users_assoc = relationship("Users", back_populates="users_association")
             skill_assoc = relationship("Skill", back_populates="skill_association")
@@ -46,7 +46,7 @@ def checkdb():
             __tablename__ = 'milestoneassociation'
             milestone_users_id = Column(Integer, ForeignKey('users.id'), primary_key=True)
             milestone_skill_id = Column(Integer, ForeignKey('skill.id'), primary_key=True)
-            milestone_date_id = Column(Integer, ForeignKey('date.id'), primary_key=True)
+            milestone_date_id = Column(Integer, ForeignKey('date.id'))
             comment = Column(String(85), primary_key=True)
             level = Column(Integer, nullable = True)
             users_milestone_assoc = relationship("Users", back_populates="users_milestone_association")

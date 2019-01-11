@@ -55,24 +55,16 @@ class ControlledExpansionPanels extends React.Component {
   async handleRemoveSkill(event, skillToRemove) {
     event.stopPropagation();
     const confirmation = window.confirm(
-      'Are you sure you want to remove ' +
-        skillToRemove +
-        " from your skill list?",
+      'Are you sure you want to remove ' + skillToRemove + ' from your skill list?',
     );
 
     // only if user confirms deletion
     if (confirmation) {
-      // Api request to remove skill from database
-      const { user } = Store.getState();
-      const { username } = user;
-
+      // Api request to delete skill from own skilllist
       const request = {
-        username,
-        skill: skillToRemove,
+        skillpath: skillToRemove,
         forAll: false,
       };
-
-      console.log(request);
 
       const Rest = new RestCom(RestPoints.deleteSkill, request);
       //todo remove stringify
@@ -120,7 +112,10 @@ class ControlledExpansionPanels extends React.Component {
                 </Button>
               </div>
               <div className={classes.removeButton}>
-                <IconButton onClick={event => this.handleRemoveSkill(event, skillpath)}>
+                <IconButton
+                  title={'Delete ' + skillname}
+                  onClick={event => this.handleRemoveSkill(event, skillpath)}
+                >
                   <DeleteIcon />
                 </IconButton>
               </div>

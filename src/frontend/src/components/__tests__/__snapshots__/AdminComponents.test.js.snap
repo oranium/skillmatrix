@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test admin Components render DeleteSkillDialog component 1`] = `
+<RemoveSkillDialog
+  classes={
+    Object {
+      "dialogcontent": "RemoveSkillDialog-dialogcontent-2",
+      "root": "RemoveSkillDialog-root-1",
+    }
+  }
+/>
+`;
+
+exports[`test admin Components render NewSkillToDBDialog component 1`] = `
+<FormDialog
+  classes={
+    Object {
+      "dialogcontent": "FormDialog-dialogcontent-4",
+      "root": "FormDialog-root-3",
+    }
+  }
+/>
+`;
