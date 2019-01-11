@@ -30,9 +30,9 @@ class testDatabaseController(unittest.TestCase):
         self.python1 = Skill(name='Python', path='Programming/Python')
         self.js1 = Skill(name='JavaScript', path='Programming/Javascript')
 
+        db.session.add(self.prog)
         db.session.add(self.java1)
         db.session.add(self.python1)
-        db.session.add(self.prog)
         db.session.add(self.js1)
         
 
@@ -122,21 +122,21 @@ class testDatabaseController(unittest.TestCase):
         self.x1.child_skill_assoc = self.java1
         db.session.commit()
 
-        self.pythonlevel1 = Guidelines(skill_id=2, level=1, information="gar nicht gut")
-        self.pythonlevel2 = Guidelines(skill_id=2, level=2, information="nicht gut")
-        self.pythonlevel3 = Guidelines(skill_id=2, level=3, information="mittel")
-        self.pythonlevel4 = Guidelines(skill_id=2, level=4, information="schon gut")
-        self.pythonlevel5 = Guidelines(skill_id=2, level=5, information="what a man :O")
+        self.pythonlevel1 = Guidelines(skill_id=3, level=1, information="gar nicht gut")
+        self.pythonlevel2 = Guidelines(skill_id=3, level=2, information="nicht gut")
+        self.pythonlevel3 = Guidelines(skill_id=3, level=3, information="mittel")
+        self.pythonlevel4 = Guidelines(skill_id=3, level=4, information="schon gut")
+        self.pythonlevel5 = Guidelines(skill_id=3, level=5, information="what a man :O")
         self.javalevel1 = Guidelines(skill_id=2, level=1, information="gar nicht gut")
         self.javalevel2 = Guidelines(skill_id=2, level=2, information="nicht gut")
         self.javalevel3 = Guidelines(skill_id=2, level=3, information="mittel")
         self.javalevel4 = Guidelines(skill_id=2, level=4, information="schon gut")
         self.javalevel5 = Guidelines(skill_id=2, level=5, information="what a man :O")
-        self.javascriptlevel1 = Guidelines(skill_id=2, level=1, information="gar nicht gut")
-        self.javascriptlevel2 = Guidelines(skill_id=2, level=2, information="nicht gut")
-        self.javascriptlevel3 = Guidelines(skill_id=2, level=3, information="mittel")
-        self.javascriptlevel4 = Guidelines(skill_id=2, level=4, information="schon gut")
-        self.javascriptlevel5 = Guidelines(skill_id=2, level=5, information="what a man :O")
+        self.javascriptlevel1 = Guidelines(skill_id=4, level=1, information="gar nicht gut")
+        self.javascriptlevel2 = Guidelines(skill_id=4, level=2, information="nicht gut")
+        self.javascriptlevel3 = Guidelines(skill_id=4, level=3, information="mittel")
+        self.javascriptlevel4 = Guidelines(skill_id=4, level=4, information="schon gut")
+        self.javascriptlevel5 = Guidelines(skill_id=4, level=5, information="what a man :O")
         db.session.add(self.pythonlevel1)
         db.session.add(self.pythonlevel2)
         db.session.add(self.pythonlevel3)
@@ -153,7 +153,7 @@ class testDatabaseController(unittest.TestCase):
         db.session.add(self.javalevel4)
         db.session.add(self.javalevel5)
         db.session.commit()
-        
+
     def tearDown(self):
         num_rows_deleted4 = db.session.query(MilestoneAssociation).delete()
         num_rows_deleted5 = db.session.query(Association).delete()
