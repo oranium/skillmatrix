@@ -2,7 +2,7 @@ version: "3"
 services:
   backend:
     environment:
-      - ENV_TESTING=True
+      - ENV_TESTING=False
       - ENV_DEBUG=True
       - ENV_TESTDATABASE_URI=mysql+pymysql://root:Momomomo2@localhost/sm1
       - ENV_DATABASE_URI=mysql+pymysql://root:Momomomo2@db/sm1
