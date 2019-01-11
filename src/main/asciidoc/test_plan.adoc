@@ -126,6 +126,15 @@ Jede testbezogene Aufgabe muss einem Ansprechpartner zugeordnet werden.
 |U-State-1 |State speichern |Nutzer gibt etwas in ein Fomularfeld ein |saveState() |JSON-Objekt |Daten erfolgreich gespeichert
 |U-State-2 |State einlesen  |Seite wird geladen |loadState() |Itemname |store Objekt
 |U-State-3 |Wert eines Inputfelds im State ändern |Nutzer gibt etwas in ein Fomularfeld ein |updateInput() |Id, Wert |neuer State
+|U-database_controler-1|Suchen welcher User den SKill mindestens zu einem bestimmten Level besitzt|Skills und Users müssen existieren|database_controller.search()|{Skill:Level}|Liste von Usern
+|U-database_controler-2|Suche nach einem nicht bestehenden Skill|Users müssen existieren|database_controller.search()|{Skill:Level}|Leere Liste
+|U-database_controler-3|Füge einem User einen Skill hinzu, welchen dieser auf einem bestimmten Level beherrscht|Skill und User müssen existieren|database_controller.set_skills()|User,{Skill:Level}|keine Ausgabe
+|U-database_controler-4|Erstellt einen Milestone für einen User mit einem Skill, einem Datum, einem Kommentar und einem Level| User, Skill und Datum müssen existieren|database_controller.add_milestone()|Username, Skillpath, Datum, Kommentar, Level|keine Ausgabe
+|U-database_controler-5|Sucht nach einem Milestone mit bestimmten Username und Skillpath|User und Skill müssen existieren|database_controller.get_milestone()|Username, Skillpath|Milestone
+|U-database_controler-6|Sucht nach einer Association welche einem User einen Skill zuweist|User und Skill müssen existieren|database_controller.get_assoc()|User_id, Skill_id| Assiociation
+|U-database_controler-7|Sucht nach allen Usern|keine Anforderungen|database_controller.get_all_users()|keine Parameter|Liste von allen Usern
+|U-database_controler-8|Sucht nach allen Unterkategorien eines Skills, welchen ein User kann| User und Skill müssen existieren|database_controller.get_subcategories()|Usernmae,Skillpath|Dict aller Unterkategorien
+
 
 
 
