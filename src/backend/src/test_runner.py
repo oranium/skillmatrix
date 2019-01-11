@@ -9,11 +9,11 @@ loader = unittest.TestLoader()
 suite = unittest.TestSuite()
 
 # add tests to suite
-#suite.addTests(loader.loadTestsFromModule(test_authentication_controller))
-#suite.addTests(loader.loadTestsFromModule(test_rest_api))
-#suite.addTests(loader.loadTestsFromModule(test_controller))
-#suite.addTests(loader.loadTestsFromModule(test_model))
-#suite.addTests(loader.loadTestsFromModule(test_db_model))
+suite.addTests(loader.loadTestsFromModule(test_authentication_controller))
+suite.addTests(loader.loadTestsFromModule(test_rest_api))
+suite.addTests(loader.loadTestsFromModule(test_controller))
+suite.addTests(loader.loadTestsFromModule(test_model))
+suite.addTests(loader.loadTestsFromModule(test_db_model))
 suite.addTests(loader.loadTestsFromModule(test_database_controller))
 
 # run tests
