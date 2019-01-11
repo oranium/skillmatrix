@@ -23,7 +23,8 @@ import {
   resetForm,
   setError,
   toggleConfirmDialog,
-  setSkillName
+  setSkillName,
+  toggleSkillNameEmpty,
 } from 'actions';
 
 // Rest
@@ -50,14 +51,14 @@ class FormDialog extends Component {
     if (skillname.includes('/')) {
       store.dispatch(setError('You can\'t use "/" in a skillname.'));
       // remove "/" from input value
-      event.target.value = skillname.replace('/','');
+      event.target.value = skillname.replace('/', '');
     } else {
       store.dispatch(setSkillName(skillname));
     }
   };
 
   // open confirmation dialog
-  handleClickOpen = () => {
+  openConfirmDialog = () => {
     store.dispatch(toggleConfirmDialog(true));
   };
   // close confirmation dialog
@@ -66,10 +67,24 @@ class FormDialog extends Component {
   };
 
   // send new skill to database
-  async handleSubmit() {
+  async handleSubmit(confirmed) {
     const state = store.getState();
     const category = state.formState.singleselect.value;
     const { skillname, guideline } = state.newSkillToDBDialog;
+
+    /* do not send emtpy skillname to createSkill
+    if empty mark input field red and cancel sending
+    */
+    if (skillname === '') {
+      store.dispatch(toggleSkillNameEmpty(true));
+      return;
+    }
+
+    // if not confirmed yet
+    if (category === '' && !confirmed) {
+      this.openConfirmDialog();
+      return;
+    }
 
     //build whole path for new skill
     var skillpath = '';
@@ -117,7 +132,8 @@ class FormDialog extends Component {
     const state = store.getState();
     const { showDialog } = state.profile;
     const { singleselect } = state.formState;
-    const { confirmDialogOpen, skillname } = state.newSkillToDBDialog;
+    const { confirmDialogOpen, skillname, skillNameIsEmptyError } = state.newSkillToDBDialog;
+    const showSkillNameError = skillname === '' && skillNameIsEmptyError;
 
     // dialog that is shown when user leafs category emtpy
     const confirmDialog = (
@@ -141,7 +157,7 @@ class FormDialog extends Component {
             <Button onClick={this.handleClickClose} color="primary">
               Cancel
             </Button>
-            <Button onClick={() => this.handleSubmit()} color="primary" autoFocus>
+            <Button onClick={() => this.handleSubmit(true)} color="primary" autoFocus>
               Submit
             </Button>
           </DialogActions>
@@ -179,6 +195,7 @@ class FormDialog extends Component {
                 variant="outlined"
                 onChange={event => this.handleSkillNameChange(event)}
                 value={skillname}
+                error={showSkillNameError}
                 fullWidth
               />
               {showGuidelineInput && <GuidelineInputCard />}
@@ -187,15 +204,9 @@ class FormDialog extends Component {
               <Button onClick={this.handleClose} color="primary">
                 Cancel
               </Button>
-              {state.formState.singleselect.value.length === 0 ? (
-                <Button onClick={() => this.handleClickOpen()} color="primary">
-                  Submit
-                </Button>
-              ) : (
-                <Button onClick={() => this.handleSubmit()} color="primary">
-                  Submit
-                </Button>
-              )}
+              <Button onClick={() => this.handleSubmit(false)} color="primary">
+                Submit
+              </Button>
             </DialogActions>
           </div>
         </Dialog>

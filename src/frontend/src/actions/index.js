@@ -144,3 +144,8 @@ export const toggleConfirmDialog = open => ({
   type: 'TOGGLECONFIRMDIALOG',
   open,
 });
+
+export const toggleSkillNameEmpty = empty => ({
+  type: 'TOGGLESKILLNAMEEMPTY',
+  empty,
+});
