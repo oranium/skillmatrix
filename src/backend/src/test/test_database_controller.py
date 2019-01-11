@@ -16,10 +16,7 @@ def setUpModule():
 class testDatabaseController(unittest.TestCase):
 
     def setUp(self):
-        database_controller.create_user('Valdemar-Forsberg', 'Valdemar Forsberg')
-        database_controller.create_user('Karl-Kalagin', "Karl Kalagin")
-        database_controller.create_user('Isaac-Hunt', "Isaac Hunt")
-        '''
+
         self.valdemar = Users(username='Valdemar-Forsberg', name="Valdemar Forsberg")
         self.karl = Users(username='Karl-Kalagin', name="Karl Kalagin")
         self.isaac = Users(username='Isaac-Hunt', name="Isaac Hunt")
@@ -27,16 +24,11 @@ class testDatabaseController(unittest.TestCase):
         db.session.add(self.valdemar)
         db.session.add(self.karl)
         db.session.add(self.isaac)
-        '''
-        database_controller.create_skill('Programming', 'Programming',"")
-        database_controller.create_skill('Java', 'Programming/Java', 'Programming')
-        database_controller.create_skill('Python', 'Programming/Python', 'Programming')
-        database_controller.create_skill('JavaScript', 'Programming/JavaScript', 'Programming')
-        '''
-        self.prog = Skill(name='Programming', root=True)
-        self.java1 = Skill(name='Java')
-        self.python1 = Skill(name='Python')
-        self.js1 = Skill(name='JavaScript')
+
+        self.prog = Skill(name='Programming', path='Programming', root=True)
+        self.java1 = Skill(name='Java', path='Programming/Java')
+        self.python1 = Skill(name='Python', path='Programming/Python')
+        self.js1 = Skill(name='JavaScript', path='Programming/Javascript')
 
         db.session.add(self.java1)
         db.session.add(self.python1)
@@ -50,106 +42,86 @@ class testDatabaseController(unittest.TestCase):
         self.a.skill_assoc = self.js1
         self.a.date_assoc = self.date1
         self.a.users_assoc = self.isaac
-        '''
-        database_controller.add_milestone('Isaac-Hunt','Programming/JavaScript', '2019-11-01','bootcamp',4)
-        '''
-        self.b = MilestoneAssociation(comment='bootcamp69')
+
+
+        self.b = MilestoneAssociation(comment='bootcamp', level=4)
         self.b.skill_milestone_assoc = self.js1
         self.b.date_milestone_assoc = self.date1
         self.b.users_milestone_assoc = self.isaac
-        self.b.level = self.a.level
-        '''
-        database_controller.set_skills('Isaac-Hunt', {'Programming/JavaScript':3})
-        '''
+        db.session.add(self.b)
+
+
         self.a1 = Association(level=3)
         self.a1.skill_assoc = self.js1
         self.a1.date_assoc = self.date1
         self.a1.users_assoc = self.isaac
         db.session.add(self.a1)
-        '''
-        '''
-        self.a2 = Association(level=3)
-        self.a2.skill_assoc = self.python1
-        self.a2.date_assoc = self.date1
-        self.a2.users_assoc = self.karl
-        db.session.add(self.a2)
-        '''
-        database_controller.set_skills('Valdemar-Forsberg', {'Programming/Java': 3})
-        '''
+
         self.a3 = Association(level=3)
         self.a3.skill_assoc = self.java1
         self.a3.date_assoc = self.date1
         self.a3.users_assoc = self.valdemar
         db.session.add(self.a3)
-        '''
-        database_controller.set_skills('Karl-Kalagin', {'Programming/JavaScript': 3})
-        '''
+
+
         self.a4 = Association(level=3)
         self.a4.skill_assoc = self.js1
         self.a4.date_assoc = self.date1
         self.a4.users_assoc = self.karl
         db.session.add(self.a4)
-        '''
-        database_controller.set_skills('Valdemar-Forsberg', {'Programming/Python': 4})
-        '''
+
+
         self.a5 = Association(level=4)
         self.a5.skill_assoc = self.python1
         self.a5.date_assoc = self.date1
         self.a5.users_assoc = self.valdemar
         db.session.add(self.a5)
-        '''
-        database_controller.set_skills('Isaac-Hunt', {'Programming/Java': 2})
-        '''
+
         self.a6 = Association(level=2)
         self.a6.skill_assoc = self.java1
         self.a6.date_assoc = self.date1
         self.a6.users_assoc = self.isaac
         db.session.add(self.a6)
-        '''
-        database_controller.set_skills('Valdemar-Forsberg', {'Programming/JavaScript': 2})
-        '''
+
+
         self.a7 = Association(level=2)
         self.a7.skill_assoc = self.js1
         self.a7.date_assoc = self.date1
         self.a7.users_assoc = self.valdemar
         db.session.add(self.a7)
-        '''
-        database_controller.set_skills('Karl-Kalagin', {'Programming/Python': 3})
-        '''
+
+
         self.a8 = Association(level=3)
         self.a8.skill_assoc = self.python1
         self.a8.date_assoc = self.date1
         self.a8.users_assoc = self.karl
         db.session.add(self.a8)
-        '''
-        database_controller.set_skills('Isaac-Hunt', {'Programming/Python': 3})
-        '''
+
         self.a9 = Association(level=3)
         self.a9.skill_assoc = self.python1
         self.a9.date_assoc = self.date1
         self.a9.users_assoc = self.isaac
         db.session.add(self.a9)
-        '''
-        database_controller.set_skills('Karl-Kalagin', {'Programming/Java': 1})
-        '''
+
+
         self.a10 = Association(level=1)
         self.a10.skill_assoc = self.java1
         self.a10.date_assoc = self.date1
         self.a10.users_assoc = self.karl
         db.session.add(self.a10)
-        '''
 
-        '''
+
+
         self.x = Hierarchy()
-        self.x.parent_skill_assoc = self.java1
+        self.x.parent_skill_assoc = self.prog
         self.x.child_skill_assoc = self.js1
         db.session.add(self.x)
 
         self.x1 = Hierarchy()
-        self.x1.parent_skill_assoc = self.python1
-        self.x1.child_skill_assoc = self.js1
+        self.x1.parent_skill_assoc = self.prog
+        self.x1.child_skill_assoc = self.java1
         db.session.commit()
-        '''
+
     def tearDown(self):
         pass
 
@@ -175,7 +147,7 @@ class testDatabaseController(unittest.TestCase):
 
     def test_add_milestone(self):
         database_controller.add_milestone("Karl-Kalagin", "Programming/Java", "2019-01-01", "testmiltestone", 5)
-        skill_id = Skill.query.filter_by(path=)
+        #skill_id = Skill.query.filter_by(path=)
         association_exists = MilestoneAssociation.query.filter(MilestoneAssociation.milestone_skill_id == self.java1.id,
                                                                MilestoneAssociation.milestone_users_id == self.karl.id)
         self.assertIsNotNone(association_exists)
