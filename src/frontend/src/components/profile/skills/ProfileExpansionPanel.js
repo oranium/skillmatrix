@@ -78,6 +78,7 @@ class ControlledExpansionPanels extends React.Component {
     }
   }
 
+  //render one displayed ExpansionPanel for one skill
   render() {
     const { classes, skill, summary } = this.props;
     const { skillname, level, skillpath } = skill;

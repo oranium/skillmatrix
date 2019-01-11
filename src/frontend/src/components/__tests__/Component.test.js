@@ -3,7 +3,6 @@ import { shallow } from 'enzyme';
 import LoginForm from '../login/LoginForm';
 import Header from '../header/Header';
 import App from '../App';
-import ControlledExpansionPanels from '../common/ControlledExpansionPanels';
 import {
   SkillNameInput,
   DateInput,
@@ -53,13 +52,6 @@ describe('test components from InputFields', () => {
   });
   it('render SearchInput from InputFields', () => {
     const wrapper = shallow(<SearchInput />);
-    expect(wrapper).toMatchSnapshot();
-  });
-});
-
-describe('test ExpensionPanels right', () => {
-  it('render ControlledExpansionPanels component', () => {
-    const wrapper = shallow(<ControlledExpansionPanels />);
     expect(wrapper).toMatchSnapshot();
   });
 });

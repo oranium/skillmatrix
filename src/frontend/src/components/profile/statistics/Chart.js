@@ -7,6 +7,7 @@ const Chart = (props) => {
     skill, witdh, height, display, enabledZoom, milestones,
   } = props;
 
+  //map date and level to (x,y) coordinates for rendering the chart
   const datastructure = Object.keys(milestones).map(idx => ({
     x: milestones[idx].date,
     y: milestones[idx].level,
@@ -27,7 +28,7 @@ const Chart = (props) => {
       },
     ],
   };
-
+  //return line chart
   return (
     <div className="Chart">
       <Line

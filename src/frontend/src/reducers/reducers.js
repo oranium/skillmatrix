@@ -68,6 +68,18 @@ const defaultSearch = {
   error: false,
 };
 
+const defaultNewSkillToDBDialog = {
+  skillname: '',
+  guideline: {
+    1: 'Insufficient',
+    2: 'Sufficient/Below Average',
+    3: 'Satisfactory / Average',
+    4: 'Good',
+    5: 'Excellent',
+  },
+  confirmDialogOpen: false,
+};
+
 Object.freeze(defaultSearch);
 
 const defaultProfilePageState = {
@@ -255,6 +267,23 @@ export const loading = (state = false, action) => {
       return action.open;
     case 'RESETSTATE':
       return false;
+    default:
+      return state;
+  }
+};
+
+export const newSkillToDBDialog = (state = defaultNewSkillToDBDialog, action) => {
+  switch (action.type) {
+    case 'CHANGEGUIDELINE':
+      return { ...state, guideline: { ...state.guideline, [action.level]: action.value } };
+    case 'SETSKILLNAME':
+      return { ...state, skillname: action.skillname };
+    case 'TOGGLECONFIRMDIALOG':
+      return { ...state, confirmDialogOpen: action.open };
+    case 'RESETFORM':
+      return defaultNewSkillToDBDialog;
+    case 'RESETSTATE':
+      return defaultNewSkillToDBDialog;
     default:
       return state;
   }

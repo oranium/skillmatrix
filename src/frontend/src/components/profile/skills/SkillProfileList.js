@@ -19,6 +19,8 @@ const styles = theme => ({
   },
 });
 
+//return sorted ExpansioPanels as UI Component by traversing a skill tree recurive
+//ExpansionPanel Programming => ExpansionPanel Python => ExpansionPanel Flask for Programming/Python/Flask
 function sortDatastructureRecursive(subcategories, props) {
   if (subcategories === undefined) return <div />;
   // console.log(subcategories);
@@ -44,6 +46,7 @@ class SkillProfileList extends React.Component {
       expanded: expanded ? panel : false,
     });
   };
+  //render all skills of a user
   render() {
     const { categories, classes } = this.props;
     const { expanded } = this.state;

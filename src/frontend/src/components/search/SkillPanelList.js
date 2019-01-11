@@ -22,10 +22,14 @@ const styles = theme => ({
 
 function ControlledExpansionPanels(props) {
   const { classes, results, heading } = props;
-
-  const panels = results.map((user, i) => (
-    <SkillPanel key={user.username} id={i} username={user.username} skills={user.skills} />
-  ));
+  let panels;
+  if (results.length === 0) {
+    panels = 'No Users found.';
+  } else {
+    panels = results.map((user, i) => (
+      <SkillPanel key={user.username} id={i} username={user.username} skills={user.skills} />
+    ));
+  }
 
   return (
     <div className={classes.root}>

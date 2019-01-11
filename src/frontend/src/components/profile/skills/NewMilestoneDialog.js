@@ -26,11 +26,13 @@ import { updateOwnProfile } from 'rest/handleCommonRequests';
 import checkEmptyInputs from 'functions/checkEmptyInputs';
 
 export default class FormDialog extends React.Component {
+  //handles formstate and dialog state
   handleClose = () => {
     store.dispatch(resetForm);
     store.dispatch(closeProfileDialog);
   };
 
+  //gets all Skill by traversing the passed skill tree recursive
   getAllSkillsRecursive(skill, allSkills, aktPath) {
     allSkills.push(aktPath);
     skill.subcategories.forEach(subskill => {
@@ -38,7 +40,8 @@ export default class FormDialog extends React.Component {
     });
     return allSkills;
   }
-
+  //gets the actual level of a passes skill by recursivly traversing the skill tree
+  //submits if the skillpath equals the passed skills path
   getaktLevelRecursive(skill, aktPath, path, level) {
     if (aktPath === path) {
       level = skill.level;
@@ -59,6 +62,7 @@ export default class FormDialog extends React.Component {
     return level;
   }
 
+  //submits the values of the form as new milestone Object to the backend
   async handleSubmit(milestone) {
     const inputFieldIDs = {
       datum: 'datefield',
@@ -86,7 +90,7 @@ export default class FormDialog extends React.Component {
 
     var aktLevel = 0;
 
-    //holt das aktuelle Level des im Select ausgewählten Skill aus dem State
+    //gets the actual level of a selected skill by recursivly traversing the skill tree
     Object.keys(currentProfile.skills).forEach(index => {
       if (
         this.getaktLevelRecursive(
@@ -114,6 +118,11 @@ export default class FormDialog extends React.Component {
     };
 
     var allSkillsOfUser = [];
+    //get all skills of the actual user by recursivly travsersing the
+    //skill tree /skill => subcategories
+    //and always pass the name + "/" to the next depth of the tree
+    //this generates the skillpath name => Programming/Python/Flask
+
     Object.keys(currentProfile.skills).forEach(index => {
       Object.keys(currentProfile.skills[index].subcategories).forEach(subskill => {
         if (allSkillsOfUser.length === 0) {
@@ -136,12 +145,15 @@ export default class FormDialog extends React.Component {
           );
       });
     });
+
+    //get guidelines from the  actual selected skill
     var guidelines;
     Object.keys(state.allSkills).forEach(key => {
       if (singleselect.value === key) {
         guidelines = state.allSkills[key];
       }
     });
+
     return (
       <div>
         <Dialog

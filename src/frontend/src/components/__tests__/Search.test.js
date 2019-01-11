@@ -2,6 +2,8 @@ import SearchController from 'components/search/SearchController';
 
 const Search = new SearchController();
 
+Search.query = { 'Programming/Python/NumPy': 1, 'Programming/Java': 1 };
+
 const milestones = [
   {
     date: '2015-05-01',
@@ -75,11 +77,8 @@ const exProfile2 = {
 };
 
 const exSearchResult = {
-  query: { NumPy: 1, Java: 1 },
-  results: {
-    has_all: [exProfile1],
-    has_some: [exProfile2],
-  },
+  has_all: [exProfile1],
+  has_some: [exProfile2],
 };
 
 const exProzessedResults = {
@@ -88,7 +87,10 @@ const exProzessedResults = {
       username: 'testuser1',
       skills: [
         {
-          skillname: 'NumPy', skillpath: 'Programming/Python/NumPy', level: 4, milestones,
+          skillname: 'NumPy',
+          skillpath: 'Programming/Python/NumPy',
+          level: 4,
+          milestones,
         },
         {
           skillname: 'Java',
@@ -114,7 +116,7 @@ const exProzessedResults = {
   ],
 };
 describe('search tests', () => {
-  it('rest response should be prozessed correctly', () => {
+  it('rest response form search should be prozessed correctly', () => {
     const actResult = Search.storeSearchResults(exSearchResult);
     expect(actResult).toEqual(exProzessedResults);
   });

@@ -84,8 +84,8 @@ class ButtonAppBar extends Component {
               className={classes.menuButton}
               onClick={openDrawer}
               color="inherit"
-              aria-label="own profile"
-              title="show own profile"
+              aria-label="menu"
+              title="show mene"
             >
               <MenuIcon />
             </IconButton>
