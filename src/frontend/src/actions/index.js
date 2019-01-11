@@ -12,6 +12,11 @@ export const setInputError = (id, error) => ({
   error,
 });
 
+export const setVariousInputErrors = ids => ({
+  type: 'SETVARIOUSINPUTERRORS',
+  ids,
+});
+
 export const switchPage = page => ({
   type: 'SWITCHPAGE',
   page,

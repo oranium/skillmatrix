@@ -18,6 +18,8 @@ const styles = {
   },
 };
 
+const showIsEmptyError = (value, error) => (value === '' || value == null) && error;
+
 export const SkillNameInput = withStyles(styles)((props) => {
   const { classes } = props;
   const id = 'textfield';
@@ -99,7 +101,8 @@ export const DateInput = withStyles(styles)((props) => {
 });
 
 export const TextArea = withStyles(styles)((props) => {
-  const { classes } = props;
+  const { classes, data } = props;
+  const { name, value, error } = data;
   const id = 'textarea';
 
   return (
@@ -107,10 +110,10 @@ export const TextArea = withStyles(styles)((props) => {
       required
       multiline
       rows="4"
-      label={props.data.name}
-      value={props.data.value}
-      className={`${classes.textField} ${props.data.name}`}
-      error={props.data.error}
+      label={name}
+      value={value}
+      className={`${classes.textField} ${name}`}
+      error={showIsEmptyError(value, error)}
       margin="normal"
       variant="outlined"
       onChange={evt => props.onChange(id, evt.target.value)}
@@ -119,28 +122,30 @@ export const TextArea = withStyles(styles)((props) => {
 });
 
 export const LevelPicker = withStyles(styles)((props) => {
-  const { classes } = props;
+  const { classes, guidelines, data } = props;
   const id = 'levelfield';
   const numbers = ['1', '2', '3', '4', '5'];
-  let className = '';
-  var guidelines = {1: "", 2: "", 3: "", 4: "", 5: ""};
-  if(props.guidelines !== undefined){  
-    guidelines = props.guidelines;
-  }
-  if (props.data.error) {
-    className = classes.error;
+  let allGuidelines = {
+    1: '',
+    2: '',
+    3: '',
+    4: '',
+    5: '',
+  };
+  if (props.guidelines !== undefined) {
+    allGuidelines = guidelines;
   }
 
-  const radioBtns = numbers.map((value, i) => (
+  const radioBtns = numbers.map(value => (
     <Radio
-      key={i}
-      checked={props.data.value === value}
+      key={value}
+      checked={data.value === value}
       onChange={evt => props.onChange(id, evt.target.value)}
       value={value}
       aria-label={`Level ${value}`}
-      title={guidelines[value]}
-      className={className}
+      title={allGuidelines[value]}
+      className={showIsEmptyError(data.value, data.error) ? classes.error : ''}
     />
   ));
-  return <div className={`${classes.textField} ${classes.levelPicker}`}>{radioBtns}</div>;
+  return <div className={classes.textField}>{radioBtns}</div>;
 });

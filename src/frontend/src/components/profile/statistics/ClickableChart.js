@@ -51,7 +51,7 @@ export class ClickableChart extends React.Component {
     this.setState({ open: false });
   };
 
-  async handleDeleteMilestone(level, date) {
+  async handleDeleteMilestone(milestoneData) {
     const { skillpath } = this.props;
 
     const confirmation = window.confirm(
@@ -62,8 +62,7 @@ export class ClickableChart extends React.Component {
     if (confirmation) {
       const milestone = {
         skillpath,
-        level,
-        date,
+        ...milestoneData,
       };
 
       const Rest = new RestCom(RestPoints.deleteMilestone, milestone);
@@ -83,10 +82,8 @@ export class ClickableChart extends React.Component {
     const milestoneList = Object.keys(milestones).map(key => (
       <MilestoneList
         key={key}
-        date={milestones[key].date}
-        level={milestones[key].level}
-        comment={milestones[key].comment}
-        deleteMilestone={(level, date) => this.handleDeleteMilestone(level, date)}
+        milestone={milestones[key]}
+        deleteMilestone={milestoneData => this.handleDeleteMilestone(milestoneData)}
       />
     ));
     return (
