@@ -34,7 +34,7 @@ class MilestoneAssociation(db.Model):
     milestone_skill_id = db.Column(db.Integer, db.ForeignKey('skill.id'))
     milestone_date_id = db.Column(db.Integer, db.ForeignKey('date.id'))
     comment = db.Column(db.String(150))
-    level = db.Column(db.Integer, nullable=True)
+    level = db.Column(db.Integer, nullable=False)
     users_milestone_assoc = db.relationship("Users", back_populates="users_milestone_association")
     skill_milestone_assoc = db.relationship("Skill", back_populates="skill_milestone_association")
     date_milestone_assoc = db.relationship("Date", back_populates="date_milestone_association")
