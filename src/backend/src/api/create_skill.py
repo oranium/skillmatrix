@@ -28,6 +28,8 @@ class CreateSkill(Resource):
             return Response(status=504)
         except PermissionError:
             return Response(status=401)
+        except AttributeError:
+            return Response(status=422)
         except Exception as e:
             print(e, file=sys.stderr)
             return Response(status=520)

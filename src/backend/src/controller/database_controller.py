@@ -264,7 +264,11 @@ class DatabaseController:
                 skillname str: Name of the skill to add.
                 skillpath str: Full path of the skill to add.
                 category str: Category that the skill belongs to.
+            Raises:
+                AttributeError if the skill (identified by skillpath) already exists in the database.
         """
+        if Skill.query.filter_by(skillpath=skillpath).first():
+            raise AttributeError
         new_skill = Skill(name=skillname, path=skillpath)
         if not category:
             new_skill.root = True
