@@ -1,7 +1,42 @@
 = SWT Group 01
 
+== Running the Docker Container
+
+The docker container can easily be started using the Makefile:
+....
+$make clean build run
+....
+This deletes old containers, if they exist (clean). Then, it builds the frontend and moves it to the static directory of the app (build). (run) builds and starts the docker container(s) for backend (and database). The application can be found at `localhost/static/index`.  
+
 include::src/frontend/readme.adoc[]
 
 '''
 
 include::src/backend/readme.adoc[]
+
+
+
+
+== Login Credentials:
+
+The ldap.SWT.com\-prefix is not needed for the login input fields and is added automatically for testing and debugging modes of the application. 
+
+*Test-User: Valdemar Forsberg* +
+User: ldap.SWT.com\Valdemar-Forsberg +
+PW: @testuser1 +
+
+*Test-User: Karl Kalagin* +
+User: ldap.SWT.com\Karl-Kalagin +
+PW: @testuser2 +
+
+*Test-User: Isaac Hunt* +
+User: ldap.SWT.com\Isaac-Hunt +
+PW: @testuser3 +
+
+*Test-User: Ozoemena Somayina* +
+User: ldap.SWT.com\Ozoemena-Somayina +
+PW: @testuser4 +
+
+*Test-User: Yvonne Thompsome* +
+User: ldap.SWT.com\Yvonne-Thompsome +
+PW: @testuser5 +

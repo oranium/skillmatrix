@@ -1,4 +1,7 @@
 :imagesdir: ./models/design
+:toc:
+:toc-placement: macro
+toc::[]
 
 = Entwicklerdokumentation
 
@@ -33,7 +36,7 @@ Genauere Informationen können dem Pflichtenheft entnommen werden.
 Es wird ein Server als Host für die Anwendung benötigt. 
 
 * Software-Vorgaben +
-React, Redux, ChartJS, Material-UI , Python/Flask,LDAP3 yaml und MySQL werden genutzt. 
+Docker, React, Redux, ChartJS, Material-UI , Python/Flask,LDAP3 yaml und MySQL werden genutzt. 
 
 * Vorgaben zum Betrieb der Software +
 Server: Webserver, um Dateien an die Clienten auszuliefern. +
@@ -71,9 +74,15 @@ image:Statistics.jpg[Statistik]
 
 image:DatenbankController.jpg[DatenbankController]
 
-* Entwurfsklassendiagramm +
-
+* Entwurfsklassendiagramme +
+*Übersicht*
 image:entwurfsdiagramm.JPG[Entwurfsdiagramm]
+
+*Backend*
+image:backend_class_diag.jpg[Entwurfsdiagramm Backend]
+
+*Datenbank*
+image:datenbank.jpg[Entwurf Datenbank]
  
 == Entwurfsentscheidungen
 //* Architektur
@@ -82,6 +91,253 @@ image:entwurfsdiagramm.JPG[Entwurfsdiagramm]
 Die Daten werden in einer MySQL-Datenbank abgelegt. Ist diese abgeschaltet, ist die App nicht funktionsfähig.
 * Benutzeroberfläche +
 Die Benutzeroberfläche wird mit React und Komponenten von Material-UI erstellt.
+
+== Kommunikation über REST-APIs
+=== Fehlercodes
+* 400: Fehlerhafte Anfragen, zum Beispiel Anfrage an /setSkills für Skill, der nicht in Datenbank ist.
+* 401: User ist im Backend nicht eingeloggt - es besteht keine Verbindung zum AD
+* 409: Ressource beim Löschen nicht in Datenbank - vermutlich bereits gelöscht, z.B. doppelte Anfrage
+* 422: Skill existiert bereits in der Datenbank (Anfrage an /createSkill)
+* 504: Timeout (AD)
+* 520: anderer Fehler - Ausgabe im Fehlerstream des Servers
+
+=== /login
+* erlaubte Anfragen: POST, OPTIONS
+* Form der POST-Anfrage (json):
+....
+{
+"username": String
+"password": String
+}
+....
+* Form der Antwort (json):
+....
+{
+"user": Profile,
+}
+....
+
+*Profile hat folgende Form:*
+....
+{
+"username": String,
+"name": String,
+"skills": [Skill]
+}
+....
+*Skill hat folgende Form:*
+....
+{
+"skillname": String,
+"skillpath": String,
+"level": Integer,
+"milestones":[Milestone]
+"subcategories":[Skill],
+"root" = bool
+}
+....
+*Milestone hat folgende Form:*
+....
+{
+"date": "YYYY-MM-DD",
+"comment": String,
+"level": Integer
+}
+....
+
+=== /logout
+* erlaubte Anfragen: POST, OPTIONS
+* Form der POST-Anfrage (json): 
+....
+{
+"username": String
+}
+....
+* Keine Antwort mit json-data
+
+=== /search
+* erlaubte Anfragen: POST, OPTIONS
+* Form der POST-Anfrage (json): 
+....
+{
+"username": String,
+"query": {
+         String: Integer,
+         String: Integer,
+         ...
+         }
+}
+....
+_Anmerkung: Keys in "query" entsprechen dem vollständigen Pfad des Skills, Integers dem gewünschten Mindestlevel, der standardmäßig 1 ist._
+
+* Form der Antwort (json):
+....
+{
+"query": {
+        String: Integer,
+        String: Integer,
+        ...
+        }
+"results: {
+          "has_all": [Profile],
+          "has_some": [Profile],
+          }   
+}
+....
+_Anmerkung: Die Erklärung zu Profile ist unter dem Punkt /login zu finden_
+
+=== /getSkills
+* erlaubte Anfragen: GET, POST, OPTIONS
+
+* Form der POST-Anfrage (json):
+....
+{
+"username": String
+}
+....
+
+* Form der Antwort (POST, json):
+....
+{
+"username": String,
+"allSkills": [String]
+}
+....
+
+* Form der Antwort (GET, json):
+....
+{
+"allSkills": [String:{
+                        1:String,
+                        2:String,
+                        ...,
+                        5:String}
+                ]
+"categories":[String]
+}
+....
+_Anmerkung: Der Objektkey in allSkills ist jeweils der (Pfad-)Name des Skills. Das zugehörige Objekt sind die Guidelines für Level 1-5_
+
+=== /setSkills
+* erlaubte Anfragen: POST, OPTIONS
+* Form der POST-Anfrage (json): 
+....
+{
+"username": String,
+"skillpaths": {
+          String: Integer,
+          String: Integer,
+          ...
+          }
+}
+....
+
+* Form der Antwort (json):
+....
+{
+Profile
+}
+....
+_Anmerkung: Die Erklärung zu Profile ist unter dem Punkt /login zu finden_
+
+=== /createSkill
+* erlaubte Anfragen: POST, OPTIONS
+* Form der POST-Anfrage (json): 
+....
+{
+"username": String,
+"skillname": String,
+"skillpath" : String,
+"category": String
+}
+....
+
+* Form der Antwort (json):
+....
+{
+Profile
+}
+....
+_Anmerkung: Die Erklärung zu Profile ist unter dem Punkt /login zu finden_
+
+=== /milestone
+* erlaubte Anfragen: POST, OPTIONS
+* Form der POST-Anfrage (json): 
+....
+{
+"username": String,
+"skillpath": String,
+"level": Int,
+"date": "YYYY-MM-DD",
+"comment": String
+}
+....
+
+* Form der Antwort:
+....
+{
+Profile
+}
+....
+_Anmerkung: Die Erklärung zu Profile ist unter dem Punkt /login zu finden_
+
+=== /guideline
+* erlaubte Anfragen: POST, OPTIONS
+* Form der POST-Anfrage (json): 
+....
+{
+"username": String,
+"skillpath": String,
+"guidelines":{
+        1:String,
+        2:String,
+        ...,
+        5:String
+        }
+}
+....
+_Anmerkung: Die String-values in "guidelines" sind die jeweiligen Guidelines für zugehöriges Level._
+
+
+=== /deleteSkill
+* erlaubte Anfragen: POST, OPTIONS
+* Form der POST-Anfrage (json): 
+....
+{
+"username": String,
+"skillpath": String,
+"forAll": Boolean
+}
+....
+
+* Form der Antwort:
+....
+{
+Profile
+}
+....
+_Anmerkung: Die Erklärung zu Profile ist unter dem Punkt /login zu finden_
+
+=== /deleteMilestone
+* erlaubte Anfragen: POST, OPTIONS
+* Form der POST-Anfrage (json): 
+....
+{
+"username": String,
+"skillpath": String,
+"level": Int,
+"date": "YYYY-MM-DD",
+"comment": String
+}
+....
+
+* Form der Antwort:
+....
+{
+Profile
+}
+....
+_Anmerkung: Die Erklärung zu Profile ist unter dem Punkt /login zu finden_
 
 [appendix]
 == Glossar

@@ -10,6 +10,9 @@ To run all tests:
 $ cd src/backend/test
 $ python3 test_runner.py
 ....
+
+Environment variables must be set (see docker-compose.yml). ENV_TESTING must be "True".
+
 The _requirements.txt_ contains pylint. To run pylint on all files in `src/backend/src` and `src/backend/tests`:
 ....
 $ cd src/backend

@@ -1,0 +1,373 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test Profile Components render ProfileController component 1`] = `
+<ProfileController
+  classes={
+    Object {
+      "buttonMargin": "ProfileController-buttonMargin-14",
+      "buttons": "ProfileController-buttons-13",
+      "root": "ProfileController-root-12",
+    }
+  }
+  data={Array []}
+  skill="Javascript"
+/>
+`;
+
+exports[`test Profile Components render TabContainer component 1`] = `
+<TabContainer
+  classes={
+    Object {
+      "root": "TabContainer-root-15",
+    }
+  }
+  skill="Javascript"
+/>
+`;
+
+exports[`test Profile/skills Components render Label component 1`] = `
+<Label
+  classes={
+    Object {
+      "root": "Label-root-1",
+    }
+  }
+  value="Javascript"
+/>
+`;
+
+exports[`test Profile/skills Components render NewMilestoneDialog component 1`] = `
+<div>
+  <WithStyles(Dialog)
+    aria-labelledby="form-dialog-title"
+    onClose={[Function]}
+    open={false}
+  >
+    <WithStyles(DialogTitle)
+      id="form-dialog-title"
+    >
+      New milestone
+    </WithStyles(DialogTitle)>
+    <WithStyles(DialogContent)>
+      <WithStyles(DialogContentText)>
+        To add a new milestone please fill in all inputfields.
+      </WithStyles(DialogContentText)>
+      <WithStyles(IntegrationReactSelect)
+        allSkills={
+          Array [
+            "Programming/Python",
+            "Programming/Python/NumPy",
+            "Design/Photoshop",
+            "Sport/Aikido",
+            "Sport/Socker",
+          ]
+        }
+      />
+      <WithStyles(RadioButtonsGroup)
+        level={0}
+      />
+      <WithStyles(Component)
+        data={
+          Object {
+            "error": false,
+            "name": "Date",
+            "value": "2019-01-11",
+          }
+        }
+        onChange={[Function]}
+      />
+      <WithStyles(Component)
+        data={
+          Object {
+            "error": false,
+            "name": "Note",
+            "value": "",
+          }
+        }
+        onChange={[Function]}
+      />
+    </WithStyles(DialogContent)>
+    <WithStyles(DialogActions)>
+      <WithStyles(Button)
+        color="primary"
+        onClick={[Function]}
+      >
+        Cancel
+      </WithStyles(Button)>
+      <WithStyles(Button)
+        color="primary"
+        onClick={[Function]}
+      >
+        Submit
+      </WithStyles(Button)>
+    </WithStyles(DialogActions)>
+  </WithStyles(Dialog)>
+</div>
+`;
+
+exports[`test Profile/skills Components render NewSkillDialog component 1`] = `
+<div>
+  <WithStyles(Dialog)
+    aria-labelledby="form-dialog-title"
+    onClose={[Function]}
+  >
+    <WithStyles(DialogTitle)
+      id="form-dialog-title"
+    >
+      New skill
+    </WithStyles(DialogTitle)>
+    <WithStyles(DialogContent)>
+      <WithStyles(DialogContentText)>
+        To add a new Skill please fill in all inputfields.
+      </WithStyles(DialogContentText)>
+      <WithStyles(IntegrationReactSelect)
+        allSkills={
+          Array [
+            "Programming/Python/SQLAlchemy",
+            "Programming/Java",
+            "Design/Skillname",
+            "Sport/Kung Fu",
+          ]
+        }
+        placeholder="Select a skill to add"
+      />
+      <WithStyles(Component)
+        data={
+          Object {
+            "error": false,
+            "name": "Level",
+            "value": "",
+          }
+        }
+        onChange={[Function]}
+        required={true}
+      />
+    </WithStyles(DialogContent)>
+    <WithStyles(DialogActions)>
+      <WithStyles(Button)
+        color="primary"
+        onClick={[Function]}
+      >
+        Cancel
+      </WithStyles(Button)>
+      <WithStyles(Button)
+        color="primary"
+        onClick={[Function]}
+      >
+        Submit
+      </WithStyles(Button)>
+    </WithStyles(DialogActions)>
+  </WithStyles(Dialog)>
+</div>
+`;
+
+exports[`test Profile/skills Components render ProfileExpensionPanel component 1`] = `
+<ControlledExpansionPanels
+  classes={
+    Object {
+      "headingButton": "ControlledExpansionPanels-headingButton-5",
+      "left": "ControlledExpansionPanels-left-3",
+      "noFlex": "ControlledExpansionPanels-noFlex-7",
+      "removeButton": "ControlledExpansionPanels-removeButton-6",
+      "right": "ControlledExpansionPanels-right-4",
+    }
+  }
+  isEditable={true}
+  skill="Javascript"
+/>
+`;
+
+exports[`test Profile/skills Components render ProfileExpensionPanel component 2`] = `
+<ControlledExpansionPanels
+  classes={
+    Object {
+      "headingButton": "ControlledExpansionPanels-headingButton-5",
+      "left": "ControlledExpansionPanels-left-3",
+      "noFlex": "ControlledExpansionPanels-noFlex-7",
+      "removeButton": "ControlledExpansionPanels-removeButton-6",
+      "right": "ControlledExpansionPanels-right-4",
+    }
+  }
+  isEditable={false}
+  skill="Javascript"
+/>
+`;
+
+exports[`test Profile/skills Components render SkillProfileList component 1`] = `
+<SkillProfileList
+  categories={
+    Array [
+      Object {
+        "skillname": "Java",
+      },
+      Object {
+        "skillname": "Python",
+      },
+      Object {
+        "skillname": "Haskell",
+      },
+    ]
+  }
+  classes={
+    Object {
+      "panels": "SkillProfileList-panels-2",
+    }
+  }
+  isEditable={true}
+/>
+`;
+
+exports[`test Profile/skills Components render SkillProfileList component 2`] = `
+<SkillProfileList
+  categories={
+    Array [
+      Object {
+        "skillname": "Java",
+      },
+      Object {
+        "skillname": "Python",
+      },
+      Object {
+        "skillname": "Haskell",
+      },
+    ]
+  }
+  classes={
+    Object {
+      "panels": "SkillProfileList-panels-2",
+    }
+  }
+  isEditable={false}
+/>
+`;
+
+exports[`test Profile/stats Components render Chart component 1`] = `
+<div
+  className="Chart"
+>
+  <Line
+    data={
+      Object {
+        "datasets": Array [
+          Object {
+            "backgroundColor": "rgba(75,192,192,1)",
+            "borderColor": "rgba(75,192,192,1)",
+            "data": Array [
+              Object {
+                "x": "2011-09-11",
+                "y": 0,
+              },
+              Object {
+                "x": "2017-01-20",
+                "y": 1,
+              },
+              Object {
+                "x": "2018-02-06",
+                "y": 2,
+              },
+              Object {
+                "x": "2021-11-23",
+                "y": 3,
+              },
+            ],
+            "fill": false,
+            "label": "C++",
+            "pointBorderColor": "rgba(75,192,192,1)",
+            "pointBorderWidth": "rgba(75,192,192,1)",
+            "pointHoverBackgroundColor": "rgba(75,192,192,1)",
+            "pointHoverBorderColor": "rgba(75,192,192,1)",
+          },
+        ],
+      }
+    }
+    options={
+      Object {
+        "maintainAspectRatio": false,
+        "pan": Object {
+          "enabled": undefined,
+          "mode": "x",
+        },
+        "scales": Object {
+          "xAxes": Array [
+            Object {
+              "position": "bottom",
+              "ticks": Object {
+                "display": undefined,
+              },
+              "time": Object {
+                "displayFormats": Object {
+                  "month": "MM/YY",
+                },
+                "tooltipFormat": "ll",
+                "unit": "month",
+              },
+              "type": "time",
+            },
+          ],
+          "yAxes": Array [
+            Object {
+              "ticks": Object {
+                "beginAtZero": true,
+                "display": undefined,
+                "max": 7,
+                "stepValue": 1,
+                "steps": 0.5,
+              },
+            },
+          ],
+        },
+        "startAtZero": true,
+        "zoom": Object {
+          "enabled": undefined,
+          "mode": "xy",
+          "rangeMax": Object {
+            "y": 30,
+          },
+          "rangeMin": Object {
+            "y": -10,
+          },
+        },
+      }
+    }
+  />
+</div>
+`;
+
+exports[`test Profile/stats Components render SimpleCard component 1`] = `
+<ClickableChart
+  classes={
+    Object {
+      "appBar": "ClickableChart-appBar-9",
+      "container": "ClickableChart-container-11",
+      "flex": "ClickableChart-flex-10",
+      "root": "ClickableChart-root-8",
+    }
+  }
+  milestones={
+    Array [
+      Object {
+        "comment": "init",
+        "date": "2011-09-11",
+        "level": 0,
+      },
+      Object {
+        "comment": "C++ Workshop",
+        "date": "2017-01-20",
+        "level": 1,
+      },
+      Object {
+        "comment": "C++ Lehrgang",
+        "date": "2018-02-06",
+        "level": 2,
+      },
+      Object {
+        "comment": "C++ 3 jähriges Projekt fertig gestellt, mit 100000 Zeilen c++ Code",
+        "date": "2021-11-23",
+        "level": 3,
+      },
+    ]
+  }
+  skillname="C++"
+  skillpath="C++"
+/>
+`;
