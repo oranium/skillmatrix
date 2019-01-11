@@ -1,5 +1,5 @@
-import sys
 import json
+import traceback
 from flask import Response
 from flask_restful import Resource, reqparse
 from controller.controller import controller
@@ -18,7 +18,7 @@ class Logout(Resource):
         except PermissionError:
             return Response(status=401)
         except Exception as e:
-            print(e, file=sys.stderr)
+            traceback.print_exc()
             return Response(status=520)
 
     def options(self):

@@ -7,9 +7,7 @@ import sys
 import re
 # if info about the server is required:
 # get info about server
-# print(mock_server.info)
 # get info about connection
-# print(mock_connection)
 
 
 class AuthenticationController:
@@ -29,7 +27,6 @@ class AuthenticationController:
             self.server = Server(server_url, port=self.port, use_ssl=True, get_info=ALL)
         else:
             self.server = Server(server_url, port=self.port, get_info=ALL)
-        print(self.server)
         self.login_prefix = prefix
         self.base_dn = base_dn
         self.authentication = authentication
@@ -41,11 +38,9 @@ class AuthenticationController:
         Returns JSON with user object on successful login,
         AttributeError for wrong credentials, TimeoutError if the AD doesn't respond.
         """
-        print(username,file=sys.stderr)
         try:
             if authentication_controller.authentication == "NTLM":
                 login_name = authentication_controller.login_prefix+username
-                print(login_name, file=sys.stderr)
                 new_connection = Connection(authentication_controller.server,
                                             login_name,
                                             password,
@@ -54,32 +49,24 @@ class AuthenticationController:
 
             else:
                 login_name = 'uid='+username+','+authentication_controller.base_dn
-                print(login_name)
                 new_connection = Connection(authentication_controller.server,
                                 login_name,
                                 password)
 
-            print("created connection!", file=sys.stderr)
             # wrong credentials
             if new_connection is None:
-                print("wrong cred", file=sys.stderr)
                 raise AttributeError
-            print("binding connection", file=sys.stderr)
             new_connection.bind()
-            print("adding connection", file=sys.stderr)
 
             # successful login
             authentication_controller.connections[username] = new_connection
             return authentication_controller.get_name(username)
         # catch empty input
         except (LDAPUnknownAuthenticationMethodError, LDAPInvalidCredentialsResult) as e:
-            print("empty", file=sys.stderr)
-            print(e.__name__, file=sys.stderr)
 
             raise AttributeError
         # catch
         except LDAPStartTLSError:
-            print("TLS failed")
             raise Exception
         # catch timeout while calling AD
         except LDAPSocketOpenError:
@@ -120,10 +107,8 @@ class AuthenticationController:
             raise TimeoutError
             return username
         except IndexError:
-            print("The response of connection-search was empty")
             return username
         except Exception:
-            print("Unexpected error: ", sys.exc_info()[0])
             return username
 
 
