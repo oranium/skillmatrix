@@ -13,7 +13,6 @@ class RestCom {
   constructor(restPoint, data = {}) {
     // serveradress + rest end point
     this.restApi = APISERVER + restPoint;
-    console.log(this.restApi);
 
     const requestData = data;
 
@@ -27,8 +26,6 @@ class RestCom {
     }
 
     this.data = JSON.stringify(requestData);
-
-    console.log(this.data);
 
     this.headers = {
       headers: {
