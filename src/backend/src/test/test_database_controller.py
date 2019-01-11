@@ -16,7 +16,6 @@ def setUpModule():
 class testDatabaseController(unittest.TestCase):
 
     def setUp(self):
-        print(Users.query.all(), file=sys.stderr)
         database_controller.create_user('Valdemar-Forsberg', 'Valdemar Forsberg')
         database_controller.create_user('Karl-Kalagin', "Karl Kalagin")
         database_controller.create_user('Isaac-Hunt', "Isaac Hunt")
@@ -68,7 +67,6 @@ class testDatabaseController(unittest.TestCase):
         self.a1.users_assoc = self.isaac
         db.session.add(self.a1)
         '''
-        database_controller.set_skills('Karl-Kalagin', {'Programming/Python': 3})
         '''
         self.a2 = Association(level=3)
         self.a2.skill_assoc = self.python1
@@ -155,7 +153,9 @@ class testDatabaseController(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def tearDownClass():
+    @classmethod
+    def tearDownClass(cls):
+        db.session.commit()
         setuptestdb.dropdb()
 
     def test_search_success(self):
