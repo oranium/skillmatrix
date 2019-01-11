@@ -126,6 +126,7 @@ class ControlledExpansionPanels extends React.Component {
                 className={classes.radioGroup}
                 level={level}
                 skill={skillpath}
+                wholeSkill={skill}
                 levelChange={this.props.levelChange}
                 disabled={this.props.isEditable}
                 guidelines={guidelines}

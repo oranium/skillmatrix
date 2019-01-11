@@ -63,6 +63,7 @@ class ProfileController extends Component {
         }
       });
     });
+
     // send skill
     let Rest = new RestCom(RestPoints.setSkills, latestChanges);
 
@@ -79,6 +80,7 @@ class ProfileController extends Component {
   }
 
   handleLevelChange = (skill, level) => {
+    console.log(skill)
     this.localUpdate.push([{ skill, level }]);
     this.setState({ changes: true });
   };
@@ -96,6 +98,7 @@ class ProfileController extends Component {
   }
 
   handleChange = (evt, value) => {
+    this.setState({ changes: false });
     store.dispatch(changeView(value));
   };
 
@@ -171,7 +174,11 @@ class ProfileController extends Component {
           {noSkills && (
             <div>
               <h2>Looks empty :( Go get some skills!</h2>
-              <img alt="tumbleweed rolling through desert - empty profile" height="400" src="https://media.giphy.com/media/1Zbeweu52ZaQE/giphy.gif" />
+              <img
+                alt="tumbleweed rolling through desert - empty profile"
+                height="400"
+                src="https://media.giphy.com/media/1Zbeweu52ZaQE/giphy.gif"
+              />
             </div>
           )}
           {view === 0 && (
