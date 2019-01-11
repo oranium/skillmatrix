@@ -22,9 +22,8 @@ const styles = theme => ({
 });
 
 const MilestoneList = (props) => {
-  const classes = { props };
   const {
-    level, comment, date, deleteMilestone,
+    classes, level, comment, date, deleteMilestone,
   } = props;
 
   return (
