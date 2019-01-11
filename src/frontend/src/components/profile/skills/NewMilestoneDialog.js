@@ -16,11 +16,14 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 // redux
 import store from 'Store';
-import { closeProfileDialog, updateInput, resetForm, setVariousInputErrors } from 'actions';
+import { closeProfileDialog, updateInput, resetForm } from 'actions';
 
 // Rest
 import RestPoints from 'rest/Init';
 import { updateOwnProfile } from 'rest/handleCommonRequests';
+
+// functions
+import checkEmptyInputs from 'components/common/checkEmptyInputs';
 
 export default class FormDialog extends React.Component {
   handleClose = () => {
@@ -56,26 +59,14 @@ export default class FormDialog extends React.Component {
     return level;
   }
 
-  getEmptyInputs(milestone) {
-    const inputFieldsID = {
+  async handleSubmit(milestone) {
+    const inputFieldIDs = {
       datum: 'datefield',
       comment: 'textarea',
       skillpath: 'singleselect',
     };
-    const inputErrors = [];
-    Object.keys(milestone).forEach(key => {
-      if (milestone[key] === '' && inputFieldsID.hasOwnProperty(key)) {
-        inputErrors.push(inputFieldsID[key]);
-      }
-    });
-    return inputErrors.length === 0 ? false : inputErrors;
-  }
 
-  async handleSubmit(milestone) {
-    const emptyInputs = this.getEmptyInputs(milestone);
-    if (emptyInputs) {
-      store.dispatch(setVariousInputErrors(emptyInputs));
-    } else {
+    if (!checkEmptyInputs(milestone, inputFieldIDs)) {
       await updateOwnProfile(RestPoints.milestone, milestone);
       this.handleClose();
     }

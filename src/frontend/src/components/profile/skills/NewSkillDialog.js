@@ -21,15 +21,31 @@ import { closeProfileDialog, updateInput, resetForm } from 'actions';
 import RestPoints from 'rest/Init';
 import { updateOwnProfile } from 'rest/handleCommonRequests';
 
+// functions
+import checkEmptyInputs from 'components/common/checkEmptyInputs';
+
 export default class FormDialog extends Component {
   handleClose = () => {
     store.dispatch(resetForm);
     store.dispatch(closeProfileDialog);
   };
 
-  async handleSubmit(skill) {
-    await updateOwnProfile(RestPoints.setSkills, skill);
-    this.handleClose();
+  async handleSubmit(skillpath, level) {
+    const skill = {
+      skillpaths: {
+        [skillpath]: level,
+      },
+    };
+    const inputs = { skillpath, level };
+    const inputFieldIDs = {
+      level: 'levelfield',
+      skillpath: 'singleselect',
+    };
+
+    if (!checkEmptyInputs(inputs, inputFieldIDs)) {
+      await updateOwnProfile(RestPoints.setSkills, skill);
+      this.handleClose();
+    }
   }
   getAllSkillsRecursive(skill, allSkills, aktPath) {
     allSkills.push(aktPath);
@@ -57,12 +73,11 @@ export default class FormDialog extends Component {
 
     const { allSkills } = state;
     var { levelfield, singleselect } = state.formState;
-    var profile = this.getProfile(state);
 
-    const aktSkill = {
-      username: profile.username,
-      skills: { [singleselect.value]: levelfield.value },
-    };
+    const skillpath = singleselect.value;
+    const level = levelfield.value;
+
+    var profile = this.getProfile(state);
 
     var allSkillsOfUser = [];
     Object.keys(profile.skills).forEach(index => {
@@ -96,17 +111,13 @@ export default class FormDialog extends Component {
     });
     var guidelines;
     Object.keys(allSkills).forEach(key => {
-      if (singleselect.value === key) {
+      if (skillpath === key) {
         guidelines = allSkills[key];
       }
     });
     return (
       <div>
-        <Dialog
-          open={open}
-          onClose={this.handleClose}
-          aria-labelledby="form-dialog-title"
-        >
+        <Dialog open={open} onClose={this.handleClose} aria-labelledby="form-dialog-title">
           <DialogTitle id="form-dialog-title">New skill</DialogTitle>
           <DialogContent>
             <DialogContentText>
@@ -128,7 +139,7 @@ export default class FormDialog extends Component {
             <Button onClick={this.handleClose} color="primary">
               Cancel
             </Button>
-            <Button onClick={() => this.handleSubmit(aktSkill)} color="primary">
+            <Button onClick={() => this.handleSubmit(skillpath, level)} color="primary">
               Submit
             </Button>
           </DialogActions>
