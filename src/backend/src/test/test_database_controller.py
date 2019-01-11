@@ -179,22 +179,14 @@ class testDatabaseController(unittest.TestCase):
         self.assertIsNotNone(hierarchy_exists)
         Skill.query.filter_by(id=Skill.query.filter_by(name="Flask").first().id).delete()
 
-    def test_get_all_skill_names(self):
-        result = database_controller.get_paths_with_guidelines()
-        expected_result = ["Java", "Python", "Programming", "JavaScript"]
-        self.assertEquals(result, expected_result)
+    def test_get_path_with_guidlines(self):
+        pass
 
-    def test_get_skill_id(self):
-        result = database_controller.get_skill("Java").id
-        self.assertEqual(result, 1)
 
     def test_get_skill(self):
         result = database_controller.get_skill("Python")
         self.assertEqual(result.name, "Python")
 
-    def test_get_user_id(self):
-        result = database_controller.get_user_id("Valdemar-Forsberg")
-        self.assertEqual(result, 1)
 
     def test_get_user(self):
         result = database_controller.get_user_id("Valdemar-Forsberg")
@@ -234,6 +226,20 @@ class testDatabaseController(unittest.TestCase):
         result = database_controller.get_skills("Lisza-Zulu")
         self.assertIsNone(result)
 
+    def test_get_guideline_dict(self):
+        pass
+
+    def test_get_guideline_dict(self):
+        pass
+
+    def test_change_guidlelines(self):
+        pass
+
+    def test_get_guideline_dict(self):
+        pass
+
+
+
     def test_create_user(self):
         database_controller.create_user("Lisza-Zulu", "Lisza Zulu")
         self.assertEqual(Users.query.filter_by(name="Lisza Zulu").first().name(), "Lisza Zulu")
@@ -268,3 +274,14 @@ class testDatabaseController(unittest.TestCase):
         result = database_controller.build_subcategories('Valdemar-Forsberg', "Java")
         expected_result = SkillModel("Java", 3, [SkillModel('JavaScript', 2)])
         self.assertEquals(result, expected_result)
+
+    def test_remove_skill_from_database(self):
+        pass
+
+    def test_remove_skill(selfself):
+        pass
+
+    def test_remove_milestone(self):
+        pass
+
+
