@@ -1,53 +1,69 @@
+import json
+
 from controller.controller import controller
 import unittest
 from unittest.mock import patch
 
 
 class TestController(unittest.TestCase):
-    """unittests for database controller"""
+    """Unittests for Controller"""
 
-    def test_login_success(self):
-        pass
+    def setUp(self):
+        self.EMPTY_PROFILE = dict(user=dict(username="User-Name", name="User Name", skills=[]))
 
-    def test_login_new_user(self):
-        pass
+    @patch("controller.database_controller.database_controller.get_skills")
+    @patch("controller.database_controller.database_controller.create_user")
+    @patch("controller.database_controller.database_controller.exists")
+    @patch("controller.authentication_controller.authentication_controller.login")
+    def test_login_new_user(self, mock_login, mock_exists, mock_create, mock_get_skills):
+        mock_login.return_value = "User Name"
+        mock_exists.return_value = False
+        mock_get_skills.return_value = []
+        new_login_return = controller.login("User-Name", "password")
+        mock_create.assert_called_with("User-Name", "User Name")
+        self.assertEquals(self.EMPTY_PROFILE, new_login_return)
 
-    def test_logout(self):
-        pass
+    @patch("controller.controller.controller.is_connected")
+    def test_logout_not_logged_in(self, mock_connected):
+        mock_connected.return_value = False
+        self.assertRaises(PermissionError, controller.logout, "username")
 
-    def test_logout_no_permission(self):
-        pass
+    @patch("controller.controller.controller.is_connected")
+    def test_get_paths_with_guidelines_w_username_not_logged_in(self, mock_connected):
+        mock_connected.return_value = False
+        self.assertRaises(PermissionError, controller.get_paths_with_guidelines, "username")
 
-    def test_search_success(self):
-        search_result = dict(skill="Java", result=dict(Aron=1, Willy=5))
-        with patch.object(controller, "search") as mock_search:
-            mock_search.return_value = search_result
-            self.assertEqual(search_result, controller.search(self, "Java"))
+    @patch("controller.controller.controller.is_connected")
+    def test_create_skill_not_logged_in(self, mock_connected):
+        mock_connected.return_value = False
+        self.assertRaises(PermissionError, controller.create_skill, "username", "skillname", "skillpath", "category")
 
-    def test_search_no_results(self):
-        with patch.object(controller, "search") as mock_search:
-            mock_search.return_value = None
-            self.assertRaises(ValueError, controller.search, self, "bad request that yields no results")
+    @patch("controller.controller.controller.is_connected")
+    def test_search_not_logged_in(self, mock_connected):
+        mock_connected.return_value = False
+        self.assertRaises(PermissionError, controller.search, "username", {"Programming/Python": 1})
 
-    def test_search_no_permission(self):
-        pass
+    @patch("controller.controller.controller.is_connected")
+    def test_set_skills_not_logged_in(self, mock_connected):
+        mock_connected.return_value = False
+        self.assertRaises(PermissionError, controller.set_skills, "username", {"Programming/Python": 1})
 
-    def test_set_skill(self):
-        pass
+    @patch("controller.controller.controller.is_connected")
+    def test_add_milestone_not_logged_in(self, mock_connected):
+        mock_connected.return_value = False
+        self.assertRaises(PermissionError, controller.add_milestone, "username", "skillpath", "date", "com", "level")
 
-    def test_set_skill_no_permission(self):
-        pass
+    @patch("controller.controller.controller.is_connected")
+    def test_add_guidelines_not_logged_in(self, mock_connected):
+        mock_connected.return_value = False
+        self.assertRaises(PermissionError, controller.add_guidelines, "user", "skillpath", ["1", "2", "3", "4", "5"])
 
-    def test_add_milestone(self):
-        pass
+    @patch("controller.controller.controller.is_connected")
+    def test_remove_skill_not_logged_in(self, mock_connected):
+        mock_connected.return_value = False
+        self.assertRaises(PermissionError, controller.remove_skill, "username", "skillpath", False)
 
-    def test_add_milestone_no_permission(self):
-        pass
-
-    def test_is_connected(self):
-        pass
-
-    def test_is_connected_no_connections(self):
-        pass
-
-    
+    @patch("controller.controller.controller.is_connected")
+    def test_remove_milestone_not_logged_in(self, mock_connected):
+        mock_connected.return_value = False
+        self.assertRaises(PermissionError, controller.remove_milestone, "name", "path", 3, "2018-11-11", "Project")
