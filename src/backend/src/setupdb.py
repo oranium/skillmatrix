@@ -16,7 +16,7 @@ def checkdb():
     else:
         engine = create_engine(environ.get('ENV_DATABASE_URI'))
 
-    if not engine.dialect.has_table(engine, 'guidelines') | (environ.get('ENV_TESTING') == 'True'):
+    if not engine.dialect.has_table(engine, 'guidelines') or (environ.get('ENV_TESTING') == 'True'):
         Base = declarative_base()
 
         class Guidelines(Base):
