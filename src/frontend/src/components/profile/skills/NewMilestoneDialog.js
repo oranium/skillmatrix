@@ -23,7 +23,7 @@ import RestPoints from 'rest/Init';
 import { updateOwnProfile } from 'rest/handleCommonRequests';
 
 // functions
-import checkEmptyInputs from 'components/common/checkEmptyInputs';
+import checkEmptyInputs from 'functions/checkEmptyInputs';
 
 export default class FormDialog extends React.Component {
   handleClose = () => {
