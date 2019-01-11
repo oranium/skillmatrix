@@ -150,6 +150,18 @@ const exampleSkillList = {
   },
 };
 
+const defaultNewSkillToDBDialog = {
+  skillname: '',
+  guideline: {
+    1: 'Insufficient',
+    2: 'Sufficient/Below Average',
+    3: 'Satisfactory / Average',
+    4: 'Good',
+    5: 'Excellent',
+  },
+  confirmDialogOpen: false,
+};
+
 // ###################################################  formstate reducers  ###################################################
 
 describe('reducer tests', () => {
@@ -318,13 +330,35 @@ describe('reducer tests', () => {
     expect(actState.profile.profiles[actState.profile.profiles.length - 1]).toBe(exProfile);
   });
 
-  it('should update the actual state after Event "SETOWNPROFILE"', () => {
-    const actState = reducer(defaultProfilePageState, {
-      type: 'SETOWNPROFILE',
-      profile: exProfile,
+
+    // ###################################################  newSkillToDB reducers  ###################################################
+
+  it('should update the actual state after Event "SETSKILLNAME"', () => {
+    const actState = reducer(defaultNewSkillToDBDialog, {
+      type: 'SETSKILLNAME',
+      skillname: "Python",
     });
-    expect(actState.profile.profiles[0]).toBe(exProfile);
+    expect(actState.newSkillToDBDialog.skillname).toBe("Python");
   });
+
+  it('should update the actual state after Event "CHANGEGUIDELINE"', () => {
+    const actState = reducer(defaultNewSkillToDBDialog, {
+      type: 'CHANGEGUIDELINE',
+      level: 2,
+      value: 'sehr sehr schlecht',
+    });
+    expect(actState.newSkillToDBDialog.guideline[2]).toBe("sehr sehr schlecht");
+  });
+
+  it('should update the actual state after Event "TOGGLECONFIRMDIALOG"', () => {
+    const actState = reducer(defaultNewSkillToDBDialog, {
+      type: 'TOGGLECONFIRMDIALOG',
+      open: true,
+    });
+    expect(actState.newSkillToDBDialog.confirmDialogOpen).toBe(true);
+  });
+
+
 
 
   // ###################################################  all Skills reducers  ###################################################
