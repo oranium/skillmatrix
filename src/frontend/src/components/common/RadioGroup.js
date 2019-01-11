@@ -25,7 +25,7 @@ class RadioButtonsGroup extends React.Component {
   };
 
   handleChange = event => {
-    this.props.levelChange(this.props.skill, parseInt(event.target.value));
+    this.props.levelChange(this.props.skill, parseInt(event.target.value), this.props.wholeSkill);
     this.setState({ value: event.target.value });
     // const skillUpdate = { skill: this.props.skill, level: event.target.value };
     // store.dispatch(updateSkills(skillUpdate));
