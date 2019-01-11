@@ -102,6 +102,15 @@ export const formState = (state = defaultFormState, action) => {
         }),
       });
 
+    case 'SETVARIOUSINPUTERRORS': {
+      const inputsWithErrors = {};
+      // set error to true for all ids (immutable)
+      action.ids.forEach((id) => {
+        inputsWithErrors[id] = { ...state[id], error: true };
+      });
+      return { ...state, ...inputsWithErrors };
+    }
+
     case 'RESETFORM':
       return defaultFormState;
 
