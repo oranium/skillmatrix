@@ -97,7 +97,7 @@ class DatabaseController:
         # print("comment: {0}".format(comment), file=sys.stderr)
         # print("level: {0}".format(level), file=sys.stderr)
         user = database_controller.get_user(username)
-        print(user.id, file=sys.stderr)
+        # print(user.id, file=sys.stderr)
         mskill = database_controller.get_skill(skillpath)
         mdate = Date.query.filter_by(date=date).first()
         if not mdate:
