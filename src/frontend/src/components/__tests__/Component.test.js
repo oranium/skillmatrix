@@ -1,5 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import SkillPanelList from 'components/search/SkillPanelList';
 import LoginForm from '../login/LoginForm';
 import Header from '../header/Header';
 import App from '../App';
@@ -11,12 +12,11 @@ import {
   SearchInput,
 } from '../common/InputFields';
 
-const username = 'Valdemar Forsberg';
-const password = 'password';
-
 describe('test Login Components', () => {
+  const username = 'Valdemar Forsberg';
+  const password = 'password';
   const wrapper = shallow(
-    <LoginForm errorMsg="" login={(username, password) => App.handleLogin(username, password)} />,
+    <LoginForm errorMsg="" login={() => App.handleLogin(username, password)} />,
   );
   it('render Login component', () => {
     expect(wrapper).toMatchSnapshot();
@@ -55,3 +55,13 @@ describe('test components from InputFields', () => {
     expect(wrapper).toMatchSnapshot();
   });
 });
+<<<<<<< HEAD
+=======
+
+describe('test ExpensionPanels right', () => {
+  it('render SkillPanelList component', () => {
+    const wrapper = shallow(<SkillPanelList />);
+    expect(wrapper).toMatchSnapshot();
+  });
+});
+>>>>>>> 55d50be485162fb6eddc9f2156a828c14bf6b251
