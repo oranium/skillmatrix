@@ -12,6 +12,11 @@ export const setInputError = (id, error) => ({
   error,
 });
 
+export const setVariousInputErrors = ids => ({
+  type: 'SETVARIOUSINPUTERRORS',
+  ids,
+});
+
 export const switchPage = page => ({
   type: 'SWITCHPAGE',
   page,
@@ -121,5 +126,21 @@ export const toggleDrawer = open => ({
 
 export const toggleSpinner = open => ({
   type: 'TOGGLESPINNER',
+  open,
+});
+
+export const changeGuideline = (level, value) => ({
+  type: 'CHANGEGUIDELINE',
+  level,
+  value,
+});
+
+export const setSkillName = skillname => ({
+  type: 'SETSKILLNAME',
+  skillname,
+});
+
+export const toggleConfirmDialog = open => ({
+  type: 'TOGGLECONFIRMDIALOG',
   open,
 });

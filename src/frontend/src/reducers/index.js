@@ -11,6 +11,7 @@ import {
   allSkills,
   allCategories,
   loading,
+  newSkillToDBDialog,
 } from './reducers';
 
 export default combineReducers({
@@ -24,4 +25,5 @@ export default combineReducers({
   allSkills,
   allCategories,
   loading,
+  newSkillToDBDialog,
 });
