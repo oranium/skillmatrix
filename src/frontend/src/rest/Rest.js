@@ -47,7 +47,7 @@ class RestCom {
       case 404:
         return 'Couldnt connect to Server. Please try again.';
       case 410:
-        return 'This request was propable already handled.';
+        return 'This request was propably already handled.';
       case 422:
         return "This skill already exists in DB. You can't add the same skill twice.";
       case 504:
