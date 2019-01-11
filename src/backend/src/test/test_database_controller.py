@@ -1,3 +1,4 @@
+import sys
 import unittest
 from app import app
 import setupdb
@@ -15,8 +16,7 @@ def setUpModule():
 class testDatabaseController(unittest.TestCase):
 
     def setUp(self):
-        setuptestdb.dropdb()
-        setupdb.checkdb()
+        print(Users.query.all(), file=sys.stderr)
         database_controller.create_user('Valdemar-Forsberg', 'Valdemar Forsberg')
         database_controller.create_user('Karl-Kalagin', "Karl Kalagin")
         database_controller.create_user('Isaac-Hunt', "Isaac Hunt")
@@ -153,8 +153,10 @@ class testDatabaseController(unittest.TestCase):
         db.session.commit()
         '''
     def tearDown(self):
-        setuptestdb.dropdb()
         pass
+
+    def tearDownClass():
+        setuptestdb.dropdb()
 
     def test_search_success(self):
         result = database_controller.search({"Java": 1})
