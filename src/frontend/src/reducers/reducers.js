@@ -95,24 +95,14 @@ const defaultCategoryList = [];
 // has all the data for the inputfields
 export const formState = (state = defaultFormState, action) => {
   switch (action.type) {
-    /* return new state1,
+    /* return new state,
     where only the one value of the certain input field has changed to action.input
     */
-
     case 'UPDATEINPUT':
-      return Object.assign({}, state, {
-        [action.id]: Object.assign({}, state[action.id], {
-          value: action.input,
-        }),
-      });
+      return { ...state, [action.id]: { ...state[action.id], value: action.input } };
 
-    // return new state, where input field with action.id has a new bool
     case 'SETINPUTERROR':
-      return Object.assign({}, state, {
-        [action.id]: Object.assign({}, state[action.id], {
-          error: action.error,
-        }),
-      });
+      return { ...state, [action.id]: { ...state[action.id], error: action.error } };
 
     case 'SETVARIOUSINPUTERRORS': {
       const inputsWithErrors = {};

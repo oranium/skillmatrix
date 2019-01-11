@@ -23,7 +23,7 @@ import {
   resetForm,
   setError,
   toggleConfirmDialog,
-  setSkillName,
+  setSkillName
 } from 'actions';
 
 // Rest
@@ -178,6 +178,7 @@ class FormDialog extends Component {
                 margin="normal"
                 variant="outlined"
                 onChange={event => this.handleSkillNameChange(event)}
+                value={skillname}
                 fullWidth
               />
               {showGuidelineInput && <GuidelineInputCard />}
