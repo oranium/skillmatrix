@@ -18,8 +18,8 @@ class Hierarchy(db.Model):
 class Association(db.Model):
     __tablename__ = 'association'
     id = db.Column(db.Integer, primary_key=True)
-    users_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
-    skill_id = db.Column(db.Integer, db.ForeignKey('skill.id'), primary_key=True)
+    users_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    skill_id = db.Column(db.Integer, db.ForeignKey('skill.id'))
     date_id = db.Column(db.Integer, db.ForeignKey('date.id'))
     level = db.Column(db.Integer)
     users_assoc = db.relationship("Users", back_populates="users_association")

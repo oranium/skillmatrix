@@ -97,6 +97,7 @@ class DatabaseController:
         # print("comment: {0}".format(comment), file=sys.stderr)
         # print("level: {0}".format(level), file=sys.stderr)
         user = database_controller.get_user(username)
+        # print(user.id, file=sys.stderr)
         mskill = database_controller.get_skill(skillpath)
         mdate = Date.query.filter_by(date=date).first()
         if not mdate:
@@ -206,30 +207,18 @@ class DatabaseController:
         '''
 
     @staticmethod
-    def get_paths_with_guidelines(username=None):
+    def get_paths_with_guidelines():
         """Gets names of all skills as two lists (root, non-root) disregarding hierarchy.
-           Only checks for skills of the user, if username is given
-            Args:
-                  username(`str`, optional): name of the user, defaults to None"""
+        """
         skills = Skill.query.all()
         # the first list contains all skills, the second list contains all categories (if username)
-        skill_list = []
-        # get skill names of specific user without guidelines
-        if username:
-            for skill in skills:
-                # check if user has the skill
-                if Association.query.filter(Association.users_id == database_controller.get_user(username).id,
-                                            Association.skill_id == skill.id).first():
-                    skill_list.append(skill.path)
+        skill_list = [{},[]]
         # get every skill with guidelines
-        else:
-            skill_list.append({})
-            skill_list.append([])
-            for skill in skills:
-                if skill.root:
-                    skill_list[1].append(skill.path)
-                else:
-                    skill_list[0][skill.path] = database_controller.get_guideline_dict(skill.path)
+        for skill in skills:
+            if skill.root:
+                skill_list[1].append(skill.path)
+            else:
+                skill_list[0][skill.path] = database_controller.get_guideline_dict(skill.path)
         return skill_list
 
     @staticmethod

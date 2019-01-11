@@ -11,9 +11,12 @@ from sqlalchemy.orm import sessionmaker
 from os import environ
 
 def checkdb():
-    engine = create_engine(environ.get('ENV_DATABASE_URI'))
+    if environ.get('ENV_TESTING') == 'True':
+        engine = create_engine(environ.get('ENV_TESTDATABASE_URI'))
+    else:
+        engine = create_engine(environ.get('ENV_DATABASE_URI'))
 
-    if not engine.dialect.has_table(engine, 'guidelines'):
+    if not engine.dialect.has_table(engine, 'guidelines') or (environ.get('ENV_TESTING') == 'True'):
         Base = declarative_base()
 
         class Guidelines(Base):
