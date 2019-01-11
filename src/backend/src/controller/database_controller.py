@@ -264,7 +264,11 @@ class DatabaseController:
                 skillname str: Name of the skill to add.
                 skillpath str: Full path of the skill to add.
                 category str: Category that the skill belongs to.
+            Raises:
+                AttributeError if the skill (identified by skillpath) already exists in the database.
         """
+        if Skill.query.filter_by(skillpath=skillpath).first():
+            raise AttributeError
         new_skill = Skill(name=skillname, path=skillpath)
         if not category:
             new_skill.root = True
@@ -529,7 +533,7 @@ class DatabaseController:
         db.session.commit()
         
     @staticmethod
-    def remove_milestone(username, skillpath, level, date):
+    def remove_milestone(username, skillpath, level, date, comment):
         """Removes a milestone from user.
             Args:
                   username(`str`): name of the user
@@ -540,10 +544,14 @@ class DatabaseController:
         date_id = Date.query.filter_by(date=date).first().id
         skill = database_controller.get_skill(skillpath)
         user = database_controller.get_user(username)
-        MilestoneAssociation.query.filter_by(milestone_skill_id=skill.id,
-                                             milestone_users_id=user.id,
-                                             level=level,
-                                             milestone_date_id=date_id).delete()
+        to_delete = MilestoneAssociation.query.filter_by(milestone_skill_id=skill.id,
+                                                         milestone_users_id=user.id,
+                                                         level=level,
+                                                         milestone_date_id=date_id,
+                                                         comment=comment).first()
+        if not to_delete:
+            raise AttributeError
+        to_delete.delete()
         db.session.commit()
 
 
