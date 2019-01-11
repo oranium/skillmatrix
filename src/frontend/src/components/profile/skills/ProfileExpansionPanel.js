@@ -55,9 +55,7 @@ class ControlledExpansionPanels extends React.Component {
   async handleRemoveSkill(event, skillToRemove) {
     event.stopPropagation();
     const confirmation = window.confirm(
-      'Are you sure you want to remove ' +
-        skillToRemove +
-        " from your skill list?",
+      'Are you sure you want to remove ' + skillToRemove + ' from your skill list?',
     );
 
     // only if user confirms deletion
@@ -114,7 +112,10 @@ class ControlledExpansionPanels extends React.Component {
                 </Button>
               </div>
               <div className={classes.removeButton}>
-                <IconButton onClick={event => this.handleRemoveSkill(event, skillpath)}>
+                <IconButton
+                  title={'Delete ' + skillname}
+                  onClick={event => this.handleRemoveSkill(event, skillpath)}
+                >
                   <DeleteIcon />
                 </IconButton>
               </div>
