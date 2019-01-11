@@ -78,6 +78,7 @@ const defaultNewSkillToDBDialog = {
     5: 'Excellent',
   },
   confirmDialogOpen: false,
+  skillNameIsEmptyError: false,
 };
 
 Object.freeze(defaultSearch);
@@ -270,6 +271,9 @@ export const newSkillToDBDialog = (state = defaultNewSkillToDBDialog, action) =>
       return { ...state, skillname: action.skillname };
     case 'TOGGLECONFIRMDIALOG':
       return { ...state, confirmDialogOpen: action.open };
+    case 'TOGGLESKILLNAMEEMPTY':
+      console.log(action);
+      return { ...state, skillNameIsEmptyError: action.empty };
     case 'RESETFORM':
       return defaultNewSkillToDBDialog;
     case 'RESETSTATE':
