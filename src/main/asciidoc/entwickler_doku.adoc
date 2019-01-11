@@ -79,7 +79,10 @@ image:DatenbankController.jpg[DatenbankController]
 image:entwurfsdiagramm.JPG[Entwurfsdiagramm]
 
 *Backend*
- image:backend_class_diag.jpg[Entwurfsdiagramm Backend]
+image:backend_class_diag.jpg[Entwurfsdiagramm Backend]
+
+*Datenbank*
+image:datenbank.jpg[Entwurf Datenbank]
  
 == Entwurfsentscheidungen
 //* Architektur
