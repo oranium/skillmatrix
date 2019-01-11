@@ -79,10 +79,10 @@ class ProfileController extends Component {
     delete latestChanges[skills];
   }
 
-  handleLevelChange = (skill, level) => {
-    console.log(skill)
+  handleLevelChange = (skill, level, wholeSkill) => {
     this.localUpdate.push([{ skill, level }]);
-    this.setState({ changes: true });
+    if(wholeSkill.level === level ) this.setState({changes: false});
+    else this.setState({ changes: true });
   };
 
   getOwnerArticle() {
