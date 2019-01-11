@@ -100,57 +100,6 @@ def dropdb():
         def __repr__(self):
             return '<id = {0} und username = {1}>'.format(self.id, self.username)
 
-    class Setup():
-        engine = create_engine('sqlite:///sqlalchemy_example.db')
-
-        Base.metadata.drop_all(bind=engine)
-        Base.metadata.create_all(engine)
-        DBSession = sessionmaker(bind=engine)
-        session = DBSession()
-
-        def create_hiestory(self, parent, child):
-            x = Hierarchy()
-            x.parent_skill_assoc= parent
-            x.child_skill_assoc= child
-            self.session.add(x)
-            self.session.commit()
-
-        def get_guidelines(self, skill_id):
-            information_list = []
-            level = 1
-            while (level < 6):
-                guideline = self.session.query(Guidelines).filter(Guidelines.skill_id == skill_id, Guidelines.level == level).one()
-                information_list.append(guideline.information)
-                level = level +1
-            print (information_list)
-            return information_list
-
-        def change_guideline(self, skill_id, level, new_information):
-            if self.session.query(Guidelines).filter(Guidelines.skill_id == skill_id, Guidelines.level == level).all():
-                print("gibt es schon")
-                d = self.session.query(Guidelines).filter(Guidelines.skill_id == skill_id, Guidelines.level == level).one()
-                self.session.delete(d)
-                self.session.commit()
-            newguideline = Guidelines(skill_id = skill_id, level = level, information = new_information)
-            self.session.add(newguideline)
-            self.session.commit()
-
-
-        def create_guidelines(self, skill_id, information_list):
-            level = 1
-            for information in information_list:
-                newguideline = Guidelines(skill_id = skill_id, level = level, information = information)
-                self.session.add(newguideline)
-                self.session.commit()
-                level = level +1
-
-
-        def create_skill(self, level, skill, date, username):
-            a = Association(level=level)
-            a.skill_assoc = skill
-            a.date_assoc = date
-            a.users_assoc = username
-    
     Base.metadata.drop_all(bind=engine)
 
 '''class Setup():
