@@ -22,9 +22,9 @@ const styles = theme => ({
 });
 
 const MilestoneList = (props) => {
-  const {
-    classes, level, comment, date, deleteMilestone,
-  } = props;
+  const { classes, milestone, deleteMilestone } = props;
+
+  const { level, comment, date } = milestone;
 
   return (
     <div className={classes.root} onClick={event => event.stopPropagation()}>
@@ -39,7 +39,7 @@ const MilestoneList = (props) => {
             <Typography style={{ width: '200%' }}>{`Comment: ${comment}`}</Typography>
           </div>
           <ExpansionPanelActions style={{ width: '100%', textAlign: 'right' }}>
-            <IconButton onClick={() => deleteMilestone(level, date)}>
+            <IconButton onClick={() => deleteMilestone(milestone)}>
               <DeleteIcon />
             </IconButton>
           </ExpansionPanelActions>
