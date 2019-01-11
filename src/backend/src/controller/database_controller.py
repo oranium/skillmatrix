@@ -267,7 +267,7 @@ class DatabaseController:
             Raises:
                 AttributeError if the skill (identified by skillpath) already exists in the database.
         """
-        if Skill.query.filter_by(skillpath=skillpath).first():
+        if Skill.query.filter_by(path=skillpath).first():
             raise AttributeError
         new_skill = Skill(name=skillname, path=skillpath)
         if not category:
