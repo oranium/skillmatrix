@@ -46,7 +46,7 @@ class RemoveSkillDialog extends Component {
     const confirmation = window.confirm(
       'Are you sure you want to remove ' +
         skillToRemove +
-        " from the database for all users? \nThis can't be undone and effects all subskills!",
+        " from the database for all users? \nThis can't be undone and affects all subskills!",
     );
 
     if (!confirmation) {

@@ -20,17 +20,33 @@ class GuidelineInputCard extends Component {
   getGuidelineListItems = () => {
     const state = store.getState();
     const { guideline } = state.newSkillToDBDialog;
-    return Object.keys(guideline).map(level => (
-      <ListItem key={level}>
-        <TextField
-          label={'Level ' + level + ': '}
-          id={'level' + level}
-          placeholder={guideline[level]}
-          onChange={event => this.handleGuidelineChange(level, event)}
-          fullWidth
-        />
-      </ListItem>
-    ));
+    const defaultGuideline = {
+      1: 'Insufficient',
+      2: 'Sufficient/Below Average',
+      3: 'Satisfactory / Average',
+      4: 'Good',
+      5: 'Excellent',
+    };
+    return Object.keys(guideline).map(level => {
+      const guidelineValue = guideline[level];
+      const valueProp = {};
+      // defaultGuidelines are not displayed as value, but as placeholder
+      if (guidelineValue !== defaultGuideline[level]) {
+        valueProp.value = guidelineValue;
+      }
+      return (
+        <ListItem key={level}>
+          <TextField
+            label={'Level ' + level + ': '}
+            id={'level' + level}
+            placeholder={defaultGuideline[level]}
+            onChange={event => this.handleGuidelineChange(level, event)}
+            {...valueProp}
+            fullWidth
+          />
+        </ListItem>
+      );
+    });
   };
 
   render() {
