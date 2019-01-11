@@ -30,8 +30,8 @@ class Association(db.Model):
 class MilestoneAssociation(db.Model):
     __tablename__ = 'milestoneassociation'
     id = db.Column(db.Integer, primary_key=True)
-    milestone_users_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
-    milestone_skill_id = db.Column(db.Integer, db.ForeignKey('skill.id'), primary_key=True)
+    milestone_users_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    milestone_skill_id = db.Column(db.Integer, db.ForeignKey('skill.id'))
     milestone_date_id = db.Column(db.Integer, db.ForeignKey('date.id'))
     comment = db.Column(db.String(85), primary_key=True)
     level = db.Column(db.Integer, nullable=True)

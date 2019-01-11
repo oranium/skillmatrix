@@ -46,8 +46,8 @@ def checkdb():
         class MilestoneAssociation(Base):
             __tablename__ = 'milestoneassociation'
             id = Column(Integer, primary_key=True)
-            milestone_users_id = Column(Integer, ForeignKey('users.id'), primary_key=True)
-            milestone_skill_id = Column(Integer, ForeignKey('skill.id'), primary_key=True)
+            milestone_users_id = Column(Integer, ForeignKey('users.id'))
+            milestone_skill_id = Column(Integer, ForeignKey('skill.id'))
             milestone_date_id = Column(Integer, ForeignKey('date.id'))
             comment = Column(String(85), primary_key=True)
             level = Column(Integer, nullable = True)
