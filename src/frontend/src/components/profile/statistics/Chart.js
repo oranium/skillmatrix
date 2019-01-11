@@ -5,11 +5,11 @@ import { zoom, pan } from 'chartjs-plugin-zoom'; // muss bleiben!! sonst funktio
 class Chart extends Component {
   render() {
     const {
-      skill, witdh, height, display, enabledZoom,
+      skill, witdh, height, display, enabledZoom, milestones
     } = this.props;
 
     const datastructure = [];
-    Object.keys(this.props.data).map(idx => datastructure.push({ x: this.props.data[idx].date, y: this.props.data[idx].level }));
+    Object.keys(milestones).map(idx => datastructure.push({ x: milestones[idx].date, y: milestones[idx].level }));
 
     const dataSet = {
       datasets: [

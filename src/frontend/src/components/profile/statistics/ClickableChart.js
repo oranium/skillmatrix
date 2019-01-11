@@ -78,14 +78,14 @@ export class ClickableChart extends React.Component {
   }
 
   render() {
-    const { classes, skillname, data } = this.props;
+    const { classes, skillname, milestones } = this.props;
 
-    const milestones = Object.keys(data).map(key => (
+    const milestoneList = Object.keys(milestones).map(key => (
       <MilestoneList
         key={key}
-        date={data[key].date}
-        level={data[key].level}
-        comment={data[key].comment}
+        date={milestones[key].date}
+        level={milestones[key].level}
+        comment={milestones[key].comment}
         deleteMilestone={(level, date) => this.handleDeleteMilestone(level, date)}
       />
     ));
@@ -99,7 +99,7 @@ export class ClickableChart extends React.Component {
                 width={300}
                 display={false}
                 skill={skillname}
-                data={data}
+                milestones={milestones}
                 enabledZoom={false}
               />
             </CardContent>
@@ -121,11 +121,11 @@ export class ClickableChart extends React.Component {
                     width={800}
                     display={true}
                     skill={skillname}
-                    data={data}
+                    milestones={milestones}
                     enabledZoom={true}
                   />
                 </Typography>
-                <List>{milestones}</List>
+                <List>{milestoneList}</List>
               </CardContent>
             </Card>
           </Typography>

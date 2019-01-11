@@ -37,7 +37,7 @@ class SkillStatisticsPage extends React.Component {
       skill.subcategories.length !== 0 ? (
         <ExpansionPanel key={skill.skillpath} expanded={expanded} onChange={this.handleChange(this.props.skill)}>
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-            <ClickableChart skillpath={skill.skillpath} skillname={skill.skillname} data={skill.milestones} />
+            <ClickableChart skillpath={skill.skillpath} skillname={skill.skillname} milestones={skill.milestones} />
           </ExpansionPanelSummary>
           <ExpansionPanelDetails className={this.props.classes.panels}>
             {this.renderDatastructureRecursive(skill.subcategories, index + 1)}
@@ -46,7 +46,7 @@ class SkillStatisticsPage extends React.Component {
       ) : (
         <ExpansionPanel key={skill.skillpath}>
           <ExpansionPanelSummary>
-            <ClickableChart skillpath={skill.skillpath} skillname={skill.skillname} data={skill.milestones} />
+            <ClickableChart skillpath={skill.skillpath} skillname={skill.skillname} milestones={skill.milestones} />
           </ExpansionPanelSummary>
         </ExpansionPanel>
       ),
