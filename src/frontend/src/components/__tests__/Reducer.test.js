@@ -330,15 +330,14 @@ describe('reducer tests', () => {
     expect(actState.profile.profiles[actState.profile.profiles.length - 1]).toBe(exProfile);
   });
 
-
-    // ###################################################  newSkillToDB reducers  ###################################################
+  // ###################################################  newSkillToDB reducers  ###################################################
 
   it('should update the actual state after Event "SETSKILLNAME"', () => {
     const actState = reducer(defaultNewSkillToDBDialog, {
       type: 'SETSKILLNAME',
-      skillname: "Python",
+      skillname: 'Python',
     });
-    expect(actState.newSkillToDBDialog.skillname).toBe("Python");
+    expect(actState.newSkillToDBDialog.skillname).toBe('Python');
   });
 
   it('should update the actual state after Event "CHANGEGUIDELINE"', () => {
@@ -347,7 +346,7 @@ describe('reducer tests', () => {
       level: 2,
       value: 'sehr sehr schlecht',
     });
-    expect(actState.newSkillToDBDialog.guideline[2]).toBe("sehr sehr schlecht");
+    expect(actState.newSkillToDBDialog.guideline[2]).toBe('sehr sehr schlecht');
   });
 
   it('should update the actual state after Event "TOGGLECONFIRMDIALOG"', () => {
@@ -358,8 +357,13 @@ describe('reducer tests', () => {
     expect(actState.newSkillToDBDialog.confirmDialogOpen).toBe(true);
   });
 
-
-
+  it('should update the actual state after Event "TOGGLESKILLNAMEEMPTY"', () => {
+    const actState = reducer(defaultNewSkillToDBDialog, {
+      type: 'TOGGLESKILLNAMEEMPTY',
+      emtpy: true,
+    });
+    expect(actState.newSkillToDBDialog.skillNameIsEmptyError).toBe(true);
+  });
 
   // ###################################################  all Skills reducers  ###################################################
   it('should update the actual state after Event "SETALLSKILLS"', () => {
