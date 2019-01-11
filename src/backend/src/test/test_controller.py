@@ -4,50 +4,48 @@ from unittest.mock import patch
 
 
 class TestController(unittest.TestCase):
-    """unittests for database controller"""
+    """Unittests for Controller"""
 
-    def test_login_success(self):
+    def setUp(self):
         pass
 
     def test_login_new_user(self):
         pass
 
-    def test_logout(self):
+    @patch("controller.authentication_controller.authentication_controller.logout")
+    @patch("controller.controller.controller.is_connected")
+    def test_logout_not_logged_in(self, mock_connected, mock_logout):
         pass
 
-    def test_logout_no_permission(self):
+    @patch("controller.authentication_controller.authentication_controller.logout")
+    @patch("controller.controller.controller.is_connected")
+    def test_get_paths_with_guidelines_not_logged_in(self):
         pass
 
-    def test_search_success(self):
-        search_result = dict(skill="Java", result=dict(Aron=1, Willy=5))
-        with patch.object(controller, "search") as mock_search:
-            mock_search.return_value = search_result
-            self.assertEqual(search_result, controller.search(self, "Java"))
+    @patch("controller.controller.controller.is_connected")
+    def test_create_skill_not_logged_in(self):
+            pass
 
-    def test_search_no_results(self):
-        with patch.object(controller, "search") as mock_search:
-            mock_search.return_value = None
-            self.assertRaises(ValueError, controller.search, self, "bad request that yields no results")
-
-    def test_search_no_permission(self):
+    @patch("controller.controller.controller.is_connected")
+    def test_search_not_logged_in(self):
         pass
 
-    def test_set_skill(self):
+    @patch("controller.controller.controller.is_connected")
+    def test_set_skills_not_logged_in(self):
         pass
 
-    def test_set_skill_no_permission(self):
+    @patch("controller.controller.controller.is_connected")
+    def test_add_milestone_not_logged_in(self):
         pass
 
-    def test_add_milestone(self):
+    @patch("controller.controller.controller.is_connected")
+    def test_add_guidelines_not_logged_in(self):
         pass
 
-    def test_add_milestone_no_permission(self):
+    @patch("controller.controller.controller.is_connected")
+    def test_remove_skill_not_logged_in(self):
         pass
 
-    def test_is_connected(self):
+    @patch("controller.controller.controller.is_connected")
+    def test_remove_milestone_not_logged_in(self):
         pass
-
-    def test_is_connected_no_connections(self):
-        pass
-
-    
