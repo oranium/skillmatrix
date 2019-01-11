@@ -41,6 +41,9 @@ const styles = theme => ({
     left: 'auto',
     position: 'fixed',
   },
+  buttonMargin: {
+    margin: '0 10px 0 10px',
+  },
 });
 
 class ProfileController extends Component {
@@ -81,7 +84,7 @@ class ProfileController extends Component {
 
   handleLevelChange = (skill, level, wholeSkill) => {
     this.localUpdate.push([{ skill, level }]);
-    if(wholeSkill.level === level ) this.setState({changes: false});
+    if (wholeSkill.level === level) this.setState({ changes: false });
     else this.setState({ changes: true });
   };
 
@@ -195,6 +198,7 @@ class ProfileController extends Component {
                   <NewSkillDialog open={showDialog === 'skill'} />
                   <div className={classes.buttons}>
                     <Button
+                      className={classes.buttonMargin}
                       variant="contained"
                       color="primary"
                       onClick={this.openNewMilestoneDialog}
@@ -202,6 +206,7 @@ class ProfileController extends Component {
                       New Milestone
                     </Button>
                     <Button
+                      className={classes.buttonMargin}
                       variant="contained"
                       color="primary"
                       name="submit"
@@ -211,7 +216,7 @@ class ProfileController extends Component {
                     </Button>
                     {this.state.changes && (
                       <Button
-                        className="applyButton"
+                        className={classes.buttonMargin}
                         variant="contained"
                         color="secondary"
                         onClick={this.applyLevelUpdates.bind(this, allSkillsOfUser)}
