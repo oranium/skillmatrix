@@ -1,10 +1,12 @@
 import unittest
 from app import app
+import setupdb
+import setuptestdb
 from controller.database import db
 from controller.database_controller import database_controller
 from model.skill_model import SkillModel
 from model.milestone_model import MilestoneModel
-from model.database_model import Date, Skill, Users, Association, MilestoneAssociation, Hierarchy
+from model.database_model import Date, Skill, Users, Association, MilestoneAssociation, Hierarchy, Guidelines
 
 
 def setUpModule():
@@ -13,6 +15,7 @@ def setUpModule():
 class testDatabaseController(unittest.TestCase):
 
     def setUp(self):
+        setupdb.checkdb()
         database_controller.create_user('Valdemar-Forsberg',"Valdemar Forsberg")
         database_controller.create_user('Karl-Kalagin', "Karl Kalagin")
         database_controller.create_user('Isaac-Hunt', "Isaac Hunt")
@@ -149,6 +152,7 @@ class testDatabaseController(unittest.TestCase):
         db.session.commit()
         '''
     def tearDown(self):
+        setuptestdb.dropdb()
         pass
 
     def test_search_success(self):
