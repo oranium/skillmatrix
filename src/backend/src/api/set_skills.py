@@ -1,4 +1,5 @@
 """Contains the SetSkills API"""
+import json
 import traceback
 from flask import Response
 from flask_restful import Resource, reqparse
