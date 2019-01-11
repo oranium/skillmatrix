@@ -3,6 +3,7 @@ import json
 from flask import Response
 from flask_restful import Resource, reqparse
 from controller.controller import controller
+import traceback
 
 
 class SetSkills(Resource):
@@ -22,6 +23,9 @@ class SetSkills(Resource):
             return Response(status=400)
         except PermissionError:
             return Response(status=401)
+        except Exception:
+            traceback.print_exc()
+            return Response(status=520)
 
     def options(self):
         pass
