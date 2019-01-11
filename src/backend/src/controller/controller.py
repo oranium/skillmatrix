@@ -189,13 +189,14 @@ class Controller:
         return ProfileModel(username, name, user_skills).jsonable()
 
     @staticmethod
-    def remove_milestone(username, skillpath, level, date):
+    def remove_milestone(username, skillpath, level, date, comment):
         """Removes a milestone from user.
             Args:
                   username(`str`): name of the user
                   skillpath(`str`): full path of the skill
                   level(`int`): level of skill at milestone date
                   date(`str`): date of milestone in format "YYYY-MM-DD"
+                  comment(`str`): comment for milestone
             Returns:
                 `ProfileModel`: updated ProfileModel of the user.
             Raises:
@@ -203,7 +204,7 @@ class Controller:
         """
         if not controller.is_connected(username):
             raise PermissionError
-        database_controller.remove_milestone(username, skillpath, level, date)
+        database_controller.remove_milestone(username, skillpath, level, date, comment)
         user_skills = database_controller.get_skills(username)
         name = authentication_controller.get_name(username)
         return ProfileModel(username, name, user_skills).jsonable()
