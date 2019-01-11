@@ -202,14 +202,15 @@ class TestRemoveMilestone(unittest.TestCase):
         self.TEST_JSON = json.dumps(dict(username="Aron",
                                          skillpath="Programming/Python",
                                          level=5,
-                                         date="2018-11-29")
+                                         date="2018-11-29",
+                                         comment="comment")
                                     )
 
     def test_call_remove_milestone(self):
         with patch.object(controller, "remove_milestone") as mock_handler:
             mock_handler.return_value = "placeholder"
             self.test_app.post("/deleteMilestone", data=self.TEST_JSON, content_type="application/json")
-            mock_handler.assert_called_with("Aron", "Programming/Python", 5, "2018-11-29")
+            mock_handler.assert_called_with("Aron", "Programming/Python", 5, "2018-11-29", "comment")
 
 
 class TestRemoveSkill(unittest.TestCase):
