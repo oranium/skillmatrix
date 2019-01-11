@@ -26,10 +26,10 @@ const MilestoneList = (props) => {
 
   const { level, comment, date } = milestone;
 
-var forbiddenComment=["Level 1", "Level 2" ,"Level 3", "Level 4", "Level 5"]
-const showDeleteIcon = !(forbiddenComment.includes(milestone.comment))
+  const forbiddenComment = ['Level 1', 'Level 2', 'Level 3', 'Level 4', 'Level 5'];
+  const showDeleteIcon = !forbiddenComment.includes(milestone.comment);
 
-return (
+  return (
     <div className={classes.root} onClick={event => event.stopPropagation()}>
       <ExpansionPanel>
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
@@ -42,11 +42,11 @@ return (
             <Typography style={{ width: '200%' }}>{`Comment: ${comment}`}</Typography>
           </div>
           <ExpansionPanelActions style={{ width: '100%', textAlign: 'right' }}>
-            
-            {showDeleteIcon === true &&(<IconButton onClick={() => deleteMilestone(milestone)}>
-              <DeleteIcon />
-            </IconButton>)
-                }
+            {showDeleteIcon === true && (
+              <IconButton onClick={() => deleteMilestone(milestone)}>
+                <DeleteIcon />
+              </IconButton>
+            )}
           </ExpansionPanelActions>
         </ExpansionPanelDetails>
       </ExpansionPanel>
