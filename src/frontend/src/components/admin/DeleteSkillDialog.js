@@ -94,7 +94,7 @@ class RemoveSkillDialog extends Component {
           aria-labelledby="form-dialog-title"
         >
           <div className={classes.dialog}>
-            <DialogTitle id="form-dialog-title">New skill</DialogTitle>
+            <DialogTitle id="form-dialog-title">Remove skill</DialogTitle>
             <DialogContent>
               <DialogContentText className={classes.dialogcontent}>
                 Remove Skill from database.

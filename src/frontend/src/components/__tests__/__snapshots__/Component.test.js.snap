@@ -1,17 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`test ExpensionPanels right render ControlledExpansionPanels component 1`] = `
-<ControlledExpansionPanels
-  classes={
-    Object {
-      "heading": "ControlledExpansionPanels-heading-26",
-      "root": "ControlledExpansionPanels-root-25",
-      "secondaryHeading": "ControlledExpansionPanels-secondaryHeading-27",
-    }
-  }
-/>
-`;
-
 exports[`test Header component render Header component 1`] = `
 <ButtonAppBar
   classes={

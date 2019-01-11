@@ -31,6 +31,8 @@ export default class FormDialog extends Component {
     await updateOwnProfile(RestPoints.setSkills, skill);
     this.handleClose();
   }
+
+  //gets all Skill by traversing the passed skill tree recursive
   getAllSkillsRecursive(skill, allSkills, aktPath) {
     allSkills.push(aktPath);
     skill.subcategories.forEach(subskill => {
@@ -64,6 +66,10 @@ export default class FormDialog extends Component {
       skills: { [singleselect.value]: levelfield.value },
     };
 
+    //get all skills of the actual user by recursivly travsersing the
+    //skill tree /skill => subcategories
+    //and always pass the name + "/" to the next depth of the tree
+    //this generates the skillpath name => Programming/Python/Flask
     var allSkillsOfUser = [];
     Object.keys(profile.skills).forEach(index => {
       Object.keys(profile.skills[index].subcategories).forEach(subskill => {
@@ -88,12 +94,15 @@ export default class FormDialog extends Component {
       });
     });
 
+    //availableNewSkill = allSkills - allSkillsofUser
     const availableNewSkills = [];
     Object.keys(allSkills).forEach(key => {
       if (!allSkillsOfUser.includes(key)) {
         availableNewSkills.push(key);
       }
     });
+
+    //gets the guidelines from the  actual selected skill
     var guidelines;
     Object.keys(allSkills).forEach(key => {
       if (singleselect.value === key) {
@@ -102,11 +111,7 @@ export default class FormDialog extends Component {
     });
     return (
       <div>
-        <Dialog
-          open={open}
-          onClose={this.handleClose}
-          aria-labelledby="form-dialog-title"
-        >
+        <Dialog open={open} onClose={this.handleClose} aria-labelledby="form-dialog-title">
           <DialogTitle id="form-dialog-title">New skill</DialogTitle>
           <DialogContent>
             <DialogContentText>

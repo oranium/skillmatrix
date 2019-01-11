@@ -35,6 +35,7 @@ class RadioButtonsGroup extends React.Component {
     const { classes, guidelines } = this.props;
     const numbers = ['1', '2', '3', '4', '5'];
     const rdBtns = numbers.map((num, index) =>
+    //set attributes of every single Radio
       num < this.props.level || num > this.props.level ? (
         <FormControlLabel
           key={index}

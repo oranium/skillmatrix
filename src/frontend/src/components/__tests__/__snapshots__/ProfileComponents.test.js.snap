@@ -62,7 +62,7 @@ exports[`test Profile/skills Components render NewMilestoneDialog component 1`] 
           Object {
             "error": false,
             "name": "Date",
-            "value": "2019-01-10",
+            "value": "2019-01-11",
           }
         }
         onChange={[Function]}
@@ -236,9 +236,26 @@ exports[`test Profile/stats Components render Chart component 1`] = `
           Object {
             "backgroundColor": "rgba(75,192,192,1)",
             "borderColor": "rgba(75,192,192,1)",
-            "data": Array [],
+            "data": Array [
+              Object {
+                "x": "2011-09-11",
+                "y": 0,
+              },
+              Object {
+                "x": "2017-01-20",
+                "y": 1,
+              },
+              Object {
+                "x": "2018-02-06",
+                "y": 2,
+              },
+              Object {
+                "x": "2021-11-23",
+                "y": 3,
+              },
+            ],
             "fill": false,
-            "label": "Javascript",
+            "label": "C++",
             "pointBorderColor": "rgba(75,192,192,1)",
             "pointBorderWidth": "rgba(75,192,192,1)",
             "pointHoverBackgroundColor": "rgba(75,192,192,1)",
@@ -301,91 +318,40 @@ exports[`test Profile/stats Components render Chart component 1`] = `
 `;
 
 exports[`test Profile/stats Components render SimpleCard component 1`] = `
-<SimpleCard
+<ClickableChart
   classes={
     Object {
-      "appBar": "SimpleCard-appBar-9",
-      "container": "SimpleCard-container-11",
-      "flex": "SimpleCard-flex-10",
-      "root": "SimpleCard-root-8",
+      "appBar": "ClickableChart-appBar-9",
+      "container": "ClickableChart-container-11",
+      "flex": "ClickableChart-flex-10",
+      "root": "ClickableChart-root-8",
     }
   }
-  data={Array []}
-  skill="Javascript"
+  milestones={
+    Array [
+      Object {
+        "comment": "init",
+        "date": "2011-09-11",
+        "level": 0,
+      },
+      Object {
+        "comment": "C++ Workshop",
+        "date": "2017-01-20",
+        "level": 1,
+      },
+      Object {
+        "comment": "C++ Lehrgang",
+        "date": "2018-02-06",
+        "level": 2,
+      },
+      Object {
+        "comment": "C++ 3 jähriges Projekt fertig gestellt, mit 100000 Zeilen c++ Code",
+        "date": "2021-11-23",
+        "level": 3,
+      },
+    ]
+  }
+  skillname="C++"
+  skillpath="C++"
 />
-`;
-
-exports[`test Profile/stats Components render SkillStatisticsGrid component 1`] = `
-<div
-  className="Chart"
->
-  <Line
-    data={
-      Object {
-        "datasets": Array [
-          Object {
-            "backgroundColor": "rgba(75,192,192,1)",
-            "borderColor": "rgba(75,192,192,1)",
-            "data": Array [],
-            "fill": false,
-            "label": "Javascript",
-            "pointBorderColor": "rgba(75,192,192,1)",
-            "pointBorderWidth": "rgba(75,192,192,1)",
-            "pointHoverBackgroundColor": "rgba(75,192,192,1)",
-            "pointHoverBorderColor": "rgba(75,192,192,1)",
-          },
-        ],
-      }
-    }
-    options={
-      Object {
-        "maintainAspectRatio": false,
-        "pan": Object {
-          "enabled": undefined,
-          "mode": "x",
-        },
-        "scales": Object {
-          "xAxes": Array [
-            Object {
-              "position": "bottom",
-              "ticks": Object {
-                "display": undefined,
-              },
-              "time": Object {
-                "displayFormats": Object {
-                  "month": "MM/YY",
-                },
-                "tooltipFormat": "ll",
-                "unit": "month",
-              },
-              "type": "time",
-            },
-          ],
-          "yAxes": Array [
-            Object {
-              "ticks": Object {
-                "beginAtZero": true,
-                "display": undefined,
-                "max": 7,
-                "stepValue": 1,
-                "steps": 0.5,
-              },
-            },
-          ],
-        },
-        "startAtZero": true,
-        "zoom": Object {
-          "enabled": undefined,
-          "mode": "xy",
-          "rangeMax": Object {
-            "y": 30,
-          },
-          "rangeMin": Object {
-            "y": -10,
-          },
-        },
-      }
-    }
-  />
-</div>
 `;

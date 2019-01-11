@@ -24,20 +24,33 @@ class SkillStatisticsPage extends React.Component {
   state = {
     expanded: null,
   };
+
+  //handle open/close expansion panel
   handleChange = panel => (event, expanded) => {
     this.setState({
       expanded: expanded ? panel : false,
     });
   };
 
+  //render recursive the subcategories into the ExpansionPanel details of root categories
+  //ends if there are no more subcategories
+  //actual chart is set on the expansion panel summary
   renderDatastructureRecursive(subcategories, index) {
     const { expanded } = this.state;
-    
+
     const subs = subcategories.map(skill =>
       skill.subcategories.length !== 0 ? (
-        <ExpansionPanel key={skill.skillpath} expanded={expanded} onChange={this.handleChange(this.props.skill)}>
+        <ExpansionPanel
+          key={skill.skillpath}
+          expanded={expanded}
+          onChange={this.handleChange(this.props.skill)}
+        >
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-            <ClickableChart skillpath={skill.skillpath} skillname={skill.skillname} milestones={skill.milestones} />
+            <ClickableChart
+              skillpath={skill.skillpath}
+              skillname={skill.skillname}
+              milestones={skill.milestones}
+            />
           </ExpansionPanelSummary>
           <ExpansionPanelDetails className={this.props.classes.panels}>
             {this.renderDatastructureRecursive(skill.subcategories, index + 1)}
@@ -46,7 +59,11 @@ class SkillStatisticsPage extends React.Component {
       ) : (
         <ExpansionPanel key={skill.skillpath}>
           <ExpansionPanelSummary>
-            <ClickableChart skillpath={skill.skillpath} skillname={skill.skillname} milestones={skill.milestones} />
+            <ClickableChart
+              skillpath={skill.skillpath}
+              skillname={skill.skillname}
+              milestones={skill.milestones}
+            />
           </ExpansionPanelSummary>
         </ExpansionPanel>
       ),
@@ -55,12 +72,17 @@ class SkillStatisticsPage extends React.Component {
     return subs;
   }
 
+  //render root categories and call renderDatastructureRecursive to render all subcategories
   render() {
     const { expanded } = this.state;
 
     const { categories } = this.props;
     const skillItems = categories.map(skill => (
-      <ExpansionPanel key={skill.skillpath} expanded={expanded} onChange={this.handleChange(this.props.skill)}>
+      <ExpansionPanel
+        key={skill.skillpath}
+        expanded={expanded}
+        onChange={this.handleChange(this.props.skill)}
+      >
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
           {' '}
           {skill.skillname}{' '}
