@@ -174,9 +174,9 @@ class testDatabaseController(unittest.TestCase):
         self.assertIsNotNone(skill_exists)
 
     def test_add_milestone(self):
-        database_controller.add_milestone("Karls-Kalagin", "Java", self.date1, "testmiltestone", 5)
-        association_exists = MilestoneAssociation.query.filter(MilestoneAssociation.milestone_date_id == self.date1.id,
-                                                               MilestoneAssociation.milestone_skill_id == self.java1.id,
+        database_controller.add_milestone("Karl-Kalagin", "Programming/Java", "2019-01-01", "testmiltestone", 5)
+        skill_id = Skill.query.filter_by(path=)
+        association_exists = MilestoneAssociation.query.filter(MilestoneAssociation.milestone_skill_id == self.java1.id,
                                                                MilestoneAssociation.milestone_users_id == self.karl.id)
         self.assertIsNotNone(association_exists)
 

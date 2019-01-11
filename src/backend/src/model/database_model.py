@@ -17,10 +17,11 @@ class Hierarchy(db.Model):
 
 class Association(db.Model):
     __tablename__ = 'association'
-    users_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
-    skill_id = db.Column(db.Integer, db.ForeignKey('skill.id'), primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
+    users_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    skill_id = db.Column(db.Integer, db.ForeignKey('skill.id'))
     date_id = db.Column(db.Integer, db.ForeignKey('date.id'))
-    level = db.Column(db.Integer, primary_key=True)
+    level = db.Column(db.Integer)
     users_assoc = db.relationship("Users", back_populates="users_association")
     skill_assoc = db.relationship("Skill", back_populates="skill_association")
     date_assoc = db.relationship("Date", back_populates="date_association")
@@ -28,11 +29,12 @@ class Association(db.Model):
 
 class MilestoneAssociation(db.Model):
     __tablename__ = 'milestoneassociation'
+    id = db.Column(db.Integer, primary_key=True)
     milestone_users_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
     milestone_skill_id = db.Column(db.Integer, db.ForeignKey('skill.id'), primary_key=True)
     milestone_date_id = db.Column(db.Integer, db.ForeignKey('date.id'))
     comment = db.Column(db.String(85), primary_key=True)
-    level = db.Column(db.Integer, nullable=False)
+    level = db.Column(db.Integer, nullable=True)
     users_milestone_assoc = db.relationship("Users", back_populates="users_milestone_association")
     skill_milestone_assoc = db.relationship("Skill", back_populates="skill_milestone_association")
     date_milestone_assoc = db.relationship("Date", back_populates="date_milestone_association")
