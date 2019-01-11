@@ -34,7 +34,7 @@ class testDatabaseController(unittest.TestCase):
         db.session.add(self.java1)
         db.session.add(self.python1)
         db.session.add(self.js1)
-        
+        db.session.commit()
 
         self.date1 = Date()
         db.session.add(self.date1)
@@ -43,13 +43,13 @@ class testDatabaseController(unittest.TestCase):
         self.a.date_assoc = self.date1
         self.a.users_assoc = self.isaac
 
-
         self.b = MilestoneAssociation(comment='bootcamp', level=4)
         self.b.skill_milestone_assoc = self.js1
         self.b.date_milestone_assoc = self.date1
         self.b.users_milestone_assoc = self.isaac
+        db.session.add(self.a)
         db.session.add(self.b)
-
+        db.session.commit()
 
         self.a1 = Association(level=3)
         self.a1.skill_assoc = self.js1
@@ -63,13 +63,11 @@ class testDatabaseController(unittest.TestCase):
         self.a3.users_assoc = self.valdemar
         db.session.add(self.a3)
 
-
         self.a4 = Association(level=3)
         self.a4.skill_assoc = self.js1
         self.a4.date_assoc = self.date1
         self.a4.users_assoc = self.karl
         db.session.add(self.a4)
-
 
         self.a5 = Association(level=4)
         self.a5.skill_assoc = self.python1
@@ -110,6 +108,7 @@ class testDatabaseController(unittest.TestCase):
         self.a10.users_assoc = self.karl
         db.session.add(self.a10)
 
+        db.session.commit()
 
 
         self.x = Hierarchy()
@@ -120,13 +119,13 @@ class testDatabaseController(unittest.TestCase):
         self.x1 = Hierarchy()
         self.x1.parent_skill_assoc = self.prog
         self.x1.child_skill_assoc = self.java1
-        db.session.commit()
+        db.session.add(self.x1)
 
         self.x2 = Hierarchy()
         self.x2.parent_skill_assoc = self.prog
         self.x2.child_skill_assoc = self.python1
+        db.session.add(self.x2)
         db.session.commit()
-
 
         self.pythonlevel1 = Guidelines(skill_id=3, level=1, information="gar nicht gut")
         self.pythonlevel2 = Guidelines(skill_id=3, level=2, information="nicht gut")
@@ -186,8 +185,8 @@ class testDatabaseController(unittest.TestCase):
         self.assertEquals(result, expected_result)
 
     def test_set_skill(self):
-        database_controller.set_skills("Valdemar-Forsberg", {"F#": 2})
-        skill_exists = Skill.query.filter_by(Skill.name == "F#").first()
+        database_controller.set_skills("Valdemar-Forsberg", {"Python": 5})
+        skill_exists = Skill.query.filter_by(name="F#").first()
         self.assertIsNotNone(skill_exists)
 
     def test_add_milestone(self):
@@ -201,7 +200,7 @@ class testDatabaseController(unittest.TestCase):
         expected_result = [MilestoneModel(self.b.date_milestone_assoc, "bootcamp", self.b.level)]
 
     def test_get_assocs(self):
-        association_exists = database_controller.get_assocs(1,1,1,"first")
+        association_exists = database_controller.get_assocs(level=1, users_id=1, skill_id=1, type="first")
         self.assertIsNotNone(association_exists)
 
     def test_get_all_users(self):
@@ -246,14 +245,15 @@ class testDatabaseController(unittest.TestCase):
         self.assertEqual(result.username, "Valdemar-Forsberg")
 
     def test_get_skill_from_id(self):
-        result = database_controller.get_skill_from_id(1)
+        print(database_controller.get_skill("Programming").id)
+        result = database_controller.get_skill_from_id(67)
         self.assertEqual(result.path, "Programming")
 
     def test_create_skill(self):
         new_skill = Skill(name='C#', path="Programming/C#")
         db.session.add(new_skill)
         db.session.commit()
-        self.assertEqual(Skill.query.filter_by(path="Progamming/C#").first().name, "C#")
+        self.assertEqual(Skill.query.filter_by(path="Programming/C#").first().name, "C#")
 
     def test_exists_success(self):
         self.assertIsNotNone(Users.query.filter_by(username="Valdemar-Forsberg").first())
@@ -305,15 +305,15 @@ class testDatabaseController(unittest.TestCase):
     def test_get_guideline_dict(self):
         pass
 
-
-
     def test_create_user(self):
         database_controller.create_user("Lisza-Zulu", "Lisza Zulu")
-        self.assertEqual(Users.query.filter_by(name="Lisza Zulu").first().name(), "Lisza Zulu")
+        self.assertEqual(Users.query.filter_by(name="Lisza Zulu").first().name, "Lisza Zulu")
 
     def test_get_recent_level(self):
-        result = database_controller.get_recent_level(1,1)
-        self.assertEqual(result, 3)
+        python_id = database_controller.get_skill("Programming/Python").id
+        valdemar_id = database_controller.get_user("Valdemar-Forsberg").id
+        result = database_controller.get_recent_level(valdemar_id, python_id)
+        self.assertEqual(result, 4)
 
     def test_get_profile_models(self):
         result = database_controller.get_profile_models([self.valdemar])
