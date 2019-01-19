@@ -6,7 +6,7 @@ The docker container can easily be started using the Makefile:
 ....
 $make clean build run
 ....
-This deletes old containers, if they exist (clean). Then, it builds the frontend and moves it to the static directory of the app (build). (run) builds and starts the docker container(s) for backend (and database). The application can be found at `localhost/static/index`.  
+This deletes old containers, if they exist (clean). Then, it builds the frontend and moves it to the static directory of the app (build). (run) builds and starts the docker container(s) for backend (and database). The application can be found at `localhost/static/index.html`.  
 
 include::src/frontend/readme.adoc[]
 
