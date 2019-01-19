@@ -3,24 +3,29 @@
 // Sowohl positive als auch negative Anmerkungen werden gern gesehen und zur stetigen Verbesserung genutzt.
 // Versuchen Sie in dieser Auswertung also stets sowohl Positives wie auch Negatives zu erwähnen.
 
-**Von:**
+**Von:** Aron Gaden
 
-**Gruppe:**
+**Gruppe:** SWT18/1
 
 == Was habe ich gelernt?
 // Ausführung der positiven und negativen Erfahrungen, die im Softwarepraktikum gesammelt wurden
+* Schriftliches Festhalten von Standards (insbesondere Schnittstellen) so früh wie möglich +
+Erst nach einigen kleinen Kommunikationsproblemen mit den API-Schnittstellen haben wir uns entschieden, sie schriftlich festzuhalten, was den Workflow erheblich verbessert hat.
+* Scrum Master sollte nicht unbedingt am Coding beteiligt sein +
+In der Gruppe hatte ich die Rolle des Scrum Masters übernommen. Die größte Schwierigkeit war dabei nicht nur, die Planung sinnvoll und fair zu gestalten, sondern insbesondere auch so, dass keine Entscheidung erscheint, als würde ich sie nicht nur zu meinen Gunsten treffen.
 
 == Welche Erfahrungen habe ich mit der Zusammenarbeit im Team gemacht?
 // Kurze Beschreibung der Zusammenarbeit im Team. Was lief gut? Was war verbesserungswürdig? Was würden Sie das nächste Mal anders machen?
+Insgesamt war die Erfahrung im Team positiv. Alle Mitglieder sind, vor allem in der Entwicklungsphase, mit der Aufgabenverteilung aufeinander zugegangen. Teilweise war die Kommunikation im Team nicht ausreichend, was ich als Scrum Master in der Gruppe auch mitzuverantworten habe. In Zukunft werde ich deshalb weiterhin, aber gerade auch am Anfang dafür sorgen, dass alle Vorhaben, Ideen oder sonstige Bemerkungen öfter und besser zusammengetragen werden.
 
 == Welche Erfahrungen habe ich bei der Wiederverwendung von Bibliotheken/Frameworks (insbesondere SalesPoint) gemacht?
 // Einschätzung der Arbeit mit den bereitgestellten und zusätzlich genutzten Frameworks. Was War gut? Was war verbesserungswürdig?
+Im Projekt habe ich am Backend mit Python gearbeitet. Die wichtigsten Bibliotheken waren dafür Flask, Flask-Restful und Flask-SQLAlchemy. Erstere waren sehr gut nutzbar und gut dokumentiert, die REST-APIs waren damit problemlos aufzubauen. Die Arbeit mit Flask-SQLAlchemy hingegen war etwas trickreicher, natürlich auch, weil kaum Erfahrung mit SQL und insbesondere keine mit ORMs vorhanden war.
 
 == Welche Vorschläge zur weiteren Verbesserung des Softwarepraktikums gibt es?
 // Möglichst mit Beschreibung, warum die Umsetzung des von Ihnen angebrachten Vorschlages nötig ist.
+In der Gruppe fiel es teilweise schwer, den Aufwand bzw. die Ausführlichkeit für die Analyse- und Entwurfsphase einzuschätzen. Womöglich liegt es auch an der Dualität Lehrstuhl - externer Auftraggeber für das externe Praktikum, da beim Lehrstuhl mehr Wert auf diese Phasen gelegt wurde, als in der Firma. Aus meiner Sicht wäre es optimal gewesen, etwas mehr über den gewünschten/optimalen Umfang dieser Aufgaben zu wissen, ob vom Auftraggeber oder Lehrstuhl. +
 
-== Feedback für den Tutor
-// Fühlten Sie sich durch den vom Lehrstuhl bereitgestellten Tutor gut betreut? Was war positiv? Was war verbesserungswürdig?
+Sehr hilfreich wäre es, über die Gruppe bzw. die Aufgabe etwas vor Beginn des Praktikums zu erfahren, um sich im Vorfeld bereits mit möglichen Technologien oder Herausforderungen in der Aufgabenstellung auseinanderzusetzen. Damit könnte man vermeiden, dass man die erste Woche oder die ersten beiden Wochen benötigt, um sich in der Aufgabenstellung zu orientieren. Ich hatte beispielsweise im Nachhinein Schwierigkeiten, gleichzeitig einen Prototypen und den Entwurf fertigzustellen, während ich in den ersten Wochen nur wenige Stunden mit dem Projekt verbracht habe.
 
-== Sonstiges und Anmerkungen
-// Welche Aspekte fanden in den oben genannten Punkten keine Erwähnung?
+Die Aufgabenstellung von 3m5. war anfangs sehr offen gehalten, insbesondere was die Auswahl der Technologien anging. Während das uns als Studenten alle Möglichkeiten offen gelassen hat, stellte sich zur Zwischenpräsentation heraus, dass zumindest für das Backend Java vom Lehrstuhl gewünscht gewesen wäre. An dieser Stelle wäre bessere Kommunikation zwischen Firma und Lehrstuhl bzw. Lehrstuhl und Gruppen wünschenswert gewesen.
