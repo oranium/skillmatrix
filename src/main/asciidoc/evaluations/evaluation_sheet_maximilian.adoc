@@ -11,9 +11,10 @@ swt18w1
 
 == Was habe ich gelernt?
 // Ausführung der positiven und negativen Erfahrungen, die im Softwarepraktikum gesammelt wurden
-Ich habe einen guten Einblick in die Realität der Softwareentwicklung bekommen, wie schwierig es werden kann Zeiten die man braucht richtig abzuschätzen, um Deadlines pünktlich zu schaffen, wie viel eine gute Vorbereitung (Analyse) ausmachen kann und wie sehr die Realität von der Theorie der Softwareentwicklung abweicht und man Probleme (zum Beispiel Kundenwünsche) noch möglichst schnell umsetzen muss.
+Ich habe einen guten Einblick in die Realität der Softwareentwicklung bekommen und gesehen wie schwierig es werden kann Zeiten die man braucht richtig abzuschätzen, um zum Beispiel Deadlines pünktlich zu schaffen oder wie viel eine gute Vorbereitung (Analyse) ausmachen kann.
+Gegen Ende des Praktikums hat man gemerkt, wie viel Arbeit eine gute Analyse ausmachen kann, aber auch dass man durch zum Beispiel Kundenwünsche schnell davon abweicht.
 
-Außerdem habe ich mich intensiv mit vielen neuen Technologien auseinandersetzen müssen bzw habe diese kenengelernt (zB: Javascript, React, Redux, Docker, Datenbanken, ...)
+Außerdem habe ich mich intensiv mit vielen neuen Technologien auseinandersetzen müssen bzw habe diese kenengelernt (zB: Javascript, React, Redux, Docker, Datenbanken, ...) 
 
 
 == Welche Erfahrungen habe ich mit der Zusammenarbeit im Team gemacht?
@@ -21,7 +22,11 @@ Außerdem habe ich mich intensiv mit vielen neuen Technologien auseinandersetzen
 
 Die Aufteilung der Aufgaben und das jeder wirklich sein Zeug gemacht,wie er konnte, engagiert war und keiner die Gruppe hängen lies, klappte bei uns zum größten Teil sehr gut.
 
-Bei nächsten mal hätte man manche Aufgaben nicht bis zum letzten Moment herauszögern müssen, wobei sich das während des Praktikums auch verbesserte.
+Beim nächsten mal hätte man manche Aufgaben nicht bis zum letzten Moment herauszögern müssen, wobei sich das während des Praktikums auch verbesserte.
+
+Außerdem hätten kleinere Probleme durch bessere Kommunikation lösen können.
+
+Aber insgesamt hat die Gruppenarbeit sehr gut funktioniert und man hat gemerkt, dass es nur geht wenn alle mitmachen.
 
 == Welche Erfahrungen habe ich bei der Wiederverwendung von Bibliotheken/Frameworks (insbesondere SalesPoint) gemacht?
 // Einschätzung der Arbeit mit den bereitgestellten und zusätzlich genutzten Frameworks. Was War gut? Was war verbesserungswürdig?
@@ -33,7 +38,7 @@ Da ich in möglichst kurzer Zeit viel neues Lernen musste, fehlte mir leider die
 == Welche Vorschläge zur weiteren Verbesserung des Softwarepraktikums gibt es?
 // Möglichst mit Beschreibung, warum die Umsetzung des von Ihnen angebrachten Vorschlages nötig ist.
 
-Die Aufgaben (insb. externes Praktikum) kleiner halten, bzw darauf achten, dass nicht all zu viele neuen Technologien gelernt werden müssen. Auch wenn wir uns bewusst für das externe Praktikum eingeschrieben haben, hat jeder noch andere Module zu bestehen und noch ein Leben außerhalb der Uni, was teilweise sehr unter dem Praktikum leiden musste.
+Den Studenten die am externen Praktikum teilnehmen schon vor Beginn die Aufgaben und notwendigen Technologien mitteilen. So kann man gleich in der ersten Woche richtig anfangen und hat während des Semesters etwas was mehr Zeit.
 
 
 == Feedback für den Tutor
