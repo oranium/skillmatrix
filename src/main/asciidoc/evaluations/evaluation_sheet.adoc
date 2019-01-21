@@ -16,7 +16,7 @@
 == Welche Erfahrungen habe ich bei der Wiederverwendung von Bibliotheken/Frameworks (insbesondere SalesPoint) gemacht?
 // Einschätzung der Arbeit mit den bereitgestellten und zusätzlich genutzten Frameworks. Was War gut? Was war verbesserungswürdig?
 
-== Welche Vorschläge zur weiteren Verbesserung des Softwarepraktikums gibt es?
+== Welche Vorschläge zur weiteren Verbesserung des Softwarepraktikums gibt es? 
 // Möglichst mit Beschreibung, warum die Umsetzung des von Ihnen angebrachten Vorschlages nötig ist.
 
 == Feedback für den Tutor
