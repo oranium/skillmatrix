@@ -1,0 +1,75 @@
+= Protokoll Gruppe 01
+
+Treffen am 17.12.2018
+
+Ort:      APB 005 +
+Beginn:   14:035 Uhr +
+Ende:     15:00 Uhr
+
+__Schriftführer:__ +
+Bruno Reinhold +
+*Nächstes Treffen:* +
+
+8.01.2019, 13:00 Uhr,  Ort des nächsten Treffens: *APB*
+
+__Teilnehmer:__ +
+//Tabellarisch oder Aufzählung, Kennzeichnung von Teilnehmern mit besonderer Rolle (z.B. Kunde)
+Paul Hoffmann (product owner) +
+Aron Gaden (scrum master, scrum team) +
+Willy Pertsch (scrum team) +
+Maximilian Schaller (scrum team) +
+Cornell Ziepel (scrum team) +
+Bruno Reinhold (Schriftführer, scrum team) +
+
+== Bemerkungen
+Verwarnungen, besondere Vorfälle, Organisatorisches, wichtige getroffene Entscheidungen +
+
+03.01.2019 15:15 Final Implementation Review bei 3m5 vor Ort +
+22.01.2019 15:15 Abschlusspräsentation bei 3m5 vor Ort +
+
+== Retrospektive des letzten Sprints
+*Issue referenziert die Issue ID von GitHub*
+// Wie ist der Status der im letzten Sprint erstellten Issues/verteilten Aufgaben?
+
+// See http://asciidoctor.org/docs/user-manual/=tables
+[option="headers"]
+|===
+|Issue |Aufgabe |Status |Bemerkung
+|#125 |feature/backend add base-dn to config| closed|faeture
+|#127|handle app configuration with env variables|closed|enhancement
+|#129|docker config database ports|closed|feature
+|#130|docker check if database exists|closed|enhacement
+|#131|feature/frontend category tree structure|closed|feature
+|#132|feature/backend implement category in models|closed|enhancement
+|#137|feature/API: update backend class diagram to contain new APIs|closed|documentation
+|#144|automatically run a build of frontend and put in static directory of app|closed|-
+|===
+
+
+== Aktueller Stand +
+-> Bereitstellung der App Dockercontainer
+
+
+== Planung des nächsten Sprints +
+*bis 16.12.2018 Anwendung als Dockercontainter bereitstellen* +
+-> hierarchische Ordnung der Skill-Anzeige implementieren  +
+-> Implementierung der Skill-Guidelines toast oder tooltip +
+-> Implementierung der Vorauswahl des aktuellen Datums +
+-> Verhindern von Zeilenumbrüche  +
+-> Erscheinen des "Apply Changes"-Button nur wenn tatsächlich Änderungen vorliegen +
+-> Aktualisieren der  Skill-Liste mit "F5" +
+-> Aktualisierung under Erweiterung der Dokumentation +
+
+
+
+
+*Issue referenziert die Issue ID von GitHub*
+
+// See http://asciidoctor.org/docs/user-manual/=tables
+[option="headers"]
+|===
+|Issue |Titel |Beschreibung |Verantwortlicher |Status
+|#133|feature/backend+frontend update api|-|Cornell, Aron|WIP
+|#134|feature/API: new API for creating skill in database|feature|Aron|WIP
+|#135|feature/API: separate API for get_skills|feature|Aron|WIP
+|#143|backend: update readme|documentation|Aron|WIP

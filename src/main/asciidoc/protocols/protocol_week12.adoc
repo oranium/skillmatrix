@@ -1,0 +1,75 @@
+= Protokoll Gruppe 01
+
+Treffen am 08.01.2019
+
+Ort:      APB 005 +
+Beginn:   13:00 Uhr +
+Ende:     14:20 Uhr
+
+__Schriftführer:__ +
+Bruno Reinhold +
+*Nächstes Treffen:* +
+
+18.01.2019, 13:00 Uhr,  Ort des nächsten Treffens: *APB*
+
+__Teilnehmer:__ +
+//Tabellarisch oder Aufzählung, Kennzeichnung von Teilnehmern mit besonderer Rolle (z.B. Kunde)
+Paul Hoffmann (product owner) +
+Aron Gaden (scrum master, scrum team) +
+Willy Pertsch (scrum team) +
+Maximilian Schaller (scrum team) +
+Cornell Ziepel (scrum team) +
+Bruno Reinhold (Schriftführer, scrum team) +
+
+== Bemerkungen
+Verwarnungen, besondere Vorfälle, Organisatorisches, wichtige getroffene Entscheidungen +
+
+22.01.2019 15:30 Abschlusspräsentation bei 3m5 vor Ort +
+
+== Retrospektive des letzten Sprints
+*Issue referenziert die Issue ID von GitHub*
+// Wie ist der Status der im letzten Sprint erstellten Issues/verteilten Aufgaben?
+
+// See http://asciidoctor.org/docs/user-manual/=tables
+[option="headers"]
+|===
+|Issue |Aufgabe |Status |Bemerkung
+|#137|feature/backend+frontend update api|closed|-
+|#134|feature/API: new API for creating skill in database|closed|feature
+|#135|feature/API: separate API for get_skills|closed|feature
+|#152|feature/profil: Implementierung der Skill-Guidelines toast/tooltip|closed|feature
+|#153|feature/profil: Aktualisieren der Skill-Liste mit "F5"|closed|feature
+|#154|feature/profil: "Apply Changes"-Button|closed|enhacement
+|#155|feature/profil: Implementierung der Vorauswahl des aktuellen Datums|closed|enhancement
+|===
+
+
+== Aktueller Stand +
+->
+
+
+== Planung des nächsten Sprints +
+*bis 11.01.2019 Fertigstellung der Applikation* +
+-> Implementierung des Skill-Paths +
+-> Implementierung der Skill-Guidelines toast oder tooltip +
+-> Verbesserung Apply Changes Button +
+-> Aktualisierung under Erweiterung der Dokumentation +
+-> Aktualisierung der Dokumentation +
+-> Testabdeckung 50% +
+
+
+
+
+*Issue referenziert die Issue ID von GitHub*
+
+// See http://asciidoctor.org/docs/user-manual/=tables
+[option="headers"]
+|===
+|Issue |Titel |Beschreibung |Verantwortlicher |Status
+|#158|feature/search: implement search for categories|feature,wonfix|-|WIP
+|#166|feature/frontend/deleteRequests: add possibility to delete skills from own profile|feature|Cornell|WIP
+|#167|feature/integration: update search in frontend to new skill paths|enhancement|Cornell|WIP
+|#168|feature/frontend/tests: test all reducers|test|Max, Cornell|WIP
+|#169|Search.test and Rest.test updaten|test|Max, Cornell|WIP
+|#170|feature/integration: guidline api connection frontend|feature|Cornell|WIP
+|#172|feature/ implement skill path|feature|Aron, Max|WIP
