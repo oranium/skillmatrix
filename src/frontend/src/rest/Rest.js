@@ -45,9 +45,9 @@ class RestCom {
       case 401:
         return 'You need to be logged in to view this page.';
       case 404:
-        return 'Couldnt connect to Server. Please try again.';
+        return "Couldn't connect to Server. Please try again.";
       case 410:
-        return 'This request was propably already handled.';
+        return 'This request was probably already handled.';
       case 422:
         return "This skill already exists in DB. You can't add the same skill twice.";
       case 504:

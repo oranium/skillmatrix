@@ -35,7 +35,7 @@ describe('Testing Login Connection to rest api', () => {
     try {
       await Rest.post();
     } catch (error) {
-      expect(error.message).toEqual('Couldnt connect to Server. Please try again.');
+      expect(error.message).toEqual('Couldn\'t connect to Server. Please try again.');
     }
   });
 
