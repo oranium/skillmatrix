@@ -53,6 +53,7 @@ class DatabaseController:
         # sort the results by descending order of sum of queried skills
         has_all.sort(key=lambda p: database_controller.sum_relevant_skills(p, list(query.keys())), reverse=True)
         has_some.sort(key=lambda p: database_controller.sum_relevant_skills(p, list(query.keys())), reverse=True)
+        print(has_all, file=sys.stderr)
         return dict(has_all=has_all, has_some=has_some)
 
     @staticmethod
@@ -386,12 +387,26 @@ class DatabaseController:
 
         """
         rel_sum = 0
+        all_skills = [profile.skills]
+        for skill_model in all_skills:
+            all_skills.append(database_controller.skill_model_list(skill_model))
+
         # look for every skill in list of skill paths
         for skill_path in skill_paths:
-            for skill_model in profile.skills:
+            for skill_model in all_skills:
                 if skill_model.skill_path.lower() == skill_path.lower():
                     rel_sum += skill_model.level
+        print("name: {0} sum: {1}".format(profile.username, rel_sum), file=sys.stderr)
         return rel_sum
+
+    @staticmethod
+    def skill_model_list(skill_model):
+        if not skill_model.subcategories:
+            return [skill_model]
+        skill_models = [skill_model]
+        for skill_child in skill_model.subcategories:
+            skill_models.extend(database_controller.skill_model_list(skill_child))
+        return skill_models
 
     @staticmethod
     def build_subcategories(username, skillpath):
