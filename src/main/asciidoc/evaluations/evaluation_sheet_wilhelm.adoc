@@ -3,9 +3,9 @@
 // Sowohl positive als auch negative Anmerkungen werden gern gesehen und zur stetigen Verbesserung genutzt.
 // Versuchen Sie in dieser Auswertung also stets sowohl Positives wie auch Negatives zu erwähnen.
 
-**Von:**
+**Von:** Wilhelm Pertsch
 
-**Gruppe:**
+**Gruppe:** swt18w1
 
 == Was habe ich gelernt?
 Im Verlauf des Projektes habe ich sehr viel über das Kreieren von Software im Allgemeinem gelernt. + 
