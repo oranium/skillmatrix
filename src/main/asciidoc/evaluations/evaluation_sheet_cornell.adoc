@@ -1,0 +1,78 @@
+= Persönliches Feedback eines Teammitgliedes des Softwarepraktikums 2018/19
+// Auch wenn der Bogen nicht anonymisiert ist, dürfen Sie gern Ihre Meinung offen kundtun.
+// Sowohl positive als auch negative Anmerkungen werden gern gesehen und zur stetigen Verbesserung genutzt.
+// Versuchen Sie in dieser Auswertung also stets sowohl Positives wie auch Negatives zu erwähnen.
+
+**Von:** +
+Cornell Ziepel
+
+**Gruppe:** +
+swt18w1
+
+== Was habe ich gelernt?
+// Ausführung der positiven und negativen Erfahrungen, die im Softwarepraktikum gesammelt wurden
+Durch das Projekt habe ich sehr viele neue Erkenntnisse im Bereich der Webentwicklung erhalten. So z.B. die Verwendung des npm Package Managers, React oder Redux. Weiterhin konnte ich Erfahrungen sammeln im Bereich Versionskontrolle beim Arbeiten im Team mit Hilfe von Git und Github. Auch einen Einblick in und die Verwendung von Docker zu erhalten, war sehr spannend.
+
+Ebenfalls habe ich gelernt, dass die testgetriebene Entwicklung gerade bei komplexen Programmen, mit vielen einzelnen Komponenten sehr hilfreich ist und viel Arbeit ersparen kann. Insbesondere, wenn man viele einzelne Container starten muss, um z.B. eine einzelne Eingabe im Frontend manuell testen zu können. Auf der anderen Seite ist es aufwendig das Frontend ohne manuelle Eingaben zu testen und die benötigten Backendkomponenten zu Mocken. Es ist mir aus Zeitgründen bzw. mangelnden Wissens nicht gelungen, Änderungen an einzelnen Funktionalitäten automatisiert zu testen. Mit korrekten Mocks und Tests hätte ich mir jedoch viel Zeit bei der Fehlersuche sparen können. Das möchte ich auf jeden Fall beim nächsten Projekt verbessern.
+
+Es ist schwierig mit dem Ansatz heranzugehen, von Anfang an übersichtlich zu programmieren, wenn man eine Sprache/eine Bibliothek neu erlernt. Ich musste lernen, auch mit Blick auf den Zeitplan, Abstriche in Hinblick auf Code Qualität zu machen und meinen Ehrgeiz etwas zu zügeln. Schlussendlich bin ich mit dem Ergebnis zufrieden, da die Aufgabe erfüllt wurde.
+
+Es war eine Herausforderung für mich, gleichzeitig das Projekt und die Nachbereitung des originären Unistoffs parallel zu bewerkstelligen. Meistens saß ich in der Zeit, in der ich für die Uni arbeiten wollte, an der Implementierung von Features für das Projekt oder der Bug Behebung. Insgesamt habe ich während des Projekts sehr wenig für andere Module erledigen können.
+
+
+== Welche Erfahrungen habe ich mit der Zusammenarbeit im Team gemacht?
+// Kurze Beschreibung der Zusammenarbeit im Team. Was lief gut? Was war verbesserungswürdig? Was würden Sie das nächste Mal anders machen?
+Die Zusammenarbeit im Team hat sehr gut funktioniert. Jedes Teammitglied hatte schnell einen festen Aufgabenbereich, der sich bereits aus der Erstellung der Prototypen ergeben hat. Diese Aufgabenteilung funktionierte bis zum Ende des Projektes sehr gut. Wir haben uns häufig getroffen, entweder in der Uni oder online, um an der Anwendung zu arbeiten und aufkommende Probleme zu besprechen. 
+
+Gerade am Anfang haben wir gemerkt, dass es auch nach einer ausführlichen Planungsphase in der Entwicklungsphase der Anwendung noch zu Unklarheiten kommen kann, insbesondere wenn es keine genauen Vorgaben von Kundenseite gibt. Aus diesem Grund war es sehr wichtig, Designentscheidungen sofort zu besprechen und abzuklären, was nicht immer ausreichend funktioniert hat. Es ist ebenso vorgekommen, dass Codebereiche nochmals umgeschrieben werden mussten. An diesen Stellen hat, trotz vieler Kommunikationskanäle, zu wenig Absprachen stattgefunden. +
+Durch gegenseitiges Feedback konnten wir unsere Kommuikation bezüglich Designentscheidungen wesentlich verbessern. Beim Auftreten von Probleme wurden diese im Team sachlich und lösungsorientiert besprochen, bis eine gemeinsamgetragene Lösung gefunden wurde.
+
+Gerade für die Umsetzung der Verbindung zwischen Frontend und Backend war die genaue Dokumentation der Schnittstellen der REST API während der Entwicklung sehr von Vorteil.
+
+Unser Scrummaster Aron hat es sehr gut verstanden den Überblick über den aktuellen Zwischenstand des Projektes und noch ausstehende Aufgaben zu behalten und zwischen den einzelnen Frontend und Backend zu vermitteln.
+
+
+
+== Welche Erfahrungen habe ich bei der Wiederverwendung von Bibliotheken/Frameworks (insbesondere SalesPoint) gemacht?
+// Einschätzung der Arbeit mit den bereitgestellten und zusätzlich genutzten Frameworks. Was War gut? Was war verbesserungswürdig?
+Bei der Entwicklung im Frontend habe ich hauptsächlich mit Javascript und verschiedenen Bibliotheken,
+wie React, Redux und Axios gearbeitet.
+
+Vor dem Praktikum habe ich in eigenen Projekten einen Großteil meiner Programme in der Entsprechenden Sprache von grundauf selber geschrieben, ohne dabei vorhandene Bibliotheken/Frameworks zu nutzen. Durch das Praktikum ist mir bewusst geworden, wie Zeit man sich sparen kann und dass Code oft auch sauberer/performanter/sicherer ist, wenn man bereits fertig entwickelte und geteste Teile von anderen Entwicklern in seinem eigenen Code wieder verwendet. Dies gilt auch für eigene Anwendungsteile, die man von Anfang an unter Beachtung der Wiederverwendbarkeit entwickelt.
+
+Wie man Bibliotheken/Frameworks speziell in der Webentwicklung mit JavaScript in seine Projekte einbindet habe ich dabei am Beispiel von npm ebenfalls gelernt. Dabei wäre eine Einführung mit einigen Details zur Funktionsweise des Packet Managers im Nachhinein sicherlich hilfreich gewesen. Ein Beispiel
+für eine sehr gelungene Einführung, bei der ich auch einige Fragen los werden konnte, ist das Treffen zur Aufsetzung von Docker mit Martin Morgenstern.
+
+Spannend war dabei vor allem durch das Externe Praktikum einen größeren Einblick in Bibliotheken/Frameworks zu erhalten, die auch tatsächlich in realen Softwareprojekten verwendet werden und sich in diese einzuarbeiten.
+
+== Welche Vorschläge zur weiteren Verbesserung des Softwarepraktikums gibt es?
+// Möglichst mit Beschreibung, warum die Umsetzung des von Ihnen angebrachten Vorschlages nötig ist.
+. Mir ist aufgefallen, dass wir in manchen Wochen stark unter Zeitdruck standen, was das fristgerechte Erreichen des Zwischenziels angeht und in anderen Wochen dann wieder deutlich weniger zu tun hatten. Ich denke, dass man den Zeitplan an dieser Stelle überarbeiten könnte, insbesondere was die Zeitspanne, die man für die Umsetzung der Musskriterien zur Verfügung hat, angeht. Zum Beispiel könnte man die Anfangsphase, in der die Gruppen eingeteilt werden, das eigene Projekt vorgestellt wird und man sich einliest, etwas früher beginnen lassen, um im eigentlichen Projekt etwas mehr Zeit zu haben. Ich hätte auch nichts dagegen gehabt, mit dem Projekt eine Woche vor Vorlesungsbeginn zu starten.  
+
+. Zu Beginn des Praktikums wäre es unterstützend gewesen, auch als Externe Gruppe eine kleine Einführung in die Technologien, die im Praktikum verwendet werden sollen, zu erhalten. So wie es für Spring Boot im internen Praktikum eigene Vorlesungen gibt, wäre eine kurze fachliche Einführung während eines Team Meetings hilfreich gewesen. Dabei könnte auch auf direkt aufkommende Fragen eingegangen werden. Dies ist im Selbststudium ungleich schwieriger und Zeit aufwendiger. Insbesondere zum Package Manager npm und zum komplexen Thema des Testens im Frontend, wäre dies sinnvoll gewesen.
+
+. Es war schade, dass vor allem am Anfang der enge Zeitplan, der uns vorgegeben war, in starkem Widerspruch zu der unzureichenden Kommunikation zwischen dem Kunden (3m5), dem Lehrstuhl und unserem Team stand.
++
+--
+Folgendes Punkte sind hervorzuheben:
+
+* In der Analyse/Entwurfsphase langes Warten auf Antwort des Kunden
+** längere Zeit haben wir ohne konkrete Vorgaben gearbeitet
+** konnten uns nicht sicher sein, ob unsere Umsetzung dem Kundenwunsch entspricht
+** Zum Ende hat sich die Kommunikation aber deutlich verbessert, was auch zu einem effizienteren und erfolgreicheren Arbeiten im Team führte.
+* Wichtige Informationen bzw. Details bezüglich des Projekts, wie die Wahl der Programmiersprache im Backend, weitere Anforderungen an das Projekt, etc. wurden erst beim Treffen mit allen Beteiligten in der vierten Woche besprochen. Zu diesem Zeitpunkt war allerdings bereits die Vorstellung einer ersten Anwendung, welche die Musskriterien erfüllen sollte, angesetzt.
+
+Um diese Anlaufschwierigkeiten zu vermeiden, wäre direkt am Anfang des Externen Praktikums ein Treffen mit allen Beteiligten (Studenten, Tutor, Kunde und ein Vertreter vom Lehrstuhl) hilfreich, in dem folgende Fragen direkt zu Beginn eindeutig beantwortet werden sollten:
+
+* Was sind die Anforderungen sowohl des Lehrstuhls als auch des Kunden an das Projekt und das Team?  Lassen sich diese verbinden?
+* Welche Technologien sollen verwendet werden?
+* Was wird in der Analyse und der Entwurfsphase bezogen auf die Entwicklung dieser konkreten Anwendung vom Team erwartet?
+* Gibt es weitere Dinge zu beachten, die zwar in den Anforderungen des Lehrstuhls stehen, aber in diesem externen Projekt so nicht angewendet werden können?
+
+--
+
+== Feedback für den Tutor
+// Fühlten Sie sich durch den vom Lehrstuhl bereitgestellten Tutor gut betreut? Was war positiv? Was war verbesserungswürdig?
+Das Arbeiten mit Paul war sehr angenehm. Er war stets für Fragen offen und hat schnell auf die Fragen geantwortet. Dafür war die gemeinsame Slack Gruppe sehr hilfreich. Gerade zu detaillierteren Codefragen hat er mir Antworten geben können. Wenn das wöchentliche Meeting nicht ausgereicht hat, war es auch kein Problem, sich in der Woche ein weiteres Mal mit ihm zu treffen. 
+
+Bei der Verteilung der Prototypen wäre es schön gewesen (wie bereits unter der vorletzten Frage angesprochen), wenn er mehr auf unseren Kenntnisstand eingegangen wäre insbesondere bei der Nennung der verwendeten Technologien. Viele der verwendeten Begriffe hatten wir zu diesem Zeitpunkt einfach noch nicht gehört. Nachfragen half nur bedingt, da die Erwartungshaltung an uns äußerst hochgesteckt war. Im Selbststudium ist dann jedoch einiges klarer geworden. Mit wachsendem Kenntnisstand hat sich die Kommunikation mit Paul im Laufe des Projekts jedoch deutlich gebessert.
