@@ -6,11 +6,11 @@ services:
       - ENV_DEBUG=True
       - ENV_TESTDATABASE_URI=mysql+pymysql://root:Momomomo2@localhost/sm1
       - ENV_DATABASE_URI=mysql+pymysql://root:Momomomo2@db/sm1
-      - ENV_LDAP_SERVER_URL=ldap://swtldap.cloudapp.net
+      - ENV_LDAP_SERVER_URL=ldap://domain.cloudapp.net
       - ENV_LDAP_SERVER_PORT=389
-      - ENV_LDAP_SERVER_PREFIX=SWTAD\
-      - ENV_LDAP_BASE_DN=CN=Users,DC=ldap,DC=SWT,DC=com
-      - ENV_LDAP_SEARCH_BASE=DC=ldap,DC=SWT,DC=com
+      - ENV_LDAP_SERVER_PREFIX=domain\
+      - ENV_LDAP_BASE_DN=CN=Users,DC=domain,DC=domain,DC=tld
+      - ENV_LDAP_SEARCH_BASE=DC=domain,DC=domain,DC=tld
       - ENV_LDAP_USE_SSL=False
       - ENV_LDAP_AUTHENTICATION=NTLM
     build: src/backend
