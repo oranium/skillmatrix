@@ -1,5 +1,13 @@
 = SWT Group 01
 
+== Project Overview
+
+This repository contains the results of the software internship at TU Dresden for 3m5.
+The application is a single page website skill matrix that allows users to maintain a profile of their abilities. Users need to authenticate using an Active Directory, the login cannot be bypassed currently. That being said, no focus was put on security for this application! +
+The frontend was built using JavaScript/React. The backend runs on a flask server and communicates with a MySQL database.
+Communication between frontend and backend is implemented via RESTful APIs. The application runs inside of a docker container, accessing the locally stored database (unless it doesn't exist, in which case the database will be initialised  as empty). +
+Thorough documentation for the APIs as well as structural models can be found in src/asciidoc/. 
+
 == Running the Docker Container
 
 The docker container can easily be started using the Makefile:
